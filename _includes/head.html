@@ -1,0 +1,35 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+
+  {% capture title %}{% if page.title %}{{ page.title | escape }} | {% else %}{% endif %}{% endcapture %}
+  {% capture description %}{{ page.excerpt | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
+  {% capture defimg %}https://res.cloudinary.com/wellosoft/image/upload/c_scale,w_1280/v1564509091/home/MeBehindAlma.jpg{% endcapture %}
+  {% capture image %}{% if page.ig %}{{ page.ig | append: 'media/?size=l' }}{% else %}{{ defimg }}{% endif %}{% endcapture %}
+  <title>{{ title }}{{ site.title }}</title>
+
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <meta name="twitter:card" content="summary">
+  <meta content="{{ description }}" name="description">
+  <meta content="{{ image }}" name="image">
+  <meta content="{{ title }}" property="og:title">
+  <meta content="{{ description }}" property="og:description">
+  <meta content="{{ image }}" property="og:image">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="{{ title }}" name="twitter:title">
+  <meta content="{{ description }}" name="twitter:description">
+  <meta content="{{ image }}" name="twitter:image">
+  <meta content="#3f51b5" name="theme-color">
+  {% if jekyll.environment == 'production' and site.google_analytics %}
+  {% include google-analytics.html %}
+  {% endif %}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+
+  {%- include custom-head.html -%}
+
+</head>
