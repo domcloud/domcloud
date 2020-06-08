@@ -19,7 +19,7 @@ DOM Cloud Hosting Solution tidak membangun sendiri insfrastuktur atau hardware y
 
 Menggunakan Platfom IaaS dari tech giant mempunyai benefit sendiri. Kami tidak perlu khawatir apabila ada hacker yang berniat jahat menggoreng Hardware kami (karena kami tidak memiliki insfrastrukturnya), dan hardware IaaS tersendiri tentu sudah didukung dengan jaringan yang kuat, sehingga kami bisa fokus dengan menggunakan VM seoptimal mungkin untuk seluruh pengguna DOM Cloud.
 
-Karena kami melihat sistem kami akan sangat reliable dan ekonomis, kami berkomitmen untuk membuka paket Gratis untuk semua orang, selamanya.
+Karena kami melihat sistem kami akan sangat reliable dan ekonomis, kami berkomitmen untuk membuka paket Gratis untuk semua orang tanpa batasan waktu. Kami tidak pernah memasang iklan atau bahkan mengotak atik file anda
 
 ## Apa tujuan DOM Cloud Hosting Solution memberikan solusi Hosting Gratis?
 
