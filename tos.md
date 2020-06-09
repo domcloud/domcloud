@@ -1,13 +1,11 @@
 ---
 title: Terms of Service
-layout: default
+layout: page
 ---
 
-# Terms of Service
+*Dokumen ini masih dalam tahap penyempurnaan*
 
 Harap membaca pemberitahuan berikut sebelum menggunakan situs web ini. Penggunaan layanan dan fitur-fiturnya berarti Anda telah menerima syarat dan ketentuan yang berlaku. Melanggar atau mengabaikan salah satu syarat dan ketentuan berikut akan berdampak pada pemberian sanksi hingga pembatalan akun dengan atau tanpa pemberitahuan.
-
-> Dokumen ini masih dalam tahap penyempurnaan
 
 ## Bahasa
 
