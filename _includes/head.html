@@ -12,11 +12,10 @@
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <meta name="twitter:card" content="summary">
   <meta content="{{ description }}" name="description">
-  <meta content="{{ title }}" property="og:title">
+  <meta content="{{ title }}{{ site.title }}" property="og:title">
   <meta content="{{ description }}" property="og:description">
-  <meta content="{{ image }}" property="og:image">
   <meta content="summary_large_image" name="twitter:card">
-  <meta content="{{ title }}" name="twitter:title">
+  <meta content="{{ title }}{{ site.title }}" name="twitter:title">
   <meta content="{{ description }}" name="twitter:description">
   <meta content="#3f51b5" name="theme-color">
 
