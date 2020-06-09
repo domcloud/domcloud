@@ -2,3 +2,6 @@ title: DOM Cloud Hosting Solution
 author:
   name: Wildan M
   email: willnode@wellosoft.net
+sass:
+  style: compressed
+google_analytics: "UA-109180894-1"

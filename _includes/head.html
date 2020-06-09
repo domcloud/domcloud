@@ -19,12 +19,6 @@
   <meta content="{{ title }}" name="twitter:title">
   <meta content="{{ description }}" name="twitter:description">
   <meta content="#3f51b5" name="theme-color">
-  {% if jekyll.environment == 'production' and site.google_analytics %}
-  {% include google-analytics.html %}
-  {% endif %}
-  {%- if jekyll.environment == 'production' and site.google_analytics -%}
-    {%- include google-analytics.html -%}
-  {%- endif -%}
 
   {%- include custom-head.html -%}
 

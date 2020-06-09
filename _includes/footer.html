@@ -6,4 +6,7 @@
   <p class="text-muted">
     <small>Credit background unsplash.com</small>
   </p>
+{%- if jekyll.environment == 'production' and site.google_analytics -%}
+  {%- include google-analytics.html -%}
+{%- endif -%}
 </footer>
