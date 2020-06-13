@@ -35,7 +35,9 @@ Jika anda ingin pilihan domain yang lain dan dapat terindeks oleh Google, anda h
 
 ### Apakah DOM Cloud memfasilitasi SSL?
 
-Kami tidak memfasilitasi SSL untuk hosting gratis. Namun, bebsite berbayar dapat menggunakan Fitur Let's Encrypt dari Webmin Panel atau memasang proteksi gratis dari CloudFlare.
+Hosting dengan paket Gratis secara otomatis menggunakan SSL dari domain induk.
+
+Untuk hosting berbayar dapat menggunakan Fitur Let's Encrypt dari Webmin atau memasang proteksi gratis dari CloudFlare.
 
 ### Apakah DOM Cloud memfasilitasi CPanel?
 
@@ -63,9 +65,9 @@ Kami tidak mempunyai cukup data untuk itu dan kami tidak memberikan jaminan apap
 
 Saat ini kami tidak memfasilitasi sistem autentikasi tambahan seperti TFA atau fingerprint. Pastikan password anda unik dan cukup kuat.
 
-### Apakah DOM Cloud mempunyai Keamanan Backup dan Fasilitas Migrasi?
+### Apakah DOM Cloud memfasilitasi Migrasi?
 
-Saat ini kami tidak mempunyai fasilitas backup. Kami juga mematikan fasilitas migrasi demi keamanan. Jika anda khawatir akan data hilang, anda harus menyimak baik-baik [Terms of Service](/tos) karena kami tidak memberikan jaminan apapun pada kelangsungan hosting.
+Saat ini kami tidak mengaktifkan fitur migrasi karena faktor keamanan.
 
 ### Apakah DOM Cloud memfasilitasi Upgrade?
 
