@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-Disallow: panel.dom.my.id
-Disallow: *.sv01.dom.my.id
