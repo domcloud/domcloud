@@ -35,17 +35,15 @@ Jika anda ingin pilihan domain yang lain dan dapat terindeks oleh Google, anda h
 
 ### Apakah DOM Cloud memfasilitasi SSL?
 
-> Editor note: Kami masih mengusahakan SSL dengan wildcard domain berfungsi untuk semua domain dalam dom.my.id
-
-Semua paket dapat menikmati SSL untuk domain dom.my.id. Jika anda menggunakan custom domain, anda dapat menggunakan Fitur Let's Encrypt dari panel atau memasang proteksi gratis dari CloudFlare.
+Kami tidak memfasilitasi SSL untuk hosting gratis. Namun, bebsite berbayar dapat menggunakan Fitur Let's Encrypt dari Webmin Panel atau memasang proteksi gratis dari CloudFlare.
 
 ### Apakah DOM Cloud memfasilitasi CPanel?
 
-Demi memangkas biaya (apalagi hosting gratis), kami tidak menggunakan CPanel. Kami menggunakan Virtualmin (berbasis Webmin) sebagai alternatif gratis. Webmin mungkin kurang populer namun memiliki fitur tidak kalah lengkap dengan CPanel.
+Demi memangkas biaya, kami tidak menggunakan CPanel. Kami menggunakan Webmin sebagai alternatif. Webmin mungkin kurang populer namun memiliki fitur tidak kalah lengkap dengan CPanel.
 
 ### Apakah DOM Cloud memfasilitasi selain PHP?
 
-Saat ini kami hanya menggunakan PHP 7.2.11 dan tidak memfasilitasi bahasa lain seperti Python, Node.JS, dsb. Anda bisa menggunakan platform lain seperti Heroku atau Zeit.co dan tetap menggunakan DOM Cloud sebagai basis database.
+Saat ini kami hanya menggunakan PHP 7.2.11 dan tidak memfasilitasi bahasa lain seperti Python, Node.JS, dsb. Anda bisa menggunakan platform lain seperti Heroku atau Zeit.CO dan tetap menggunakan DOM Cloud sebagai basis database.
 
 ### Saya rasa kapasitas yang diberikan oleh Paket Gratis kurang cukup.
 
@@ -63,7 +61,7 @@ Kami tidak mempunyai cukup data untuk itu dan kami tidak memberikan jaminan apap
 
 ### Apakah DOM Cloud mempunyai keamanan tambahan untuk Akun Hosting?
 
-Kami tidak memfasilitasi sistem autentikasi tambahan seperti TFA atau fingerprint. Namun setiap aksi yang beresiko (mengganti domain atau email atau password, downgrade hosting dan menghapus hosting atau akun) pasti membutuhkan konfirmasi email dari anda.
+Saat ini kami tidak memfasilitasi sistem autentikasi tambahan seperti TFA atau fingerprint. Pastikan password anda unik dan cukup kuat.
 
 ### Apakah DOM Cloud mempunyai Keamanan Backup dan Fasilitas Migrasi?
 
@@ -75,7 +73,7 @@ Ya, anda dapat mengupgrade hosting kapan saja. Dalam DOM Cloud anda dapat upgrad
 
 ### Apakah DOM Cloud memfasilitasi Downgrade?
 
-Kami tidak memfasilitasi downgrade hosting saat ini.
+Ya, downgrade dapat dilakukan namun pembelian sebelumnya akan hangus dan aksi tersebut tidak dapat dikembalikan.
 
 ### Apakah DOM Cloud memfasilitasi Refund?
 
