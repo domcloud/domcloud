@@ -9,7 +9,7 @@ Cloud Hosting Solution adalah provider yang menyediakan solusi buat anda yang me
 
 ### Siapa dibelakang DOM Cloud Hosting Solution?
 
-Anda bisa mencari tahu di halaman pribadi saya: [wellosoft.net](https://wellosoft.net). Sejauh ini DOM Cloud hanyalah sebuah project hobi, namun kami mempunyai harapan yang besar untuk mensukseskan DOM Cloud hingga dapat digunakan oleh banyak orang.
+Anda dapat mencari tahu di website [wellosoft.net](https://wellosoft.net). Sejauh ini DOM Cloud hanyalah sebuah eksperimen, namun kami mempunyai harapan yang besar untuk mensukseskan DOM Cloud hingga dapat digunakan oleh banyak orang.
 
 ### Kenapa Bisa Begitu Murah (Bahkan Gratis)?
 
@@ -29,15 +29,11 @@ Kami tidak tahu apakah Cloud Hosting bermodel seperti ini dapat survive untuk wa
 
 ### Apakah DOM Cloud memfasilitasi domain Gratis?
 
-Setiap hosting dalam DOM Cloud difasilitasi dengan domain yang terpasang dalam subdomain `.sv[nomor slave]` diikuti dengan `.dom.my.id`. Domain ini sangat membantu apabila anda masih mengembangkan website anda dan belum siap untuk dipublish diinternet. Subdomain ini tentunya mempunyai beberapa kekurangan, diantaranya ialah terlalu panjang dan tidak akan di Indeks oleh Google.
-
-Jika anda ingin pilihan domain yang lain dan dapat terindeks oleh Google, anda harus membeli domain sendiri dengan provider lain (kami tidak melayani pembelian domain). Pengguna hosting selain paket Gratis dapat mengarahkan domain ke IP server dan menambahkan domain alias dalam hosting agar bisa aktif.
+Setiap hosting dalam DOM Cloud difasilitasi dengan domain yang terpasang dalam subdomain `.dom.my.id`. Domain ini sangat membantu apabila website anda masih dalam tahap pengembangan atau anda tidak ingin merogoh dompet untuk membeli kustom domain.
 
 ### Apakah DOM Cloud memfasilitasi SSL?
 
-Hosting dengan paket Gratis secara otomatis menggunakan SSL dari domain induk.
-
-Untuk hosting berbayar dapat menggunakan Fitur Let's Encrypt dari Webmin atau memasang proteksi gratis dari CloudFlare.
+Setiap hosting dapat memasang SSL dari Let's Encrypt melalui Webmin atau memasang proteksi gratis dari CloudFlare jika anda menggunakan kustom domain.
 
 ### Apakah DOM Cloud memfasilitasi CPanel?
 
@@ -45,13 +41,13 @@ Demi memangkas biaya, kami tidak menggunakan CPanel. Kami menggunakan Webmin seb
 
 ### Apakah DOM Cloud memfasilitasi selain PHP?
 
-Saat ini kami hanya menggunakan PHP 7.2.11 dan tidak memfasilitasi bahasa lain seperti Python, Node.JS, dsb. Anda bisa menggunakan platform lain seperti Heroku atau Zeit.CO dan tetap menggunakan DOM Cloud sebagai basis database.
+Saat ini kami hanya menggunakan PHP 7.2.11 dan tidak memfasilitasi bahasa lain seperti Python, Node.JS, dsb. Anda bisa menggunakan platform lain seperti Heroku atau Zeit.Co dan tetap menggunakan DOM Cloud sebagai basis database.
 
 ### Saya rasa kapasitas yang diberikan oleh Paket Gratis kurang cukup.
 
 Anda bisa menggunakan paket yang berbayar, pembayaran dilakukan secara tahunan atau dipaket sekaligus maksimal hingga 5 tahun.
 
-Namun sebelum anda lakukan itu, pikir kembali, apakah anda membutuhkan kuota tersebut? 50 MB adalah ukuran yang sangat cukup, dilihat dari ukuran project CI atau Wordpress yang hanya sekitar 5 MB. Jika anda khawatir soal kapasitas media yang akan membesar, anda bisa menggunakan opsi media yang lain seperti Google Drive, Dropbox atau Cloudinary.
+Namun sebelum anda lakukan itu, pikir kembali, apakah anda membutuhkan kuota tersebut? 100 MB adalah ukuran yang sangat cukup, dilihat dari ukuran project Wordpress/MyBB/OpenCart yang kurang dari 25 MB. Jika anda khawatir soal kapasitas media yang akan membesar, anda bisa menggunakan solusi media storage alternatif seperti Google Drive, Dropbox atau Cloudinary.
 
 ### Apakah DOM Cloud mempunyai Sarana Promo dan Afiliasi?
 
