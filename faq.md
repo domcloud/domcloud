@@ -9,11 +9,11 @@ Cloud Hosting Solution adalah provider yang menyediakan solusi buat anda yang me
 
 ### Siapa dibelakang DOM Cloud Hosting Solution?
 
-Anda dapat mencari tahu di website [wellosoft.net](https://wellosoft.net). Sejauh ini DOM Cloud hanyalah sebuah eksperimen, namun kami mempunyai harapan yang besar untuk mensukseskan DOM Cloud hingga dapat digunakan oleh banyak orang.
+Anda dapat mencari tahu di [website pribadi saya](https://wellosoft.net). Sejauh ini DOM Cloud adalah sebuah eksperimen, namun kami mempunyai harapan yang besar untuk mensukseskan DOM Cloud hingga dapat digunakan oleh banyak orang.
 
 ### Kenapa Bisa Begitu Murah (Bahkan Gratis)?
 
-DOM Cloud Hosting Solution tidak membangun sendiri insfrastuktur atau hardware yang diperlukan untuk menyimpan hosting. Kami menggunakan Cloud VM dari Microsoft Azure sebagai insfrastruktur DOM Cloud. Kami berpendapat bahwa meskipun kami mempunyai budget milyaran rupiah untuk membangun insfrastuktur sendiri, kami tetap tidak bisa menandingi insfrastuktur seoptimal platfom IaaS dari tech giant (IaaS yang kami maksud adalah Google Cloud, Amazon AWS, Microsoft Azure).
+DOM Cloud tidak membangun sendiri insfrastuktur atau hardware yang diperlukan untuk menyimpan hosting. Kami menggunakan Cloud VM dari Microsoft Azure sebagai insfrastruktur DOM Cloud. Kami berpendapat bahwa meskipun kami mempunyai budget milyaran rupiah untuk membangun insfrastuktur sendiri, kami tetap tidak bisa menandingi insfrastuktur seoptimal platfom IaaS dari tech giant (IaaS yang kami maksud adalah Google Cloud, Amazon AWS, Microsoft Azure).
 
 Menggunakan Platfom IaaS dari tech giant mempunyai benefit sendiri. Kami tidak perlu khawatir apabila ada hacker yang berniat jahat menggoreng Hardware kami (karena kami tidak memiliki insfrastrukturnya), dan hardware IaaS tersendiri tentu sudah didukung dengan jaringan yang kuat, sehingga kami bisa fokus dengan mengelola VM seoptimal mungkin untuk seluruh pengguna DOM Cloud.
 
@@ -24,8 +24,6 @@ Karena kami optimis bahwa sistem kami akan sangat reliable dan ekonomis, kami be
 Salah satu masalah pada penggunaan shared cloud hosting ialah harganya yang "tinggi", namun banyak resource yang tidak terpakai. DOM Cloud hadir dengan fasilitas paket yang jauh lebih kecil dan hemat, sehingga penggunaan resource bisa lebih optimal dan harganya lebih menjangkau banyak kalangan.
 
 Dengan maraknya platform cloud gratis seperti GitHub, Cloudinary, Cloudflare, TravisCI dan lain sebagainya, kami percaya bahwa inilah saatnya semua orang harus mempunyai kesempatan yang sama untuk mempunyai dan belajar membuat website mereka sendiri.
-
-Kami tidak tahu apakah Cloud Hosting bermodel seperti ini dapat survive untuk waktu yang cukup panjang, namun kami akan melakukan yang terbaik agar terus bisa survive.
 
 ### Apakah DOM Cloud memfasilitasi domain Gratis?
 
@@ -46,8 +44,6 @@ Saat ini kami hanya menggunakan PHP 7.2.11 dan tidak memfasilitasi bahasa lain s
 ### Saya rasa kapasitas yang diberikan oleh Paket Gratis kurang cukup.
 
 Anda bisa menggunakan paket yang berbayar, pembayaran dilakukan secara tahunan atau dipaket sekaligus maksimal hingga 5 tahun.
-
-Namun sebelum anda lakukan itu, pikir kembali, apakah anda membutuhkan kuota tersebut? 100 MB adalah ukuran yang sangat cukup, dilihat dari ukuran project Wordpress/MyBB/OpenCart yang kurang dari 25 MB. Jika anda khawatir soal kapasitas media yang akan membesar, anda bisa menggunakan solusi media storage alternatif seperti Google Drive, Dropbox atau Cloudinary.
 
 ### Apakah DOM Cloud mempunyai Sarana Promo dan Afiliasi?
 
