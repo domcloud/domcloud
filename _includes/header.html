@@ -1,7 +1,8 @@
-<header class="navbar px-3 navbar-expand-lg navbar-dark bg-dark">
+<header class="navbar px-3 navbar-expand-md navbar-dark fixed-top">
 
   <a class="navbar-brand" rel="author" href="{{ "/" | relative_url }}">
-    {{ site.title | escape }}
+    <img src="/assets/icon.svg" width="64px" height="60px" alt="" class="mr-2">
+    <span class="d-none d-sm-inline">&nbsp; {{ site.title | escape }}</span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

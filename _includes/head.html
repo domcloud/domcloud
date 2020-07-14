@@ -9,7 +9,7 @@
   {% capture title %}{% if page.title %}{{ page.title | escape }} | {% else %}{% endif %}{% endcapture %}
   {% capture description %}{{ page.excerpt | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
   <title>{{ title }}{{ site.title }}</title>
-  <link rel="shortcut icon" href="/assets/sm-icon.svg">
+  <link rel="shortcut icon" href="/assets/icon.svg">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <meta name="twitter:card" content="summary">
   <meta content="{{ description }}" name="description">
