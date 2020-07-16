@@ -42,9 +42,38 @@
   }
 }
 
-.nav-link {
-  padding: 0 0.8rem !important;
+@media (max-width: 768px) {
+  .navbar {
+    backdrop-filter: blur(0.5rem);
+  }
 }
+.nav-link {
+  color: rgba(255,255,255,0.8) !important;
+  text-shadow: 0 0 1px white;
+}
+.nav-link:hover {
+  color: rgba(255,255,255,1) !important;
+  text-shadow: 0 0 3px white;
+}
+
+.nav-link {
+  padding: 0.5rem 0.8rem !important;
+}
+
+.text-code {
+  color: #74c;
+}
+
+.btn-code {
+  background-color: #74c;
+  color: white;
+}
+
+.btn-code:hover {
+  color: white;
+  background-color: #53b;
+}
+
 
 .footer-list {
   display: flex;

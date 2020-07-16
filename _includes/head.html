@@ -4,9 +4,12 @@
   <meta name="google-site-verification" content="5OHB_0OlYbC7R9za5bPb9lO3jUFlRn3ZpULLrZOzOI8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  {%- include custom-head.html -%}
+
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
 
   {% capture title %}{% if page.title %}{{ page.title | escape }} | {% else %}{% endif %}{% endcapture %}
+  {% capture color %}{% if page.color %}{{ page.color }}{% else %}#c70{% endif %}{% endcapture %}
   {% capture description %}{{ page.excerpt | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
   <title>{{ title }}{{ site.title }}</title>
   <link rel="shortcut icon" href="/assets/icon.svg">
@@ -18,8 +21,6 @@
   <meta content="summary_large_image" name="twitter:card">
   <meta content="{{ title }}{{ site.title }}" name="twitter:title">
   <meta content="{{ description }}" name="twitter:description">
-  <meta content="#3f51b5" name="theme-color">
-
-  {%- include custom-head.html -%}
+  <meta content="{{ color }}" name="theme-color">
 
 </head>
