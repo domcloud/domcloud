@@ -1,3 +1,4 @@
+@charset "UTF-8";
 
 .bg {
   background-image: var(--bg);
@@ -5,25 +6,57 @@
   background-size: cover;
   background-repeat: no-repeat;
 
-  &.top {
-  background-position: top;
-  padding-top: 80px;
-  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  &.top {
+  background-position: top;
+  padding-top: 80px;
+  min-height: 60vh;
+  }
+  &.top.text-white {
+  text-shadow: 0 0 5px black;
   }
   &.fixed {
     background-attachment: fixed;
   }
   &.full {
-    height: 50vh;
+    min-height: 50vh;
+    padding: 3em;
   }
 }
 
-.navbar {
-  backdrop-filter: blur(1rem);
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05), inset 0 -1px 0 rgba(0,0,0,0.15);
-  background: #0008;
+.checklist {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  &>li {
+    &::before {
+      content: '✔️';
+      margin-right: 1em;
+    }
+    margin: 0.4em 0;
+  }
+}
+
+.nav-link {
+  padding: 0 0.8rem !important;
+}
+
+.footer-list {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+  padding: 0;
+  &>li {
+    margin: 1em 1em;
+    a {
+      color: grey;
+    }
+  }
 }
