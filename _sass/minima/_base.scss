@@ -89,3 +89,10 @@
     }
   }
 }
+
+.hr-curvy{position:relative;height:0;pointer-events:none}
+.hr-curvy svg{position:absolute;top:-50px;height:100px;width:100%;display:block}
+.hr-curvy .up{fill:var(--up, transparent)}
+.hr-curvy .down{fill:var(--down, transparent)}
+.hr-curvy .upback{fill:var(--upback, transparent)}
+.hr-curvy .downback{fill:var(--downback, transparent)}
