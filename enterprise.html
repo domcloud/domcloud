@@ -67,7 +67,7 @@ color: '#c10'
           1 VM B1MS: 300K
           32 GB SSD: 100K
           64 GB LRS:  50K
-          T COST   : 450K
+          TOTAL    : 450K
         -->
         <li><b>1</b> vCPU &times; <b>2.4</b> GHz</li>
         <li><b>2 GB</b> RAM <b>4 GB</b> Swap</li>
@@ -96,7 +96,7 @@ color: '#c10'
           1 VM B2S  : 600K
           128 GB SSD :400K
           256GB LRS : 200K
-          T COST   : 1200K
+          TOTAL    : 1200K
         -->
         <li><b>2</b> vCPU &times; <b>2.4</b> GHz</li>
         <li><b>4 GB</b> RAM <b>8 GB</b> Swap</li>
@@ -113,19 +113,48 @@ color: '#c10'
         High Load Level
       </p>
       <p>
-        Butuh server dengan tenaga komputasi yang cukup tinggi?
+        Butuh server yang pasti kuat untuk menangani traffic yang tinggi?
       </p>
     </div>
     <div class="col-md-6 bg full" style="background-color: #f77;">
       <h5 class="card-title">Paket Enterprise Tier III</h5>
-      <p id="tier-3" class="display-4">5800K</p>
+      <p id="tier-3" class="display-4">2800K</p>
+      <p class="text-dark">Rupiah <b>Per Bulan</b></p>
+      <ul class="checklist">
+        <!-- 
+          1 VM B2MS : 1200K
+          256 GB SSD : 800K
+          512 GB LRS:  400K
+          TOTAL    :  2400K
+        -->
+        <li><b>2</b> vCPU &times; <b>2.4</b> GHz</li>
+        <li><b>8 GB</b> RAM <b>16 GB</b> Swap</li>
+        <li><b>256 GB</b> Storage <b>1100</b> IOPS</li>
+        <li><b>2</b> Backup Slot</li>
+        <li><b>1</b> Publik IP Statis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row g-0">
+    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
+      <p class="h1 text-danger">
+        Crazy Load Level
+      </p>
+      <p>
+        Hanya untuk server yang didesain melakukan banyak komputasi secara parallel 
+      </p>
+    </div>
+    <div class="col-md-6 bg full" style="background-color: #f55;">
+      <h5 class="card-title">Paket Enterprise Tier IV</h5>
+      <p id="tier-4" class="display-4">5800K</p>
       <p class="text-dark">Rupiah <b>Per Bulan</b></p>
       <ul class="checklist">
         <!-- 
           1 VM B4MS : 2400K
           512 GB SSD :1600K
           1024GB LRS:  800K
-          T COST   :  4800K
+          TOTAL    :  4800K
         -->
         <li><b>4</b> vCPU &times; <b>2.4</b> GHz</li>
         <li><b>16 GB</b> RAM <b>32 GB</b> Swap</li>
@@ -183,6 +212,7 @@ color: '#c10'
     var yearly = document.getElementById('yearly').checked;
     document.getElementById('tier-1').innerText = yearly ? '700K' : '800K';
     document.getElementById('tier-2').innerText = yearly ? '1500K' : '1800K';
-    document.getElementById('tier-3').innerText = yearly ? '5000K' : '5800K';
+    document.getElementById('tier-3').innerText = yearly ? '2500K' : '2800K';
+    document.getElementById('tier-4').innerText = yearly ? '5000K' : '5800K';
   }
 </script>
