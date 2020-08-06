@@ -15,24 +15,24 @@ color: '#c10'
 
   <div class="row g-0">
     <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fdd;">
-      <p class="h4 my-3">✔ Non-Shared Hosting</p>
-      <p><small>Bayar Hosting sesuai Spesifikasi.<br>Server sepenuhnya milik anda.</small></p>
+      <p class="h4 my-3">✔ OpenVZ VPS</p>
+      <p><small>Virtual Private Server dengan performa optimal di harganya.</small></p>
     </div>
     <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fcc;">
       <p class="h4 my-3">✔ Akses Sudo</p>
       <p><small>Akses sistem dan install software dalam level sistem bebas semau anda.</small></p>
     </div>
     <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fbb;">
-      <p class="h4 my-3">✔ Burstable VM</p>
-      <p><small>Server didesain untuk penggunaan CPU rendah, namun dapat diutilitaskan penuh saat dibutuhkan.</small></p>
+      <p class="h4 my-3">✔ Dedicated IP Address</p>
+      <p><small>Kami sediakan 1 Alamat IP publik khusus untuk server anda.</small></p>
     </div>
     <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #faa;">
       <p class="h4 my-3">✔ Multi-Domain</p>
       <p><small>Anda dapat menampung lebih dari satu domain dari satu server.</small></p>
     </div>
     <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #faa;">
-      <p class="h4 my-3">✔ Automated Backup</p>
-      <p><small>Melakukan kesalahan? Tidak masalah. Anda dapat rollback sesuai dengan slot backup tersedia.</small></p>
+      <p class="h4 my-3">✔ 2 Slot Backup</p>
+      <p><small>Melakukan Kesalahan? Tersedia 2 Slot Backup Otomatis untuk rollback kapanpun anda mau.</small></p>
     </div>
     <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fbb;">
       <p class="h4 my-3">✔ Managed Service</p>
@@ -48,34 +48,32 @@ color: '#c10'
     </div>
   </div>
 
-  <p class="h4 my-5" style="user-select: none;"><label><input type="checkbox" id="yearly" oninput="updateComparison()" class="form-check-input mr-4">Memesan secara tahunan?</label></p>
   <div class="row g-0">
     <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
       <p class="h1 text-danger">
         Entry Level
       </p>
       <p>
-        Cocok untuk anda yang memulai migrasi dari server sendiri
+        Paket awal untuk anda yang memulai server dari nol atau migrasi dari server sendiri
       </p>
     </div>
     <div class="col-md-6 bg full" style="background-color: #fcc;">
       <h5 class="card-title">Paket Enterprise Tier I</h5>
-      <p id="tier-1" class="display-4">800K</p>
+      <p id="tier-1" class="display-4">350K</p>
       <p class="text-dark">Rupiah <b>Per Bulan</b></p>
       <ul class="checklist">
         <!-- 
-          1 VM B1MS: 300K
           32 GB SSD: 100K
-          64 GB LRS:  50K
-          50 GB NET: 100K
-          TOTAL    : 550K
+          64 GB HDD:  50K
+          25 GB NET:  50K
+          TOTAL    : 200K
+          IP ADR   :  50K
+          CPU COVER: 100K
         -->
-        <li><b>1</b> vCPU &times; <b>2.4</b> GHz</li>
-        <li><b>2 GB</b> RAM <b>4 GB</b> Swap</li>
-        <li><b>32 GB</b> Storage <b>120</b> IOPS</li>
-        <li><b>50 GB</b> Bandwidth per Bulan</li>
-        <li><b>2</b> Backup Slot</li>
-        <li><b>1</b> Publik IP Statis</li>
+        <li><b>1</b> vCPU</li>
+        <li><b>2 GB</b> RAM</li>
+        <li><b>32 GB</b> Storage</li>
+        <li><b>25 GB</b> Bandwidth</li>
       </ul>
     </div>
   </div>
@@ -91,22 +89,21 @@ color: '#c10'
     </div>
     <div class="col-md-6 bg full" style="background-color: #f99;">
       <h5 class="card-title">Paket Enterprise Tier II</h5>
-      <p id="tier-2" class="display-4">1800K</p>
+      <p id="tier-2" class="display-4">750K</p>
       <p class="text-dark">Rupiah <b>Per Bulan</b></p>
       <ul class="checklist">
         <!-- 
-          1 VM B2S  : 600K
           64 GB SSD : 200K
-          128GB LRS : 100K
-          100GB NET : 200K
-          TOTAL    : 1100K
+          128GB HDD : 100K
+          50 GB NET : 100K
+          TOTAL     : 400K
+          IP ADR   :   50K
+          CPU COVER : 300K
         -->
-        <li><b>2</b> vCPU &times; <b>2.4</b> GHz</li>
-        <li><b>4 GB</b> RAM <b>8 GB</b> Swap</li>
-        <li><b>64 GB</b> Storage <b>250</b> IOPS</li>
-        <li><b>100 GB</b> Bandwidth per Bulan</li>
-        <li><b>2</b> Backup Slot</li>
-        <li><b>1</b> Publik IP Statis</li>
+        <li><b>2</b> vCPU</li>
+        <li><b>4 GB</b> RAM</li>
+        <li><b>64 GB</b> Storage</li>
+        <li><b>50 GB</b> Bandwidth</li>
       </ul>
     </div>
   </div>
@@ -122,22 +119,21 @@ color: '#c10'
     </div>
     <div class="col-md-6 bg full" style="background-color: #f77;">
       <h5 class="card-title">Paket Enterprise Tier III</h5>
-      <p id="tier-3" class="display-4">2800K</p>
+      <p id="tier-3" class="display-4">1750K</p>
       <p class="text-dark">Rupiah <b>Per Bulan</b></p>
       <ul class="checklist">
         <!-- 
-          1 VM B2MS : 1200K
-          128 GB SSD : 400K
-          256 GB LRS:  200K
-          150GB NET :  300K
-          TOTAL    :  2300K
+          128GB SSD : 400K
+          256GB HDD : 200K
+          100GB NET : 200K
+          TOTAL    :  800K
+          IP ADR   :   50K
+          CPU COVER : 900K
         -->
-        <li><b>2</b> vCPU &times; <b>2.4</b> GHz</li>
-        <li><b>8 GB</b> RAM <b>16 GB</b> Swap</li>
-        <li><b>128 GB</b> Storage <b>500</b> IOPS</li>
-        <li><b>150 GB</b> Bandwidth per Bulan</li>
-        <li><b>2</b> Backup Slot</li>
-        <li><b>1</b> Publik IP Statis</li>
+        <li><b>3</b> vCPU</li>
+        <li><b>8 GB</b> RAM</li>
+        <li><b>128 GB</b> Storage</li>
+        <li><b>100 GB</b> Bandwidth</li>
       </ul>
     </div>
   </div>
@@ -153,22 +149,21 @@ color: '#c10'
     </div>
     <div class="col-md-6 bg full" style="background-color: #f55;">
       <h5 class="card-title">Paket Enterprise Tier IV</h5>
-      <p id="tier-4" class="display-4">4800K</p>
+      <p id="tier-4" class="display-4">2750K</p>
       <p class="text-dark">Rupiah <b>Per Bulan</b></p>
       <ul class="checklist">
         <!-- 
-          1 VM B4MS : 2400K
-          256 GB SSD : 800K
-          512 GB LRS:  400K
-          200GB NET :  400K
-          TOTAL    :  4000K
+          256GB SSD : 800K
+          512GB HDD : 400K
+          200GB NET : 400K
+          TOTAL    : 1600K
+          IP ADR   :   50K
+          CPU COVER :1100K
         -->
-        <li><b>4</b> vCPU &times; <b>2.4</b> GHz</li>
-        <li><b>16 GB</b> RAM <b>32 GB</b> Swap</li>
-        <li><b>256 GB</b> Storage <b>1100</b> IOPS</li>
-        <li><b>200 GB</b> Bandwidth per Bulan</li>
-        <li><b>2</b> Backup Slot</li>
-        <li><b>1</b> Publik IP Statis</li>
+        <li><b>4</b> vCPU</li>
+        <li><b>16 GB</b> RAM</li>
+        <li><b>256 GB</b> Storage</li>
+        <li><b>200 GB</b> Bandwidth</li>
       </ul>
     </div>
   </div>
@@ -177,19 +172,15 @@ color: '#c10'
   <p class="mb-5"><small>Tambahan fitur server sesuai target kebutuhan anda.</small></p>
 
   <div class="row g-0">
-    <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fdd;">
+    <div class="col-lg-4 col-sm-6 py-2 px-3" style="background-color: #fdd;">
       <p class="h4 my-3">Slave DNS Server</p>
       <p><small>Proteksi tambahan agar DNS server anda tetap jalan meski DNS main server sedang error atau offline.</small></p>
     </div>
-    <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fcc;">
+    <div class="col-lg-4 col-sm-6 py-2 px-3" style="background-color: #fcc;">
       <p class="h4 my-3">Add-On Slot Backup</p>
       <p><small>Anda dapat menambah slot backup lagi sesuai kebutuhan.</small></p>
     </div>
-    <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #fbb;">
-      <p class="h4 my-3">Add-On Data Disk</p>
-      <p><small>Anda dapat menambah secondary disk untuk data khusus bila diperlukan.</small></p>
-    </div>
-    <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #faa;">
+    <div class="col-lg-4 col-sm-6 py-2 px-3" style="background-color: #faa;">
       <p class="h4 my-3">Add-On Bandwidth</p>
       <p><small>Anda dapat menambah kuota bandwidth per bulan bila diperlukan.</small></p>
     </div>
@@ -199,32 +190,18 @@ color: '#c10'
   <p class="mb-5"><small>Tambahan layanan agar manajemen server anda lebih mudah.</small></p>
 
   <div class="row g-0">
-    <div class="col-md-3 col-sm-6 py-2 px-3" style="background-color: #fdd;">
+    <div class="col-md-4 col-sm-6 py-2 px-3" style="background-color: #fdd;">
       <p class="h4 my-3">Migrasi Server</p>
       <p><small>Kami melayani migrasi server lokal yang sudah ke server DOM Cloud untuk setup server pertama kali.</small></p>
     </div>
-    <div class="col-md-3 col-sm-6 py-2 px-3" style="background-color: #fcc;">
+    <div class="col-md-4 col-sm-6 py-2 px-3" style="background-color: #fcc;">
       <p class="h4 my-3">Instalasi Server</p>
       <p><small>Kami melayani perencaan dan pemasangan software yang digunakan untuk setup server pertama kali.</small></p>
     </div>
-    <div class="col-md-3 col-sm-6 py-2 px-3" style="background-color: #fbb;">
+    <div class="col-md-4 col-sm-6 py-2 px-3" style="background-color: #fbb;">
       <p class="h4 my-3">Konsultasi Server</p>
       <p><small>Jika anda butuh konsultasi dan guide step-step untuk mengelola server anda, kami dapat membantu itu.</small></p>
-    </div>
-    <div class="col-lg-3 col-sm-6 py-2 px-3" style="background-color: #faa;">
-      <p class="h4 my-3">Custom Region Server</p>
-      <p><small>Jika fokus bisnis anda bukan terletak di Asia Tenggara, kami dapat memindahkannya ke tempat lain tersedia.</small></p>
     </div>
   </div>
 
 </div>
-
-<script>
-  function updateComparison() {
-    var yearly = document.getElementById('yearly').checked;
-    document.getElementById('tier-1').innerText = yearly ? '700K' : '800K';
-    document.getElementById('tier-2').innerText = yearly ? '1500K' : '1800K';
-    document.getElementById('tier-3').innerText = yearly ? '2500K' : '2800K';
-    document.getElementById('tier-4').innerText = yearly ? '4000K' : '4800K';
-  }
-</script>
