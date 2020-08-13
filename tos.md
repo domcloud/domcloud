@@ -33,7 +33,7 @@ Pengguna DILARANG menggunakan layanan kami untuk:
 5. Website torrent, rapidlech atau aplikasi peer to peer lainnya
 6. File sharing atau untuk penyimpanan data atau file yang mengandung hak cipta
 7. Menyimpan file backup dari layanan lain atau membuat backup secara berlebihan
-8. Melakukan komputasi yang bersifat menguras sumber daya secara signifikan seperti Bitcoin Mining, AI Training atau hal lainnya.
+8. Melakukan komputasi yang bersifat menguras sumber daya secara signifikan seperti Bitcoin Mining, Data Training atau hal lainnya.
 9. Streaming Website dengan mengupload konten video dan sejenisnya untuk keperluan streaming - Diizinkan jika melakukan embled video dengan menggunakan layanan seperti Youtube dan sejenisnya
 
 ## Kebijakan Penggunaan Sumber Daya
