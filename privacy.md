@@ -3,8 +3,13 @@ title: Privacy Policy
 layout: page
 ---
 
+# Pernyataan Privasi DOM Cloud
+
+Terima kasih telah mempercayakan DOM Cloud Hosting ("DOM Cloud", "kami") dengan website Anda, dan informasi pribadi Anda. Memegang informasi pribadi Anda adalah tanggung jawab yang serius, dan kami ingin Anda tahu bagaimana kami menanganinya.
+
 Kami berkomitmen untuk menjaga privasi dari pengunjung dan pengguna situs web kami; kebijakan ini memberitahukan bagaimana kami memperlakukan informasi pribadi anda. Kebijakan privasi ini mengatur cara kami mengumpulkan, menggunakan, memelihara dan mengungkapkan informasi yang dikumpulkan dari pengunjung dan pengguna situs web ini.
-Informasi yang kami kumpulkan
+
+## Informasi yang kami kumpulkan
 
 Kami mengumpulkan informasi pribadi dari pengguna melalui formulir online ketika pengguna memesan produk dan jasa kami. Kami juga dapat mengumpulkan informasi tentang bagaimana para pengguna menggunakan situs web kami, misalnya, dengan melacak jumlah tampilan unik yang diterima oleh halaman-halaman situs web atau domain dari mana pengguna berasal. Kami menggunakan "cookies" untuk melacak bagaimana pengguna menggunakan situs web kami.
 
