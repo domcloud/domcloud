@@ -1,213 +1,161 @@
 ---
+lang: id
 title: Harga
 excerpt: Hosting Gratis, Selamanya dengan kapasitas 200 MB, bandwidth 5 GB, 1 Database, Domain Gratis tanpa iklan selamanya.
 layout: default
 color: '#c50'
+head:
+  h1: Mulai dengan yang gratis
+  h2: Tidak perlu takut rugi, kami menyediakan opsi hosting gratis, tanpa tapi-tapi.
+  h3: Tidak ada iklan. Anda yang pegang kendali konten hosting anda.
+plans:
+  - title: Paket Freedom
+    caption: 100% Gratis
+    subcapt: Untuk media belajar? Untuk testing software? Tidak masalah!
+    style: "style='background: #ffc;'"
+    price: Gratis!
+    subprice:
+    items:
+    - <li>Domain Gratis</li>
+    - <li><b>200 MB</b> Storage</li>
+    - <li title="6 GB / tahun = 500 MB / 1 bulan"><b>6 GB</b> Bandwidth</li>
+    - <li><b>1</b> Database</li>
+  - title: Paket Lite
+    caption: Hosting Terjangkau
+    subcapt: Cocok untuk website pribadi.
+    style: "style='background: #fe7;'"
+    price: 50K
+    subprice: Rupiah Per Tahun
+    items:
+    - <li>Domain Custom</li>
+    - <li><b>500 MB</b> Storage</li>
+    - <li title="18 GB / tahun = 1.5 GB / bulan = 500 MB / 10 hari"><b>18 GB</b> Bandwidth</li>
+    - <li><b>5</b> Subdomain</li>
+    - <li><b>6</b> Database</li>
+  - title: Paket Pro
+    caption: Hosting Ideal
+    subcapt: Cocok untuk website bisnis berkembang.
+    style: "style='background: #fd4;'"
+    price: 200K
+    subprice: Rupiah Per Tahun
+    items:
+    - <li>Domain Custom</li>
+    - <li><b>1500 MB</b> Storage</li>
+    - <li title="60 GB / tahun = 5 GB / bulan = 1 GB / 1 minggu"><b>60 GB</b> Bandwidth</li>
+    - <li><b>10</b> Subdomain</li>
+    - <li><b>12</b> Database</li>
+    - <li><b>AWStats Logs</b></li>
+  - title: Paket Business
+    caption: Hosting Lengkap
+    subcapt: Cocok untuk website bisnis yang membutuhkan fitur manajemen yang lengkap.
+    style: "style='background: #fb2;'"
+    price: 600K
+    subprice: Rupiah Per Tahun
+    items:
+    - <li>Domain Custom</li>
+    - <li><b>6000 MB</b> Storage</li>
+    - <li title="180 GB / tahun = 15 GB / bulan = 1 GB / 2 hari"><b>180 GB</b> Bandwidth</li>
+    - <li><b>20</b> Subdomain</li>
+    - <li><b>25</b> Database</li>
+    - <li><b>50 Sub-Akun</b></li>
+    - <li><b>AWStats Logs</b></li>
+  - title: Paket Super
+    caption: Hosting Super Duper Lengkap
+    subcapt: Hanya untuk website dengan prediksi trafik mencapai angka jutaan.
+    style: "style='background: #c61; color: white'"
+    price: 1800K
+    subprice: Rupiah Per Tahun
+    items:
+    - <li>Domain Custom</li>
+    - <li><b>16000 MB</b> Storage</li>
+    - <li title="600 GB / tahun = 50 GB / 1 bulan = 1.5 GB / 1 hari"><b>600 GB</b> Bandwidth</li>
+    - <li><b>50</b> Subdomain</li>
+    - <li><b>100</b> Database</li>
+    - <li><b>100 Sub-Akun</b></li>
+    - <li><b>AWStats Logs</b></li>
+faqs:
+  -
+    - id: faq01
+      title: Apakah Paket Freedom benar-benar Gratis?
+      body: <p>Ya, paket Freedom tidak membutuhkan pengajuan khusus apapun. Paket Freedom mempunyai masa tenggang hingga 2 bulan, namun anda dapat memperpanjang masa tenggang tersebut kapanpun anda mau.</p>
+    - id: faq02
+      title: Apa saja metode Pembayarannya?
+      body: <p>Kami melayani pembayaran melalui VA BNI / Mandiri, Gerai Indomart / Alfamart, serta layanan e-Wallet dalam LinkAja, OVO, Dana, GoPay, ShopeePay dan BCA Mobile.</p>
+    - id: faq03
+      title: Apakah ada biaya lain selain hosting?
+      body: <p>Jika anda ingin domain yang selain berakhiran <b>.dom.my.id</b>, anda dapat membeli domain yang <a href="/domain.html" target="_blank" rel="noopener noreferrer">tertera disini</a>. Selain itu ada tambahan biaya Rp. 5000 di setiap transaksi dalam DOM Cloud.</p>
+    - id: faq04
+      title: Apa kami dapat mengajukan Refund?
+      body: <p>Kami tidak dapat melayani refund dalam kondisi apapun. <a href="/service.html" target="_blank" rel="noopener noreferrer">Baca Syarat Layanan Kami</a>. Jika anda ingin meninjau layanan kami, silahkan mulai dari paket Freedom.</p>
+  -
+    - id: faq10
+      title: Bedanya Storage dan Bandwidth?
+      body: <p>Storage adalah batas penyimpanan yang dihitung sebagai jumlah kapasitas file, database, dan data server lainnya. Sedangkan Bandwidth adalah batasan data yang dikirim dan diterima dalam tempo waktu tertentu.</p>
+    - id: faq11
+      title: Bagaimana prinsip pembatasan Bandwidth?
+      body: <p> Bandwidth yang tertera adalah bandwidth dalam hitungan per tahun. Namun pembatasan efektif dilakukan per bulan. Misalkan, untuk paket Freedom anda mendapatkan 6 GB bandwidth, maka anda dibatasi 500 MB tiap bulan. Pembatasan ini akan direset ulang tiap awal bulan.</p>
+    - id: faq12
+      title: Bagaimana cara menghitung kebutuhan Bandwidth?
+      body: <p>Anda dapat melakukan penghitungan cepat dengan rata-rata ukuran website yakni 100 KB per halaman. Contoh, dengan pembatasan paket Freedom 500 MB per bulan, anda dapat trafic maksimum sekitar 5000 view per bulan. Angka ini dapat ditingkatkan lebih jauh apabila anda mengoptimasi ukuran website atau menggunakan CDN. <a href="https://panduan.domcloud.id/hosting/storage.html" target="_blank" rel="noopener noreferrer">Baca Lebih Lanjut Disini</a>.</p>
+  -
+    - id: faq21
+      title: Apakah tidak ada opsi Unlimited?
+      body: <p>Beberapa hosting provider lain mengklaim menyediakan storage dan bandwidth Unlimited. Hal ini tidak selalu benar, karena hosting tersebut menggunakan "Penggunaan Wajar" / "Fair Usage" yang kita tidak tahu batasan "wajar" secara tepatnya. DOM Cloud mematahkan kerancuan ini dengan menjelaskan batasan yang benar-benar anda dapatkan disetiap rentang harganya.</p>
+    - id: faq22
+      title: Apakah Server DOM Cloud berada di Indonesia?
+      body: <p>DOM Cloud tidak membangun server sendiri. DOM Cloud merupakan layanan hosting diatas Insfrastruktur Microsoft Azure dan saat ini kami memasang server utama di Singapura.</p>
+    - id: faq23
+      title: Apakah DOM Cloud mempunyai Garansi Uptime?
+      body: <p>Server DOM Cloud digaransi oleh <a href="https://azure.microsoft.com/en-in/support/legal/sla/virtual-machines/v1_9/" target="_blank" rel="noopener noreferrer">Standard SSD Azure Cloud SLA</a>, namun hal ini sendiri tidak menjamin downtime dikarenakan kesalahan operator atau serangan internet tertentu. <a href="/service.html" target="_blank" rel="noopener noreferrer">Baca Syarat Layanan kami untuk keterangan lebih lanjut</a>.</p>
 ---
 <div class="text-center">
 
   <div class="jumbotron bg top fixed text-white"
     style="--bg: url(https://images.unsplash.com/photo-1437773540554-96d393b4d0c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80); background-color: #c50;">
-    <h1 class="display-4">Mulai dengan yang gratis</h1>
-    <div class="text-sm">Tidak perlu takut rugi, kami menyediakan opsi hosting gratis, tanpa tapi-tapi.</div>
+    <h1 class="display-4">{{ page.head.h1 }}</h1>
+    <div class="text-sm">{{ page.head.h2 }}</div>
   </div>
 
-  <p class="h4 my-5">Tidak ada iklan. Anda yang pegang kendali konten hosting anda.</p>
+  <p class="h4 my-5">{{ page.head.h3 }}</p>
 
+  {% for plan in page.plans %}
   <div class="row g-0">
     <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
       <p class="h1 text-warning">
-        100% Gratis
+        {{ plan.caption }}
       </p>
       <p>
-        Untuk media belajar? Untuk testing software? Tidak masalah!
+        {{ plan.subcapt }}
       </p>
     </div>
-    <div class="col-md-6 bg full" style="background-color: #ffc;">
-      <h5 class="card-title">Paket Freedom</h5>
-      <p class="display-4">Gratis!</p>
+    <div class="col-md-6 bg full" {{ plan.style }}>
+      <h5 class="card-title">{{ plan.title }}</h5>
+      <p class="display-4">{{ plan.price }}</p>
+      <p>{{ plan.subprice }}</p>
       <ul class="checklist">
-        <li>Domain Gratis</li>
-        <li><b>200 MB</b> Storage</li>
-        <li title="6 GB / tahun = 500 MB / 1 bulan"><b>6 GB</b> Bandwidth</li>
-        <li><b>1</b> Database</li>
+        {% for item in plan.items %}
+          {{ item }}
+        {% endfor %}
       </ul>
     </div>
   </div>
-
-  <div class="row g-0">
-    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
-      <p class="h1 text-warning">
-        Hosting Terjangkau
-      </p>
-      <p>
-        Cocok untuk keperluan hosting pribadi.
-      </p>
-    </div>
-    <div class="col-md-6 bg full" style="background-color: #ff9;">
-      <h5 class="card-title">Paket Lite</h5>
-      <p class="display-4">50K</p>
-      <p class="text-muted">Rupiah Per Tahun</p>
-      <ul class="checklist">
-        <li><b>Domain Custom</b></li>
-        <li><b>500 MB</b> Storage</li>
-        <li title="18 GB / tahun = 1.5 GB / bulan = 500 MB / 10 hari"><b>18 GB</b> Bandwidth</li>
-        <li><b>5</b> Subdomain</li>
-        <li><b>6</b> Database</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row g-0">
-    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
-      <p class="h1 text-warning">
-        Hosting Ideal
-      </p>
-      <p>
-        Cocok untuk bisnis yang mengandalkan teknologi internet.
-      </p>
-    </div>
-    <div class="col-md-6 bg full" style="background-color: #fe4;">
-      <h5 class="card-title">Paket Pro</h5>
-      <p class="display-4">200K</p>
-      <p class="text-muted">Rupiah Per Tahun</p>
-      <ul class="checklist">
-        <li><b>Domain Custom</b></li>
-        <li><b>1500 MB</b> Storage</li>
-        <li title="60 GB / tahun = 5 GB / bulan = 1 GB / 1 minggu"><b>60 GB</b> Bandwidth</li>
-        <li><b>10</b> Subdomain</li>
-        <li><b>12</b> Database</li>
-        <li><b>AWStats Logs</b></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row g-0">
-    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
-      <p class="h1 text-warning">
-        Hosting Lengkap
-      </p>
-      <p>
-        Cocok untuk bisnis yang butuh solusi software dan fitur manajemen yang lengkap.
-      </p>
-    </div>
-    <div class="col-md-6 bg full" style="background-color: #fc2;">
-      <h5 class="card-title">Paket Business</h5>
-      <p class="display-4">600K</p>
-      <p class="text-muted">Rupiah Per Tahun</p>
-      <ul class="checklist">
-        <li><b>Domain Custom</b></li>
-        <li><b>6000 MB</b> Storage</li>
-        <li title="180 GB / tahun = 15 GB / bulan = 1 GB / 2 hari"><b>180 GB</b> Bandwidth</li>
-        <li><b>20</b> Subdomain</li>
-        <li><b>25</b> Database</li>
-        <li><b>50 Sub-Akun</b></li>
-        <li><b>AWStats Logs</b></li>
-      </ul>
-    </div>
-  </div>
-
-  <!--div class="row g-0">
-    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
-      <p class="h1 text-warning">
-        Hosting Super Sekali
-      </p>
-      <p>
-        Hanya untuk website dengan prediksi trafik mencapai angka jutaan.
-      </p>
-    </div>
-    <div class="col-md-6 bg full" style="background-color: #f70; color: white">
-      <h5 class="card-title">Paket Super</h5>
-      <p class="display-4">1800K</p>
-      <p class="">Rupiah Per Tahun</p>
-      <ul class="checklist">
-        <li><b>Domain Custom</b></li>
-        <li><b>16000 MB</b> Storage</li>
-        <li title="600 GB / tahun = 50 GB / 1 bulan = 1.5 GB / 1 hari"><b>600 GB</b> Bandwidth</li>
-        <li><b>50</b> Subdomain</li>
-        <li><b>100</b> Database</li>
-        <li><b>100 Sub-Akun</b></li>
-        <li><b>AWStats Logs</b></li>
-      </ul>
-    </div>
-  </div-->
-
-  <div class="row g-0 text-white">
-    <div class="col-12 bg full" style="background-color: #c70;">
-      <p class="card-title">Butuh kontrol atau opsi kuota yang lebih banyak?</p>
-      <p class="h1 m-3"><a href="/enterprise.html" class="text-white">Cek paket Enterprise</a></p>
-    </div>
-  </div>
+  {% endfor %}
 
   <div class="p-5" style="background-color: #FFE;">
     <h2 class="mb-3">FAQ</h2>
     <div class="row">
+      {% for faqrow in page.faqs %}
       <div class="col-lg-4">
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq01" aria-expanded="false">Apakah Paket Freedom benar-benar Gratis?</button>
-        <div class="collapse multi-collapse mb-3" id="faq01">
+        {% for faq in faqrow %}
+        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#{{ faq.id }}" aria-expanded="false">{{ faq.title }}</button>
+        <div class="collapse multi-collapse mb-3" id="{{ faq.id }}">
           <div class="card card-body">
-            <p>Ya, paket Freedom tidak membutuhkan pengajuan khusus apapun. Paket Freedom mempunyai masa tenggang hingga 3 bulan, namun anda dapat memperpanjang masa tenggang tersebut kapanpun anda mau.</p>
+            {{ faq.body }}
           </div>
         </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq02" aria-expanded="false">Apa saja metode Pembayarannya?</button>
-        <div class="collapse multi-collapse mb-3" id="faq02">
-          <div class="card card-body">
-            <p>Kami melayani pembayaran melalui VA BNI / Mandiri, Gerai Indomart / Alfamart, serta layanan e-Wallet dalam LinkAja, OVO, Dana, GoPay, ShopeePay dan BCA Mobile.</p>
-          </div>
-        </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq03" aria-expanded="false">Apakah ada biaya lain selain hosting?</button>
-        <div class="collapse multi-collapse mb-3" id="faq03">
-          <div class="card card-body">
-            <p>Jika anda ingin domain yang selain berakhiran <b>.dom.my.id</b>, anda dapat membeli domain yang <a href="/domain.html" target="_blank" rel="noopener noreferrer">tertera disini</a>. Selain itu ada tambahan biaya Rp. 5000 di setiap transaksi dalam DOM Cloud.</p>
-          </div>
-        </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq04" aria-expanded="false">Apa kami dapat mengajukan Refund?</button>
-        <div class="collapse multi-collapse mb-3" id="faq04">
-          <div class="card card-body">
-            <p>Kami tidak dapat melayani refund dalam kondisi apapun. <a href="/service.html" target="_blank" rel="noopener noreferrer">Baca Syarat Layanan Kami</a>. Jika anda ingin meninjau layanan kami, silahkan mulai dari paket Freedom.</p>
-          </div>
-        </div>
+        {% endfor %}
       </div>
-      <div class="col-lg-4">
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq11" aria-expanded="false">Bedanya Storage dan Bandwidth?</button>
-        <div class="collapse multi-collapse mb-3" id="faq11">
-          <div class="card card-body">
-            <p>Storage adalah batas penyimpanan yang dihitung sebagai jumlah kapasitas file, database, dan data server lainnya. Sedangkan Bandwidth adalah batasan data yang dikirim dan diterima dalam tempo waktu tertentu.</p>
-          </div>
-        </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq12" aria-expanded="false">Bagaimana prinsip pembatasan Bandwidth?</button>
-        <div class="collapse multi-collapse mb-3" id="faq12">
-          <div class="card card-body">
-            <p> Bandwidth yang tertera adalah bandwidth dalam hitungan per tahun. Namun pembatasan efektif dilakukan per bulan. Misalkan, untuk paket Freedom anda mendapatkan 6 GB bandwidth, maka anda dibatasi 500 MB tiap bulan. Pembatasan ini akan direset ulang tiap awal bulan.</p>
-          </div>
-        </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq13" aria-expanded="false">Bagaimana cara menghitung kebutuhan Bandwidth?</button>
-        <div class="collapse multi-collapse mb-3" id="faq13">
-          <div class="card card-body">
-            <p>Anda dapat melakukan penghitungan cepat dengan rata-rata ukuran website yakni 100 KB per halaman. Contoh, dengan pembatasan paket Freedom 500 MB per bulan, anda dapat trafic maksimum sekitar 5000 view per bulan. Angka ini dapat ditingkatkan lebih jauh apabila anda mengoptimasi ukuran website atau menggunakan CDN. <a href="https://panduan.domcloud.id/hosting/storage.html" target="_blank" rel="noopener noreferrer">Baca Lebih Lanjut Disini</a>.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq21" aria-expanded="false">Apakah tidak ada opsi Unlimited?</button>
-        <div class="collapse multi-collapse mb-3" id="faq21">
-          <div class="card card-body">
-            <p>Beberapa hosting provider lain mengklaim menyediakan storage dan bandwidth Unlimited. Hal ini tidak selalu benar, karena hosting tersebut menggunakan "Penggunaan Wajar" / "Fair Usage" yang kita tidak tahu batasan "wajar" secara tepatnya. DOM Cloud mematahkan kerancuan ini dengan menjelaskan batasan yang benar-benar anda dapatkan disetiap rentang harganya.</p>
-          </div>
-        </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq22" aria-expanded="false">Apakah Server DOM Cloud berada di Indonesia?</button>
-        <div class="collapse multi-collapse mb-3" id="faq22">
-          <div class="card card-body">
-            <p>DOM Cloud tidak membangun server sendiri. DOM Cloud merupakan layanan hosting diatas Insfrastruktur Microsoft Azure dan saat ini kami memasang server utama di Singapura.</p>
-          </div>
-        </div>
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#faq23" aria-expanded="false">Apakah DOM Cloud mempunyai Garansi Uptime?</button>
-        <div class="collapse multi-collapse mb-3" id="faq23">
-          <div class="card card-body">
-            <p>Server DOM Cloud digaransi oleh <a href="https://azure.microsoft.com/en-in/support/legal/sla/virtual-machines/v1_9/" target="_blank" rel="noopener noreferrer">Standard SSD Azure Cloud SLA</a>, namun hal ini sendiri tidak menjamin downtime dikarenakan kesalahan operator atau serangan internet tertentu. <a href="/service.html" target="_blank" rel="noopener noreferrer">Baca Syarat Layanan kami untuk keterangan lebih lanjut</a>.</p>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
     <p class="mt-2"><a class="btn btn-lg btn-warning" href="https://portal.dom.my.id/id/register">Daftar Sekarang</a></p>
   </div>
