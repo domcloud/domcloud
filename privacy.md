@@ -3,7 +3,7 @@ title: Pernyataan Privasi DOM Cloud
 layout: page
 ---
 
-> *Update terakhir: 1 September 2020*
+> *Update terakhir: 25 September 2020*
 
 Terima kasih telah mempercayakan DOM Cloud Hosting ("DOM Cloud", "kami") dengan website Anda, dan informasi pribadi Anda. Memegang informasi pribadi Anda adalah tanggung jawab yang serius, dan kami ingin Anda tahu bagaimana kami menanganinya.
 
@@ -47,12 +47,12 @@ Mohon dipahami bahwa kata sandi hosting berbeda dengan **kata sandi akun portal*
 
 #### Bagaimana Kami Mengontak Anda
 
-Kami menggunakan alamat email anda sebagai sarana notifikasi utama; contohnya, saat anda melakukan pembelian dan saat masa pembelian hosting anda akan habis. Email resmi DOM Cloud hanya menggunakan akhiran **@mx.dom.my.id** dan didalam email tersebut selalu menyebutkan nama lengkap anda sesuai yang anda isi dalam data registrasi.
+Kami menggunakan alamat email anda sebagai sarana notifikasi utama; contohnya, saat anda melakukan pembelian dan saat masa pembelian hosting anda akan habis. Email otomatis yang resmi dari DOM Cloud hanya menggunakan akhiran **@mail.domcloud.id** dan didalam email tersebut selalu menyebutkan nama lengkap anda sesuai yang anda isi dalam data registrasi.
 
 Jika anda ingin mengajukan pertanyaan tiket melalui WhatsApp yang tertera pada sudut kanan bawah, maka kami akan mengontak anda dengan nomor yang sama saat anda mengajukan pertanyaan.
-
-Apabila kami membutuhkan informasi penting dan mendesak dari anda, kami dapat mengontak anda melalui nomor HP yang anda isi dalam data registrasi melalui bentuk pesan WhatsApp atau panggilan lain dari +6289514631927, **jika dan hanya jika** kami terdesak atau diminta oleh hukum dan badan lain sesuai dengan peraturan perundang-undangan yang berlaku.
 
 #### Perubahan Lainnya
 
 Kami berhak untuk mengubah pernyataan privasi ini, apabila dibutuhkan; dengan atau tanpa pemberitahuan dengan anda. Segala pertanyaan mengenai pernyataan privasi atau syarat dan ketentuan kami, bisa anda tanyakan melalui tiket WhatsApp yang tersedia di tombol kanan bawah website ini.
+
+*Anda dapat melihat [arsip perubahan pernyataan privasi ini disini](https://github.com/domcloud/dom-site/commits/master/privacy.md)*

@@ -3,7 +3,7 @@ title: Ketentuan Layanan
 layout: page
 ---
 
-> *Update terakhir: 6 September 2020*
+> *Update terakhir: 25 September 2020*
 
 Harap membaca pemberitahuan berikut sebelum menggunakan situs web ini. Penggunaan layanan dan fitur-fiturnya berarti Anda telah menerima syarat dan ketentuan yang berlaku. Melanggar atau mengabaikan salah satu syarat dan ketentuan berikut akan berdampak pada pemberian sanksi hingga penutupan akun dengan atau tanpa pemberitahuan.
 
@@ -17,53 +17,47 @@ Pengguna **DILARANG** memuat dan menerbitkan konten yang mengandung:
 2. Pornografi, SARA, penghinaan dan keasusilaan umum
 3. Hal-hal yang bersifat dapat menimbulkan perselisihan, keresahan, dan teror
 4. Materi yang dapat digunakan untuk hal-hal yang mengganggu semua pihak
-5. Ponzy, pyramid Scheme dan bentuk penipuan lainnya
+5. Ponzy, pyramid scheme dan bentuk penipuan lainnya
 6. Phishing, auto like, auto bot dan sejenisnya
-7. Materi-materi lain yang tidak sesuai dengan hukum dan peraturan perundang-undangan Republik Indonesia
+7. Materi-materi lain yang tidak sesuai dengan hukum dan peraturan perundang-undangan Republik Indonesia atau wilayah tertentu lainnya.
 
 Kami berhak untuk menolak memberikan layanan kami kepada siapa pun. Semua konten yang termasuk dalam penjelasan di atas dapat dihapus dari server kami dengan atau tanpa pemberitahuan.
 
 ## Penggunaan Layanan
 
-DOM Cloud menerapkan sistem Fair Usage. Pengguna **DILARANG** menggunakan layanan kami untuk:
+Pengguna **DILARANG** menggunakan layanan kami untuk:
 
-1. Mengirimkan email massal dan atau SPAM
+1. Mengirimkan email massal berlebihan atau bahkan spam dan phising
 2. Memasang bot IRC, PsyBNC, dan proses-proses yang berkaitan dengan IRC
 3. Memasang script web proxy, mail proxy, dan jenis-jenis proxy lainnya
 4. Melakukan DDOS, port scanning, sniffing, exploit system, dan tindakan hacking lainnya
 5. Website torrent, rapidlech atau aplikasi peer to peer lainnya
-6. File sharing atau untuk penyimpanan data atau file yang mengandung hak cipta
+6. File sharing atau untuk penyimpanan data yang mengandung hak cipta
 7. Menyimpan file backup dari layanan lain atau membuat backup secara berlebihan
-8. Melakukan komputasi yang bersifat menguras sumber daya secara signifikan seperti Bitcoin Mining, Data Training atau hal lainnya.
-9. Streaming Website dengan mengupload konten video dan sejenisnya untuk keperluan streaming - Diizinkan jika melakukan embled video dengan menggunakan layanan seperti Youtube dan sejenisnya
+8. Melakukan komputasi data yang bersifat menguras sumber daya secara signifikan
+9. Bitcoin, mining atau segala bentuk proses yang melibatkan cryptocurrency
+10. Mengupload atau memproses konten video atau konten berat sejenisnya untuk keperluan streaming
+
+Apabila kami menemukan website yang melanggar ketentuan layanan tersebut, kami berhak untuk menghapus dan memblokir hosting baik atau tanpa pemberitahuan.
 
 ## Penggunaan Sumber Daya
 
-DOM Cloud memberikan layanan hosting dengan harga, kuota, kapasitas bandwidth dan fitur hosting lainnya sesuai dengan paket dan layanan masing-masing yang tertera pada [halaman pricing](/price). Namun perlu diperhatikan dengan sangat untuk memperhatikan sumber daya yang digunakan termasuk penggunaan CPU, Memori dan Disk Space agar tidak menyebabkan gangguan penggunaan kepada akun hosting lain pada server yang sama. Apabila kami mendeteksi penggunaan resource yang berlebihan maka kami berhak menonaktifkan hosting tersebut dengan atau tanpa pemberitahuan.
+DOM Cloud memberikan layanan hosting dengan harga, kuota, kapasitas bandwidth dan fitur hosting lainnya sesuai dengan paket dan layanan masing-masing yang tertera pada [halaman harga](/price). Perlu diperhatikan untuk menghindari hal-hal yang bersangkutan dengan penggunaan Disk space dan bandwidth yang tertera di poin-poin atas agar kuota anda tidak cepat habis. Apabila anda memang butuh penggunaan bandwidth dan disk space yang lebih, mohon meninjau ulang sistem website anda dengan cara memasang CDN atau menggunakan layanan file storage pihak ketiga.
 
-DOM Cloud adalah solusi layanan hosting. Semua file yang diupload kepada DOM Cloud adalah untuk keperluan pembuatan website. Disk space pada akun DOM Cloud **DILARANG** digunakan untuk:
+Selain memberikan limit kepada hal yang tertera pada pricing, DOM menerapkan FUP (Fair Usage Policy) pada beberapa aspek yang hosting kami tidak dapat membatasi secara otomatis, seperti penggunaan inodes, CPU dan memori. Kami mentoleransi penggunaan CPU tinggi yang hanya berjalan selama beberapa menit dalam sehari, namun tidak untuk eksekusi yang panjang. Sama untuk penggunaan memori yang tinggi, apabila menggunakan program non-PHP seperti Python, Ruby, Node.JS, kami akan berkomunikasi dengan anda untuk melakukan upgrade paket agar kami juga dapat mengupgrade kapasitas sistem dan mencegah terjadinya overselling.
 
-1. Penyimpanan Backup diluar layanan atau konten website
-2. Penyimpanan online dan layanan file-sharing
-3. Penyimpanan media Film, Photo, Software
-5. Penyimpanan file yang bersifat ilegal atau melanggar hukum
-4. Penyimpanan file yang memiliki hak cipta
-6. Media berbau pornografi atau pelecehan.
-7. Dokumen arsip atau sejenisnya, termasuk file log.
-
-DOM Cloud berhak untuk menghapus file tersebut dari akun pengguna dengan atau tanpa pemberitahuan kepada klien, bahkan menghapus akun tersebut. DOM Cloud juga berhak untuk menghapus file tunggal yang besar dari akun pengguna tanpa mempertimbangkan isi dari file tersebut dengan atau tanpa pemberitahuan kepada klien. DOM Cloud juga berhak untuk membersihkan akun pengguna dengan menghapus file-file yang memiliki kriteria jenis file yang tidak boleh di-host di layanan DOM Cloud, dengan atau tanpa pemberitahuan kepada klien.
-
-Selain memberikan limit kepada hal yang tertera pada pricing, DOM menerapkan FUP (Fair Usage Policy) pada beberapa aspek yang hosting kami tidak dapat membatasi secara otomatis, seperti penggunaan CPU dan memori. Kami juga tidak dapat mentolerasi sebuah hosting dengan inodes lebih dari batas kewajaran untuk semua jenis paket; jika kami menemukan hosting diluar batas kewajaran, secara otomatis konten tersebut akan terhapus baik dengan atau tanpa pemberitahuan.
 
 ## Pembayaran dan Keaktifan Akun
 
 Anda setuju untuk memberikan informasi pembayaran yang benar dalam memesan produk atau layanan kami. Order Anda akan diproses begitu konfirmasi pembayaran dilakukan.
 
-Semua hosting yang disuspend karena alasan abuse atau belum melakukan pembayaran atau perpanjangan lebih dari 14 hari akan dihapus secara permanen. DOM Cloud tidak memberikan backup hosting yang sudah dihapus secara permanen. Mohon dipahami bahwa hal ini tidak berpengaruh pada hosting yang kehabisan jatah disk maupun bandwidth.
+Semua hosting yang disuspend karena alasan abuse atau belum melakukan pembayaran atau perpanjangan lebih dari 14 hari akan dihapus secara permanen. DOM Cloud tidak memberikan backup hosting yang sudah dihapus secara permanen. Mohon dipahami bahwa hal ini tidak berpengaruh pada hosting yang kehabisan disk space maupun bandwidth.
 
 ## Ketentuan Pengembalian Uang (Refund)
 
-DOM Cloud tidak memberikan jaminan garansi dalam bentuk apapun. Semua bentuk pembayaran dalam layanan DOM Cloud tidak dapat dikembalikan. Mohon membeli produk kami secara cermat.
+DOM Cloud memberikan kesempatan untuk melakukan pengembalian uang (refund) apabila anda baru membeli hosting paket Pro keatas yang berumur kurang dari 30 hari sejak pembelian pertama. Refund tersebut berupa pengembalian uang 90% dari harga hosting, tidak termasuk pembelian domain dan tambahan data bandwidth. Mohon dipertimbangkan bahwa Refund tidak berlaku untuk perpanjangan atau upgrade paket.
+
+Kami hanya melayani proses refund ke dalam rekening Himbara (BNI, BRI, Mandiri atau BTN). Setelah kami mengirimkan uang, hosting anda secara otomatis terhapus tanpa ada pemberitahuan dan backup lainnya. Anda dapat mengajukan Refund melalui kontak WhatsApp atau email kami.
 
 ## Ketentuan Umum
 
@@ -99,3 +93,5 @@ DOM Cloud dapat mengungkapkan informasi pengguna kepada lembaga penegak hukum at
 DOM Cloud berhak untuk mengubah kebijakannya kapan saja tanpa ada pemberitahuan.
 
 DOM Cloud dan pengguna sepakat untuk menyelesaikan sengketa secara musyawarah untuk mencapai mufakat. Apabila sengketa tidak dapat diselesaikan secara musyawarah, maka akan diselesaikan sesuai ketentuan hukum yang berlaku di Indonesia.
+
+*Anda dapat melihat arsip [perubahan pernyataan dan ketentuan layanan ini disini](https://github.com/domcloud/dom-site/commits/master/service.md)*
