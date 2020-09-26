@@ -1,6 +1,7 @@
 ---
 title: Pernyataan Privasi DOM Cloud
 layout: page
+lang: id
 ---
 
 > *Update terakhir: 25 September 2020*

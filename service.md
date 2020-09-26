@@ -1,6 +1,7 @@
 ---
 title: Ketentuan Layanan
 layout: page
+lang: id
 ---
 
 > *Update terakhir: 25 September 2020*

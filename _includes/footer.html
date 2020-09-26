@@ -1,16 +1,29 @@
 <footer class="site-footer h-card py-5 bg-light text-center">
 
+  {% if page.lang == 'id' %}
   <ul class="footer-list">
     <li><a href="/">Fitur</a></li>
     <li><a href="/price">Harga</a></li>
     <li><a href="/domain">Domain</a></li>
-    <li><a href="https://portal.domcloud.id">Portal</a></li>
+    <li><a href="https://portal.domcloud.id/id/login">Portal</a></li>
     <li><a href="https://panduan.domcloud.id">Panduan</a></li>
     <li><a href="/service">Layanan</a></li>
     <li><a href="/privacy">Privasi</a></li>
     <li><a href="/about">Tentang</a></li>
     <li><a href="https://instagram.com/domcloud.id">Instagram</a></li>
   </ul>
+  {% else %}
+  <ul class="footer-list">
+    <li><a href="/en/">Features</a></li>
+    <li><a href="/en/price">Pricing</a></li>
+    <li><a href="/en/domain">Domain</a></li>
+    <li><a href="https://portal.domcloud.id/en/login">Portal</a></li>
+    <li><a href="/en/service">Service</a></li>
+    <li><a href="/en/privacy">Privacy</a></li>
+    <li><a href="/en/about">About</a></li>
+  </ul>
+  {% endif %}
+
   <p><img src="/assets/icon.svg" width="200px"/></p>
   <p>
     &copy; 2020 DOM Cloud Hosting
