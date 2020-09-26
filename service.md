@@ -58,7 +58,7 @@ Semua hosting yang disuspend karena alasan abuse atau belum melakukan pembayaran
 
 DOM Cloud memberikan kesempatan untuk melakukan pengembalian uang (refund) apabila anda baru membeli hosting paket Pro keatas yang berumur kurang dari 30 hari sejak pembelian pertama. Refund tersebut berupa pengembalian uang 90% dari harga hosting, tidak termasuk pembelian domain dan tambahan data bandwidth. Mohon dipertimbangkan bahwa Refund tidak berlaku untuk perpanjangan atau upgrade paket.
 
-Kami hanya melayani proses refund ke dalam rekening Himbara (BNI, BRI, Mandiri atau BTN). Setelah kami mengirimkan uang, hosting anda secara otomatis terhapus tanpa ada pemberitahuan dan backup lainnya. Anda dapat mengajukan Refund melalui kontak WhatsApp atau email kami.
+Kami hanya melayani proses refund ke dalam rekening Himbara (BNI, BRI, Mandiri atau BTN) untuk Bank Indonesia atau melalui TransferWire untuk bank di negara lain. Setelah kami mengirimkan uang, hosting anda secara otomatis terhapus tanpa ada pemberitahuan dan backup lainnya. Anda dapat mengajukan Refund melalui kontak WhatsApp atau email kami.
 
 ## Ketentuan Umum
 

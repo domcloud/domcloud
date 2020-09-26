@@ -4,7 +4,7 @@ layout: page
 lang: id
 ---
 
-> *Update terakhir: 25 September 2020*
+> *Update terakhir: 26 September 2020*
 
 Terima kasih telah mempercayakan DOM Cloud Hosting ("DOM Cloud", "kami") dengan website Anda, dan informasi pribadi Anda. Memegang informasi pribadi Anda adalah tanggung jawab yang serius, dan kami ingin Anda tahu bagaimana kami menanganinya.
 
@@ -50,7 +50,7 @@ Mohon dipahami bahwa kata sandi hosting berbeda dengan **kata sandi akun portal*
 
 Kami menggunakan alamat email anda sebagai sarana notifikasi utama; contohnya, saat anda melakukan pembelian dan saat masa pembelian hosting anda akan habis. Email otomatis yang resmi dari DOM Cloud hanya menggunakan akhiran **@mail.domcloud.id** dan didalam email tersebut selalu menyebutkan nama lengkap anda sesuai yang anda isi dalam data registrasi.
 
-Jika anda ingin mengajukan pertanyaan tiket melalui WhatsApp yang tertera pada sudut kanan bawah, maka kami akan mengontak anda dengan nomor yang sama saat anda mengajukan pertanyaan.
+Jika anda ingin mengajukan pertanyaan tiket melalui WhatsApp yang tertera pada sudut kanan bawah, maka kami akan mengontak anda dengan nomor yang sama saat anda mengajukan pertanyaan. Anda juga dapat mengontak kami melalui email **support@domcloud.id**.
 
 #### Perubahan Lainnya
 
