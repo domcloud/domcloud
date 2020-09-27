@@ -13,7 +13,7 @@ Anda dapat mencari tahu di [website pribadi saya](https://wellosoft.net). Sejauh
 
 ### Kenapa Bisa Begitu Murah (Bahkan Gratis)?
 
-DOM Cloud tidak membangun sendiri insfrastuktur atau hardware yang diperlukan untuk menyimpan hosting. Kami menggunakan Cloud VM dari Microsoft Azure sebagai insfrastruktur DOM Cloud. Kami berpendapat bahwa meskipun kami mempunyai budget milyaran rupiah untuk membangun insfrastuktur sendiri, kami tetap tidak bisa menandingi insfrastuktur seoptimal platfom IaaS dari tech giant (IaaS yang kami maksud adalah Google Cloud, Amazon AWS, Microsoft Azure).
+DOM Cloud tidak membangun sendiri insfrastuktur atau hardware yang diperlukan untuk menyimpan hosting. Kami menggunakan Cloud VM dari Digital Ocean sebagai insfrastruktur DOM Cloud. Kami berpendapat bahwa meskipun kami mempunyai budget milyaran rupiah untuk membangun insfrastuktur sendiri, kami tetap tidak bisa menandingi insfrastuktur seoptimal platfom IaaS dari tech giant (IaaS yang kami maksud adalah Google Cloud, Amazon AWS, Digital Ocean).
 
 Menggunakan Platfom IaaS dari tech giant mempunyai benefit sendiri. Kami tidak perlu khawatir apabila ada hacker yang berniat jahat menggoreng Hardware kami (karena kami tidak memiliki insfrastrukturnya), dan hardware IaaS tersendiri tentu sudah didukung dengan jaringan yang kuat, sehingga kami bisa fokus dengan mengelola VM seoptimal mungkin untuk seluruh pengguna DOM Cloud.
 
