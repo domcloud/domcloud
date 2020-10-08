@@ -2,20 +2,26 @@
 lang: en
 title: Price
 excerpt: Free Hosting with 200 MB capacity, 5 GB bandwidth, 1 Database, Free Domain without ads forever.
-layout: default
+layout: price
 color: '#c50'
 head:
   h1: List of Host Plan
   h2: Which host plan suits for you?
+  priceayear: US$ a year
+  spec: Specification
+  suit: Suitable for
+  faq: FAQ
+  signuptext: Sign up now
+  signuplink: https://portal.domcloud.id/en/register
 plans:
   - title: Freedom Plan
     style: 'white'
     price: "Free!"
     items:
-    - <li>Free Domain</li>
-    - <li><b>256 MB</b> Storage</li>
-    - <li><b>18 GB</b> Bandwidth</li>
-    - <li><b>1</b> Database</li>
+    - Free Domain
+    - <b>256 MB</b> Storage
+    - <b>18 GB</b> Bandwidth
+    - <b>1</b> Database
     suits:
     - Testing a Website
     - Web for Personal
@@ -23,10 +29,10 @@ plans:
     style: '#ffe'
     price: "5.00"
     items:
-    - <li>Custom Domain</li>
-    - <li><b>1024 MB</b> Storage</li>
-    - <li><b>60 GB</b> Bandwidth</li>
-    - <li><b>2</b> Databases</li>
+    - Custom Domain
+    - <b>1024 MB</b> Storage
+    - <b>60 GB</b> Bandwidth
+    - <b>2</b> Databases
     suits:
     - Testing a Website
     - Web for Blogging
@@ -35,11 +41,11 @@ plans:
     style: '#ffc'
     price: "20.00"
     items:
-    - <li>Custom Domain</li>
-    - <li><b>3072 MB</b> Storage</li>
-    - <li><b>180 GB</b> Bandwidth</li>
-    - <li><b>5</b> Subdomains</li>
-    - <li><b>6</b> Databases</li>
+    - Custom Domain
+    - <b>3072 MB</b> Storage
+    - <b>180 GB</b> Bandwidth
+    - <b>5</b> Subdomains
+    - <b>6</b> Databases
     suits:
     - Web for Public
     - Multimedia-rich Web
@@ -48,12 +54,12 @@ plans:
     style: '#ff8'
     price: "60.00"
     items:
-    - <li>Custom Domain</li>
-    - <li><b>8192 MB</b> Storage</li>
-    - <li><b>600 GB</b> Bandwidth</li>
-    - <li><b>20</b> Subdomains</li>
-    - <li><b>25</b> Databases</li>
-    - <li><b>50 Sub-Accounts</b></li>
+    - Custom Domain
+    - <b>8192 MB</b> Storage
+    - <b>600 GB</b> Bandwidth
+    - <b>25</b> Subdomains
+    - <b>30</b> Databases
+    - <b>50 Sub-Accounts</b>
     suits:
     - Web for Business
     - Information System
@@ -62,12 +68,12 @@ plans:
     style: '#ff0'
     price: "180.00"
     items:
-    - <li>Custom Domain</li>
-    - <li><b>16384 MB</b> Storage</li>
-    - <li><b>1800 GB</b> Bandwidth</li>
-    - <li><b>50</b> Subdomains</li>
-    - <li><b>60</b> Databases</li>
-    - <li><b>75 Sub-Accounts</b></li>
+    - Custom Domain
+    - <b>16384 MB</b> Storage
+    - <b>1800 GB</b> Bandwidth
+    - <b>50</b> Subdomains
+    - <b>60</b> Databases
+    - <b>75 Sub-Accounts</b>
     suits:
     - Marketplace
     - Business Integration
@@ -76,12 +82,12 @@ plans:
     style: '#110; color: white'
     price: "600.00"
     items:
-    - <li>Custom Domain</li>
-    - <li><b>40960 MB</b> Storage</li>
-    - <li><b>6000 GB</b> Bandwidth</li>
-    - <li><b>100</b> Subdomains</li>
-    - <li><b>120</b> Databases</li>
-    - <li><b>150 Sub-Accounts</b></li>
+    - Custom Domain
+    - <b>40960 MB</b> Storage
+    - <b>6000 GB</b> Bandwidth
+    - <b>100</b> Subdomains
+    - <b>120</b> Databases
+    - <b>150 Sub-Accounts</b>
     suits:
     - ???
 faqs:
@@ -125,62 +131,3 @@ faqs:
       title: I'm still curious about the DOM Cloud policy
       body: <p>You can read <a href="/about.html">about us</a> and <a href="/service.html">our terms of service</a>.f you are still curious, you can cross check our statement via <a href="https://github.com/domcloud/dom-portal">source code portal</a> or ask us through support.</p>
 ---
-<div class="text-center">
-
-  <div class="jumbotron bg top fixed text-white"
-    style="--bg: url(https://images.unsplash.com/photo-1437773540554-96d393b4d0c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80); background-color: #c50;">
-    <h1 class="display-4">{{ page.head.h1 }}</h1>
-    <div class="text-sm">{{ page.head.h2 }}</div>
-  </div>
-
-
-  {% for plan in page.plans %}
-  <div class="row g-0"  style="background: {{ plan.style }}">
-    <div class="col-md-4 bg py-5">
-      <p class="h3">{{ plan.title }}</p>
-      <p class="display-2">{{ plan.price }}</p>
-      <p>US$ a year</p>
-    </div>
-    <div class="col-md-4 bg py-5 h5 font-weight-normal">
-      <p><small>Specification</small></p>
-      <ul class="checklist">
-        {% for item in plan.items %}
-          {{ item }}
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="col-md-4 bg py-5 h5 font-weight-normal">
-      <p><small>Suitable for</small></p>
-      <ul class="checklist">
-        {% for item in plan.suits %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  {% endfor %}
-
-  <div class="p-5" style="background-color: #FFE;">
-    <h2 class="mb-3">FAQ</h2>
-    <div class="row">
-      {% for faqrow in page.faqs %}
-      <div class="col-lg-4">
-        {% for faq in faqrow %}
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#{{ faq.id }}" aria-expanded="false">{{ faq.title }}</button>
-        <div class="collapse multi-collapse mb-3" id="{{ faq.id }}">
-          <div class="card card-body">
-            {{ faq.body }}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      {% endfor %}
-    </div>
-    <p class="mt-2"><a class="btn btn-lg btn-warning" href="https://portal.domcloud.id/en/register">Sign up now</a></p>
-  </div>
-  <style>
-    .dropdown-toggle {
-      white-space: normal !important;
-    }
-  </style>
-</div>

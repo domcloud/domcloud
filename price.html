@@ -1,21 +1,27 @@
 ---
 lang: id
 title: Harga
-excerpt: Hosting Gratis, Selamanya dengan kapasitas 200 MB, bandwidth 5 GB, 1 Database, Domain Gratis tanpa iklan selamanya.
-layout: default
+excerpt: Hosting Gratis, Selamanya dengan kapasitas 256 MB, bandwidth 18 GB dan domain gratis tanpa iklan selamanya.
+layout: price
 color: '#c50'
 head:
   h1: Daftar Harga Paket Hosting
   h2: Manakah paket hosting yang cocok untuk anda?
+  priceayear: Harga per tahun
+  spec: Spesifikasi
+  suit: Cocok untuk
+  faq: FAQ
+  signuptext: Daftar Sekarang
+  signuplink: https://portal.domcloud.id/id/register
 plans:
   - title: Paket Freedom
     style: 'white'
     price: Gratis!
     items:
-    - <li>Domain Gratis</li>
-    - <li><b>256 MB</b> Storage</li>
-    - <li><b>18 GB</b> Bandwidth</li>
-    - <li><b>1</b> Database</li>
+    - Domain Gratis
+    - <b>256 MB</b> Storage
+    - <b>18 GB</b> Bandwidth
+    - <b>1</b> Database
     suits:
     - Tes Website
     - Web Pribadi
@@ -23,10 +29,10 @@ plans:
     style: '#ffe'
     price: 50K
     items:
-    - <li>Domain Custom</li>
-    - <li><b>1024 MB</b> Storage</li>
-    - <li><b>60 GB</b> Bandwidth</li>
-    - <li><b>2</b> Database</li>
+    - Domain Custom
+    - <b>1024 MB</b> Storage
+    - <b>60 GB</b> Bandwidth
+    - <b>2</b> Database
     suits:
     - Tes Website
     - Web Blogging
@@ -35,11 +41,11 @@ plans:
     style: '#ffc'
     price: 200K
     items:
-    - <li>Domain Custom</li>
-    - <li><b>3072 MB</b> Storage</li>
-    - <li><b>180 GB</b> Bandwidth</li>
-    - <li><b>5</b> Subdomain</li>
-    - <li><b>6</b> Database</li>
+    - Domain Custom
+    - <b>3072 MB</b> Storage
+    - <b>180 GB</b> Bandwidth
+    - <b>5</b> Subdomain
+    - <b>6</b> Database
     suits:
     - Web Publik
     - Web Multimedia
@@ -48,12 +54,12 @@ plans:
     style: '#ff8'
     price: 600K
     items:
-    - <li>Domain Custom</li>
-    - <li><b>8192 MB</b> Storage</li>
-    - <li><b>600 GB</b> Bandwidth</li>
-    - <li><b>20</b> Subdomain</li>
-    - <li><b>25</b> Database</li>
-    - <li><b>50 Sub-Akun</b></li>
+    - Domain Custom
+    - <b>8192 MB</b> Storage
+    - <b>600 GB</b> Bandwidth
+    - <b>25</b> Subdomain
+    - <b>30</b> Database
+    - <b>50 Sub-Akun</b>
     suits:
     - Web Instansi
     - Sistem Informasi
@@ -62,12 +68,12 @@ plans:
     style: '#ff0'
     price: 1800K
     items:
-    - <li>Domain Custom</li>
-    - <li><b>16384 MB</b> Storage</li>
-    - <li><b>1800 GB</b> Bandwidth</li>
-    - <li><b>50</b> Subdomain</li>
-    - <li><b>60</b> Database</li>
-    - <li><b>75 Sub-Akun</b></li>
+    - Domain Custom
+    - <b>16384 MB</b> Storage
+    - <b>1800 GB</b> Bandwidth
+    - <b>50</b> Subdomain
+    - <b>60</b> Database
+    - <b>75 Sub-Akun</b>
     suits:
     - Marketplace
     - Integrasi Bisnis
@@ -76,12 +82,12 @@ plans:
     style: '#110; color: white'
     price: 6000K
     items:
-    - <li>Domain Custom</li>
-    - <li><b>40960 MB</b> Storage</li>
-    - <li><b>6000 GB</b> Bandwidth</li>
-    - <li><b>100</b> Subdomain</li>
-    - <li><b>120</b> Database</li>
-    - <li><b>150 Sub-Akun</b></li>
+    - Domain Custom
+    - <b>40960 MB</b> Storage
+    - <b>6000 GB</b> Bandwidth
+    - <b>100</b> Subdomain
+    - <b>120</b> Database
+    - <b>150 Sub-Akun</b>
     suits:
     - ???
 faqs:
@@ -125,62 +131,3 @@ faqs:
       title: Saya masih penasaran dengan kebijakan DOM Cloud
       body: <p>Anda dapat membaca <a href="/about.html">tentang kami</a> dan <a href="/service.html">syarat dan ketentuan kami</a>. Jika anda masih penasaran juga, anda dapat cross cek pernyataan kami melalui <a href="https://github.com/domcloud/dom-portal">source code portal</a> atau bertanya pada kami melalui support.</p>
 ---
-<div class="text-center">
-
-  <div class="jumbotron bg top fixed text-white"
-    style="--bg: url(https://images.unsplash.com/photo-1437773540554-96d393b4d0c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80); background-color: #c50;">
-    <h1 class="display-4">{{ page.head.h1 }}</h1>
-    <div class="text-sm">{{ page.head.h2 }}</div>
-  </div>
-
-
-  {% for plan in page.plans %}
-  <div class="row g-0"  style="background: {{ plan.style }}">
-    <div class="col-md-4 bg py-5">
-      <p class="h3">{{ plan.title }}</p>
-      <p class="display-2">{{ plan.price }}</p>
-      <p>Harga per tahun</p>
-    </div>
-    <div class="col-md-4 bg py-5 h5 font-weight-normal">
-      <p><small>Spesifikasi</small></p>
-      <ul class="checklist">
-        {% for item in plan.items %}
-          {{ item }}
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="col-md-4 bg py-5 h5 font-weight-normal">
-      <p><small>Cocok untuk</small></p>
-      <ul class="checklist">
-        {% for item in plan.suits %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  {% endfor %}
-
-  <div class="p-5" style="background-color: #FFE;">
-    <h2 class="mb-3">FAQ</h2>
-    <div class="row">
-      {% for faqrow in page.faqs %}
-      <div class="col-lg-4">
-        {% for faq in faqrow %}
-        <button class="btn btn-text btn-block dropdown-toggle mb-2" type="button" data-toggle="collapse" data-target="#{{ faq.id }}" aria-expanded="false">{{ faq.title }}</button>
-        <div class="collapse multi-collapse mb-3" id="{{ faq.id }}">
-          <div class="card card-body">
-            {{ faq.body }}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      {% endfor %}
-    </div>
-    <p class="mt-2"><a class="btn btn-lg btn-warning" href="https://portal.domcloud.id/id/register">Daftar Sekarang</a></p>
-  </div>
-  <style>
-    .dropdown-toggle {
-      white-space: normal !important;
-    }
-  </style>
-</div>
