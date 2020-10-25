@@ -1,0 +1,94 @@
+---
+title: Domain
+excerpt: Purchase a domain along with affordable hosting prices
+layout: default
+color: "#353"
+lang: en
+global:
+- dom: .COM
+  price: 160K
+  renew: 160K
+  bg: '#8f8'
+- dom: .NET
+  price: 200K
+  renew: 200K
+  bg: '#5e5'
+- dom: .ORG
+  price: 155K
+  renew: 200K
+  bg: '#8f8'
+- dom: .BIZ
+  price: 255K
+  renew: 255K
+  bg: '#5e5'
+- dom: .XYZ
+  price: 25K
+  renew: 175K
+  bg: '#8f8'
+- dom: .SITE
+  price: 35K
+  renew: 415K
+  bg: '#5e5'
+- dom: .ONLINE
+  price: 35K
+  renew: 515K
+  bg: '#8f8'
+- dom: .TECH
+  price: 55K
+  renew: 710K
+  bg: '#5e5'
+- dom: .INFO
+  price: 75K
+  renew: 240K
+  bg: '#8f8'
+---
+
+<div class="text-center">
+  <div
+    class="jumbotron bg top fixed text-white"
+    style="
+      --bg: url(https://images.unsplash.com/photo-1551970634-747846a548cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+      background-color: #353;
+    "
+  >
+    <h1 class="display-4">Domain at the right price</h1>
+    <div class="text-sm">
+        Purchase a domain along with affordable hosting prices
+    </div>
+  </div>
+
+  <div class="my-5">
+    <p class="h1 text-success">Top Level Domain</p>
+  </div>
+
+  <div class="row g-0">
+    {% for d in page.global %}
+    <div class="col-lg-4 text-left">
+      <div
+        class="px-4 py-4 d-flex justify-content-between align-items-end"
+        style="background-color: {{ d.bg }}"
+      >
+        <div class="h2 card-title my-auto" style="width: 4em">{{ d.dom }}</div>
+        <div>
+          <div class="display-4">{{ d.price }}</div>
+          <h6 class="text-muted">Buy</h6>
+        </div>
+        <div>
+          <div class="h5">{{ d.renew }}</div>
+          <h6 class="text-muted">Renew</h6>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="p-4">
+    <p>
+      <a
+        class="btn btn-lg btn-success"
+        href="https://portal.domcloud.id/en/register"
+        >Sign Up Now</a
+      >
+    </p>
+  </div>
+</div>

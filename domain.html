@@ -2,163 +2,157 @@
 title: Domain
 excerpt: Pembelian domain sepaket dengan harga hosting yang terjangkau
 layout: default
-color: '#353'
+color: "#353"
 lang: id
+indo:
+- dom: .ID
+  price: 235K
+  req: KTP
+  bg: '#5e5'
+- dom: .CO.ID
+  price: 335K
+  req: KTP, Akta/Izin
+  bg: '#8f8'
+- dom: .MY.ID
+  price: 25K
+  req: KTP
+  bg: '#5e5'
+- dom: .BIZ.ID
+  price: 70K
+  req: KTP
+  bg: '#8f8'
+- dom: .OR.ID
+  price: 70K
+  req: KTP, Akta/Izin
+  bg: '#5e5'
+- dom: .WEB.ID
+  price: 70K
+  req: KTP
+  bg: '#8f8'
+- dom: .AC.ID
+  price: 70K
+  req: KTP, SK, Kuasa
+  bg: '#5e5'
+- dom: .SCH.ID
+  price: 70K
+  req: KTP, SK, Kuasa
+  bg: '#8f8'
+- dom: .PONPES.ID
+  price: 70K
+  req: KTP, SK
+  bg: '#5e5'
+global:
+- dom: .COM
+  price: 160K
+  renew: 160K
+  bg: '#8f8'
+- dom: .NET
+  price: 200K
+  renew: 200K
+  bg: '#5e5'
+- dom: .ORG
+  price: 155K
+  renew: 200K
+  bg: '#8f8'
+- dom: .BIZ
+  price: 255K
+  renew: 255K
+  bg: '#5e5'
+- dom: .XYZ
+  price: 25K
+  renew: 175K
+  bg: '#8f8'
+- dom: .SITE
+  price: 35K
+  renew: 415K
+  bg: '#5e5'
+- dom: .ONLINE
+  price: 35K
+  renew: 515K
+  bg: '#8f8'
+- dom: .TECH
+  price: 55K
+  renew: 710K
+  bg: '#5e5'
+- dom: .INFO
+  price: 75K
+  renew: 240K
+  bg: '#8f8'
 ---
+
 <div class="text-center">
-
-  <div class="jumbotron bg top fixed text-white"
-    style="--bg: url(https://images.unsplash.com/photo-1551970634-747846a548cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80); background-color: #353;">
+  <div
+    class="jumbotron bg top fixed text-white"
+    style="
+      --bg: url(https://images.unsplash.com/photo-1551970634-747846a548cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+      background-color: #353;
+    "
+  >
     <h1 class="display-4">Domain dengan harga yang pas</h1>
-    <div class="text-sm">Pembelian domain sepaket dengan harga hosting yang terjangkau</div>
-  </div>
-
-  <p class="h4 my-5">Semua harga adalah pembelian per tahun</p>
-
-
-  <div class="row g-0">
-    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
-      <p class="h1 text-success">
-        Top Level Domain
-      </p>
-    </div>
-    <div class="col-md-6 text-left">
-      <div class="px-4 py-4 d-flex justify-content-between align-items-end" style="background-color: #efe;">
-        <div class="h2 card-title my-auto" style="width:5em">.XYZ</div>
-        <div>
-          <div class="display-4">20K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">150K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-4 d-flex justify-content-between align-items-end" style="background-color: #cfc;">
-        <div class="h2 card-title my-auto" style="width:5em">.COM</div>
-        <div>
-          <div class="display-4">140K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">170K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-4 d-flex justify-content-between align-items-end" style="background-color: #afa;">
-        <div class="h2 card-title my-auto" style="width:5em">.ID</div>
-        <div>
-          <div class="display-4">215K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">215K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
+    <div class="text-sm">
+      Pembelian domain sepaket dengan harga hosting yang terjangkau
     </div>
   </div>
 
+  <div class="my-5">
+    <p class="h1 text-success">Domain Indonesia</p>
+    <p>
+      <small
+        ><a
+          href="https://dok.dom.my.id/domain/tld.html"
+          style="color: green; font-weight: bold; text-decoration: none"
+          >Lihat persyaratan dokumen untuk domain Indonesia</a
+        ></small
+      >
+    </p>
+  </div>
+
   <div class="row g-0">
-    <div class="col-md-6 d-flex flex-column justify-content-center text-left p-4">
-      <p class="h1 text-success">
-        Domain Indonesia
-      </p>
-      <p><small><a href="https://dok.dom.my.id/domain/tld.html" style="color: green; font-weight: bold; text-decoration: none;">Lihat persyaratan dokumen untuk domain Indonesia</a></small></p>
+    {% for d in page.indo %}
+    <div
+      class="p-4 col-md-4"
+      style="background-color: {{ d.bg }}"
+    >
+      <div class="h2 card-title my-auto">{{ d.dom }}</div>
+      <div class="display-4 my-2">{{ d.price }}</div>
+      <h6 class="text-muted">Per Tahun</h6>
+      <h6 class="small">Syarat: {{ d.req }}</h6>
     </div>
-    <div class="col-md-6 text-left">
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #8f8;">
-        <div class="h2 card-title my-auto" style="width:5em">.CO.ID</div>
+    {% endfor %}
+  </div>
+
+  <div class="my-5">
+    <p class="h1 text-success">Top Level Domain</p>
+  </div>
+
+  <div class="row g-0">
+    {% for d in page.global %}
+    <div class="col-lg-4 text-left">
+      <div
+        class="px-4 py-4 d-flex justify-content-between align-items-end"
+        style="background-color: {{ d.bg }}"
+      >
+        <div class="h2 card-title my-auto" style="width: 4em">{{ d.dom }}</div>
         <div>
-          <div class="display-4">315K</div>
+          <div class="display-4">{{ d.price }}</div>
           <h6 class="text-muted">Beli</h6>
         </div>
         <div>
-          <div class="h5">315K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #5e5;">
-        <div class="h2 card-title my-auto" style="width:5em">.WEB.ID</div>
-        <div>
-          <div class="display-4">60K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">60K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #2d2;">
-        <div class="h2 card-title my-auto" style="width:5em">.OR.ID</div>
-        <div>
-          <div class="display-4">60K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">60K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #5e5;">
-        <div class="h2 card-title my-auto" style="width:5em">.AC.ID</div>
-        <div>
-          <div class="display-4">60K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">60K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #8f8;">
-        <div class="h2 card-title my-auto" style="width:5em">.SCH.ID</div>
-        <div>
-          <div class="display-4">60K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">60K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #afa;">
-        <div class="h2 card-title my-auto" style="width:5em">.BIZ.ID</div>
-        <div>
-          <div class="display-4">60K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">60K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #cfc;">
-        <div class="h2 card-title my-auto" style="width:5em">.PONPES.ID</div>
-        <div>
-          <div class="display-4">55K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">55K</div>
-          <h6 class="text-muted">Perpanjang</h6>
-        </div>
-      </div>
-      <div class="px-4 py-2 d-flex justify-content-between align-items-end" style="background-color: #efe;">
-        <div class="h2 card-title my-auto" style="width:5em">.MY.ID</div>
-        <div>
-          <div class="display-4">25K</div>
-          <h6 class="text-muted">Beli</h6>
-        </div>
-        <div>
-          <div class="h5">25K</div>
+          <div class="h5">{{ d.renew }}</div>
           <h6 class="text-muted">Perpanjang</h6>
         </div>
       </div>
     </div>
+    {% endfor %}
   </div>
 
   <div class="p-4">
-    <p><a class="btn btn-lg btn-success" href="https://portal.domcloud.id/id/register">Daftar Sekarang</a></p>
+    <p>
+      <a
+        class="btn btn-lg btn-success"
+        href="https://portal.domcloud.id/id/register"
+        >Daftar Sekarang</a
+      >
+    </p>
   </div>
 </div>
