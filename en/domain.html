@@ -6,40 +6,40 @@ color: "#353"
 lang: en
 global:
 - dom: .COM
-  price: 160K
-  renew: 160K
+  price: 11
+  renew: 11
   bg: '#8f8'
 - dom: .NET
-  price: 200K
-  renew: 200K
+  price: 14
+  renew: 14
   bg: '#5e5'
 - dom: .ORG
-  price: 155K
-  renew: 200K
+  price: 11
+  renew: 14
   bg: '#8f8'
 - dom: .BIZ
-  price: 255K
-  renew: 255K
+  price: 17
+  renew: 17
   bg: '#5e5'
 - dom: .XYZ
-  price: 25K
-  renew: 175K
+  price: 3
+  renew: 12
   bg: '#8f8'
 - dom: .SITE
-  price: 35K
-  renew: 415K
+  price: 4
+  renew: 27
   bg: '#5e5'
 - dom: .ONLINE
-  price: 35K
-  renew: 515K
+  price: 4
+  renew: 33
   bg: '#8f8'
 - dom: .TECH
-  price: 55K
-  renew: 710K
+  price: 5
+  renew: 45
   bg: '#5e5'
 - dom: .INFO
-  price: 75K
-  renew: 240K
+  price: 6
+  renew: 17
   bg: '#8f8'
 ---
 
@@ -59,6 +59,9 @@ global:
 
   <div class="my-5">
     <p class="h1 text-success">Top Level Domain</p>
+    <div class="text-sm">
+        All domain prices in yearly US dollar.
+    </div>
   </div>
 
   <div class="row g-0">
@@ -70,11 +73,11 @@ global:
       >
         <div class="h2 card-title my-auto" style="width: 4em">{{ d.dom }}</div>
         <div>
-          <div class="display-4">{{ d.price }}</div>
+          <div class="display-4">{{ d.price }}.00</div>
           <h6 class="text-muted">Buy</h6>
         </div>
         <div>
-          <div class="h5">{{ d.renew }}</div>
+          <div class="h5">{{ d.renew }}.00</div>
           <h6 class="text-muted">Renew</h6>
         </div>
       </div>
