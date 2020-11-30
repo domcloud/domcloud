@@ -353,6 +353,42 @@ lang: id
 </details>
 
 <details>
+  <summary class="my-3" id="what-is-deployment">
+    <strong>Apa fungsinya deployment?</strong>
+  </summary>
+  <p>
+    Deployment bisa dibuat sebagai template, bisa juga digunakan agar
+    menyederhakan step-step yang biasanya umum dilakukan. Konsepnya mirip
+    seperti <code>Procfile</code> di Heroku atau <code>Dockerfile</code> di
+    Docker. Hanya saja anda juga dapat menggunakannya untuk memodifikasi hosting
+    anda saat ini.
+  </p>
+  <p>
+    Deployment berformat YAML dan anda dapat menggunakan beberapa template yang
+    ada atau
+    <a href="https://github.com/domcloud/dom-templates#readme"
+      >mempelajarinya sendiri</a
+    >.
+  </p>
+</details>
+
+<details>
+  <summary class="my-3" id="what-is-deployment">
+    <strong>Bagaimana cara mengakses SSH?</strong>
+  </summary>
+  <p>
+    Anda dapat menggunakan aplikasi SSH untuk mengontrol server melalui
+    CMD/Terminal. Linux/MacOS biasanya sudah terinstall secara default. Untuk
+    Windows
+    <a
+      href="https://winpoin.com/cara-mengaktifkan-dan-menggunakan-ssh-command-di-windows-10/"
+      >ada caranya sendiri</a
+    >, kemudian anda dapat menyalin alamat ssh di login portal kemudian paste di
+    terminal untuk mengaksesnya.
+  </p>
+</details>
+
+<details>
   <summary class="my-3">
     <strong>Saya mendapat memory error saat install Composer/NPM.</strong>
   </summary>
@@ -383,5 +419,54 @@ lang: id
   <p>
     Karena server memakai Nginx. <a href="#why-nginx">Scroll up</a> untuk
     membaca solusinya.
+  </p>
+</details>
+
+<details>
+  <summary class="my-3">
+    <strong>Saya tidak bisa login ke database</strong>
+  </summary>
+  <p>
+    Jika anda tidak bisa login ke PhpMyAdmin/PhpPgAdmin berarti anda belum
+    menyalakan fitur MySQL/PostgreSQL. Karena fitur tersebut opsional anda harus
+    menyalakannya sendiri.
+  </p>
+  <p>
+    Untuk menyalakan database Anda bisa menyalakannya dengan cara melakukan
+    <a href="#what-is-deployment">deployment</a>
+    <code>features: ['mysql']</code> atau <code>features: ['postgres']</code>
+    <i>atau</i> secara manual melalui portal Webmin, <i>Edit Virtual Server</i>,
+    <i>Enabled Features</i>, Centang MySQL/PostgreSQL, lalu menambahkan database
+    baru di menu <i>Edit Databases</i>
+  </p>
+  <p>
+    Jika anda bisa login ke PhpMyAdmin namun anda tidak bisa konek melalui PC
+    anda, anda harus menambah akses ke IP address eksternal dengan cara masuk ke
+    Portal Webmin, <i>Edit Databases</i>, <i>Remote Hosts</i> dan tambahkan
+    <code>*.*.*.*</code> di baris berikutnya.
+  </p>
+</details>
+
+<details>
+  <summary class="my-3">
+    <strong>Saya tidak bisa membuka website melalui HTTPS</strong>
+  </summary>
+  <p>
+    Jika anda bisa membuka website melalui HTTP namun tidak dalam HTTPS, anda
+    perlu menyalakan HTTPS. Gunakan
+    <a href="#what-is-deployment">deployment</a> berikut:
+  </p>
+  <code>
+    <pre>features: ['ssl']<br>nginx: {"ssl":"enforce"}</pre>
+  </code>
+  <p>
+    Hal tersebut akan mencoba verifikasi SSL melalui Let's Encrypt dan
+    menyalakan HTTPS redirect sehingga website anda selalu menggunakan HTTPS.
+  </p>
+  <p>
+    Jika anda mendapati error
+    <code>ERR_CERTIFICATE_TRANSPARENCY_REQUIRED</code>, itu biasanya karena efek
+    website baru diverifikasi dan biasanya akan hilang sendiri dalam beberapa
+    jam.
   </p>
 </details>
