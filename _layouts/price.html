@@ -3,13 +3,10 @@ layout: default
 ---
 
 <div class="text-center">
-  <div
-    class="jumbotron bg top fixed text-white"
-    style="
+  <div class="jumbotron bg top fixed text-white" style="
       --bg: url(https://images.unsplash.com/photo-1437773540554-96d393b4d0c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1056&q=80);
       background-color: #c50;
-    "
-  >
+    ">
     <h1 class="display-4">{{ page.head.h1 }}</h1>
     <div class="text-sm">{{ page.head.h2 }}</div>
   </div>
@@ -45,29 +42,26 @@ layout: default
     <div class="row">
       {% for faqrow in page.faqs %}
       <div class="col-lg-4">
-        {% for faq in faqrow %}
-        <button
-          class="btn btn-text btn-block dropdown-toggle mb-2"
-          type="button"
-          data-toggle="collapse"
-          data-target="#{{ faq.id }}"
-          aria-expanded="false"
-        >
-          {{ faq.title }}
-        </button>
-        <div class="collapse multi-collapse mb-3" id="{{ faq.id }}">
-          <div class="card card-body">{{ faq.body }}</div>
+        <div class="accordion">
+          {% for faq in faqrow %}
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ faq.id }}"
+                aria-expanded="false">
+                {{ faq.title }}
+              </button>
+            </h2>
+            <div class="collapse multi-collapse mb-3" id="{{ faq.id }}">
+              <div class="accordion-body">{{ faq.body }}</div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
       {% endfor %}
     </div>
     <p class="mt-2">
-      <a
-        class="btn btn-lg btn-warning"
-        href="{{ page.head.signuplink }}"
-        >{{ page.head.signuptext }}</a
-      >
+      <a class="btn btn-lg btn-warning" href="{{ page.head.signuplink }}">{{ page.head.signuptext }}</a>
     </p>
   </div>
   <style>

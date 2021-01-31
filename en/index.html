@@ -3,36 +3,31 @@ layout: default
 excerpt: Distruptive hosting provider for IT developers
 color: '#7aa'
 pricing:
-- val: 6000
+- val: 4000
   plan: 'Freedom'
   price: 'Free!'
-  desc: 'No need to pay! This plan is suitable for those who are just starting a website.'
+  desc: 'No need to pay! Suitable when starting a website.'
   color: 'white'
-- val: 20000
+- val: 12000
   plan: 'Lite'
   price: '5.00 US$'
-  desc: 'Saving plan! Does not break your wallet and perfect for the size of a personal website.'
-  color: '#ffe'
-- val: 60000
+  desc: 'An economical package for personal websites or small budget websites.'
+  color: '#36e; color: white'
+- val: 40000
   plan: 'Pro'
-  price: '20.00 US$'
-  desc: 'A website with lots of content? This plan is suitable for growing websites.'
-  color: '#ffc'
-- val: 200000
-  plan: 'Business'
-  price: '60.00 US$'
-  desc: 'To build a system? This plan is suitable for both business and office level use.'
-  color: '#ff8'
-- val: 600000
+  price: '25.00 US$'
+  desc: 'Have a lot of content started? This package is suitable for growing websites.'
+  color: '#808; color: white'
+- val: 120000
   plan: 'Super'
-  price: '180.00 US$'
-  desc: 'Super cool plan! For a website with high level of traffic which close to the millions.'
-  color: '#ff0'
-- val: 2000000
-  plan: 'Legend'
-  price: '600.00 US$'
-  desc: 'This is a god level plan that you will not possibly buy.'
-  color: '#110; color: white'
+  price: '75.00 US$'
+  desc: 'A super cool package for an extremely popular website!'
+  color: '#d23; color: white'
+- val: 400000
+  plan: 'Ultimate'
+  price: '1500.00 US$'
+  desc: 'A website package that makes this business owner goosebumps.'
+  color: '#000; color: white'
 features:
 - title: Virtualmin
   logo: https://saad.web.id/wp-content/uploads/2018/07/saadwebid-layanan-migrasi-vps-virtualmin.png
@@ -101,14 +96,14 @@ templates:
 <div class="text-center">
 
   <div class="jumbotron bg top fixed text-white"
-    style="--bg: url(https://images.unsplash.com/photo-1518789013127-40b4f36a2eb1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80); background-color: #7aa;">
+    style="--bg: url(https://images.unsplash.com/photo-1542459025-64f60ea0b26c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80); background-color: #7aa;">
     <h1 class="display-4 py-5">FreeDOM, <b>starts here</b></h1>
     <p class="h4 my-5">Distruptive hosting provider for IT developers</p>
   </div>
   <p class="h4 my-5">How many views per month for the website that you want to create?</p>
   <div class="row g-0" id="rcolor">
     <div class="col-md-6 bg full">
-      <input type="range" min="0" max="5" class="w-75" value="0" id="rinput">
+      <input type="range" min="0" max="4" class="w-75" value="0" id="rinput">
       <p class="h3 my-3">~<span id="rval"></span> views / month</p>
       <p class="text-muted"><small>For average use of 256 KB / view</small></p>
     </div>
@@ -116,7 +111,7 @@ templates:
       <p>Try<br> <span class="h2"><span id="rplan"></span> Plan</span></p>
       <p>Price a year <b><span id="rprice"></span></b> </p>
       <p id="rdesc"></p>
-      <p><a href="/en/price.html">See plan comparison details</a></p>
+      <p><a style="color: inherit;" href="/en/price.html">See plan comparison details</a></p>
     </div>
    <script>
      const rlist = JSON.parse('{{ page.pricing | jsonify }}');
