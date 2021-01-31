@@ -107,46 +107,48 @@ templates:
     <p class="my-5"></p>
   </div>
   <p class="h4 my-5 text-center">Berapa banyak trafik website yang anda butuhkan?</p>
-  <div class="row g-0" id="rcolor">
+  <div class="row g-0 p-5" id="rcolor">
     <div class="col-md-6 bg">
       <input type="range" min="0" max="4" class="w-75" value="0" id="rinput">
       <p class="h3 my-3">~<span id="rval"></span> views / bulan</p>
       <p><small>Untuk penggunaan rata-rata 256 KB / view</small></p>
     </div>
-    <div class="col-md-6 text-left d-flex flex-column py-5 justify-content-center">
+    <div class="col-md-6 text-left d-flex flex-column pt-5 pt-md-0 justify-content-center">
       <p>Cobalah<br> <span class="h2">Paket <span id="rplan"></span></span></p>
       <p>Harga per tahun <b><span id="rprice"></span></b> </p>
       <p id="rdesc"></p>
       <p><a style="color: inherit;" href="/price.html">Lihat detail perbandingan paket</a></p>
     </div>
-   <script>
-     const rlist = JSON.parse('{{ page.pricing | jsonify }}');
+    <script>
+      const rlist = JSON.parse('{{ page.pricing | jsonify }}');
 
-     var f = function (e) {
+      var f = function (e) {
       document.getElementById('rval').innerText =  rlist[e.target.value].val.toLocaleString();
       document.getElementById('rplan').innerText = rlist[e.target.value].plan;
       document.getElementById('rprice').innerText = rlist[e.target.value].price;
       document.getElementById('rdesc').innerText = rlist[e.target.value].desc;
       document.getElementById('rcolor').style = 'background-color: ' + rlist[e.target.value].color;
-     };
-     f({target: {value: 0}});
-     document.getElementById('rinput').oninput = f;
+      };
+      f({target: {value: 0}});
+      document.getElementById('rinput').oninput = f;
     </script>
   </div>
 
   <p class="h4 my-5 text-center">Dilengkapi dengan integrasi teknologi dan layanan super lengkap</p>
-  <div class="row g-0 align-items-center text-left justify-content-center">
-    {% for feat in page.features %}
-    <div class="col-lg-6 mb-2">
-      <div class="d-flex">
-        <img src="{{ feat.logo }}" class="w-25" style="max-height: 120px; object-fit: contain;">
-        <div class="ms-2 d-flex flex-column justify-content-center">
-          <div class="h4 my-2">{{ feat.title }}</div>
-          <p>{{ feat.desc }}</p>
+  <div class="container-fluid">
+    <div class="row g-0 align-items-center text-left justify-content-center">
+      {% for feat in page.features %}
+      <div class="col-lg-6 mb-2">
+        <div class="d-flex">
+          <img src="{{ feat.logo }}" style="height: 120px; width: 120px; object-fit: contain;">
+          <div class="ms-2 d-flex flex-column justify-content-center">
+            <div class="h4 my-2">{{ feat.title }}</div>
+            <p>{{ feat.desc }}</p>
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
   <p class="h4 my-5 text-center">Install script sekali klik untuk banyak aplikasi dan framework</p>
   <div class="row g-0 text-center">
