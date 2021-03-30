@@ -1,59 +1,59 @@
 ---
-title: Pernyataan Privasi DOM Cloud
+title: DOM Cloud Privacy Statement
 layout: page
-lang: id
+lang: en
 ---
 
-> *Update terakhir: 26 September 2020*
+> * Last updated: 26 September 2020 *
 
-Terima kasih telah mempercayakan DOM Cloud Hosting ("DOM Cloud", "kami") dengan website Anda, dan informasi pribadi Anda. Memegang informasi pribadi Anda adalah tanggung jawab yang serius, dan kami ingin Anda tahu bagaimana kami menanganinya.
+Thank you for entrusting DOM Cloud Hosting ("DOM Cloud", "us") with your website, and your personal information. Holding your personal information is a serious responsibility, and we want you to know how we handle it.
 
-Kami berkomitmen untuk menjaga privasi dari pengunjung dan pengguna situs web kami; kebijakan ini memberitahukan bagaimana kami memperlakukan informasi pribadi anda. Kebijakan privasi ini mengatur cara kami mengumpulkan, menggunakan, memelihara dan mengungkapkan informasi yang dikumpulkan dari pengunjung dan pengguna situs web ini.
+We are committed to safeguarding the privacy of our website visitors and users; This policy tells us how we treat your personal information. This privacy policy governs how we collect, use, maintain and disclose information collected from visitors and users of this website.
 
-## Informasi yang kami kumpulkan
+## Information we collect
 
-**Informasi pribadi** adalah informasi apapun yang bertujuan untuk mengidentifikasi penggunaan website pada salah satu user. Contoh informasi pribadi diantaranya username dan password, alamat email, nomor HP, nama lengkap dan alamat IP.
+** Personal information ** is any information that aims to identify a user's use of the website. Examples of personal information include username and password, email address, cellphone number, full name and IP address.
 
-Kami mengumpulkan informasi pribadi dari pengguna melalui formulir online ketika pengguna memesan produk dan jasa kami. Selain dari formulir tersebut, kami juga mengumpulkan informasi tentang bagaimana para pengguna menggunakan situs web kami, menggunakan Cookies dan Google Analytics, dan kami hanya menggunakan informasi tersebut untuk menganalisa performa website kami, tanpa dapat mengidentifikasi siapa yang menggunakan website tersebut secara pribadi.
+We collect personal information from users through online forms when users order our products and services. Apart from these forms, we also collect information about how users use our website, use Cookies and Google Analytics, and we only use this information to analyze the performance of our website, without being able to identify who is using the website personally.
 
-## Informasi Pribadi yang anda masukkan
+## Personal Information you enter
 
-#### Data Registrasi
+#### Registration Data
 
-Saat anda mendaftarkan diri ke portal DOM Cloud, kami meminta sejumlah biodata, yakni nama lengkap, alamat email dan nomor HP yang valid. Data tersebut kami gunakan untuk mengidentifikasi pengguna agar kami dapat memenuhi pemesanan produk dan jasa kami.
+When you register for the DOM Cloud portal, we ask for a number of biodata, namely your full name, email address and a valid cellphone number. We use this data to identify users so that we can fulfill orders for our products and services.
 
-Kami juga dapat menggunakan informasi pribadi yang dikumpulkan melalui situs Web kami untuk menghubungi pengguna berkaitan dengan produk dan jasa yang ditawarkan oleh DOM Cloud dan afiliasinya yang terpercaya, mitra bisnis, dan sebaliknya untuk meningkatkan pengalaman pengguna terhadap DOM Cloud dan afiliasinya, dan mitra bisnis. Informasi pribadi tidak akan dijual atau dialihkan ke mitra bisnis kami tanpa persetujuan Anda, kecuali bahwa kami akan mengungkapkan informasi yang kami kumpulkan kepada pihak pemerintah atau pihak yang berwenang lainnya jika dibutuhkan oleh hukum dan peraturan perundang-undangan yang berlaku.
+We may also use personal information collected through our Web site to contact users regarding products and services offered by DOM Cloud and its trusted affiliates, business partners, and vice versa to improve the user experience of DOM Cloud and its affiliates, and business partners. Personal information will not be sold or transferred to our business partners without your consent, except that we will disclose the information we collect to the government or other authorities if required by applicable laws and regulations.
 
-#### Data Pembayaran
+#### Payment Data
 
-Saat anda meregistrasi akun hosting berbayar (premium), kami mengirimkan data registrasi yakni nama lengkap, alamat email dan nomor HP untuk mitra kami, iPaymu, memproses transaksi anda. Mohon dimengerti bahwa, kami tidak memproses atau menyimpan data untuk transaksi, seperti kartu kredit, informasi bank atau informasi transaksi lainnya dari anda, namun mitra transaksi kami yang memproses informasi tersebut.
+When you register for a paid hosting account (premium), we send registration data, namely your full name, email address and cellphone number for our partner, iPaymu, to process your transaction. Please understand that, we do not process or store data for transactions, such as credit card, bank information or other transaction information from you, but our transaction partners process that information.
 
-#### Data Domain dan WHOIS
+#### Data Domain and WHOIS
 
-Saat anda meregistrasi domain baru untuk keperluan hosting, kami meminta data tambahan, seperti nama bisnis anda dan alamat lengkap anda. Bersamaan dengan data registrasi anda, kami proses ke ke mitra domain kami, ResellerCamp. Data tersebut digunakan untuk keperluan WHOIS, sehingga orang lain dapat mengakses data tersebut sebagai bagian dari tanggung jawab anda mengelola domain. Jika anda ingin merahasiannya, anda dapat membeli tambahan proteksi privasi jika tersedia.
+When you register a new domain for hosting purposes, we ask for additional data, such as your business name and your full address. Along with your registration data, we process it to our domain partner, ResellerCamp. The data is used for WHOIS purposes, so that other people can access the data as part of your responsibility to manage the domain. If you want to keep it secret, you can buy additional privacy protection if available.
 
-#### Data Server dan Hosting
+#### Server and Hosting data
 
-File dan Database yang anda simpan dalam DOM Cloud merupakan aset dan hak milik anda. Kami tidak akan memodifikasi, memasang iklan apalagi membagi dan menjual data anda yang tersimpan dalam server kami, kecuali apabila kami diminta demikian oleh pihak pemerintah atau pihak yang berwenang lainnya jika dibutuhkan oleh hukum dan peraturan perundang-undangan yang berlaku.
+The files and databases that you store in the DOM Cloud are your assets and property. We will not modify, advertise, let alone share and sell your data stored on our servers, unless we are asked to do so by the government or other authorized parties if required by applicable laws and regulations.
 
-Mohon dimengerti, bahwa kami melakukan backup secara berkala, sehingga apabila anda sudah menghapus data sensitif di dalam server, data anda masih terekam dalam arsip backup selama beberapa waktu.
+Please understand that we do backups regularly, so that if you delete sensitive data on the server, your data will still be recorded in the backup archive for some time.
 
-## Informasi Penting Lainnya
+## Other Important Information
 
-#### Kata Sandi Hosting
+#### Hosting Password
 
-**Kata sandi hosting anda tidak dienkripsi**. Kata sandi hosting kami simpan apa adanya sebagai kenyamanan layanan kami. Kami juga menggunakan kata sandi tersebut apabila sewaktu-waktu kami membutuhkannya untuk menyelesaikan permasalahan hosting anda melalui pertanyaan WhatsApp atau media lainnya. Untuk itu kami menyarankan agar anda menggunakan karakter random untuk kata sandi tersebut, jangan diisi dengan kata sandi yang masih anda gunakan pada akun login lainnya.
+** Your hosting password is not encrypted **. Our hosting passwords are kept as is for the convenience of our service. We also use this password if at any time we need it to solve your hosting problems via WhatsApp questions or other media. For that we recommend that you use random characters for the password, don't fill in a password that you still use on other login accounts.
 
-Mohon dipahami bahwa kata sandi hosting berbeda dengan **kata sandi akun portal** yang anda masukkan saat mengisi data Registrasi. Untuk kata sandi tersebut, tentu sudah kami enkripsi dengan metode modern dan cukup kuat. Kami memahami standar keamanan internet agar terhindar dari aksi hack dan pembobolan data penting lainnya; dan menjaga privasi anda selalu merupakan prioritas kami yang paling utama.
+Please understand that the hosting password is different from the ** portal account password ** that you entered when filling in the Registration data. For this password, of course we have encrypted it using a modern method and it is strong enough. We understand internet security standards in order to avoid hacks and other important data breaches; and maintaining your privacy is always our top priority.
 
-#### Bagaimana Kami Mengontak Anda
+#### How We Contact You
 
-Kami menggunakan alamat email anda sebagai sarana notifikasi utama; contohnya, saat anda melakukan pembelian dan saat masa pembelian hosting anda akan habis. Email otomatis yang resmi dari DOM Cloud hanya menggunakan akhiran **@mail.domcloud.id** dan didalam email tersebut selalu menyebutkan nama lengkap anda sesuai yang anda isi dalam data registrasi.
+We use your email address as the primary means of notification; for example, when you make a purchase and when your hosting purchase period will expire. Official automatic email from DOM Cloud only uses the suffix **@mail.domcloud.id** and in that email always mentions your full name according to what you entered in the registration data.
 
-Jika anda ingin mengajukan pertanyaan tiket melalui WhatsApp yang tertera pada sudut kanan bawah, maka kami akan mengontak anda dengan nomor yang sama saat anda mengajukan pertanyaan. Anda juga dapat mengontak kami melalui email **support@domcloud.id**.
+If you want to ask a ticket question via WhatsApp which is listed in the lower right corner, then we will contact you with the same number when you asked the question. You can also contact us via email **support@domcloud.id**.
 
-#### Perubahan Lainnya
+#### Other Changes
 
-Kami berhak untuk mengubah pernyataan privasi ini, apabila dibutuhkan; dengan atau tanpa pemberitahuan dengan anda. Segala pertanyaan mengenai pernyataan privasi atau syarat dan ketentuan kami, bisa anda tanyakan melalui tiket WhatsApp yang tersedia di tombol kanan bawah website ini.
+We reserve the right to change this privacy statement, if needed; with or without notification with you. You can ask any questions regarding our privacy statement or our terms and conditions via the WhatsApp ticket available at the bottom right button of this website.
 
-*Anda dapat melihat [arsip perubahan pernyataan privasi ini disini](https://github.com/domcloud/dom-site/commits/master/privacy.md)*
+* You can view [archive of changes to this privacy statement here] (https://github.com/domcloud/dom-site/commits/master/privacy.md) *

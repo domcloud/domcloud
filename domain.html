@@ -1,82 +1,45 @@
 ---
 title: Domain
-excerpt: Pembelian domain sepaket dengan harga hosting yang terjangkau
+excerpt: Purchase a domain along with affordable hosting prices
 layout: default
 color: "#353"
-lang: id
-indo:
-- dom: .ID
-  price: 235K
-  req: KTP
-  bg: '#5e5'
-- dom: .CO.ID
-  price: 335K
-  req: KTP, Akta/Izin
-  bg: '#8f8'
-- dom: .MY.ID
-  price: 25K
-  req: KTP
-  bg: '#5e5'
-- dom: .BIZ.ID
-  price: 70K
-  req: KTP
-  bg: '#8f8'
-- dom: .OR.ID
-  price: 70K
-  req: KTP, Akta/Izin
-  bg: '#5e5'
-- dom: .WEB.ID
-  price: 70K
-  req: KTP
-  bg: '#8f8'
-- dom: .AC.ID
-  price: 70K
-  req: KTP, SK, Kuasa
-  bg: '#5e5'
-- dom: .SCH.ID
-  price: 70K
-  req: KTP, SK, Kuasa
-  bg: '#8f8'
-- dom: .PONPES.ID
-  price: 70K
-  req: KTP, SK
-  bg: '#5e5'
+lang: en
 global:
 - dom: .COM
-  price: 160K
-  renew: 160K
+  price: 11
+  renew: 11
   bg: '#8f8'
 - dom: .NET
-  price: 200K
-  renew: 200K
+  price: 14
+  renew: 14
   bg: '#5e5'
 - dom: .ORG
-  price: 155K
-  renew: 200K
+  price: 11
+  renew: 14
   bg: '#8f8'
 - dom: .BIZ
-  price: 255K
-  renew: 255K
+  price: 17
+  renew: 17
   bg: '#5e5'
 - dom: .XYZ
-  price: 25K
-  renew: 175K
+  price: 3
+  renew: 12
   bg: '#8f8'
 - dom: .SITE
-  price: 35K
-  renew: 415K
+  price: 4
+  renew: 27
   bg: '#5e5'
 - dom: .ONLINE
-  price: 35K
-  renew: 515K
+  price: 4
+  renew: 33
   bg: '#8f8'
 - dom: .TECH
-  price: 55K
-  renew: 710K
+  price: 5
+  renew: 45
   bg: '#5e5'
 - dom: .INFO
-  price: 75K
-  renew: 240K
+  price: 6
+  renew: 17
   bg: '#8f8'
 ---
 
@@ -88,41 +51,17 @@ global:
       background-color: #353;
     "
   >
-    <h1 class="display-4">Domain dengan harga yang pas</h1>
+    <h1 class="display-4">Domain at the right price</h1>
     <div class="text-sm">
-      Pembelian domain sepaket dengan harga hosting yang terjangkau
+        Purchase a domain along with affordable hosting prices
     </div>
-  </div>
-
-  <div class="my-5">
-    <p class="h1 text-success">Domain Indonesia</p>
-    <p>
-      <small
-        ><a
-          href="https://dok.dom.my.id/domain/tld.html"
-          style="color: green; font-weight: bold; text-decoration: none"
-          >Lihat persyaratan dokumen untuk domain Indonesia</a
-        ></small
-      >
-    </p>
-  </div>
-
-  <div class="row g-0">
-    {% for d in page.indo %}
-    <div
-      class="p-4 col-md-4"
-      style="background-color: {{ d.bg }}"
-    >
-      <div class="h2 card-title my-auto">{{ d.dom }}</div>
-      <div class="display-4 my-2">{{ d.price }}</div>
-      <h6 class="text-muted">Per Tahun</h6>
-      <h6 class="small">Syarat: {{ d.req }}</h6>
-    </div>
-    {% endfor %}
   </div>
 
   <div class="my-5">
     <p class="h1 text-success">Top Level Domain</p>
+    <div class="text-sm">
+        All domain prices in yearly US dollar.
+    </div>
   </div>
 
   <div class="row g-0">
@@ -134,12 +73,12 @@ global:
       >
         <div class="h2 card-title my-auto" style="width: 4em">{{ d.dom }}</div>
         <div>
-          <div class="display-4">{{ d.price }}</div>
-          <h6 class="text-muted">Beli</h6>
+          <div class="display-4">{{ d.price }}.00</div>
+          <h6 class="text-muted">Buy</h6>
         </div>
         <div>
-          <div class="h5">{{ d.renew }}</div>
-          <h6 class="text-muted">Perpanjang</h6>
+          <div class="h5">{{ d.renew }}.00</div>
+          <h6 class="text-muted">Renew</h6>
         </div>
       </div>
     </div>
@@ -150,8 +89,8 @@ global:
     <p>
       <a
         class="btn btn-lg btn-success"
-        href="https://portal.domcloud.id/id/register"
-        >Daftar Sekarang</a
+        href="https://portal.domcloud.id/en/register"
+        >Sign Up Now</a
       >
     </p>
   </div>
