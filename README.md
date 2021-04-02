@@ -2,7 +2,7 @@
 
 Welcome to the DOM Cloud! Innovative hosting provider that you can start for free.
 
-We use GitHub for [Questions](https://github.com/domcloud/domcloud-io/issues) and [Discussion](https://github.com/domcloud/domcloud-io/discussion). For private inquiries please send an email to [support@domcloud.id](mailto:support@domcloud.id).
+We use GitHub for [Issue Tracking](https://github.com/domcloud/domcloud-io/issues) and [Discussions](https://github.com/domcloud/domcloud-io/discussions). For private inquiries please send an email to [support@domcloud.id](mailto:support@domcloud.id).
 
 ## Service FAQ
 
@@ -213,4 +213,4 @@ It is possible that the file you uploaded is too large or the PHP script you are
 
 ## Other Questions
 
-Please use the [discussion page](https://github.com/domcloud/domcloud-io/discussion) :)
+Please use the [discussions page](https://github.com/domcloud/domcloud-io/discussions) :)
