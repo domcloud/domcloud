@@ -2,15 +2,13 @@
 
 Welcome to the DOM Cloud! Innovative hosting provider that you can start for free.
 
-We use GitHub for [Questions](./issues) and [Discussion] (./discussion). For private inquiries please send an email to [support@domcloud.id](mailto:support@domcloud.id).
+We use GitHub for [Questions](https://github.com/domcloud/domcloud-io/issues) and [Discussion](https://github.com/domcloud/domcloud-io/discussion). For private inquiries please send an email to [support@domcloud.id](mailto:support@domcloud.id).
 
 ## Service FAQ
 
 ### Who is the person behind DOM Cloud?
 
-[I myself](https://github.com/willnode)
-
-### Menggunakan server apa dan dimana?
+[I, myself](https://github.com/willnode).
 
 ### Using what server and where?
 
@@ -23,16 +21,16 @@ DOM Cloud uses servers from [Digital Ocean](https://m.do.co/c/facab6f3ac67) and 
 
 Yes. The Freedom package is a free plan, has a capacity of 256 MB and bandwidth of 1 GB per month. Your free website will not expire as long as you renew the expiration period at least once every 2 months.
 
-If you want more, you can [subscribe to another package](https://domcloud.io/price), it applies per website:
+If you want more, you can [subscribe to another plan](https://domcloud.io/price), it applies per website:
 
-| Fitur | Freedom | Lite | Pro | Super | Ultimate |
+| Feature | Freedom | Lite | Pro | Super | Ultimate |
 |---|:-:|:-:|:-:|:-:|:-:|
 | Storage | 256 MB | 1 GB | 4 GB | 7 GB | 10 GB |
 | Bandwidth | 12 GB | 45 GB | 150 GB | 450 GB | 1500 GB |
 | Database | 1 | 3 | 10 | 25 | 50 |
 | Custom Domain | ⛔ | ✅ | ✅ | ✅ | ✅ |
-| Max Subserver | ⛔ | ⛔ | 8 | 25 | 50 |
-| Multi Akun | ⛔ | ⛔ | ⛔ | 25 | 50 |
+| Subserver Max | ⛔ | ⛔ | 8 | 25 | 50 |
+| Multi Account | ⛔ | ⛔ | ⛔ | 25 | 50 |
 
 ### What is the difference between DOM Cloud and Other Hosting Providers?
 
@@ -60,7 +58,7 @@ Then what about the security of your own website? It is your duty to make your w
 
 ### How to Edit a Website?
 
-You can log in via [portal] (https://portal.domcloud.id/en/) and then open the "Login" tab. There you can see several types of login credentials to access:
+You can log in via [portal](https://portal.domcloud.id/en/) and then open the "Login" tab. There you can see several types of login credentials to access:
 
 + ** Webmin ** to access the main hosting settings, including upload files, manage database access and DNS.
 + ** FTP ** to access files using an FTP application (such as FileZilla Client or WinScpy).
@@ -89,7 +87,7 @@ You can change it in Webmin > Server Configuration > PHP Options.
 
 Available PHP versions: `5.6`,` 7.4` (default), `8.0`.
 
-There are 2 PHP mode options namely `FastCGI` and` PHP-FPM` (default) but it is highly recommended that you do not change these default settings.
+There are 2 PHP mode options namely `FastCGI` and `PHP-FPM` (default) but it is highly recommended that you do not change these default settings.
 
 ### How to install PHP Framework?
 
@@ -181,7 +179,7 @@ You can [contact us](mailto:support@domcloud.id) if it is still not correct.
 
 ### HTTPS Error `ERR_CERT_AUTHORITY_INVALID`
 
-This means that your SSL certificate has not been set or has expired. To update it please [scroll up](#how-to-update-ssl).
+This means that your SSL certificate has not been set or has expired. To update it please [scroll up](#how-to-renew-ssl).
 
 If you encounter `ERR_CERTIFICATE_TRANSPARENCY_REQUIRED` after an SSL update, you don't need to panic because of an error due to cache and it will disappear in a few minutes.
 
@@ -197,7 +195,7 @@ chmod -R 750 ~ /
 
 There are 2 possibilities:
 
-+ If this happens for all page URLs, chances are you forgot to set NGINX to [center index.php]() or [turn on passenger mode]() for non-PHP.
++ If this happens for all page URLs, chances are you forgot to set NGINX to [setup index.php](#how-to-install-php-framework) or [turn on passenger mode](#how-do-i-install-non-php-applications) for non-PHP.
 + If this happens for only a few files, there may be errors such as typo in the URL, wrong Base URL or not paying attention to the file name size.
 
 
@@ -206,13 +204,13 @@ There are 2 possibilities:
 This means that there is an error in your PHP, but unlike XAMPP, PHP by default will not raise an error on the website.
 
 You have 2 options for viewing the error:
-+ Via Webmin> Logs and Reports> Nginx Error Log
-+ [Set in .user.ini](): `display_errors = On`
++ Via Webmin > Logs and Reports > Nginx Error Log
++ [Set in .user.ini](#how-do-i-set-php-settings-phpini): `display_errors = On`
 
 ### Nginx Error `502 Bad Gateway` page
 
-It is possible that the file you uploaded is too large or the PHP script you are running is taking too long. You can fix this via [.user.ini]() file.
+It is possible that the file you uploaded is too large or the PHP script you are running is taking too long. You can fix this via [.user.ini](#how-do-i-set-php-settings-phpini) file.
 
 ## Other Questions
 
-Please use [discussion page](./discussion) :)
+Please use the [discussion page](https://github.com/domcloud/domcloud-io/discussion) :)
