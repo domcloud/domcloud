@@ -188,7 +188,7 @@ If you encounter `ERR_CERTIFICATE_TRANSPARENCY_REQUIRED` after an SSL update, yo
 This means that NGINX cannot access the file due to a linux mode setting error in the file. In order to fix this easily you can run this on SSH:
 
 `` bash
-chmod -R 750 ~ /
+chmod -R 750 ~/
 ``
 
 ### Nginx Error page `404 Found`
