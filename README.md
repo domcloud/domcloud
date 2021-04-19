@@ -60,10 +60,10 @@ Then what about the security of your own website? It is your duty to make your w
 
 You can log in via [portal](https://portal.domcloud.id/en/) and then open the "Login" tab. There you can see several types of login credentials to access:
 
-+ ** Webmin ** to access the main hosting settings, including upload files, manage database access and DNS.
-+ ** FTP ** to access files using an FTP application (such as FileZilla Client or WinScpy).
-+ ** Database ** for database access using MySQL or PostgreSQL applications. You can also use the online editor PhpMyAdmin or PhpPgAdmin.
-+ ** SSH ** for terminal access using SSH applications (such as OpenSSH Client or PuTTY) or SSH Online (using Web SSH).
++ **Webmin** to access the main hosting settings, including upload files, manage database access and DNS.
++ **FTP** to access files using an FTP application (such as FileZilla Client or WinScpy).
++ **Database** for database access using MySQL or PostgreSQL applications. You can also use the online editor PhpMyAdmin or PhpPgAdmin.
++ **SSH** for terminal access using SSH applications (such as OpenSSH Client or PuTTY) or SSH Online (using Web SSH).
 
 ### What is the Deployment Feature?
 
@@ -103,7 +103,7 @@ nginx:
     try_files: $uri $uri/ /index.php$is_args$args
 ```
 
-The root path depends on the respective framework. For example WordPress or CI 3 uses `public_html` only while Laravel or CI 4 uses` public_html / public`.
+The root path depends on the respective framework. For example WordPress or CI 3 uses `public_html` only while Laravel or CI 4 uses `public_html / public`.
 
 Don't forget to delete the default `index.html`.
 
@@ -113,7 +113,7 @@ You can override PHP settings via the `.user.ini` file in the document root. Onc
 
 ### How do I install non-PHP applications?
 
-After you have installed the required dependencies (eg `npm i` for Node.JS,` pip install` for Python, etc.), you can configure Nginx to load the application by:
+After you have installed the required dependencies (eg `npm i` for Node.JS, `pip install` for Python, etc.), you can configure Nginx to load the application by:
 
 ```yml
 root: public_html/public
