@@ -21,7 +21,7 @@ DOM Cloud uses servers from [Digital Ocean](https://m.do.co/c/facab6f3ac67) and 
 
 Yes. The Freedom package is a free plan, has a capacity of 256 MB and bandwidth of 1 GB per month. Your free website will not expire as long as you renew the expiration period at least once every 2 months.
 
-If you want more, you can [subscribe to another plan](https://domcloud.io/price), it applies per website:
+If you want more, you can [subscribe to another plan](https://domcloud.io/price), it applies per hosting or website:
 
 | Feature | Freedom | Lite | Pro | Super | Ultimate |
 |---|:-:|:-:|:-:|:-:|:-:|
@@ -31,6 +31,21 @@ If you want more, you can [subscribe to another plan](https://domcloud.io/price)
 | Custom Domain | ⛔ | ✅ | ✅ | ✅ | ✅ |
 | Subserver Max | ⛔ | ⛔ | 8 | 25 | 50 |
 | Multi Account | ⛔ | ⛔ | ⛔ | 25 | 50 |
+
+### What are benefits of using paid Plans?
+
+Paid plans is available to purchase using PayPal, and using these gains your hosting additional features:
++ No more 2 month limit expiration 
++ Can use any custom domain you want
++ DNS feature can be turned on
++ Can purchase additional network bandwidth
++ Can never be accidentally deleted (until it expires)
+
+### Can I switch plan later?
+
+Yes, you can upgrade from free plan to any paid plan anytime. You can also upgrade or purchase additional bandwidth quota after you bought your initial plan.
+
+However, during your paid plan term, you can't downgrade unless it's nearly expiring (in under 1 month). For technical reasons right now you can't ever go back to free plan if you have already purchased a paid plan before.
 
 ### What is the difference between DOM Cloud and Other Hosting Providers?
 
@@ -54,6 +69,12 @@ Then what about us? We have explained earlier, DOM Cloud does not have special s
 
 Then what about the security of your own website? It is your duty to make your website safe from internet attacks. However, if you have already been hit by an attack that has damaged your server data (for example, RCE or SQL Injection) you can still ask for help to restore the server to the backup point before the fatal incident occurred.
 
+### GDPR Compliance
+
+You can delete all your hosting and account data right away if you want to. The only thing that leaves trail is your purchase information (if you ever happen to purchase anything from this service, anyway). Please see the [privacy section](https://domcloud.io/privacy) if you concerns what data is shared for third parties.
+
+Unfornatunely, I don't have lawyers, I can't make sure if this 100% "GDPR Compliance". Please avoid this service if you're an european and want to doing serious business.
+
 ## Technical Tutorial FAQ
 
 ### How to Edit a Website?
@@ -64,6 +85,24 @@ You can log in via [portal](https://portal.domcloud.id/en/) and then open the "L
 + **FTP** to access files using an FTP application (such as FileZilla Client or WinScpy).
 + **Database** for database access using MySQL or PostgreSQL applications. You can also use the online editor PhpMyAdmin or PhpPgAdmin.
 + **SSH** for terminal access using SSH applications (such as OpenSSH Client or PuTTY) or SSH Online (using Web SSH).
+
+### Is there any requirements need to considered when purchasing domain?
+
+As with usual terms when you bought a domain, you need to provide a public information of your contact info or whoever is accountable with. This includes name, email, phone number and physical address. This is required in comply with WHOIS requirements that basically enforced during purchasing domains. 
+
+For security reason your login email address will always be send as the owner of the domain. Because of this, you must make sure that your login email is active, as you need it later for confirming your email address as the owner for the first time.
+
+During confirming your email for domain purchase, if you've been asked for Indonesian Citizen Number (NIK) along the way, you can leave it empty.
+
+If you're not feeling safe purchasing domain from here, feel free to buy it from somewhere else instead.
+
+### How to point a custom domain here?
+
+You can add an CNAME record of your domain to `sga.domcloud.id` or `nyc.domcloud.id` (depending which server you're choosing).
+
+### Can I change a server location of existing Hosting?
+
+No, you can't do that. You have to manually migrate things using Webmin portal.
 
 ### What is the Deployment Feature?
 
