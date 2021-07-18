@@ -2,43 +2,43 @@ softwares:
   - title: Virtualmin Panel
     sub1: Manage file server interactively
     sub2: cPanel-like, but more user-friendly
-    img: /assets/virtualmin.png
+    img: /assets/feat/virtualmin.png
   - title: Nginx Webserver
     sub1: Easily configure webserver
     sub2: Much faster and easier than Apache
-    img: /assets/nginx.png
+    img: /assets/feat/nginx.png
   - title: Let's Encrypt
     sub1: HTTPS connection automatically
     sub2: No need to buy an SSL certificate!
-    img: /assets/letsencrypt.png
+    img: /assets/feat/letsencrypt.png
   - title: PostgreSQL
     sub1: MySQL alternative modern database
     sub2: MySQL of course can still be used of course
-    img: /assets/postgresql.png
+    img: /assets/feat/postgresql.png
   - title: PHP
     sub1: PHP multi-version toolset including Composer
     sub2: Need PHP 5.6? 7.4? 8.x? No problem.
-    img: /assets/php.png
+    img: /assets/feat/php.png
   - title: Phusion Passenger
     sub1: Modules for web applications other than PHP
     sub2: All app languages ​​work in DOM Cloud!
-    img: /assets/passenger.png
+    img: /assets/feat/passenger.png
   - title: Python
     sub1: Python 3 multi-version toolset including Pip Installation
     sub2: Django? Flash? Jupiter Notebook? No problem.
-    img: /assets/python.png
+    img: /assets/feat/python.png
   - title: Node.JS
     sub1: Node.JS Toolset including NPM and Yarn . Installation
     sub2: Express? Hugo? Gatsby? Next.js? No problem.
-    img: /assets/nodejs.png
+    img: /assets/feat/nodejs.png
   - title: Ruby
     sub1: Ruby Toolset including Bundler and Gem Installation
     sub2: Ruby on Rails? Other frameworks? No problem.
-    img: /assets/ruby.png
+    img: /assets/feat/ruby.png
   - title: Many more languages
     sub1: Go, Rust, Deno, C++, any language can.
     sub2: Using Phusion Passenger GLS of course
-    img: /assets/gls.png
+    img: /assets/feat/gls.png
 benefits:
   - title: Free Start!
     sub1: No trial, no credit card, just make it right away
