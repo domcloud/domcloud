@@ -43,9 +43,9 @@ If we find a website that violates these terms of service, we reserve the right 
 
 ## Resource Usage
 
-DOM Cloud provides hosting services with price, quota, bandwidth capacity, and other hosting features according to the respective packages and services listed on [price page](/ price). It is necessary to pay attention to avoid matters related to the use of Disk space and bandwidth that are listed in the above points so that your quota does not run out quickly. If you need more bandwidth and disk space usage, please review your website system by installing a CDN or using a third-party file storage service.
+DOM Cloud provides hosting services with price, quota, bandwidth capacity, and other hosting features according to the respective plans and services listed on [price page](/ price). It is necessary to pay attention to avoid matters related to the use of Disk space and bandwidth that are listed in the above points so that your quota does not run out quickly. If you need more bandwidth and disk space usage, please review your website system by installing a CDN or using a third-party file storage service.
 
-In addition to imposing limits on what is stated in pricing, DOM implements FUP (Fair Usage Policy) on several aspects that our hosting cannot automatically limit, such as inodes, CPU, and memory usage. We tolerate high CPU usage that only runs for a few minutes a day, but not for long executions. Same for high memory usage, if you use high intensive applications, we will communicate with you to upgrade the package so that we can also upgrade the system capacity and prevent overselling.
+In addition to imposing limits on what is stated in pricing, DOM implements FUP (Fair Usage Policy) on several aspects that our hosting cannot automatically limit, such as inodes, CPU, and memory usage. We tolerate high CPU usage that only runs for a few minutes a day, but not for long executions. Same for high memory usage, if you use high intensive applications, we will communicate with you to upgrade the plan so that we can also upgrade the system capacity and prevent overselling.
 
 
 ## Payment and Account Activity
@@ -56,7 +56,7 @@ Any hosting that is suspended due to abuse or has not made a payment or an exten
 
 ## Refund Terms
 
-DOM Cloud provides an opportunity to make a refund if you have just purchased a paid plan that is less than 15 days old from the first purchase. The refund is a refund of 90% of the hosting price, excluding the purchase of a domain and additional data bandwidth. Please note that Refunds are not valid for package extensions or upgrades.
+DOM Cloud provides an opportunity to make a refund if you have just purchased a paid plan that is less than 15 days old from the first purchase. The refund is a refund of 90% of the hosting price, excluding the purchase of a domain and additional data bandwidth. Please note that Refunds are not valid for plan extensions or upgrades.
 
 We only serve the refund process to a Himbara account (BNI, BRI, Mandiri, or BTN) for Indonesian Bank or via PayPal for customers outside of Indonesia. After we send the money, your hosting is automatically deleted without any notification and other backups. You can submit a refund via email support.
 

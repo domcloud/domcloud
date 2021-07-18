@@ -19,7 +19,7 @@ DOM Cloud uses servers from [Digital Ocean](https://m.do.co/c/facab6f3ac67) and 
 
 ### Is it really free?
 
-Yes. The Freedom package is a free plan, has a capacity of 256 MB and bandwidth of 1 GB per month. Your free website will not expire as long as you renew the expiration period at least once every 2 months.
+Yes. The Freedom plan is a free plan, has a capacity of 256 MB and bandwidth of 1 GB per month. Your free website will not expire as long as you renew the expiration period at least once every 2 months.
 
 If you want more, you can [subscribe to another plan](https://domcloud.io/price), it applies per hosting or website:
 
@@ -35,7 +35,7 @@ If you want more, you can [subscribe to another plan](https://domcloud.io/price)
 ### What are benefits of using paid Plans?
 
 Paid plans is available to purchase using PayPal, and using these gains your hosting additional features:
-+ No more 2 month limit expiration 
++ No more 2 month limit expiration
 + Can use any custom domain you want
 + DNS feature can be turned on
 + Can purchase additional network bandwidth
@@ -88,7 +88,7 @@ You can log in via [portal](https://portal.domcloud.id/en/) and then open the "L
 
 ### Is there any requirements need to considered when purchasing domain?
 
-As with usual terms when you bought a domain, you need to provide a public information of your contact info or whoever is accountable with. This includes name, email, phone number and physical address. This is required in comply with WHOIS requirements that basically enforced during purchasing domains. 
+As with usual terms when you bought a domain, you need to provide a public information of your contact info or whoever is accountable with. This includes name, email, phone number and physical address. This is required in comply with WHOIS requirements that basically enforced during purchasing domains.
 
 For security reason your login email address will always be send as the owner of the domain. Because of this, you must make sure that your login email is active, as you need it later for confirming your email address as the owner for the first time.
 

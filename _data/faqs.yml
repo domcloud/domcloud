@@ -1,7 +1,7 @@
 -
   - id: faq01
     title: Is the Freedom Plan really Free?
-    body: <p>Yes, the Freedom package does not require any special application. The Freedom Package has a grace period of up to 2 months, but you can extend the grace period whenever you want.</p>
+    body: <p>Yes, the Freedom plan does not require any special application. The Freedom Plan has a grace period of up to 2 months, but you can extend the grace period whenever you want.</p>
   - id: faq02
     title: What are the payment methods?
     body: <p>We use TransferWire to proceed international payments. But right now it has to done manually using support request</p>
