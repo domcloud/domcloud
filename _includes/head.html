@@ -12,8 +12,8 @@
   {% capture color %}{% if page.color %}{{ page.color }}{% else %}#c70{% endif %}{% endcapture %}
   {% capture description %}{{ page.excerpt | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
   <title>{{ title }}{{ site.title }}</title>
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/assets/icon.png">
+  <link rel="icon" href="/assets/icon/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/icon/apple-touch-icon.png">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="manifest" href="/site.webmanifest">
   <meta content="summary" name="twitter:card">

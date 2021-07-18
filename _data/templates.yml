@@ -19,7 +19,7 @@
   color: "#5091CD"
   link: joomla.yml
 - name: Flarum
-  icon: /assets/flarum.svg
+  icon: /assets/feat/flarum.svg
   color: "#E7762E"
   link: flarum.yml
 - name: Ghost
