@@ -16,7 +16,7 @@
     padding-top: 80px;
     min-height: 60vh;
   }
-  &.top.text-white {
+  &.top .text-white, &.top.text-white {
     text-shadow: 0 0 10px black;
   }
   &.fixed {

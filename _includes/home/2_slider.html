@@ -1,0 +1,85 @@
+<p class="h4 my-5 text-center" id="plans">How many target visitors to your website?</p>
+<div class="row g-0 p-5" id="rcolor" style="background-color: white; text-shadow: 0px 0px 20px white;">
+    <div class="col-md-6 bg">
+        <input type="range" min="0.1" max="1" step="0.05" class="w-75" value="0" id="rinput">
+        <p class="h3 my-3">~<span id="rval">100</span> visitors</p>
+        <p><small>For average use 256 KB / visit</small></p>
+    </div>
+    <div class="col-md-6 text-left d-flex flex-column pt-5 pt-md-0 justify-content-center">
+        <p>Try<br> <span class="h2"><span id="rplan">Freedom</span></span></p>
+        <p>Price per year <b><span id="rprice">Gratis!</span></b> </p>
+        <p id="rdesc">No need to spend! Suitable for use when starting a website.</p>
+        <p><a style="color: inherit;" href="/price">See package comparison details</a></p>
+    </div>
+    <script>
+        const rlist = [{
+            "val": 4000,
+            "plan": "Freedom Plan",
+            "price": "Free!",
+            "desc": "Forever free",
+            "color": "black",
+        }, {
+            "val": 15000,
+            "plan": "Lite Plan",
+            "price": "US$ 5.00",
+            "desc": "For small websites",
+            "color": "indigo",
+        }, {
+            "val": 25000,
+            "plan": "Kit Plan",
+            "price": "US$ 10.00",
+            "desc": "For growing websites",
+            "color": "darkblue",
+        }, {
+            "val": 50000,
+            "plan": "Pro Plan",
+            "price": "US$ 25.00",
+            "desc": "For professional websites",
+            "color": "white",
+        }, {
+            "val": 150000,
+            "plan": "Super Plan",
+            "price": "US$ 60.00",
+            "desc": "For business websites",
+            "color": "lightgoldenrodyellow",
+        }, {
+            "val": 250000,
+            "plan": "Ultimate Plan",
+            "price": "US$ 100.00",
+            "desc": "For ambition websites",
+            "color": "lightblue",
+        }];
+        const lerpColor = function (a, b, amount) {
+            const ar = a >> 16,
+                ag = a >> 8 & 0xff,
+                ab = a & 0xff,
+
+                br = b >> 16,
+                bg = b >> 8 & 0xff,
+                bb = b & 0xff,
+
+                rr = ar + amount * (br - ar),
+                rg = ag + amount * (bg - ag),
+                rb = ab + amount * (bb - ab);
+
+            return (rr << 16) + (rg << 8) + (rb | 0);
+        };
+        var f = function (e) {
+            var v = Math.ceil(Math.pow(e.target.value, 4) * 1000) * 250
+            var t = rlist.findIndex(x => x.val >= v);
+            document.getElementById('rval').innerText = v.toLocaleString();
+            document.getElementById('rplan').innerText = rlist[t].plan;
+            document.getElementById('rprice').innerText = rlist[t].price;
+            document.getElementById('rdesc').innerText = rlist[t].desc;
+            document.getElementById('rcolor').style.backgroundColor = '#' + lerpColor(0xffffff, 0x000020, e.target.value - 0.1).toString(16);
+            document.getElementById('rcolor').style.color =  rlist[t].color;
+            document.getElementById('rcolor').style.boxShadow = `inset 0 0 ${t}px ${t * 2}px ` + rlist[t].color;
+        };
+        f({
+            target: {
+                value: 0.1
+            }
+        });
+        document.getElementById('rinput').oninput = f;
+    </script>
+</div>

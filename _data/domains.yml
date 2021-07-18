@@ -1,0 +1,37 @@
+global:
+- dom: .COM
+  price: $ 11.00
+  renew: $ 11.00
+  bg: '#8f8'
+- dom: .NET
+  price: $ 14.00
+  renew: $ 14.00
+  bg: '#5e5'
+- dom: .ORG
+  price: $ 11.00
+  renew: $ 14.00
+  bg: '#8f8'
+- dom: .BIZ
+  price: $ 17.00
+  renew: $ 17.00
+  bg: '#5e5'
+- dom: .XYZ
+  price: $ 3.00
+  renew: $ 12.00
+  bg: '#8f8'
+- dom: .SITE
+  price: $ 4.00
+  renew: $ 27.00
+  bg: '#5e5'
+- dom: .ONLINE
+  price: $ 4.00
+  renew: $ 33.00
+  bg: '#8f8'
+- dom: .TECH
+  price: $ 5.00
+  renew: $ 45.00
+  bg: '#5e5'
+- dom: .INFO
+  price: $ 6.00
+  renew: $ 17.00
+  bg: '#8f8'

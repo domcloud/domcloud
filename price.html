@@ -1,123 +1,114 @@
 ---
 lang: en
-title: Price
-excerpt: Free Hosting with 200 MB capacity, 5 GB bandwidth, 1 Database, Free Domain without ads forever.
-layout: price
-color: '#c50'
-head:
-  h1: List of Host Plan
-  h2: Which host plan suits for you?
-  priceayear: US$ a year
-  spec: Specification
-  suit: Suitable for
-  faq: FAQ
-  signuptext: Sign up now
-  signuplink: https://portal.domcloud.id/en/register
-plans:
-  - title: Freedom Plan
-    style: 'white'
-    price: "Free!"
-    items:
-    - Free Domain
-    - <b>256 MB</b> Storage
-    - <b>15 GB</b> Bandwidth
-    - <b>1</b> Database
-    suits:
-    - Testing a Website
-    - Web for Personal
-  - title: Lite Plan
-    style: '#ffe'
-    price: "5.00"
-    items:
-    - Custom Domain
-    - <b>1024 MB</b> Storage
-    - <b>45 GB</b> Bandwidth
-    - <b>3</b> Databases
-    suits:
-    - Testing a Website
-    - Web for Blogging
-    - Web for Portfolio
-  - title: Pro Plan
-    style: '#ffc'
-    price: "25.00"
-    items:
-    - Custom Domain
-    - <b>4 GB</b> Storage
-    - <b>150 GB</b> Bandwidth
-    - <b>8</b> Subservers
-    - <b>10</b> Databases
-    suits:
-    - Web for Public
-    - Multimedia-rich Web
-    - Web for Organization
-  - title: Super Plan
-    style: '#ff8'
-    price: "75.00"
-    items:
-    - Custom Domain
-    - <b>7 GB</b> Storage
-    - <b>450 GB</b> Bandwidth
-    - <b>25</b> Subservers
-    - <b>25</b> Databases
-    - <b>25 Sub-Accounts</b>
-    suits:
-    - Web for Business
-    - Information System
-    - Public Service
-  - title: Ultimate Plan
-    style: '#ff0'
-    price: "150.00"
-    items:
-    - Custom Domain
-    - <b>10 GB</b> Storage
-    - <b>1500 GB</b> Bandwidth
-    - <b>50</b> Subservers
-    - <b>50</b> Databases
-    - <b>50 Sub-Accounts</b>
-    suits:
-    - Marketplace
-    - Business Integration
-    - Big Data
-    suits:
-    - ???
-faqs:
-  -
-    - id: faq01
-      title: Is the Freedom Plan really Free?
-      body: <p>Yes, the Freedom package does not require any special application. The Freedom Package has a grace period of up to 2 months, but you can extend the grace period whenever you want.</p>
-    - id: faq02
-      title: What are the payment methods?
-      body: <p>We use TransferWire to proceed international payments. But right now it has to done manually using support request</p>
-    - id: faq03
-      title: Are there any other costs besides hosting?
-      body: <p>If you want a domain that ends in other than <b>.dom.my.id</b>,  you can purchase the domain <a href="/domain.html" target="_blank" rel="noopener noreferrer">listed here</a>. In addition there is an additional fee of 50 cents on every transaction in the DOM Cloud.</p>
-    - id: faq04
-      title: Can we submit a Refund?
-      body: <p>If your hosting is less than 30 days from the date of purchase, you can contact support to process your refund request. The amount purchased is 90% of the hosting price and it does not include any add-on or domain bandwidth purchases.</p>
-  -
-    - id: faq10
-      title: The difference between storage and bandwidth?
-      body: <p>Storage is a usage limit that is calculated as the total capacity of files, databases, and other server data. While Bandwidth is the limit of data sent within a certain time.</p>
-    - id: faq11
-      title: What is the principle of bandwidth limitation?
-      body: <p>The bandwidth shown is the bandwidth per year. However, the effective limitation is done per month. For example, for the Freedom plan you get 18 GB of bandwidth, then you are limited to 1.5 GB each month. This restriction will be reset at the beginning of each month.</p>
-    - id: faq12
-      title: How do you calculate bandwidth requirements?
-      body: <p>You can do a quick calculation with the average website size of 256 KB per page. For example, with the Freedom plan limitation of 1.5 GB per month, you can get a maximum traffic of around 6000 views per month. This figure can be increased even further if you optimize the size of the website, using a CDN or purchase additional bandwidth.</p>
-    - id: faq13
-      title: I feel that the capacity given is lacking
-      body: <p>As a website owner, it is also your obligation to optimize resource usage. This is a reminder that you always check website performance so that it remains responsive and good for SEO. If your media resource demands are high, you can use third party file storage such as Google Drive, Dropbox, AWS S3 or Cloudinary.</p><p>If you just want more additional bandwidth, you can purchase it as add-ons at 5 cents per GiB.</p>
-  -
-    - id: faq21
-      title: Aren't there Unlimited options?
-      body: <p>Several other hosting providers claim to provide Unlimited storage and bandwidth. This is not always true, because the host uses "Fair Usage" for which we do not know the exact "fair" limits. DOM Cloud breaks this confusion by explaining the limits you actually get in each price range.</p>
-    - id: faq22
-      title: Where is the server located?
-      body: <p>DOM Cloud does not build its own servers. DOM Cloud is a hosting service on top of the Digital Ocean Infrastructure and we are currently installing the main server in Singapore.</p>
-    - id: faq23
-      title: Does DOM Cloud have an Uptime Guarantee?
-      body: <p>The DOM Cloud server is guaranteed by the <a href="https://www.digitalocean.com/docs/platform/droplet-policies/" target="_blank" rel="noopener noreferrer">99.99% Uptime Droplet SLA</a>, however DOM Cloud itself does not guarantee downtime caused by maintenance, operator error or certain cyber attacks.</p>
-    - id: faq24
-      title: I'm still curious about the DOM Cloud policy
-      body: <p>You can read <a href="/about.html">about us</a> and <a href="/service.html">our terms of service</a>.f you are still curious, you can cross check our statement via <a href="https://github.com/domcloud/dom-portal">source code portal</a> or ask us through support.</p>
+title: Pricing
+excerpt: Which hosting package is right for you? From Freedom to Ultimate packages, there's sure to be one that's right for the size of your website.
+layout: default
+color: '#50c'
 ---
+
+<div class="text-center">
+  <div class="jumbotron bg top fixed text-white" style="
+      --bg: url(https://images.unsplash.com/photo-1601248543571-bf246689c301?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1056&q=80);
+      background-color: #50c;
+    ">
+    <h1 class="display-4">Hosting Package Price List</h1>
+  </div>
+  <div class="container my-5">
+    <div class="row">
+      {% for plan in site.data.pricing %}
+      <div class="col-md-6 col-lg-4 my-3">
+        <div class="card" style="{{ plan.style }}">
+          <div class="card-body">
+            <h4>{{ plan.title }}</h4>
+            <h4 class="display-4">{{ plan.price }}</h4>
+            <div class="mb-3" style="opacity: 50%;">{{ plan.renew }}</div>
+            <div class="row justify-content-center">
+              <div class="list-group text-start col-auto">
+                {% for item in plan.items %}
+                <div class="list-group-item" style="{{ plan.style }}"><i class="fas {{item.icon}} me-2"></i>
+                  {{ item.text }}</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+<div class="text-center" id="domain">
+  <div
+    class="jumbotron bg top fixed text-white"
+    style="
+      --bg: url(https://images.unsplash.com/photo-1551970634-747846a548cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+      background-color: #353;
+    "
+  >
+    <h1 class="display-4">Domain Price List</h1>
+  </div>
+
+
+  <div class="row g-0">
+    {% for d in site.data.domains.global %}
+    <div class="col-lg-4 text-left">
+      <div
+        class="px-4 py-4 d-flex justify-content-between align-items-end"
+        style="background-color: {{ d.bg }}"
+      >
+        <div class="h2 card-title my-auto" style="width: 4em">{{ d.dom }}</div>
+        <div>
+          <div class="display-4">{{ d.price }}</div>
+          <h6 class="text-muted">Buy</h6>
+        </div>
+        <div>
+          <div class="h5">{{ d.renew }}</div>
+          <h6 class="text-muted">Extend</h6>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<div class="text-center" id="domain">
+  <div
+    class="jumbotron bg top fixed text-white"
+    style="
+      --bg: url(https://images.unsplash.com/photo-1560961911-293cfd783727?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80);
+      background-color: #fe3;
+    "
+  >
+    <h1 class="display-4">FAQ</h1>
+  </div>
+
+<div class="p-5">
+  <div class="row">
+    {% for faqrow in site.data.faqs %}
+    <div class="col-md-4">
+      <div class="accordion">
+        {% for faq in faqrow %}
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#{{ faq.id }}" aria-expanded="false">
+              {{ faq.title }}
+            </button>
+          </h2>
+          <div class="collapse multi-collapse mb-3" id="{{ faq.id }}">
+            <div class="accordion-body">{{ faq.body }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<p class="mt-2 text-center">
+  <a class="btn btn-lg btn-warning" href="https://portal.domcloud.id/id/register">Sign up now</a>
+</p>

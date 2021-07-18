@@ -1,0 +1,36 @@
+<div class="container my-5">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center">Multi Location Server</h3>
+            <p class="text-center">Choose closest to the location of your audience</p>
+            <div style="position: relative;">
+                <img src="/assets/worldmap.png" class="w-100" alt="">
+                <a href="#sga" style="position: absolute;
+              top: 57.3%;
+              left: 75.8%;
+              font-size: 30px;
+              transform: translate(-11px, -45px);" data-bs-toggle="popover" data-bs-trigger="focus" title="SGA Server"
+                    data-bs-content="CNAME: sga.domcloud.id,&lt;br&gt; DEFAULT DOMAIN: *.dom.my.id" data-bs-html="true">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+                <a href="#nyc" style="position: absolute;
+            top: 31.5%;
+            left: 27.8%;
+            font-size: 30px;
+            transform: translate(-11px, -45px);" data-bs-toggle="popover" data-bs-trigger="focus" title="NYC Server"
+                    data-bs-content="CNAME: nyc.domcloud.id,&lt;br&gt; DEFAULT DOMAIN: *.domcloud.io"
+                    data-bs-html="true">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    });
+</script>
