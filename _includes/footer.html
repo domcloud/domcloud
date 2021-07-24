@@ -11,13 +11,34 @@
     <li><a href="https://domcloud.id/">Indonesian?</a></li>
   </ul>
 
-  <p><img src="/assets/icon.svg" alt="icon" width="200px"/></p>
+  <p><img src="/assets/icon.svg" alt="icon" width="200px" /></p>
   <p>
     &copy; 2020 DOM Cloud Hosting
   </p>
-{%- if jekyll.environment == 'production' and site.google_analytics -%}
+  <div class="d-block d-md-none" style="height: 200px;">
+  </div>
+  <div class="container" style="position: absolute; left: 0; bottom: 0;">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-4">
+
+        <div style="font-style: italic; margin-bottom: 30px; text-align: justify;">
+          <div class="card">
+            <div class="card-body">
+              <small> Fineprint: All content in subdomain *.domcloud.io is user generated content
+                and it's not affiliated nor endorsed by DOM Cloud in anyway.
+                <a href="/service#disclaimer" class="text-dark">Learn more</a>. <a href="mailto:abuse@domcloud.id"
+                  class="text-dark">Report Abuse</a>.</small>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
   {%- include google-analytics.html -%}
-{%- endif -%}
+  {%- endif -%}
 </footer>
 
 <a href="https://github.com/domcloud/domcloud-io/discussions/new" class="float github" target="_blank"

@@ -4,15 +4,19 @@ layout: page
 lang: en
 ---
 
-> * Last updated: July 14, 2021 *
+> *Last updated: July 24, 2021*
 
-Please read the following notices before using this website. Use of the service and its features means that you have accepted the applicable terms and conditions. Violating or ignoring any of the following terms and conditions will result in sanctions until account closure with or without notification.
+Please read the following notices before using this website. Use of the service and its features means that you have accepted the applicable terms and conditions. Violating or ignoring any of the following terms and conditions will result in sanctions includes account closure with or without notification.
+
+Subject to these Terms of Service (this "Agreement"), DOM Cloud ("DOM Cloud Hosting", "DOM Cloud", "we", "us" and/or "our") provides access to DOM Cloud's cloud platform, including, without limitation, this website, certain API's and domain registration services (collectively, the "Services"). By using or accessing the Services, you acknowledge that you have read, understand, and agree to be bound by this Agreement.
+
+If you are entering into this Agreement on behalf of a company, business or other legal entity, you represent that you have the authority to bind such entity to this Agreement, in which case the term "you" shall refer to such entity. If you do not have such authority, or if you do not agree with this Agreement, you must not accept this Agreement and may not use the Services.
 
 ## Content
 
-You agree to bear and not endanger DOM Cloud from various claims resulting from the use of our services. DOM Cloud is not responsible for files, data, content from websites of DOM Cloud service users. All services provided by DOM Cloud can only be used for lawful purposes (not against the law). Use of our services to violate copyright or trademark is prohibited. This also includes distributing unauthorized copies of copyrighted music, books, photographs, or other works. Offering or selling counterfeit products or merchandise from trademark holders will have the effect of the cancellation of your account. Any accounts found to be in breach of someone else's copyright will be suspended immediately. And all accounts found to be repeatedly infringing copyright regardless of the warning will be removed from our service.
+You agree to bear and not endanger DOM Cloud from various claims resulting from the use of our services. DOM Cloud is not responsible for software, files, data, code, content (collectively, the "Information") from websites of DOM Cloud service users. All services provided by DOM Cloud can only be used for lawful purposes (not against the law). Use of our services to violate copyright or trademark is prohibited. This also includes, but not limited to, distributing unauthorized copies of copyrighted music, books, photographs, or other works. Offering or selling counterfeit products or merchandise from trademark holders will have the effect of the cancellation of your account. Any accounts found to be in breach of someone else's copyright will be suspended immediately. And all accounts found to be repeatedly infringing copyright regardless of the warning will be removed from our service.
 
-Users are **PROHIBITED** from loading and publishing content that contains:
+Users are **PROHIBITED** from loading and publishing information that contains:
 
 1. Copyright material without the permission of the owner
 2. Pornography, humiliation, and general immorality
@@ -43,7 +47,7 @@ If we find a website that violates these terms of service, we reserve the right 
 
 ## Resource Usage
 
-DOM Cloud provides hosting services with price, quota, bandwidth capacity, and other hosting features according to the respective plans and services listed on [price page](/ price). It is necessary to pay attention to avoid matters related to the use of Disk space and bandwidth that are listed in the above points so that your quota does not run out quickly. If you need more bandwidth and disk space usage, please review your website system by installing a CDN or using a third-party file storage service.
+DOM Cloud provides hosting services with price, quota, data transfer capacity, and other hosting features according to the respective plans and services listed on [price page](/price). It is necessary to pay attention to avoid matters related to the use of Disk space and data transfer that are listed in the above points so that your quota does not run out quickly. If you need more data transfer and disk space usage, please review your website system by installing a CDN or using a third-party file storage service.
 
 In addition to imposing limits on what is stated in pricing, DOM implements FUP (Fair Usage Policy) on several aspects that our hosting cannot automatically limit, such as inodes, CPU, and memory usage. We tolerate high CPU usage that only runs for a few minutes a day, but not for long executions. Same for high memory usage, if you use high intensive applications, we will communicate with you to upgrade the plan so that we can also upgrade the system capacity and prevent overselling.
 
@@ -52,11 +56,11 @@ In addition to imposing limits on what is stated in pricing, DOM implements FUP 
 
 You agree to provide correct payment information when ordering our products or services. Your order will be processed as soon as payment confirmation is made.
 
-Any hosting that is suspended due to abuse or has not made a payment or an extension for more than 30 days will be permanently deleted. DOM Cloud does not provide backups permanently deleted hosting. Please understand that this does not affect hosting running out of disk space or bandwidth.
+Any hosting that is suspended due to abuse or has not made a payment or an extension for more than 30 days will be permanently deleted. DOM Cloud does not provide backups permanently deleted hosting. Please understand that this does not affect hosting running out of disk space or data transfer.
 
 ## Refund Terms
 
-DOM Cloud provides an opportunity to make a refund if you have just purchased a paid plan that is less than 15 days old from the first purchase. The refund is a refund of 90% of the hosting price, excluding the purchase of a domain and additional data bandwidth. Please note that Refunds are not valid for plan extensions or upgrades.
+DOM Cloud provides an opportunity to make a refund if you have just purchased a paid plan that is less than 15 days old from the first purchase. The refund is a refund of 90% of the hosting price, excluding the purchase of a domain and additional data data transfer. Please note that Refunds are not valid for plan extensions or upgrades.
 
 We only serve the refund process to a Himbara account (BNI, BRI, Mandiri, or BTN) for Indonesian Bank or via PayPal for customers outside of Indonesia. After we send the money, your hosting is automatically deleted without any notification and other backups. You can submit a refund via email support.
 
@@ -80,7 +84,7 @@ You agree that you must defend, protect, save and not endanger DOM Cloud from an
 
 ## Disclaimer
 
-DOM Cloud is not responsible for any damage that may occur to your business. DOM Cloud does not provide any warranty, either express or implied on the services we provide. This includes data loss caused by delays, non-delivery, incorrect delivery, and any service interruptions caused by DOM Cloud and its employees.
+**The information, service and support service is provided "as is" and DOM Cloud is not responsible for any damage that may occur to you or your business. DOM Cloud does not provide any warranty, either express or implied on the information, services and support service we or our users provide. This includes, but is not limited to, data loss caused by delays, non-delivery, incorrect delivery, and any service interruptions caused by DOM Cloud and its customers or employees.**
 
 DOM Cloud does not serve taking domain and host access rights or ownership with developers. If you have a problem with a developer (the developer is blurred/unreachable), you must contact the developer to solve it personally.
 
@@ -94,6 +98,6 @@ DOM Cloud may disclose user data and information to law enforcement agencies or 
 
 DOM Cloud reserves the right to change its policies at any time without notice.
 
-DOM Cloud and users agree to resolve disputes by deliberation to reach a consensus. If the dispute cannot be resolved by deliberation, it will be resolved under the applicable legal provisions in Indonesia.
+DOM Cloud and users agree to resolve disputes by deliberation and not in a class, consolidated, or representative action to reach a consensus. If the dispute cannot be resolved by deliberation, it will be resolved under the applicable legal provisions in Indonesia.
 
-* You can view the archive [changes to this statement and terms of service here](https://github.com/domcloud/domcloud-io/commits/master/service.md) *
+*You can view the archive [changes to this statement and terms of service here](https://github.com/domcloud/domcloud-io/commits/master/service.md)*
