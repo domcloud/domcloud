@@ -2,36 +2,75 @@ global:
 - dom: .COM
   price: $ 11.00
   renew: $ 11.00
+  for: Commercial
   bg: '#8f8'
 - dom: .NET
   price: $ 14.00
   renew: $ 14.00
+  for: Networking
   bg: '#5e5'
 - dom: .ORG
   price: $ 11.00
   renew: $ 14.00
+  for: Organization
   bg: '#8f8'
 - dom: .BIZ
   price: $ 17.00
   renew: $ 17.00
+  for: Business
   bg: '#5e5'
 - dom: .XYZ
   price: $ 3.00
   renew: $ 12.00
+  for: Unique
   bg: '#8f8'
 - dom: .SITE
   price: $ 4.00
   renew: $ 27.00
+  for: Simple
   bg: '#5e5'
 - dom: .ONLINE
   price: $ 4.00
   renew: $ 33.00
+  for: Online
   bg: '#8f8'
 - dom: .TECH
   price: $ 5.00
   renew: $ 45.00
+  for: Technology
   bg: '#5e5'
 - dom: .INFO
   price: $ 6.00
   renew: $ 17.00
+  for: Information
+  bg: '#8f8'
+- dom: .IO
+  price: $ 57.00
+  renew: $ 57.00
+  for: Startup
+  bg: '#5e5'
+- dom: .PRO
+  price: $ 7.00
+  renew: $ 19.00
+  for: Professional
+  bg: '#8f8'
+- dom: .SHOP
+  price: $ 10.00
+  renew: $ 32.00
+  for: Shopping
+  bg: '#5e5'
+- dom: .LIVE
+  price: $ 5.00
+  renew: $ 22.00
+  for: Livestream
+  bg: '#8f8'
+- dom: .NEWS
+  price: $ 22.00
+  renew: $ 22.00
+  for: News
+  bg: '#5e5'
+- dom: .AGENCY
+  price: $ 20.00
+  renew: $ 20.00
+  for: Agency
   bg: '#8f8'

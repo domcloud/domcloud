@@ -53,12 +53,15 @@ color: '#50c'
 
   <div class="row g-0">
     {% for d in site.data.domains.global %}
-    <div class="col-lg-4 text-left">
+    <div class="col-lg-4 text-start">
       <div
         class="px-4 py-4 d-flex justify-content-between align-items-end"
         style="background-color: {{ d.bg }}"
       >
-        <div class="h2 card-title my-auto" style="width: 4em">{{ d.dom }}</div>
+        <div class="card-title my-auto" style="width: 5em">
+          <div class="h2">{{ d.dom }}</div>
+          <div class="small">{{ d.for }}&nbsp;Site</div>
+        </div>
         <div>
           <div class="display-4">{{ d.price }}</div>
           <h6 class="text-muted">Buy</h6>
