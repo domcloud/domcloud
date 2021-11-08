@@ -1,16 +1,16 @@
 -
   - id: faq01
     title: Is the Freedom Plan really Free?
-    body: <p>Yes, the Freedom plan does not require any special application. The Freedom Plan has a grace period of up to 2 months, but you can extend the grace period whenever you want.</p>
+    body: <p>Yes, the Freedom plan is really free without giving any payment details. The Freedom Plan has a grace period of up to 2 months, but you can extend the grace period whenever you want.</p>
   - id: faq02
     title: What are the payment methods?
-    body: <p>We use TransferWire to proceed international payments. But right now it has to done manually using support request</p>
+    body: <p>We use PayPal to proceed international payments.</p>
   - id: faq03
     title: Are there any other costs besides hosting?
-    body: <p>If you want a domain that ends in other than <b>.dom.my.id</b>,  you can purchase the domain <a href="/domain.html" target="_blank" rel="noopener noreferrer">listed here</a>. In addition there is an additional fee of 50 cents on every transaction in the DOM Cloud.</p>
+    body: <p>All host ends with <b>.domcloud.io</b>, but you can have other domains as long as you've already own it. If not, you may need purchase one. There's also additional PayPal transaction fee that automatically calculated at checkout.</p>
   - id: faq04
     title: Can we submit a Refund?
-    body: <p>If your hosting is less than 30 days from the date of purchase, you can contact support to process your refund request. The amount purchased is 90% of the hosting price and it does not include any add-on or domain bandwidth purchases.</p>
+    body: <p>Currently there's no refund system available yet.</p>
 -
   - id: faq10
     title: The difference between storage and bandwidth?
@@ -22,18 +22,18 @@
     title: How do you calculate bandwidth requirements?
     body: <p>You can do a quick calculation with the average website size of 256 KB per page. For example, with the Freedom plan limitation of 1.5 GB per month, you can get a maximum traffic of around 6000 views per month. This figure can be increased even further if you optimize the size of the website, using a CDN or purchase additional bandwidth.</p>
   - id: faq13
-    title: I feel that the capacity given is lacking
-    body: <p>As a website owner, it is also your obligation to optimize resource usage. This is a reminder that you always check website performance so that it remains responsive and good for SEO. If your media resource demands are high, you can use third party file storage such as Google Drive, Dropbox, AWS S3 or Cloudinary.</p><p>If you just want more additional bandwidth, you can purchase it as add-ons at 5 cents per GiB.</p>
+    title: I feel I need way more capacity
+    body: <p>As a website owner, it is also your responsibility to optimize resource usage. This itself is a reminder so that your website performance remains optimal and good for SEO. If your media resource demands are high, you can use third party file storage such as Google Drive, Dropbox, AWS S3 or Cloudinary.</p><p>If you just want more additional bandwidth, you can purchase it as add-ons at 5 cents per GiB.</p>
 -
   - id: faq21
     title: Aren't there Unlimited options?
     body: <p>Several other hosting providers claim to provide Unlimited storage and bandwidth. This is not always true, because the host uses "Fair Usage" for which we do not know the exact "fair" limits. DOM Cloud breaks this confusion by explaining the limits you actually get in each price range.</p>
   - id: faq22
     title: Where is the server located?
-    body: <p>DOM Cloud does not build its own servers. DOM Cloud is a hosting service on top of the Digital Ocean Infrastructure and we are currently installing the main server in Singapore.</p>
+    body: <p>We are currently installing the main server in Singapore, New York and Japan.</p>
   - id: faq23
     title: Does DOM Cloud have an Uptime Guarantee?
-    body: <p>The DOM Cloud server is guaranteed by the <a href="https://www.digitalocean.com/docs/platform/droplet-policies/" target="_blank" rel="noopener noreferrer">99.99% Uptime Droplet SLA</a>, however DOM Cloud itself does not guarantee downtime caused by maintenance, operator error or certain cyber attacks.</p>
+    body: <p>DOM Cloud host its servers on popular compute servers that provides 99.99% Uptime SLA, however DOM Cloud itself does not guarantee downtime caused by maintenance, operator error or certain cyber attacks.</p>
   - id: faq24
     title: I'm still curious about the DOM Cloud policy
     body: <p>You can read <a href="/about.html">about us</a> and <a href="/service.html">our terms of service</a>.f you are still curious, you can cross check our statement via <a href="https://github.com/domcloud/dom-portal">source code portal</a> or ask us through support.</p>

@@ -1,0 +1,28 @@
+---
+---
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+
+<body style="position: relative;">
+
+  <main class="page-content" aria-label="Content">
+    <div class="container-fluid">
+      <h1 class="mb-5">{{ page.title }}</h1>
+      <div class="row">
+        <div class="col-md-3">
+          {%- include docs-toc.html -%}
+        </div>
+        <div class="col-md-9">
+          {{ content }}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  {%- include footer.html -%}
+
+</body>
+
+</html>
