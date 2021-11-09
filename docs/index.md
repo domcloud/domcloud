@@ -22,7 +22,7 @@ For an overview, DOM Cloud let's you to:
 To understand why DOM Cloud exist, we need to compare with existing hosting solutions...
 
 
-### Comparing with shared hosting providers
+### Comparing with other shared hosting providers
 
 Existing shared hosting solutions commonly uses Apache (or \[Open\]LiteSpeed). Apache thrives in hosting businesses because the portability of configuration files in form of `.htaccess` files. It was true that Apache was a common choice, but nowadays, it has been surpassed with NginX.
 
@@ -52,4 +52,37 @@ You can start hosting websites from [the portal](https://portal.domcloud.id/en/l
 8. Select domain type, either leave default, use existing domain or buy new one.
 9. Check the total price, then click "Order Now".
 10. Your hosting will be started right away or after payment.
+
+## Managing Hosts
+
+Here are menus available:
+
++ Info: Basic information and stats about the host (showing host IP, storage and bandwidth used)
++ Manage: Authentication page to manage host data (opening gate to Virtualmin/DB/SSH/FTP)
++ Deploy: Deploy management and script runner (for automating instalation and other tasks)
++ Check:
+  + Invoice: Check payment status and remaining grace time
+  + DNS: Check and Identify common problems with DNS
+  + Firewall: Check firewall option
+  + Nginx: Check and change NginX configuration or logs
+  + Passenger: Check Passenger App Status and Logs
++ Admin:
+  + Change Username
+  + Change Domain
+  + Upgrade
+  + Extend
+  + Transfer
+  + Delete
+
+## Virtualmin
+
+The Virtualmin portal gives you ability to manage files, subservers and databases.
+
+The [Virtualmin page](/docs/virtualmin) explains things you can do with it.
+
+## SSH
+
+SSH access is available for all plans and you can either use your local SSH client or use WebSSH. SSH is useful you want to execute certain software using CLI or Bash interface.
+
+You can also use [the runner script](/docs/runner) to automate certain tasks that you usually do with SSH.
 

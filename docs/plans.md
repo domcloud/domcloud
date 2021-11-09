@@ -20,6 +20,12 @@ Here's quick table for reference:
 
 The free plan has no time limit. However to prevent spam you have to reactivate every two months by logging in to portal and perform extension.
 
+Here are some common question about choosing the right plan for the budget:
+
+### What is a Subserver
+
+A subserver is essentially a separate host with files contents.
+
 ### What are benefits of using paid Plans?
 
 Paid plans is available to purchase using PayPal, and using these gains your hosting additional features:
