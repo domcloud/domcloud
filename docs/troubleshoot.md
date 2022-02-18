@@ -16,6 +16,7 @@ layout: docs
 
 + Use `ssl: enforce` to redirect all insecure traffic to secure one.
 + NginX alone is capable of creating `E-Tag` cache to speed up static files delivery.
++ If you use Cloudflare, and you happen to get infinite redirection, please turn off the SSL proxy in Cloudflare.
 + We have built-in bursted rate-limit of 50 requests for 3 requests/seconds in each IP address.
 
 #### PHP-FPM
@@ -34,7 +35,7 @@ layout: docs
 #### Passenger Phusion
 
 + Passenger Phusion Node.JS looks for `app.js`, `passenger_wsgi.py` or `config.ru` in parent of root path to start the app.
-+ The GLS feature from Passenger Phusion can start any app, even binary files.
++ The GLS feature from Passenger Phusion can start any app, even binary files, provided you pass `$PORT` correctly.
 + Passenger Phusion Node.JS works with CJS. If your project use ESM you need to use GLS.
 + Passenger Phusion will be activated if `passenger_enabled on` and no files present in destination path.
 + You can tell if Phusion is serving a file by checking `server: nginx + Phusion Passenger` HTTP header.

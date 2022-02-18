@@ -1,4 +1,4 @@
-<header class="navbar navbar-dark navbar-expand-md position-absolute px-3 w-100" style="background-color: #0004;">
+<header class="navbar navbar-dark navbar-expand-md position-{{ include.position | default: 'absolute' }} px-3 w-100" style="background-color: #0004;">
 
   <a class="navbar-brand" rel="author" href="{{ "/" | relative_url }}">
     <img src="/assets/icon.svg" width="64px" height="60px" alt="" class="mr-2">

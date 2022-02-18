@@ -1,0 +1,71 @@
+code {
+    padding: 0.2em 0.15em;
+    font-weight: 400;
+    background-color: $code-background-color;
+    border: 1px solid black;
+    border-radius: 0;
+}
+
+div.highlighter-rouge {
+    padding: 1em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    overflow-x: auto;
+    background-color: $code-background-color;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-overflow-scrolling: touch;
+
+    div.highlight,
+    pre.highlight,
+    code {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+}
+
+// {% highlight LANG %}...{% endhighlight %},
+// {% highlight LANG linenos %}...{% endhighlight %}:
+figure.highlight {
+    padding: 1em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    background-color: $code-background-color;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-overflow-scrolling: touch;
+
+    pre,
+    code {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+}
+
+// ```[LANG]...```, kramdown line_numbers = true,
+// {% highlight LANG linenos %}...{% endhighlight %}:
+.highlight .table-wrapper {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+
+    td,
+    pre {
+        min-width: 0;
+        padding: 0;
+        background-color: $code-background-color;
+        border: 0;
+    }
+
+    td.gl {
+        padding-right: 1em;
+    }
+
+    pre {
+        margin: 0;
+        line-height: 2;
+    }
+}

@@ -8,8 +8,7 @@ The runner is the core feature in DOM Cloud. It let's you to perform automatic c
 
 For common script deployments, you don't have to write it yourself. You can start from existing templates in [the homepage](https://domcloud.io/#templates) or [template repository](https://github.com/domcloud/dom-templates).
 
-We make it as simple as possible to understand. And better, our runner script is open sourced. More in depth explanation is available in the repository page.
-
+We make it as simple as possible to understand. And better, our runner script is [open sourced](https://github.com/domcloud/dom-next-rootkit). More in depth explanation is available in the repository page.
 
 The script runner is in YAML format. For example to create a new WordPress instance:
 
@@ -33,6 +32,8 @@ commands:
 ```
 
 With a quick look, you can tell that it will download `https://wordpress.org/latest.zip` extracting and moving it out of `wordpress` directory, then creating a mysql database and signing SSL certificate, also configuring the correct NginX record for WordPress and perform quick `sed` operations to inject database credentials directly to the config files.
+
+Actually you don't have to understand them right now. If you used some popular software or framework, you can use the [template repository](https://github.com/domcloud/dom-templates).
 
 Here's what you can configure:
 

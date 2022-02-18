@@ -7,19 +7,38 @@
 
 <body style="position: relative;">
 
+  {%- include header.html position='relative' -%}
+
   <main class="page-content" aria-label="Content">
     <div class="container-fluid">
       <h1 class="mb-5">{{ page.title }}</h1>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-lg-3">
           {%- include docs-toc.html -%}
         </div>
-        <div class="col-md-9">
+        <div class="col-lg-9">
           {{ content }}
+
+          <script src="https://giscus.app/client.js"
+            data-repo="domcloud/domcloud-io"
+            data-repo-id="MDEwOlJlcG9zaXRvcnkzNTI4MjEwNjg="
+            data-category="Updates"
+            data-category-id="DIC_kwDOFQefTM4CBOVD"
+            data-mapping="pathname"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="light"
+            data-lang="id"
+            crossorigin="anonymous"
+            async>
+    </script>
         </div>
       </div>
     </div>
   </main>
+
+
 
   {%- include footer.html -%}
 
