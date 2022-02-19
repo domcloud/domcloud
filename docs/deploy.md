@@ -6,11 +6,13 @@ layout: docs
 
 Here's the place you need to read for hands-on tutorial for deploying any software. You should also read this in accordance with the [Runner Script](/docs/runner) and [Troubleshoot](/docs/troubleshoot) in case you hit into problem later.
 
-## The Runner Script or Template
+## Preliminary Setup
+
+### The Runner Script or Template
 
 When you create a new host, you will prompted with **Template** text box. That is the script that will be executed on the host. We use YAML format here, which defined on the [Runner Script](/docs/runner) page.
 
-Remember we also provide a [template repository](/docs/templates) for common templates.
+Remember we also provide a [template repository](/docs/templates) for common templates. If you can't find what you're looking for, you can create your own template by reading below and much better, [share it with us](https://github.com/domcloud/domcloud-io/discussions/categories/show-and-tell).
 
 ### Cloning from Git Repo
 
@@ -39,6 +41,7 @@ features: [mysql, ssl]
 If you are deploying for subdomain, you have to specify the subdomain name in the `subdomain` field.
 
 ```yml
+# ... other configs ...
 subdomain: mysubdomain.mydomain.com
 ```
 
@@ -46,7 +49,7 @@ subdomain: mysubdomain.mydomain.com
 
 ### Selecting PHP Version
 
-To switch PHP version, you can use the `php` feature. By default we're using `7.4` but you can change it to `8.0` or `5.6` if you need to.
+To switch PHP version, you can use the `php` feature. By default we're using `7.4` but you can change it to `8.0`, `8.1` or `5.6` if you need to. Unfortunately you can't ask any other version than the ones listed because PHP installation is always requires system-wide installation.
 
 ```yml
 features:
@@ -97,17 +100,37 @@ nginx:
     alias: public_html/alpha/public
     try_files: $uri $uri/ @alpha
     fastcgi: on  # enable PHP processing for this
-  - match: @alpha
+  - match: "@alpha"
     rewrite: /alpha/(.*)$ /alpha/index.php?/$1 last
 ```
 
 ### `user.ini` Configuration
 
-The `user.ini` file is a configuration file for PHP. You can use it to configure PHP settings like maximum upload file or maximum timeout limit. To customize this file, you can create `.user.ini` file in root folder of your source.
+The `user.ini` file is a configuration file for PHP. You can use it to configure PHP settings like maximum upload file or maximum timeout limit. To customize this file, you can create `.user.ini` file in root folder of your source (which by default is `~/public_html/.user.ini`).
+
+```yml
+commands:
+- rm -f .user.ini
+- echo 'upload_max_filesize = 10M' > .user.ini
+```
+
+### Denying Hidden Files
+
+Often times when using non-standard frameworks where you're not isolating the root folder in `public` directory, you might want to deny hidden files because you don't want to expose sensitive information (like `.git` or `.user.ini` or even `.env` files). You can do that by adding `deny` to the `nginx` locations section.
+
+```yml
+nginx:
+  fastcgi: on
+  locations:
+  - match: ~ /\.(?!well-known).*
+    deny: all
+```
+
+Note that `.well-known` must not be blocked because it's used by some services like verificating SSL certificates.
 
 ## Specific Deployment setup for Node.js
 
-TODO
+
 ## Specific Deployment setup for Python
 TODO
 ## Specific Deployment setup for Ruby

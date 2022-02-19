@@ -1,8 +1,15 @@
+.page-content h1, .page-content h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.25em;
+}
+.page-content h2 {
+    padding-top: 0.25em;
+}
 code {
     padding: 0.2em 0.15em;
     font-weight: 400;
     background-color: $code-background-color;
-    border: 1px solid black;
+    border: 1px solid lightsteelblue;
     border-radius: 0;
 }
 

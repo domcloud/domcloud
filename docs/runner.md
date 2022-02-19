@@ -2,7 +2,7 @@
 layout: docs
 ---
 
-## Setup with Script Runner
+# Setup with Script Runner
 
 The runner is the core feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script.
 
@@ -37,9 +37,8 @@ Actually you don't have to understand them right now. If you used some popular s
 
 Here's what you can configure:
 
----
 
-### `source`
+## `source`
 
 Type: `string` or `object`. If it a string, it will be the `url`.
 
@@ -47,35 +46,34 @@ If this value is set, it will download contents inside the host. The content can
 
 > CAUTION: This action will **overwrite** all contents inside the host.
 
-#### `url`
+### `url`
 The zip (or clone) URL to download. Required.
 
-#### `type`
+### `type`
 To `extract` a ZIP file or `clone` a repo. If omitted, it autodetects whether it is a `github.com` or `gitlab.com` URL and perform `clone` instead of `extract`.
 
-#### `directory` (`type: extract` only)
+### `directory` (`type: extract` only)
 Specify the folder name to move out of ZIP file after extraction. This also can be specified from `url`'s hash. If omitted, no move operation performed.
 
 > For legacy reason, a `directory` in root config will works too, it will be converted as `source.directory`.
 
-#### `branch` (`type: clone` only)
+### `branch` (`type: clone` only)
 Specify the clone branch to get checked out. This also can be specified from directory or `url`'s hash. If omitted, the default branch is checked out.
 
-#### `shallow` (`type: clone` only)
+### `shallow` (`type: clone` only)
 Do shallow clone? Default to `true`. It is recommended to leave it that way to keep `.git` internal size low.
 
-#### `submodules` (`type: clone` only)
+### `submodules` (`type: clone` only)
 Do Recursive clone of submodules? Default to `false`.
 
----
 
-### `features`
+## `features`
 
 Type: Array of `string` or `object`. If one item is a string, it will be converted to object (.e.g. `mysql on` become `{ mysql: on }`).
 
 This configures all features available for the host in DOM Cloud.
 
-#### mysql
+### mysql
 
 Configure MariaDB (MySQL).
 
@@ -84,7 +82,7 @@ Configure MariaDB (MySQL).
 + `mysql drop <dbname>` Drop a database with `<dbname>`.
 + `mysql off`. Disables `mysql` feature. **Caution: Also drop all DB  permanently**.
 
-#### postgresql
+### postgresql
 
 Configure PostgreSQL.
 
@@ -93,7 +91,7 @@ Configure PostgreSQL.
 + `postgresql drop <dbname>` Drop a database with `<dbname>`.
 + `postgresql off`. Disables `postgresql` feature. **Caution: Also drop all DB permanently**.
 
-#### dns
+### dns
 
 Configure BIND DNS Server.
 
@@ -104,7 +102,7 @@ Configure BIND DNS Server.
 
 DNS records for child server is handled automatically.
 
-#### firewall
+### firewall
 
 Configure Whitelist Firewall.
 
@@ -115,15 +113,15 @@ Firewall is an additional protection to make sure the host won't send any outgoi
 
 **Please note due to obvious PHP weakness in security, it's mandatory to turn on this feature for WordPress or any weakly protected PHP server**.
 
-#### ssl
+### ssl
 
 Attempt to renew SSL certificate.
 
-#### root
+### root
 
 Set directory root path.
 
-#### php
+### php
 
 Set PHP (FastCGI) version. Available options:
 
@@ -133,38 +131,37 @@ Set PHP (FastCGI) version. Available options:
 
 Remember that `php 8.x` is an active release. It will automatically get incremented over time.
 
-#### node
+### node
 
 Install specific NodeJS version.
 
 By default it's Node 14.x
 
-#### python
+### python
 
 Install specific Python version.
 
 By default it's Python 3.6
 
-#### ruby
+### ruby
 
 Install specific Ruby version.
 
 By default it's Ruby 2.7
 
 
----
 
-### `nginx`
+## `nginx`
 
 Type: `object`.
 
 This is the NGINX configuration for a given host.
 
-#### `ssl`
+### `ssl`
 
 HTTPS options: `on` (default), `enforce` (always redirect HTTP to HTTPS), `off` (not recommended).
 
-#### `fastcgi`
+### `fastcgi`
 
 Whether to enable or not enable PHP file execution: `on` or `off`. If omitted, `off` is the default.
 
@@ -172,7 +169,7 @@ If you set this to `on`, please consider to turn the [`firewall`](#firewall) on.
 
 You can override PHP settings via the `.user.ini` file in the document root. Once changed it will not change immediately due to cache, but usually takes no more than 5 minutes.
 
-#### `error_pages`
+### `error_pages`
 
 List of error pages command. It's particularly useful for static websites. Read on [the NGINX docs](http://nginx.org/en/docs/http/ngx_http_core_module.html#error_page).
 
@@ -180,7 +177,7 @@ List of error pages command. It's particularly useful for static websites. Read 
 + `404 =200 /200.html`: Assume `404` error as 200 OK and show `200.html` (SPA).
 + `500 502 503 504 /50x.html`: Show `50x` error as `50x.html`.
 
-### `passenger`
+## `passenger`
 
 If you want to run Non-PHP apps, you need to setup with passenger phusion.
 To enable non-PHP apps, at minimum you need these configuration:
@@ -215,7 +212,7 @@ Available options:
 + `app_root`: path to app root (default is parent of `root`)
 + `sticky_sessions`: (`on` or `off`) enable this for websocket support
 
-### `locations`
+## `locations`
 
 Array objects which one or more of:
 
@@ -228,9 +225,8 @@ Array objects which one or more of:
 + `fastcgi`: (same as above)
 + `passenger`: (same as above)
 
----
 
-### `commands`
+## `commands`
 
 Type: array of `string`.
 
@@ -240,7 +236,7 @@ This is where all the things you usually put after the execution of `source`. Th
 
 One of examples which good for production environment will be:
 
-#### Installing depedencies
+### Installing depedencies
 
 + PHP `composer.json`: `composer install --no-dev --no-cache --optimize-autoloader`
 + NodeJS `package.json`: `npm ci` or `yarn install --freeze-lockfile`

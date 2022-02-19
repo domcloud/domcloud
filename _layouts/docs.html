@@ -11,13 +11,14 @@
 
   <main class="page-content" aria-label="Content">
     <div class="container-fluid">
-      <h1 class="mb-5">{{ page.title }}</h1>
       <div class="row">
         <div class="col-lg-3">
           {%- include docs-toc.html -%}
         </div>
         <div class="col-lg-9">
-          {{ content }}
+          <div class="py-4">
+            {{ content }}
+          </div>
 
           <script src="https://giscus.app/client.js"
             data-repo="domcloud/domcloud-io"
@@ -29,7 +30,7 @@
             data-emit-metadata="0"
             data-input-position="top"
             data-theme="light"
-            data-lang="id"
+            data-lang="en"
             crossorigin="anonymous"
             async>
     </script>
