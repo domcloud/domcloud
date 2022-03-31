@@ -36,7 +36,7 @@ We would be lying if we only said good stuff. But we also have a lot of bad stuf
 
 ## Getting Started
 
-You can start hosting websites from [the portal](https://my.domcloud.co/en/login). Then:
+You can start hosting websites from [the portal](https://my.domcloud.co/login). Then:
 
 1. Create an account or login
 2. Click "New Order", this will open a form to create a new host. ![](/assets/images/new-purchase.png){:width="100%" alt="New Order"}
