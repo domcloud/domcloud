@@ -1,0 +1,59 @@
+.bg {
+    background-image: url(/assets/bg/2.svg);
+    background-position: 40vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    border-radius: 0.75rem;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.home img {
+    max-width: initial;
+}
+
+.home .preview {
+    height: 480px;
+}
+
+svg {
+    fill: var(--ifm-font-color-base);
+}
+.feature svg {
+    fill:white;
+}
+.feature .feature-icon {
+    background-color: var(--ifm-color-primary-dark);
+}
+.feature.premium .feature-icon {
+    background-color: var(--ifm-color-success-dark);
+}
+
+.border-bottom {
+    --bs-border-width: 1px;
+    --bs-border-style: solid;
+    --bs-border-color: #dee2e6;
+    border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+}

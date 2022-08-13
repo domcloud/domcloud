@@ -109,7 +109,7 @@ Configure Whitelist Firewall.
 + `firewall on` or `firewall` Enable firewall.
 + `firewall off` Disable firewall.
 
-Firewall is an additional protection to make sure the host won't send any outgoing request not defined in the [whitelist](). It's recommended for any host who doesn't use any third-party API.
+Firewall is an additional protection to make sure the host won't send any outgoing request not defined in the whitelist. It's recommended for any host who doesn't use any third-party API.
 
 **Please note due to obvious PHP weakness in security, it's mandatory to turn on this feature for WordPress or any weakly protected PHP server**.
 

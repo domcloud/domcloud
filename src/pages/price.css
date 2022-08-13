@@ -1,0 +1,16 @@
+.pricing svg {
+    fill: var(--ifm-font-color-base);
+    height: 2em;
+    width: 2em;
+    margin-right: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.pricing .cap {
+    font-size: 3rem;
+}
+
+.pricing .item {
+    display: flex;
+    align-items: center;
+}

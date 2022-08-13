@@ -12,7 +12,7 @@ Here's the place you need to read for hands-on tutorial for deploying any softwa
 
 When you create a new host, you will prompted with **Template** text box. That is the script that will be executed on the host. We use YAML format here, which defined on the [Runner Script](/docs/runner) page.
 
-Remember we also provide a [template repository](/docs/templates) for common templates. If you can't find what you're looking for, you can create your own template by reading below and much better, [share it with us](https://github.com/domcloud/domcloud-io/discussions/categories/show-and-tell).
+Remember we also provide a template repository for common templates. If you can't find what you're looking for, you can create your own template by reading below and much better, [share it with us](https://github.com/domcloud/domcloud-io/discussions/categories/show-and-tell).
 
 ### Cloning from Git Repo
 
