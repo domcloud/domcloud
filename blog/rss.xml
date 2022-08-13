@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>DOM Cloud Blog</title>
+        <link>https://domcloud.co/blog</link>
+        <description>DOM Cloud Blog</description>
+        <lastBuildDate>Thu, 26 Aug 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Welcome, New Landing Page!]]></title>
+            <link>https://domcloud.co/blog/welcome-new-landing-page</link>
+            <guid>welcome-new-landing-page</guid>
+            <pubDate>Thu, 26 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!]]></description>
+            <content:encoded><![CDATA[<p>In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!</p><p>The new design reflects more about what this service about: it's for the niche, but packed with lots of server tooling that (hopefully) makes your dev life easier.</p><p>I captured the screenshot (in video) below. I like the dark mode button!</p><video width="100%" loop="" muted="" controls=""><source src="/assets/medias/new-landing-page-97b6b4910e015a2e9115440bb850b2c1.webm" type="video/webm">Sorry! Your browser does not support the video tag.</video><p>If you wonder, this new landing site is built using <a href="https://docusaurus.io" target="_blank" rel="noopener noreferrer">Docusaurus</a>, replacing our old simple website that's powered by Jekyll. I saved <a href="https://web.archive.org/web/20220612080708/https://domcloud.co/" target="_blank" rel="noopener noreferrer">the old site in archive.org</a> if you wanted to see the difference.</p><p>Anyway, I feel sorry that the proper blog and docs are just live today. Actually, a lot has gotten since 2 years I've been making this platform. Let's hope it get better every time!</p><br>]]></content:encoded>
+            <category>service</category>
+            <category>update</category>
+        </item>
+    </channel>
+</rss>
