@@ -18,15 +18,59 @@ DOM Cloud is a cloud hosting solution that allows you to host your website on ou
 3. If you use our platform, we want you to get the most benefit of raw access to our servers, for example with SSH you can also open Visual Studio Code with remote SSH so you can do awesome things, like cloud working environment for example.
 
 
-## Our Philosoply, And some disclaimer.
+## Our Philosophy
 
 We want students, teachers, developers with their hobby time make use of our platform for a better experience with putting things online. Personally, the reason I created this because I once struggled to find a host service that's good enough for a university project.
 
-That's just a reasoning and we have a separate page to read more about our philosophy. [Check it out!](./philosphy.md) <br/>I recommend you to read it first so you can have a better view of what we're trying to do.
+That's just a reasoning and we have a separate page to read more about our philosophy. [Check it out!](./philosophy.md) <br/>I recommend you to read it first so you can have a better view of what we're trying to do and not to do.
 
+## Features
 
 Let's sump up the key benefits of DOM Cloud starting from what you see in our landing page:
 
+### Portal Toolbox
+
+We have tools, many of them, and they have their own separate pages.
+
++ Web-Based Tools
++ Virtualmin
++ Runner
++ Visual Studio Code
++ GitHub Integration
+
+### Server Services
+
+Inside the server we have many daemon services running:
+
++ NginX (HTTP Proxy)
++ Passenger Phusion (Runtime Manager)
++ PHP-FPM (PHP Runtime Manager)
++ SSL (HTTPS Certbot)
++ DNS (Name Daemon Server)
++ Firewall (Whitelist)
+
 ### Language Compilers Support
 
-We host a range of support
+We host a range of code language support and they have separate guides pages.
+
++ PHP
++ Node.js
++ Python
++ Ruby
++ Go
++ Other languages
+
+### Database Instance Support
+
+We support MariaDB (MySQL), PostgreSQL, and SQLite. Well, who doesn't support SQLite?
+
++ MariaDB
++ PostgreSQL
+
+### Other Pages
+
+Some pages are dedicated to other things, like:
+
++ Set up custom domain
++ Set up subdomain
++ Troubleshooting

@@ -34,9 +34,9 @@ layout: docs
 
 #### Passenger Phusion
 
-+ Passenger Phusion Node.JS looks for `app.js`, `passenger_wsgi.py` or `config.ru` in parent of root path to start the app.
++ Passenger Phusion Node.js looks for `app.js`, `passenger_wsgi.py` or `config.ru` in parent of root path to start the app.
 + The GLS feature from Passenger Phusion can start any app, even binary files, provided you pass `$PORT` correctly.
-+ Passenger Phusion Node.JS works with CJS. If your project use ESM you need to use GLS.
++ Passenger Phusion Node.js works with CJS. If your project use ESM you need to use GLS.
 + Passenger Phusion will be activated if `passenger_enabled on` and no files present in destination path.
 + You can tell if Phusion is serving a file by checking `server: nginx + Phusion Passenger` HTTP header.
 + Static files is often better to be handled within NginX alone to make use of `E-Tag` cache.

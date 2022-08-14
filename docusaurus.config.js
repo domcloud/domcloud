@@ -138,6 +138,10 @@ const config = {
                 href: 'https://my.domcloud.co/login',
               },
               {
+                label: 'Uptime Status',
+                href: 'https://stats.uptimerobot.com/AA77Xt9Jx8',
+              },
+              {
                 label: 'Privacy Notice',
                 href: '/privacy',
               },
