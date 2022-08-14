@@ -53,11 +53,10 @@ Inside the server we have many daemon services running:
 
 We host a range of code language support and they have separate guides pages.
 
-+ PHP
-+ Node.js
-+ Python
-+ Ruby
-+ Go
++ [PHP](../deploying/php.md)
++ [Node.js](../deploying/node.md)
++ [Python](../deploying/python.md)
++ [Ruby](../deploying/ruby.md)
 + Other languages
 
 ### Database Instance Support

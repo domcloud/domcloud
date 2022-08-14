@@ -1,14 +1,15 @@
 ---
 layout: docs
+title: Runner
 ---
 
 # Setup with Script Runner
 
 The runner is the core feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script.
 
-For common script deployments, you don't have to write it yourself. You can start from existing templates in [the homepage](https://domcloud.io/#templates) or [template repository](https://github.com/domcloud/dom-templates).
+For common script deployments, you don't have to write it yourself. You can start from existing recipes in [the homepage](https://domcloud.io/#templates) or [recipe repository](https://github.com/domcloud/recipes).
 
-We make it as simple as possible to understand. And better, our runner script is [open sourced](https://github.com/domcloud/dom-next-rootkit). More in depth explanation is available in the repository page.
+We make it as simple as possible to understand. And better, our runner script is [open sourced](https://github.com/domcloud/brodge). More in depth explanation is available in the repository page.
 
 The script runner is in YAML format. For example to create a new WordPress instance:
 
@@ -128,28 +129,40 @@ Set PHP (FastCGI) version. Available options:
 + `php 5.6`
 + `php 7.4` (default)
 + `php 8.0`
++ `php latest`
 
 Remember that `php 8.x` is an active release. It will automatically get incremented over time.
 
 ### node
 
-Install specific NodeJS version.
+Install specific NodeJS version. Available options:
 
-By default it's Node 14.x
++ `node` or `node lts`
++ `node latest`
++ `node beta`
++ `node x.y.z`
+
+
+By default it's Node 14.x provided from system.
 
 ### python
 
-Install specific Python version.
+Install specific Python version. Available options:
 
-By default it's Python 3.6
++ `python` or `python latest`
++ `python x.y`
++ `python x.y.z`
+
+By default it's Python 3.6 provided from system.
 
 ### ruby
 
-Install specific Ruby version.
+Install specific Ruby version. Available options:
 
-By default it's Ruby 2.7
++ `ruby` or `ruby latest`
++ `ruby x.y.z`
 
-
+By default it's Ruby 2.7 provided from system.
 
 ## `nginx`
 
@@ -233,14 +246,3 @@ Type: array of `string`.
 List of SSH commands in sequence. The starting directory is always `~/public_html`. If any exit code detected to be not zero, the execution chain stop.
 
 This is where all the things you usually put after the execution of `source`. Things like installing depedencies, bundling frontend or injecting database credential.
-
-One of examples which good for production environment will be:
-
-### Installing depedencies
-
-+ PHP `composer.json`: `composer install --no-dev --no-cache --optimize-autoloader`
-+ NodeJS `package.json`: `npm ci` or `yarn install --freeze-lockfile`
-+ Python `requirements.txt`: `pip install --no-cache-dir --user -r requirements.txt`
-+ Ruby `gem.bundle`: `bundle install --without development test`
-
-

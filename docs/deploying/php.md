@@ -1,16 +1,16 @@
 ---
 title: PHP
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying PHP Application with DOM Cloud
+# Deploying PHP Apps with DOM Cloud
 
 PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM. 
 
-Popular PHP recipes is `WordPress`, `CodeIgniter` and `Laravel`. Please read our [Runner's Guide](../runner.md) first if you haven't.
+Popular PHP recipes is `WordPress`, `CodeIgniter` and `Laravel`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
 ## Recipes
 
@@ -231,7 +231,7 @@ The example above puts the whole laravel app inside `/app/` subfolder. Let's see
 
 You can read more about putting Laravel in subfolder using NginX in this [StackOverflow answer](https://stackoverflow.com/a/62965174/3908409).
 
-## PHP version setup
+## PHP environment setup
 
 The default PHP version is `7.4`, which is the default provided from the OS.
 
@@ -248,7 +248,7 @@ Unfortunately you can't use custom PHP version other than provided because it's 
 We always update the list to the latest supported version or latest major version starting from PHP 5.
 
 Support for PHP extensions is varies but you can request a ticket to be included, provided the extension 
-is provided officially by PHP (with notable exception: `xdebug`).
+is provided officially by PHP.
 
 *(Coming soon)* when PHP version is fixed, it's also changing the `php` and `composer` version it used.
 This is done using PATH manipulation. Alternatively, you can call the alternative `php` version using 
@@ -256,7 +256,7 @@ This is done using PATH manipulation. Alternatively, you can call the alternativ
 
 ## Composer install
 
-Composer is installed automatically. Note that the good recommendation install packages is:
+Composer is installed automatically. The good recommendation to install packages is with:
 
 ```sh
 composer install --no-dev --no-progress --optimize-autoloader
