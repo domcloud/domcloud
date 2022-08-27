@@ -23,22 +23,29 @@ export default function Home2() {
                 <div className="container mt-3 mb-5">
                     <div className="row">
                         <div className="col">
-                            <IcHtml height={80}/>
+                            <a href="/docs/deploying/static-site">
+                                <IcHtml height={80} />
+                            </a>
                         </div>
                         <div className="col">
-                            <IcPhp height={80}/>
+                            <a href="/docs/deploying/php">
+                                <IcPhp height={80} />
+                            </a>
                         </div>
                         <div className="col">
-                            <IcNode height={80} />
+                            <a href="/docs/deploying/node">
+                                <IcNode height={80} />
+                            </a>
                         </div>
                         <div className="col">
-                            <IcPython height={80} />
+                            <a href="/docs/deploying/python">
+                                <IcPython height={80} />
+                            </a>
                         </div>
                         <div className="col">
-                            <IcRuby height={80} />
-                        </div>
-                        <div className="col">
-                            <IcGo height={80} />
+                            <a href="/docs/deploying/ruby">
+                                <IcRuby height={80} />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -46,13 +53,19 @@ export default function Home2() {
                 <div className="container mt-3">
                     <div className="row">
                         <div className="col">
-                            <IcSqlite height={80}/>
+                            <a href="/docs/features/databases#sqlite">
+                                <IcSqlite height={80} />
+                            </a>
                         </div>
                         <div className="col">
-                            <IcMariaDB height={80}/>
+                            <a href="/docs/features/databases#mariadb">
+                                <IcMariaDB height={80} />
+                            </a>
                         </div>
                         <div className="col">
-                            <IcPostgre height={80} />
+                            <a href="/docs/features/databases#postgres">
+                                <IcPostgre height={80} />
+                            </a>
                         </div>
                     </div>
                 </div>

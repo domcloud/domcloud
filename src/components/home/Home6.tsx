@@ -1,32 +1,34 @@
 import React from "react";
+import FaMapMarker from '@fortawesome/fontawesome-free/svgs/solid/map-marker-alt.svg';
 
 export default function Home6() {
-    return (<div className="container my-5">
+    return (<div className="container mb-5 map">
         <div className="card">
             <div className="card__body">
-                <h3 className="text-center">Multi Location Server</h3>
-                <p className="text-center">Choose closest to the location of your audience</p>
+                <h2 className="text--center">Global Insfrastructure</h2>
+                <p className="text--center">Serve website closest to the location of your audience</p>
                 <div style={{ position: 'relative' }}>
                     <img src="/assets/feat/worldmap.png" className="w-100" alt="" />
                     <a href="#sg1" style={{
                         position: 'absolute',
                         top: '57.3%',
                         left: '75.8%',
-                        fontSize: '30px',
+                        width: '25px',
                         transform: 'translate(-11px, -45px)'
                     }} >
-                        <i className="fas fa-map-marker-alt"></i>
+                        <FaMapMarker/>
                     </a>
                     <a href="#ny1" style={{
                         position: 'absolute',
-                        top: '31.5 %',
-                        left: '27.8 %',
-                        fontSize: '30px',
+                        top: '31.5%',
+                        left: '27.8%',
+                        width: '25px',
                         transform: 'translate(-11px, -45px)',
                     }} >
-                        <i className="fas fa-map-marker-alt"></i>
+                        <FaMapMarker />
                     </a>
                 </div>
+                <p className="text--center"><a href="https://github.com/domcloud/domcloud/issues/22" target="_blank" rel="noopener noreferrer">Psst... Want more location?</a></p>
             </div>
         </div>
     </div>)

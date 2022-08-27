@@ -307,7 +307,8 @@ You won't see error details in your website because we use production default se
 If you want to see the error details in website (not recommended!), change this setting in `.user.ini`:
 
 ```ini title="~/public_html/.user.ini"
-display_errors = 1
+display_errors = On
+display_startup_errors = On
 ```
 
 ## Restarting PHP

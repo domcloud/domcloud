@@ -24,7 +24,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'domcloud', // Usually your GitHub org/user name.
-  projectName: 'domcloud_co', // Usually your repo name.
+  projectName: 'domcloud', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -86,6 +86,12 @@ const config = {
             href: 'https://my.domcloud.co/login',
             label: 'Login',
             position: 'right',
+          },
+          {
+            href: 'https://github.com/domcloud/domcloud',
+            position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },

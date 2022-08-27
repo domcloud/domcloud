@@ -50,6 +50,10 @@ svg {
 .feature.premium .feature-icon {
     background-color: var(--ifm-color-success-dark);
 }
+.map svg {
+    fill: var(--ifm-color-primary-dark);
+    filter: drop-shadow(0 -2px 4px white);
+}
 
 .border-bottom {
     --bs-border-width: 1px;
