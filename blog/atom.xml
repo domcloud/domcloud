@@ -2,16 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://domcloud.co/blog</id>
     <title>DOM Cloud Blog</title>
-    <updated>2021-08-26T00:00:00.000Z</updated>
+    <updated>2022-08-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://domcloud.co/blog"/>
     <subtitle>DOM Cloud Blog</subtitle>
     <icon>https://domcloud.co/assets/icon/favicon.ico</icon>
     <entry>
+        <title type="html"><![CDATA[Preparing for spike because of Heroku]]></title>
+        <id>preparing-for-spike-of-heroku</id>
+        <link href="https://domcloud.co/blog/preparing-for-spike-of-heroku"/>
+        <updated>2022-08-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[In few days ago Heroku announced it will no longer provide free plans, which is also means a free marketing for us. I tell people people about this service in dev.to and free-for.dev and the result is a recent spike of traffic.]]></summary>
+        <content type="html"><![CDATA[<p>In few days ago Heroku announced it <a href="https://techcrunch.com/2022/08/25/heroku-announces-plans-to-eliminate-free-plans-blaming-fraud-and-abuse/" target="_blank" rel="noopener noreferrer">will no longer provide free plans</a>, which is also means a free marketing for us. I tell people people about this service in <a href="https://dev.to/willnode/comment/219m2" target="_blank" rel="noopener noreferrer">dev.to</a> and <a href="https://github.com/ripienaar/free-for-dev/pull/2570" target="_blank" rel="noopener noreferrer">free-for.dev</a> and the result is a recent spike of traffic.</p><p><img loading="lazy" alt="Traffic stat increased dramatically" src="/assets/images/stat-08d88618918cf3e1d1d68c3594cf4595.png" width="2238" height="1148" class="img_ev3q"></p><p>To get prepared for this spike, I need to adjust a few things:</p><ul><li>The New York server just been upgraded to 2 GB RAM and 2 vCPU immediately. This capacity is equal with what I use in Singapore server. Later if spike of usage still continue, I will use a separate mount drive for <code>/home</code> directory.</li><li>I will continue to complete writing the documentation, but there will be few changes: We'll remove the optional tools we've had installed (Ruby, Go, etc.) and the only things that preinstalled will be <code>php</code> (all major/version supported), <code>node</code> and <code>python</code> with specific version provided from OS. This will make our documentation clear and removing the dangerous depedency with OS environment which can change at anytime.</li></ul><p>There's also a few improvements in features and security that I would like to talk for the next month:</p><ul><li>The home directory will change into some random unique string rather than what you provided from the UI. This is because anybody can do <code>ls /home</code> and get all username list from the server. This might need take time because it may break existing scripts. Another option is to use <em>jailkit</em> but I'm not so sure it will not break anything.</li><li>we will provide a way to pipe the logs from server into portal UI. Right now the only way to open logs is from the Webmin UI.</li><li>The documentation, again.</li></ul><p>So that's it, see you next month!</p>]]></content>
+        <author>
+            <name>Wildan Mubarok</name>
+            <uri>https://github.com/willnode</uri>
+        </author>
+        <category label="service" term="service"/>
+        <category label="update" term="update"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Welcome, New Landing Page!]]></title>
         <id>welcome-new-landing-page</id>
         <link href="https://domcloud.co/blog/welcome-new-landing-page"/>
-        <updated>2021-08-26T00:00:00.000Z</updated>
+        <updated>2021-08-16T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!]]></summary>
         <content type="html"><![CDATA[<p>In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!</p><p>The new design reflects more about what this service about: it's for the niche, but packed with lots of server tooling that (hopefully) makes your dev life easier.</p><p>I captured the screenshot (in video) below. I like the dark mode button!</p><video width="100%" loop="" muted="" controls=""><source src="/assets/medias/new-landing-page-97b6b4910e015a2e9115440bb850b2c1.webm" type="video/webm">Sorry! Your browser does not support the video tag.</video><p>If you wonder, this new landing site is built using <a href="https://docusaurus.io" target="_blank" rel="noopener noreferrer">Docusaurus</a>, replacing our old simple website that's powered by Jekyll. I saved <a href="https://web.archive.org/web/20220612080708/https://domcloud.co/" target="_blank" rel="noopener noreferrer">the old site in archive.org</a> if you wanted to see the difference.</p><p>Anyway, I feel sorry that the proper blog and docs are just live today. Actually, a lot has gotten since 2 years I've been making this platform. Let's hope it get better every time!</p><br>]]></content>
         <author>
