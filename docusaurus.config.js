@@ -148,6 +148,10 @@ const config = {
                 href: 'https://stats.uptimerobot.com/AA77Xt9Jx8',
               },
               {
+                label: 'Subscribe Blog (RSS Feed)',
+                href: '/blog/rss.xml',
+              },
+              {
                 label: 'Privacy Notice',
                 href: '/privacy',
               },
