@@ -149,7 +149,7 @@ const config = {
               },
               {
                 label: 'Subscribe Blog (RSS Feed)',
-                href: '/blog/rss.xml',
+                href: 'https://domcloud.co/blog/rss.xml',
               },
               {
                 label: 'Privacy Notice',
