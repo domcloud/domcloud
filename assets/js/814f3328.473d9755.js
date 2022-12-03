@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[2535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Preparing for spike because of Heroku","permalink":"/blog/preparing-for-spike-of-heroku"},{"title":"Welcome, New Landing Page!","permalink":"/blog/welcome-new-landing-page"}]}')}}]);
