@@ -30,9 +30,9 @@ export default function Home3() {
                 <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
                     <img
                         className="rounded-lg-3"
-                        src="https://via.placeholder.com/600x400/cccccc/969696.png?text=TODO"
+                        src="/assets/ss/templates.png"
                         alt=""
-                        width="720"
+                        height="480"
                     />
                 </div>
             </div>

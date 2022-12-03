@@ -27,17 +27,17 @@ export default function Pricing() {
                                 </div>
                                 <div className="card__body">
                                     <div className="text--center">
-                                        <h2 className="cap">2$</h2>
+                                        <h2 className="cap">3$</h2>
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>2 GB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>3 GB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>2 GB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>5 GB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
-                                        <FaBrief /> <span>Maximum of <b>5 instances</b></span>
+                                        <FaBrief /> <span>Maximum of <b>6 instances</b></span>
                                     </div>
                                     <div className="item">
                                         <FaUsers /> Team of 2 users
@@ -113,7 +113,7 @@ export default function Pricing() {
                             <FaHdd />
                         </div>
                         <h2>Free Storage</h2>
-                        <p>1 GB of free total storage for up to 4 websites.</p>
+                        <p>1.5 GB of free storage for up to 3 websites.</p>
                     </div>
                     <div className="feature col">
                         <div className="feature-icon badge">
@@ -143,7 +143,7 @@ export default function Pricing() {
                             <FaHdd />
                         </div>
                         <h2>Custom Domain</h2>
-                        <p>Free to choose to your own domain</p>
+                        <p>Put the website to your own domain</p>
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
@@ -151,7 +151,7 @@ export default function Pricing() {
                         </div>
                         <h2>Add-ons Billing</h2>
                         <p>
-                            No sudden over-usage shutdowns.
+                            No sudden over-usage shutdowns (coming soon).
                         </p>
                     </div>
                     <div className="feature premium col">

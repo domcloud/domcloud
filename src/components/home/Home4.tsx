@@ -1,4 +1,5 @@
 import React from "react";
+import ThemedImage from '@theme/ThemedImage';
 
 export default function Home4() {
     return (
@@ -10,7 +11,7 @@ export default function Home4() {
                 >
                     <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
                         <h2 className="display-6 fw-bold h4">
-                            Hit the Debug Button &mdash; In Production.
+                            Fix it in Production.
                         </h2>
                         <p className="lead pe-5">
                             No other modern deployments system will allow you directly
@@ -33,11 +34,14 @@ export default function Home4() {
                         </div>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
-                        <img
-                            className="rounded-lg-3"
-                            src="https://via.placeholder.com/600x400/cccccc/969696.png?text=TODO"
+                        <ThemedImage
+                            sources={{
+                                dark: "/assets/ss/vscode-ssh-b.png",
+                                light: "/assets/ss/vscode-ssh-w.png"
+                            }}
                             alt=""
-                            width="720"
+                            className="rounded-lg-3"
+                            height="480"
                         />
                     </div>
                 </div>
