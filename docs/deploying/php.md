@@ -10,51 +10,32 @@ import TabItem from '@theme/TabItem';
 
 PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM.
 
-Popular PHP recipes is `WordPress`, `CodeIgniter` and `Laravel`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
+Popular PHP recipes is [CodeIgniter](https://codeigniter.com/) and [Laravel](https://laravel.com/). Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
 ## Recipes
 
 <Tabs>
-  <TabItem value="simple" label="Simple PHP" default>
+  <TabItem value="simple" label="General PHP" default>
+
+### Development Mode
 
 ```yaml
 source: clear
 nginx:
   fastcgi: on
 commands:
-- echo "Hello, World!" > index.php
+- echo "<h1>Hello, World!</h1>" > index.php
+- echo "<?php phpinfo(15);" > phpinfo.php
+- echo "display_errors = On" > .user.ini
+- echo "display_startup_errors = On" >> .user.ini
 ```
 
-A simple PHP that outputs "Hello, World!"
-
-  </TabItem>
-  <TabItem value="wordpress" label="WordPress">
-
-```yaml
-source: https://wordpress.org/latest.zip
-directory: wordpress
-features:
-- mysql
-nginx:
-  fastcgi: on
-  locations:
-  - match: /
-    try_files: $uri $uri/ /index.php$is_args$args
-  - match: ~ /xmlrpc\.php$
-    deny: all
-commands:
-- cp wp-config-sample.php wp-config.php
-- sed -i "s/database_name_here/${DATABASE}/g" wp-config.php
-- sed -i "s/username_here/${USERNAME}/g" wp-config.php
-- sed -i "s/password_here/${PASSWORD}/g" wp-config.php
-- sed -i "s/utf8/utf8mb4/g" wp-config.php
-```
-
-This downloads and extracts WordPress and setup the database.
-Also blocks `/xmlrpc.php` because it's a common DoS attack.
+This creates a simple PHP that outputs "Hello, World!" and load some useful development features.
 
   </TabItem>
   <TabItem value="codeigniter" label="CodeIgniter">
+
+### Init in Development Mode
 
 ```yaml
 source: clear
@@ -73,18 +54,32 @@ commands:
 - sed -ri "s/.*database.default.username.*/database.default.username = ${USERNAME}/g" .env
 - sed -ri "s/.*database.default.password.*/database.default.password = ${PASSWORD}/g" .env
 - sed -ri "s/.*app.baseURL.*/app.baseURL = https:\/\/${DOMAIN}/g" .env
-- composer install --no-dev --no-progress --optimize-autoloader
+- composer install
 ```
 
-This set up a fresh CodeIgniter 4 project and creates a MySQL database.
+This set up a fresh CodeIgniter project in development mode with a database initialized.
+
+### Switch to Production Mode
+
+```yaml
+commands:
+- 'sed -ri "s/# CI_ENVIRONMENT = production/CI_ENVIRONMENT = production/g" .env'
+- composer install --no-dev --optimize-autoloader
+```
+
+This sets up CodeIgniter in production mode.
+
 
   </TabItem>
   <TabItem value="laravel" label="Laravel">
+
+### Init in Development Mode
 
 ```yaml
 source: clear
 root: public_html/public
 features:
+- php latest
 - mysql
 nginx:
   fastcgi: on
@@ -98,17 +93,58 @@ commands:
 - sed -ri "s/DB_DATABASE=.*/DB_DATABASE=${DATABASE}/g" .env
 - sed -ri "s/DB_USERNAME=.*/DB_USERNAME=${USERNAME}/g" .env
 - sed -ri "s/DB_PASSWORD=.*/DB_PASSWORD=${PASSWORD}/g" .env
-- sed -ri "s/APP_URL=.*/APP_URL=https:\/\/${DOMAIN}/g" .env
-- composer install --no-dev --no-progress --optimize-autoloader
+- sed -ri "s/APP_URL=.*/APP_URL=http:\/\/${DOMAIN}/g" .env
+- composer install
 - php artisan migrate:fresh
 - php artisan key:generate
 - php artisan storage:link
 ```
 
-This set up a fresh Laravel project and creates a MySQL database.
+This set up a fresh Laravel project in development mode with a database initialized.
+
+### Enable Laravel UI
+
+```yaml
+commands:
+- composer require laravel/ui
+- php artisan ui bootstrap –-auth
+- npm install
+- npm run build
+```
+
+This enables Laravel UI with Bootstrap and authentication.
+
+:::info
+
+If you wish to enable development mode with Laravel UI, specify the host IP address and random ephemeral ports. Run this in CLI/SSH:
+
+```yaml
+npm run dev -- --host `hostname -I | cut -d " " -f1` --port `shuf -n 1 -i 49152-65535`
+```
+
+Note: this doesn't work with HTTPS, only run it in development mode. You might need to set the `APP_URL` to `http://...` in `.env`.
+
+:::
+
+
+### Switch to Production Mode
+
+```yaml
+features:
+- ssl
+commands:
+- sed -ri "s/APP_DEBUG=true/APP_DEBUG=false/g" .env
+- sed -ri "s/http:\/\//https:\/\//g" .env
+- composer install --optimize-autoloader
+- npm run build
+```
+
+This switches Laravel to production mode.
 
   </TabItem>
 </Tabs>
+
+---
 
 Let's extract those recipes meaning individually.
 

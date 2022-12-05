@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 Node.js is a highly-efficient JavaScript runtime environment that executes JavaScript code as a server.
 Node.js is served using Phusion Passenger inside NginX.
 
-Popular Node.js recipes include `Express`, `Strapi`, `Next.js`, `Nuxt.js`, `SvelteKit`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
+Popular Node.js recipes include `Express`, `Next.js`, `Nuxt.js`, `SvelteKit`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
 :::caution
 
@@ -25,59 +25,46 @@ If your application is intented to be as a static site, you should read our [Sta
 <Tabs>
   <TabItem value="express" label="Express" default>
 
+### Init in Development Mode
+
 ```yaml
 source: clear
-features: ['node lts']
+features:
+- node lts
 root: public_html/public
 nginx:
   passenger:
     enabled: on
-    app_start_command: env PORT=$PORT npm start
+    app_env: development
+    app_start_command: env PORT=$PORT npx nodemon ./bin/www
 commands:
-- npx express-generator .
+- npx express-generator --view=pug --css=less --git .
 - npm i
+- npm add -D nodemon
 ```
 
-A simple express website that outputs "Hello Express!"
+A simple express website with [nodemon](https://nodemon.io/) for development.
 
-  </TabItem>
-  <TabItem value="strapi" label="Strapi" default>
+### Switch to Production Mode
 
 ```yaml
-source: clear
-root: public_html/public
-features:
-- ssl
-- node lts
 nginx:
   passenger:
-    enabled: 'on'
-    app_env: development
-    app_start_command: env PORT=$PORT yarn develop
-  locations:
-    - match: /admin/
-      alias: public_html/build/
-commands:
-- yarn config set prefix ~/.local
-- yarn global add create-strapi-app
-- create-strapi-app . --quickstart --no-run
-- echo JWT_SECRET=`node -e "console.log(crypto.randomBytes(16).toString('base64'))"` > .env
-- echo APP_KEYS=`node -e "console.log(crypto.randomBytes(16).toString('base64'))"` >> .env
-- echo ADMIN_JWT_SECRET=`node -e "console.log(crypto.randomBytes(16).toString('base64'))"` >> .env
-- echo API_TOKEN_SALT=`node -e "console.log(crypto.randomBytes(16).toString('base64'))"` >> .env
-- echo STRAPI_ADMIN_BACKEND_URL=//${DOMAIN} >> .env
-- STRAPI_ADMIN_BACKEND_URL=//${DOMAIN} yarn build
+    enabled: on
+    app_start_command: env PORT=$PORT npm start
 ```
 
-A boostrapped Strapi CMS with SQLite database, installed using yarn.
+This switches Express to production mode.
 
   </TabItem>
   <TabItem value="next" label="Next.js" default>
 
+### Init in Development Mode
+
 ```yaml
 source: clear
 features:
-  - 'node lts'
+  - node lts
 root: public_html/public
 nginx:
   passenger:
@@ -88,10 +75,102 @@ commands:
   - yarn create next-app .
 ```
 
-A bootstrapped Next.js website run in development mode.
+A bootstrapped Next.js website run in development mode (HMR works automatically).
+
+### Switch to Production Mode
+
+```yaml
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: env PORT=$PORT yarn start
+  locations:
+    - match: /_next/
+      alias: public_html/.next/
+commands:
+- yarn build
+```
+
+This builds and switches Next.js to production mode.
+
+  </TabItem>
+  <TabItem value="nuxt" label="Nuxt.js" default>
+
+```yaml
+source: clear
+features:
+  - node lts
+root: public_html/public
+nginx:
+  passenger:
+    enabled: on
+    app_env: development
+    app_start_command: env PORT=$PORT yarn dev
+commands:
+  - npx nuxi init .
+  - yarn
+```
+
+A bootstrapped Nuxt.js website run in development mode.
+
+:::caution
+
+WIP: HMR does not work with Nuxt.js yet. 
+
+:::
+
+### Switch to Production Mode
+
+```yaml
+root: public_html/.output/public
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: env PORT=$PORT node server/index.mjs
+commands:
+  - yarn build
+```
+
+This builds and switches Nuxt.js to production mode.
+
+  </TabItem>
+  <TabItem value="sveltekit" label="SvelteKit" default>
+
+```yaml
+source: clear
+root: public_html/static
+nginx:
+  passenger:
+    enabled: 'on'
+    app_env: development
+    app_start_command: 'yarn dev --port $PORT --host'
+commands:
+  - yes "" | yarn create svelte > /dev/null
+  - yarn
+```
+
+A bootstrapped SvelteKit website run in development mode (HMR works automatically).
+
+
+### Switch to Production Mode
+
+```yaml
+root: public_html/.svelte-kit/output/client
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: yarn preview --port $PORT --host
+    app_root: public_html
+commands:
+  - yarn build
+```
+
+This builds and switches SvelteKit to production mode.
 
   </TabItem>
 </Tabs>
+
+---
 
 Let's extract those recipes meaning individually.
 
@@ -157,7 +236,7 @@ nginx:
     app_start_command: env PORT=$PORT npm start
 ```
 
-Setting `app_env` to `development` will set `NODE_ENV` to development. You can also enable development server too into the `app_start_command` like above, it will run `npm start`. This setup also makes HMR (Hot Module Replacement) work out of the box.
+Setting `app_env` to `development` will set `NODE_ENV` to development. You can also enable development server too into the `app_start_command` like above, it will run `npm start`. This setup also makes HMR (Hot Module Replacement) works out of the box.
 
 
 ### WebSocket/WebRTC usage
@@ -202,7 +281,7 @@ When your Node.js crashed during startup, a helpful error will be displayed in t
 
 ## Restart Node.js
 
-To restart Node.js (e.g. after modifying the script). You can call the following command:
+To restart Node.js (e.g. after modifying the script). You can call the following command in CLI/SSH:
 
 ```
 passenger-config restart-app /
