@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Deploying PHP Apps with DOM Cloud
 
-PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM. 
+PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM.
 
 Popular PHP recipes is `WordPress`, `CodeIgniter` and `Laravel`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
@@ -50,7 +50,7 @@ commands:
 - sed -i "s/utf8/utf8mb4/g" wp-config.php
 ```
 
-This downloads and extracts WordPress and setup the database. 
+This downloads and extracts WordPress and setup the database.
 Also blocks `/xmlrpc.php` because it's a common DoS attack.
 
   </TabItem>
@@ -58,6 +58,8 @@ Also blocks `/xmlrpc.php` because it's a common DoS attack.
 
 ```yaml
 source: clear
+features:
+- mysql
 root: public_html/public
 nginx:
   fastcgi: on
@@ -110,7 +112,7 @@ This set up a fresh Laravel project and creates a MySQL database.
 
 Let's extract those recipes meaning individually.
 
-## NginX Setup 
+## NginX Setup
 
 ### FastCGI on
 
@@ -119,7 +121,7 @@ nginx:
   fastcgi: on
 ```
 
-This configuration enables FastCGI (PHP Processing) on Nginx. 
+This configuration enables FastCGI (PHP Processing) on Nginx.
 Without this, NginX will serve PHP files as static files.
 
 If you have multiple directory setup, it's important to write `fastcgi: on`
@@ -171,9 +173,9 @@ nginx:
   fastcgi: on
 ```
 
-If you use frameworks, they also likes to handle custom routes. The `try_files:` configuration 
+If you use frameworks, they also likes to handle custom routes. The `try_files:` configuration
 here is to instruct Nginx to try to serve the root `/index.php` file in case no static files found
-in the given request URL. 
+in the given request URL.
 
 ### Multiple website in a domain
 
@@ -242,17 +244,18 @@ features:
 - php latest
 ```
 
-You can also use a fixed PHP version: `php 5.6`, `php 7.4`, `php 8.0`, `php 8.1`.
+You can also use a fixed PHP version: `php 7.4`, `php 8.0`, `php 8.1`.
 
-Unfortunately you can't use custom PHP version other than provided because it's tied to system daemon. 
-We always update the list to the latest supported version or latest major version starting from PHP 5.
+Unfortunately you can't use custom PHP version other than provided because it's tied to system daemon.
+We always update the list to the latest supported version or latest major version starting from PHP 7.4.
 
-Support for PHP extensions is varies but you can request a ticket to be included, provided the extension 
-is provided officially by PHP.
+Support for PHP extensions is varies but you can request a ticket to be included, provided the extension is provided officially by PHP.
 
-*(Coming soon)* when PHP version is fixed, it's also changing the `php` and `composer` version it used.
-This is done using PATH manipulation. Alternatively, you can call the alternative `php` version using 
-`php81`, `php80`, `php56`, etc.
+*(Coming soon)* when PHP version is fixed, it's (currently) doesn't also changing the `php` and `composer` version it used.
+
+Alternatively, you can call the alternative `php` version using `php81`, `php80`, `php56`, etc.
+
+You can also do this for composer, e.g. ``php81 `which composer` install``.
 
 ## Composer install
 
@@ -278,7 +281,7 @@ The composer cache locates in `~/.composer/cache/`.
 
 ## PHP INI configuration
 
-The PHP INI configuration is useful to tweak the PHP behavior such at upload size limits. 
+The PHP INI configuration is useful to tweak the PHP behavior such at upload size limits.
 While you can't directly change the PHP INI located in system files, you can create `.user.ini`
 into PHP root folder (typically `~/public_html/.user.ini`) and tweak the config there.
 
@@ -289,7 +292,7 @@ upload_max_filesize = 32M
 post_max_size = 32M
 ```
 
-See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php). 
+See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php).
 To see default values or if your change has been in effect, use `phpinfo()`.
 
 :::caution
@@ -301,7 +304,7 @@ Note that you can't change configs with `PHP_INI_SYSTEM` level because it's only
 
 ## PHP Error Logging
 
-The error logs can be seen in `Nginx Error Logs` in Virtualmin web UI. 
+The error logs can be seen in `Nginx Error Logs` in Virtualmin web UI.
 You won't see error details in your website because we use production default settings.
 
 If you want to see the error details in website (not recommended!), change this setting in `.user.ini`:
