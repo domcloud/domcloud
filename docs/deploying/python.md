@@ -39,7 +39,7 @@ commands:
 A simple Flask website with [create-flask-app](https://github.com/isakal/create-flask-app) for development.
 
   </TabItem>
-  <TabItem value="django" label="Django" default>
+  <TabItem value="django" label="Django">
 
 ### Init in Development Mode
 
