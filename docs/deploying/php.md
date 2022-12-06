@@ -6,7 +6,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying PHP Apps with DOM Cloud
+# Deploying PHP Apps
 
 PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM.
 
@@ -287,11 +287,17 @@ We always update the list to the latest supported version or latest major versio
 
 Support for PHP extensions is varies but you can request a ticket to be included, provided the extension is provided officially by PHP.
 
-*(Coming soon)* when PHP version is fixed, it's (currently) doesn't also changing the `php` and `composer` version it used.
+When PHP version is changed, it's also changing the `php` and `composer` version it used.
 
 Alternatively, you can call the alternative `php` version using `php81`, `php80`, `php56`, etc.
 
 You can also do this for composer, e.g. ``php81 `which composer` install``.
+
+:::info
+
+While you also can change PHP version using webmin, it will not change the PHP version used by CLI/SSH. Always change PHP version using the runner like above.
+
+:::
 
 ## Composer install
 

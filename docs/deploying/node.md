@@ -6,12 +6,12 @@ sidebar_position: 3
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying Node.js Apps with DOM Cloud
+# Deploying Node.js Apps
 
 Node.js is a highly-efficient JavaScript runtime environment that executes JavaScript code as a server.
 Node.js is served using Phusion Passenger inside NginX.
 
-Popular Node.js recipes include `Express`, `Next.js`, `Nuxt.js`, `SvelteKit`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
+Popular Node.js recipes include [Express](https://expressjs.com/), [Next.js](https://nextjs.org/), [Nuxt.js](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/). Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
 :::caution
 
@@ -30,7 +30,7 @@ If your application is intented to be as a static site, you should read our [Sta
 ```yaml
 source: clear
 features:
-- node lts
+  - node lts
 root: public_html/public
 nginx:
   passenger:
@@ -96,6 +96,8 @@ This builds and switches Next.js to production mode.
   </TabItem>
   <TabItem value="nuxt" label="Nuxt.js" default>
 
+### Init in Development Mode
+
 ```yaml
 source: clear
 features:
@@ -136,8 +138,12 @@ This builds and switches Nuxt.js to production mode.
   </TabItem>
   <TabItem value="sveltekit" label="SvelteKit" default>
 
+### Init in Development Mode
+
 ```yaml
 source: clear
+features:
+  - node lts
 root: public_html/static
 nginx:
   passenger:

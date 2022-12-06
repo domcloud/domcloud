@@ -6,13 +6,15 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying Static Sites with DOM Cloud
+# Deploying Static Sites
 
 Static sites are websites that doesn't require server processing (e.g. connecting with database), so it only consist of HTML, CSS, JS files that sent as-is to the browser.
 
 While static sites are works out of the box, nowadays static sites needed to build from many kinds of frontend tooling.
 
-Most people built static sites with Node-based frontend tooling which includes `Create React App`, `Webpack`, `Parcel`, `Gatsby` and `Vite`. Please read our [Runner's Guide](../features/runner.md) first if you haven't.
+Most people built static sites with Node-based frontend tooling which includes [Create React App](https://create-react-app.dev/), [`Gatsby`](https://www.gatsbyjs.com/) and [`Vite`](https://vitejs.dev/). There are also other popular static site generators like [`Hugo`](https://gohugo.io/) and [`Jekyll`](https://jekyllrb.com/).
+
+Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
 ## Recipes
 
