@@ -13,7 +13,7 @@ Node.js is served using Phusion Passenger inside NginX.
 
 Popular Node.js recipes include [Express](https://expressjs.com/), [Next.js](https://nextjs.org/), [Nuxt.js](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/). Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
-:::caution
+:::info
 
 This guide only covers running a Node.js server, not about statically rendered pages like from `Create React App`, `Webpack`, `Parcel` or `Gatsby`.
 If your application is intented to be as a static site, you should read our [Static Site Guide](./static-site.md) instead.

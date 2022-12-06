@@ -8,10 +8,10 @@ These popular system-wide linux tools are available out of the box:
 
 | | | | | |
 | :-- | :-- | :-- | :-- | :-- |
-| cmake | convert | curl | gcc | git |
-| go | gpg2 | make | mysql | nano | 
-| openssl | node | perl | phar | php | 
-| pip | postgres | python2 | python3 | ruby | 
+| cmake | convert | composer | curl | gcc | 
+| git | go | gpg2 | make | mysql | 
+| nano | openssl | node | perl | phar | 
+| php | postgres | python2 | python3 | ruby | 
 | sed | ssh | sqlite3 | tar | unzip | 
 | vi | vim | wget | yarn | zip |
 
