@@ -3,6 +3,9 @@ title: Python
 sidebar_position: 4
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Deploying Python Apps
 
 Python is a beginner-friendly programming language popularly used for machine learning and other scientific projects. Python is served using Phusion Passenger inside NginX.
@@ -57,7 +60,7 @@ commands:
 - django-admin startproject app .
 - sed -i "s/ALLOWED_HOSTS = \[\]/ALLOWED_HOSTS = \['${DOMAIN}'\]/g" app/settings.py
 - echo "from app.wsgi import application" > passenger_wsgi.py
-- python manage.py migrate 
+- python manage.py migrate
 - mkdir public
 ```
 
