@@ -6,6 +6,9 @@ import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
 import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
 import FaBrief from '@fortawesome/fontawesome-free/svgs/solid/briefcase.svg';
 import FaUsers from '@fortawesome/fontawesome-free/svgs/solid/users.svg';
+import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/atlas.svg';
+import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
+import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
 import './price.css';
 
 export default function Pricing() {
@@ -16,6 +19,7 @@ export default function Pricing() {
             <div className="text--center my-5">
                 <h1>Pricing details</h1>
                 <p>For those who grow</p>
+                <p><i>Save 2 months for yearly plans!</i></p>
             </div>
             <div className="container my-5 pricing">
                 <div className="row justify-content-center">
@@ -31,16 +35,16 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>3 GB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>3 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>5 GB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>5 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief /> <span>Maximum of <b>6 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> Team of 2 users
+                                        <FaUsers /> <span>Team of <b>2 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -58,16 +62,16 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> 10 GB Total Storage
+                                        <FaHdd /> <span><b>10 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> 25 GB Data Network / month
+                                        <FaGlobe /> <span><b>25 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
-                                        <FaBrief /> Maximum of 10 instances
+                                        <FaBrief />  <span>Maximum of <b>10 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> Team of 5 users
+                                        <FaUsers />  <span>Team of <b>5 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -85,16 +89,16 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> 25 GB Total Storage
+                                        <FaHdd /> <span><b>25 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> 100 GB Data Network / month
+                                        <FaGlobe /> <span><b>100 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
-                                        <FaBrief /> Maximum of 25 instances
+                                        <FaBrief /> <span>Maximum of <b>25 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> Team of 15 users
+                                        <FaUsers /> <span>Team of <b>15 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -140,14 +144,14 @@ export default function Pricing() {
                 <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaHdd />
+                            <FaAtlas />
                         </div>
                         <h2>Custom Domain</h2>
                         <p>Put the website to your own domain</p>
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaLock />
+                            <FaCartPlus />
                         </div>
                         <h2>Add-ons Billing</h2>
                         <p>
@@ -156,7 +160,7 @@ export default function Pricing() {
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaGlobe />
+                            <FaQuestion />
                         </div>
                         <h2>Prioritized Support</h2>
                         <p>

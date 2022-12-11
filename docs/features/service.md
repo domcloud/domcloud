@@ -1,6 +1,6 @@
 # Services
 
-This page is discussing about tools and services that we provide and some tips you can leverage. 
+This page is discussing about tools and services that we provide and some tips you can leverage.
 
 ## Linux tools
 
@@ -8,11 +8,11 @@ These popular system-wide linux tools are available out of the box:
 
 | | | | | |
 | :-- | :-- | :-- | :-- | :-- |
-| cmake | convert | composer | curl | gcc | 
-| git | go | gpg2 | make | mysql | 
-| nano | openssl | node | perl | phar | 
-| php | postgres | python2 | python3 | ruby | 
-| sed | ssh | sqlite3 | tar | unzip | 
+| cmake | convert | composer | curl | gcc |
+| git | go | gpg2 | make | mysql |
+| nano | openssl | node | perl | phar |
+| php | postgres | python2 | python3 | ruby |
+| sed | ssh | sqlite3 | tar | unzip |
 | vi | vim | wget | yarn | zip |
 
 :::info
@@ -35,7 +35,7 @@ To avoid clutter, you can open the VSCode SSH Remote session inside a subdirecto
 
 ## HMR (Hot Module Replacement)
 
-HMR is a feature that allows you to edit your code and see the changes immediately without reloading the website. 
+HMR is a feature that allows you to edit your code and see the changes immediately without reloading the website.
 
 While DOM Cloud primary usage is for hosting production websites, it doesn't stop you from using it for development. Some recipes in [deployment section](../deploying/index.md) can make HMR works out of the box, those are includes:
 
@@ -49,9 +49,9 @@ Combined with [VSCode SSH Remote](#vscode-ssh-remote), it can function as close 
 
 ## Ephemeral Ports
 
-Most ports are blocked except ephemeral ports (32768 - 65535). You can use them for local development inside the server, including running a local dev server without going though NginX.
+Most ports are blocked except ephemeral ports (32768 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NginX.
 
-Please note that long running processes are not allowed in the server. It will be killed automatically.
+Please note that long-running background processes are not allowed in the server. It will be killed automatically.
 
 :::caution
 

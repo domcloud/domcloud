@@ -16,15 +16,15 @@ export default function Home3() {
                     <div
                         className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
                     >
-                        <button
-                            type="button"
+                        <a
+                            href="/docs/deploying/"
                             className="button button--primary button--lg px-4 me-md-2 fw-bold"
                         >
                             Browse more
-                        </button>
-                        <button type="button" className="button button--link button--lg px-4 me-md-2">
+                        </a>
+                        <a href="https://github.com/domcloud/recipes" className="button button--link button--lg px-4 me-md-2">
                             See them all
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">

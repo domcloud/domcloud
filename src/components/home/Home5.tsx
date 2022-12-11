@@ -14,7 +14,7 @@ export default function Home5() {
                         <FaHdd />
                     </div>
                     <h2>Free Storage</h2>
-                    <p>1 GB of free total storage for up to 4 websites.</p>
+                    <p>1.5 GB of free total storage for up to 3 websites.</p>
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">

@@ -16,10 +16,10 @@ export default function Home2() {
             <h1 className="display-5 fw-bold">A hosting service that serves all.</h1>
             <div className="col-lg-6 mx-auto">
                 <p className="lead mb-5">
-                    This is not an overly optimistic service that only run specific code.<br />
+                    This is not an optimistic hosting service that only run for a specific code language.<br />
                     Anything than can <u>run in linux</u>, can be <u>hosted here</u>.
                 </p>
-                <p><small>Supported language compilers</small></p>
+                <p><small>Officially supported software languages</small></p>
                 <div className="container mt-3 mb-5">
                     <div className="row">
                         <div className="col">
@@ -47,23 +47,28 @@ export default function Home2() {
                                 <IcRuby height={80} />
                             </a>
                         </div>
+                        <div className="col">
+                            <a href="/docs/deploying/go">
+                                <IcGo height={80} />
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <p><small>Builtin database instances</small></p>
                 <div className="container mt-3">
                     <div className="row">
                         <div className="col">
-                            <a href="/docs/features/databases#sqlite">
+                            <a href="/docs/features/database#sqlite">
                                 <IcSqlite height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/features/databases#mariadb">
+                            <a href="/docs/features/database#mariadb">
                                 <IcMariaDB height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/features/databases#postgres">
+                            <a href="/docs/features/database#postgres">
                                 <IcPostgre height={80} />
                             </a>
                         </div>

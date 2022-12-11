@@ -14,3 +14,8 @@
     display: flex;
     align-items: center;
 }
+
+.feature-icon svg {
+    fill: var(--ifm-font-color-base);
+    margin: .2em;
+}

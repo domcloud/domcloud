@@ -15,12 +15,12 @@ export default function Home1() {
             </h1>
             <div className="col-lg-6 mx-auto">
                 <p className="lead mb-4">
-                    It's like those modern deployments, but for the old school.
+                    It's like those modern hosting platforms, but for the old school.
                 </p>
                 <div
                     className="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center mb-5"
                 >
-                    <span>Starts with: </span>
+                    <span>Starts for free: </span>
                     <a
                         href="https://my.domcloud.co/login?with=google"
                         className="p-2 mx-2 button button--secondary d-flex align-items-center shadow--lw"
