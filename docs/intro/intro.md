@@ -57,18 +57,18 @@ We host a range of code language support and they have separate guides pages.
 + [Node.js](../deploying/node.md)
 + [Python](../deploying/python.md)
 + [Ruby](../deploying/ruby.md)
-+ Other languages
++ [Other languages](../deploying/)
 
 ### Database Instance Support
 
 We support MariaDB (MySQL), PostgreSQL, and SQLite. Well, who doesn't support SQLite?
 
-+ MariaDB
-+ PostgreSQL
++ [MariaDB](../features/database.md)
++ [PostgreSQL](../features/database.md)
 
 ### Other Pages
 
-Some pages are dedicated to other things, like:
+(TODO) Some pages are dedicated to other things, like:
 
 + Set up custom domain
 + Set up subdomain
