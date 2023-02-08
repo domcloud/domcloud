@@ -6,12 +6,12 @@ export default function Home3() {
             <div className="row g-0 p-4 align-items-center shadow--md">
                 <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
                     <h2 className="display-6 fw-bold h4">
-                        From stratch, or existing repo.
+                        From scratch, or existing repo.
                     </h2>
                     <p className="lead">
                         Start your website with couple of clicks.<br />
                         We have tens of deployments recipes ready to boot,<br />
-                        either from stratch or from your existing repo.
+                        either from scratch or from your existing repo.
                     </p>
                     <div
                         className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
