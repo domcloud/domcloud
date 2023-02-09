@@ -9,6 +9,11 @@ You found our documentation site! It's a place where you can find all the inform
 
 We use GitHub for [Issue Tracking](https://github.com/domcloud/domcloud-io/issues) and [Discussions](https://github.com/domcloud/domcloud-io/discussions). For private questions please send an email to [willnode@wellosoft.net](mailto:willnode@wellosoft.net).
 
+
+## Getting Started
+
+First time here? Get understand and set up your own website quicky by reading the [Getting Started](./getting-started.md) page.
+
 ## What is DOM Cloud? And why?
 
 DOM Cloud is a cloud hosting solution that allows you to host your website on our servers. While we are much like other cloud providers seen from above, we are pretty much different in many ways:

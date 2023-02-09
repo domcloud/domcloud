@@ -1,5 +1,6 @@
 ---
 title: Our Philosophy
+sidebar_position: 3
 ---
 # Our Philosophy
 
@@ -11,11 +12,11 @@ With that said, there are couple drawbacks and benefit to our platform:
 
 ### 1. Not Scalable
 
-Roughly saying, a system can be defined as *scalable* if it can handle a large number of users, say, hundred thousands of visitor every day; or it's targeted for global launch and visitor wouldn't worry about latency wherever they are.
+Roughly saying, a system can be defined as *scalable* if it can handle a large number of users, say, hundred thousands of visitor every day; or it's targeted for worldwide audience and visitor wouldn't worry about latency wherever they are.
 
-Honestly, our platform don't solves both problem, because it's monolithic by design. 
+Honestly, our platform don't solves both problem, because it's monolithic (single point of server) by design. 
 
-We have to admit there are other better cloud providers that gives scalability for free, especially static websites. But for other websites that need a backend code, it's way too complex. 
+We have to admit there are other better cloud providers that gives scalability for free, especially with static websites. But for other websites that need a backend code, it's way too complex. 
 
 So far we (the world) have three solutions for scalability (what I know, so far) (Be warned, it's very technical): 
 
@@ -39,7 +40,7 @@ If your website has too much traffic, memory or CPU usage, but your website is l
 
 ### 3. No Guarantee
 
-By design of monolithic system, we don't provide any guarantee that your website will stay up most of time. We do have a [uptime status monitoring system](https://stats.uptimerobot.com/AA77Xt9Jx8), but when a downtime occurred, it's inevitable. If your website runs for a mission critical project, you might need to take a look for alternate cloud provider that guarantees uptime and scalability.
+By design of monolithic system, or a single server point for a website, we don't provide any guarantee that your website will stay up most of time. We do have a [uptime status monitoring system](https://stats.uptimerobot.com/AA77Xt9Jx8), but when a downtime occurred, it's inevitable. If your website runs for a mission critical project, you might need to take a look for alternate cloud provider that guarantees uptime and scalability.
 
 ## Benefit
 
@@ -49,14 +50,18 @@ If you don't mind about scalability, a classic monolithic system like our platfo
 
 Local file access is often underrated in today's cloud computing world. The reason you wouldn't see people running PHP inside containers often is because this language is heavily depends with local file operations (e.g. for sessions and file uploads). Also, it's the simplest way to cache and store data. If you're not choosing to be monolithic then you would have take alternative solutions like Redis or Memcached for cache and S3 storages for file uploads.
 
-### 2. Incremental CI/CD Build
+### 2. Incremental Build
 
 If you have particularly large packages depedency, this will help you a lot. Unlike standard CI/CD, when you do e.g. `npm install`, the existing `node_modules` will not be cleared, thus speeding up the overall build time.
 
-### 3. Hot Fixes
+### 3. Simple Hot Fixes
 
-If you spot a bug in production, you have the option to fix it directly by editing the live server. This may risky and inconvenient for large sites. But for those who fly solo, it greatly simplifies the process of bug fixing. When things cooling down, one can see the diff and then reapply a proper fix to stream (git) repository.
+If you spot a bug in production, you have the option to fix it directly by editing the live server. This may risky and inconvenient for large sites. But for those who with little technical human resources, it greatly simplifies the process of bug fixing. When things cooling down, one can see the diff and then reapply a proper fix to stream (git) repository.
 
 ### 4. As close as running locally
 
-TODO
+We provide a local development environment that's as close as running locally. If you or your developer has a familiarity with Linux, practically it should be easy to manage the server. 
+
+## Support
+
+Currently, DOM Cloud run as a service for community. Core developer resources is minimal but we strive to make this platform autonomous and easy to use. You welcome to ask in the discussion forum or emails.
