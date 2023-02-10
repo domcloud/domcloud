@@ -64,15 +64,58 @@ This is the server where you want to host your website. You can choose any serve
 
 This is the domain name you want to use for your website. By default, it will be `[username].domcloud.io`, which is part of a free domain name provided by us. 
 
-You can also use your own domain name, but you need to configure it first. You can read more about it in the [Custom Domain](../integration/cname.md) page.
+
+:::info
+
+You can also use your own domain name, but you need to configure it first. <br/> Read more about [Custom Domain](../integration/cname.md).
+
+:::
 
 ### Left side
 
-TODO
+It's a template selector. It has three sections: Start From Template, Clone From GitHub, Custom Template.
+
+#### Start From Template
+
+The template is a pre-configured website that you can use as a starting point. It's mostly a preconfigured web apps that works out of the box.
+
+#### Clone From GitHub
+
+For some developers who already have the website code on GitHub, you can clone it directly to DOM Cloud. It will ask for GitHub access so it can clone your repository even if it's private.
+
+
+:::info
+
+If you plan to integrate our service with GitHub, there's so much more about it. <br/> Read more about [GitHub integration](../integration/github.md).
+
+:::
+
+
+#### Custom Template
+
+This is the "template" that will be executed in the runner after the website has been created. When you choose option from **Start From Template** or **Clone From GitHub**, it will be automatically set to the template that is used by the selected option.
+
+### Click "Add Host"
+
+After clicking the "Add Host" button, you will be redirected to the runner page of the newly created website where you can watch the progress of the setup. Below is the screenshot of that page.
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/new-progress-b.png",
+        light: "/assets/ss/new-progress-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+If you keep watching the page there will be a message saying "Your website is ready!" and a button to open the website when it's ready.
 
 ## Managing Website
 
-TODO
+Every website has its own dashboard. Below is the screenshot of that page.
 
 <ThemedImage
     sources={{
@@ -86,3 +129,64 @@ TODO
     loading="lazy"
 />
 
+One thing to note is that it has many tabs. One particular useful tab that you'll use often is the **Manage** tab. It contains links to edit your website and also credentials to access your website. Below is the screenshot of that page.
+
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/new-manage-b.png",
+        light: "/assets/ss/new-manage-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+Tools that you can use to manage your website are:
+
+#### Webmin
+
+Webmin is a web-based system management tool. It's mostly useful for managing files using a web interface. You can also use that to manage your databases (like adding new databases or importing from server files).
+
+#### PhpMyAdmin / PhpPgAdmin
+
+PhpMyAdmin and PhpPgAdmin is a web-based database management tool for MariaDB and PostgreSQL, respectively. During entry, you will be asked for the database username and password, which is the same as your website username and password (in Manage tab).
+
+
+:::info
+
+If you have problem accessing the database, you need to enable the database first through the Runner. <br/> Read more about [Configuring Databases](../features/database.md).
+
+:::
+
+
+#### 
+
+#### WebSSH
+
+WebSSH is a web-based SSH client. It's useful for advanced installation that requires CLI access.
+
+
+:::warning
+
+The WebSSH URL contains password in your URL for convenience. Don't open it on a shared computer. <br/> Open the link from the dropdown menu instead (which clears password in the URL).
+
+:::
+
+#### Visual Studio Code
+
+This a link to [VS code](https://code.visualstudio.com/) to remotely edit the website via SSH. It's required to have the VS code installed on your computer. During entry, you will be asked for the SSH password, which is the same as your website password.
+
+:::tip
+
+You can open the website in VS code in a particular directory to avoid clutter by opening the link from the dropdown menu.
+
+:::
+
+## Other things to aware
+
+This section covers advanced concepts that you need to know to use DOM Cloud. Refer back to our architecture system diagram for overall overview.
+
+TODO.

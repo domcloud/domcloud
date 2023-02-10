@@ -1,41 +1,16 @@
-# Website
+# DOM Cloud Repository
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This is the repository for [DOM Cloud website](https://domcloud.co/). It's built using [Docusaurus 2](https://docusaurus.io/). It's also used for public discussion and issue reporting.
 
-### Installation
+Other active repositories:
 
-```
-$ yarn
-```
+- [domcloud/recipes](https://github.com/domcloud/recipes) - Templates for the runner
+- [domcloud/bridge](https://github.com/domcloud/bridge) - The runner service that manage servers
 
-### Local Development
+Other important links:
 
-```
-$ yarn start
-```
+- [Portal](https://my.domcloud.co/) - The portal for accessing DOM Cloud service
+- [Documentation](https://domcloud.co/docs/intro/) - Our online documentation 
+- [Discussions](https://github.com/domcloud/domcloud/discussions/) - Public discussion forum
+- [Status](https://stats.uptimerobot.com/AA77Xt9Jx8) - Our service uptime status
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

@@ -16,6 +16,6 @@
 }
 
 .feature-icon svg {
-    fill: var(--ifm-font-color-base);
+    fill: white;
     margin: .2em;
 }

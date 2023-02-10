@@ -1,10 +1,10 @@
 import React from "react";
 import { GitHub, Google } from "./Icon";
 
-export default function Home2() {
+export default function Home7({ subtitle, title }) {
     return (
         <div className="px-4 py-5 my-5 text--center">
-            <h2 className="display-3 fw-bold">Ready to try out?</h2>
+            <h2 className="display-3 fw-bold">{title}</h2>
             <div
                 className="d-grid gap-2 d-md-flex justify-content-center my-4 mb-lg-3"
             >
@@ -29,9 +29,8 @@ export default function Home2() {
                     <GitHub />
                 </a>
             </div>
-            <a href="/price" className="button button--link button--lg px-4 ms-md-2">
-                See pricing
-            </a>
+            
+            {subtitle}
         </div>
     )
 }

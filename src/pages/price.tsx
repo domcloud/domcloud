@@ -10,6 +10,7 @@ import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/atlas.svg';
 import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
 import './price.css';
+import Home7 from "../components/home/Home7";
 
 export default function Pricing() {
     return (
@@ -22,8 +23,8 @@ export default function Pricing() {
                 <p><i>Save 2 months for yearly plans!</i></p>
             </div>
             <div className="container my-5 pricing">
-                <div className="row justify-content-center">
-                    <div className="col-sm-6 col-lg-3">
+                <div className="row justify-content-stretch">
+                    <div className="col-sm-6 my-2 col-lg-4">
                         <div className="card-demo shadow--md">
                             <div className="card">
                                 <div className="card__header">
@@ -50,7 +51,7 @@ export default function Pricing() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-6 col-lg-3">
+                    <div className="col-sm-6 my-2 col-lg-4">
                         <div className="card-demo shadow--md">
                             <div className="card">
                                 <div className="card__header">
@@ -77,7 +78,7 @@ export default function Pricing() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-6 col-lg-3">
+                    <div className="col-sm-6 my-2 col-lg-4">
                         <div className="card-demo shadow--md">
                             <div className="card">
                                 <div className="card__header">
@@ -107,7 +108,7 @@ export default function Pricing() {
                 </div>
             </div>
 
-            <div className="container px-4 py-5" id="featured-3">
+            <div className="container px-4 pt-5" id="featured-3">
                 <h2 className="pb-2 border-bottom text--center">
                     Want to try out? No Problem! <span className="badge badge--primary">it's free</span>
                 </h2>
@@ -168,6 +169,10 @@ export default function Pricing() {
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <div className="container">
+                <Home7 title="Starts free" subtitle="No credit card required" />
             </div>
         </Layout>
     )

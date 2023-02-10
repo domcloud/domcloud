@@ -17,7 +17,9 @@ export default function Home() {
             <Home4 />
             <Home5 />
             <Home6 />
-            <Home7 />
+            <Home7 title="Ready to try out?" subtitle={<a href="/price" className="button button--link button--lg px-4 ms-md-2">
+                See pricing
+            </a>} />
         </div>
     );
 }
