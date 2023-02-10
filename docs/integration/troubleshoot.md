@@ -1,5 +1,7 @@
 ---
 layout: docs
+title: Troubleshooting
+sidebar_position: 4
 ---
 
 # Tips and Troubleshooting

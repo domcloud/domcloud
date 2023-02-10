@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Virtualmin
+title: Virtualmin and Webmin
 ---
 
 ## Manage servers with Virtualmin Panel

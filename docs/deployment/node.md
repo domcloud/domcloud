@@ -6,7 +6,7 @@ sidebar_position: 3
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying Node.js Apps
+# Deploy Node.js Apps
 
 Node.js is a highly-efficient JavaScript runtime environment that executes JavaScript code as a server.
 Node.js is served using Phusion Passenger inside NginX.

@@ -6,7 +6,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying PHP Apps
+# Deploy PHP Apps
 
 PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM.
 

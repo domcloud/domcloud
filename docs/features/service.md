@@ -1,3 +1,7 @@
+---
+title: Linux Utilities
+---
+
 # Services
 
 This page is discussing about tools and services that we provide and some tips you can leverage.
@@ -37,7 +41,7 @@ To avoid clutter, you can open the VSCode SSH Remote session inside a subdirecto
 
 HMR is a feature that allows you to edit your code and see the changes immediately without reloading the website.
 
-While DOM Cloud primary usage is for hosting production websites, it doesn't stop you from using it for development. Some recipes in [deployment section](../deploying/index.md) can make HMR works out of the box, those are includes:
+While DOM Cloud primary usage is for hosting production websites, it doesn't stop you from using it for development. Some recipes in [deployment section](../deployment/index.md) can make HMR works out of the box, those are includes:
 
 + Laravel (with Laravel UI)
 + Create React App

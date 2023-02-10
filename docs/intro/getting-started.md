@@ -187,6 +187,13 @@ You can open the website in VS code in a particular directory to avoid clutter b
 
 ## Other things to aware
 
-This section covers advanced concepts that you need to know to use DOM Cloud. Refer back to our architecture system diagram for overall overview.
+This section covers advanced concepts that you need to know to use DOM Cloud. Refer back to our [architecture system diagram](#system-architecture) for overall overview.
 
-TODO.
+- [Firewall Daemon and Ports](../features/firewall.md)
+- [Proxy and App Daemon](../features/nginx.md)
+- [Database Daemon](../features/database.md)
+- [DNS Daemon](../features/dns.md)
+- [System Runner](../features/runner.md)
+- [Webmin and Virtualmin](../features/virtualmin.md)
+
+There's also [a dedicated page](../deployment/) for configuring a website for specific code language such as [PHP](../deployment/php.md), [Node.JS](../deployment/node.md), [Python](../deployment/python.md) or with [many CMS platforms](../deployment/cms.md) or with [many static page generator](../deployment/static-site.md) and so on. And also [a dedicated page](../integration/) for integration with [GitHub](../integration/github.md), [VS Code](../integration/vscode.md), [third-party custom domain](../integration/cname.md), and soon.

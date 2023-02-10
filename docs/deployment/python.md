@@ -6,7 +6,7 @@ sidebar_position: 4
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying Python Apps
+# Deploy Python Apps
 
 Python is a beginner-friendly programming language popularly used for machine learning and other scientific projects. Python is served using Phusion Passenger inside NginX.
 

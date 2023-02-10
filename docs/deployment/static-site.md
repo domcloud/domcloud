@@ -6,7 +6,7 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying Static Sites
+# Deploy Static Sites
 
 Static sites are websites that doesn't require server processing (e.g. connecting with database), so it only consist of HTML, CSS, JS files that sent as-is to the browser.
 

@@ -2,7 +2,7 @@
 title: Features
 ---
 
-+ [Databases](database.md)
-+ [Runner](runner.md)
-+ [Services](service.md)
-+ [Virtualmin](virtualmin.md)
+DOM Cloud features are explained by this system architecture diagram below:
+
+![Architecture](/assets/images/architecture.svg)
+

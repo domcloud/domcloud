@@ -5,7 +5,7 @@ title: CMS
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploying Popular CMS Apps
+# Deploy Popular CMS Apps
 
 CMS (Content Management System) is a software that allows you to create and manage content on a website without or with minimal coding experience. DOM Cloud supports many popular CMS apps.
 

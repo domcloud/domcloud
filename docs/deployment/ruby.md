@@ -3,6 +3,6 @@ title: Ruby
 sidebar_position: 5
 ---
 
-# Deploying Ruby Apps
+# Deploy Ruby Apps
 
 TODO

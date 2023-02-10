@@ -17,7 +17,7 @@ export default function Home3() {
                         className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
                     >
                         <a
-                            href="/docs/deploying/"
+                            href="/docs/deployment/"
                             className="button button--primary button--lg px-4 me-md-2 fw-bold"
                         >
                             Browse more

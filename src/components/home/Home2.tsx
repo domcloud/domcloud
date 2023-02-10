@@ -23,32 +23,32 @@ export default function Home2() {
                 <div className="container mt-3 mb-5">
                     <div className="row">
                         <div className="col">
-                            <a href="/docs/deploying/static-site">
+                            <a href="/docs/deployment/static-site">
                                 <IcHtml height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/deploying/php">
+                            <a href="/docs/deployment/php">
                                 <IcPhp height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/deploying/node">
+                            <a href="/docs/deployment/node">
                                 <IcNode height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/deploying/python">
+                            <a href="/docs/deployment/python">
                                 <IcPython height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/deploying/ruby">
+                            <a href="/docs/deployment/ruby">
                                 <IcRuby height={80} />
                             </a>
                         </div>
                         <div className="col">
-                            <a href="/docs/deploying/go">
+                            <a href="/docs/deployment/go">
                                 <IcGo height={80} />
                             </a>
                         </div>

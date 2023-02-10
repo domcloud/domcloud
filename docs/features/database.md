@@ -1,3 +1,7 @@
+---
+title: Database Daemon
+---
+
 # Databases 
 
 Database is an integral part of any application. DOM Cloud provides a free, opt-in `MariaDB` and `PostgreSQL` database for every website in every tier. 

@@ -1,13 +1,13 @@
 ---
 layout: docs
-title: Runner
+title: The System Runner
 ---
 
 # The Runner
 
 The runner is the core feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also a CI (Continous Integration) tool that perform some tasks inside your website.
 
-For common script deployments, you don't have to write it yourself. You can start from existing recipes from [the deploying page](../deploying/index.md) or [recipe repository](https://github.com/domcloud/recipes).
+For common script deployments, you don't have to write it yourself. You can start from existing recipes from [the deployment page](../deployment/index.md) or [recipe repository](https://github.com/domcloud/recipes).
 
 We make it as simple as possible to understand. We also make our runner script [open sourced](https://github.com/domcloud/bridge) so you take a better view of how it works if you want that.
 
