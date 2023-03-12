@@ -3,6 +3,7 @@ slug: preparing-for-spike-of-heroku
 title: Preparing for spike because of Heroku
 authors: [willnode]
 tags: [service, update]
+image: stat.png
 ---
 
 In few days ago Heroku announced it [will no longer provide free plans](https://techcrunch.com/2022/08/25/heroku-announces-plans-to-eliminate-free-plans-blaming-fraud-and-abuse/), which is also means a free marketing for us. I tell people people about this service in [dev.to](https://dev.to/willnode/comment/219m2) and [free-for.dev](https://github.com/ripienaar/free-for-dev/pull/2570) and the result is a recent spike of traffic.

@@ -3,6 +3,7 @@ slug: producing-cost-effective-service
 title: Producing a Cost-Effective Service
 authors: [willnode]
 tags: [service, update]
+image: stat.png
 ---
 
 Hi, long time I haven't do some updates. I want to point out some statistics and key actions on what to do next for DOM Cloud.

@@ -32,7 +32,7 @@ export default function Pricing() {
                                 </div>
                                 <div className="card__body">
                                     <div className="text--center">
-                                        <h2 className="cap">3$</h2>
+                                        <h2 className="cap">1.50$</h2>
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
@@ -59,7 +59,7 @@ export default function Pricing() {
                                 </div>
                                 <div className="card__body">
                                     <div className="text--center">
-                                        <h2 className="cap">10$</h2>
+                                        <h2 className="cap">5.00$</h2>
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
@@ -86,7 +86,7 @@ export default function Pricing() {
                                 </div>
                                 <div className="card__body">
                                     <div className="text--center">
-                                        <h2 className="cap">25$</h2>
+                                        <h2 className="cap">12.50$</h2>
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
