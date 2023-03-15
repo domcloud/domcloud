@@ -238,9 +238,10 @@ To enable non-PHP apps, at minimum you need these configuration:
 
 ```yaml
 root: public_html/public
-passenger:
-  enabled: on
-  app_start_command: node server.js --port=$PORT
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: node server.js --port=$PORT
 ```
 
 The configuration above will execute `node server.js --port=$PORT` in the parent of root folder (in this case, `~/public_html`). Note that you always need to pass the `$PORT` and use that as the port where your app is listening to. If your app accept port from environment instead you can use env like `env PORT=$PORT node server.js`.
