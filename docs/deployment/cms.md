@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 CMS (Content Management System) is a software that allows you to create and manage content on a website without or with minimal coding experience. DOM Cloud supports many popular CMS apps.
 
-## WordPress
+## [WordPress](https://wordpress.org)
 
 <Tabs>
   <TabItem value="wordpress-recipe" label="Recipe" default>
@@ -40,7 +40,7 @@ commands:
 This downloads and extracts WordPress and setup the database.
 Also blocks `/xmlrpc.php` because it's a common DoS attack.
 
-## Strapi
+## [Strapi](https://strapi.io) 
 
 
 <Tabs>
@@ -48,11 +48,11 @@ Also blocks `/xmlrpc.php` because it's a common DoS attack.
 
 ```yaml
 source: clear
-root: public_html/public
 features:
 - ssl
 - node lts
 nginx:
+  root: public_html/public
   passenger:
     enabled: 'on'
     app_env: development
@@ -74,6 +74,7 @@ commands:
 
 ```yaml
 nginx:
+  root: public_html/public
   passenger:
     enabled: 'on'
     app_start_command: env PORT=$PORT yarn start
@@ -83,4 +84,38 @@ nginx:
 ```
 
   </TabItem>
+</Tabs>
+
+## [Ghost](https://ghost.org)
+
+<Tabs>
+  <TabItem value="ghost-recipe" label="Recipe" default>
+
+```yaml
+
+source: https://github.com/TryGhost/Ghost/releases/download/v4.4.0/Ghost-4.4.0.zip
+root: public_html/public
+nginx:
+  ssl: enforce
+  fastcgi: off
+  passenger:
+    enabled: on
+features:
+- mysql
+- ssl
+commands:
+- echo export PATH="$HOME/public_html/node_modules/.bin:$PATH" > ~/.bash_profile
+- source ~/.bash_profile
+- mkdir public
+- echo "require('./index.js');" > app.js
+- wget -q -O config.production.json https://gist.githubusercontent.com/willnode/45e722be156736ea3a08f29d37ad997c/raw/93dbbecc209ac9e6b9eb0a9d22ece1f14ab54e67/ghost-production-config.json
+- 'sed -ri "s/username_here/${USERNAME}/g" config.production.json'
+- 'sed -ri "s/password_here/${PASSWORD}/g" config.production.json'
+- 'sed -ri "s/database_here/${DATABASE}/g" config.production.json'
+- 'sed -ri "s/url_here/https:\/\/${DOMAIN}/g" config.production.json'
+- yarn install --production --no-progress
+- knex-migrator init
+```
+
+</TabItem>
 </Tabs>

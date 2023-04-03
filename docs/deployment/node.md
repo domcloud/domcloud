@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 # Deploy Node.js Apps
 
 Node.js is a highly-efficient JavaScript runtime environment that executes JavaScript code as a server.
-Node.js is served using Phusion Passenger inside NginX.
+Node.js is served using Phusion Passenger inside NGINX.
 
 Popular Node.js recipes include [Express](https://expressjs.com/), [Next.js](https://nextjs.org/), [Nuxt.js](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/). Please read our [Runner's Guide](../features/runner.md) first if you haven't.
 
@@ -31,8 +31,8 @@ If your application is intented to be as a static site, you should read our [Sta
 source: clear
 features:
   - node lts
-root: public_html/public
 nginx:
+  root: public_html/public
   passenger:
     enabled: on
     app_env: development
@@ -49,6 +49,7 @@ A simple express website with [nodemon](https://nodemon.io/) for development.
 
 ```yaml
 nginx:
+  root: public_html/public
   passenger:
     enabled: on
     app_start_command: env PORT=$PORT npm start
@@ -65,8 +66,8 @@ This switches Express to production mode.
 source: clear
 features:
   - node lts
-root: public_html/public
 nginx:
+  root: public_html/public
   passenger:
     enabled: on
     app_env: development
@@ -81,6 +82,7 @@ A bootstrapped Next.js website run in development mode (HMR works automatically)
 
 ```yaml
 nginx:
+  root: public_html/public
   passenger:
     enabled: on
     app_start_command: env PORT=$PORT yarn start
@@ -102,8 +104,8 @@ This builds and switches Next.js to production mode.
 source: clear
 features:
   - node lts
-root: public_html/public
 nginx:
+  root: public_html/public
   passenger:
     enabled: on
     app_env: development
@@ -124,8 +126,8 @@ WIP: HMR does not work with Nuxt.js yet.
 ### Switch to Production Mode
 
 ```yaml
-root: public_html/.output/public
 nginx:
+  root: public_html/.output/public
   passenger:
     enabled: on
     app_start_command: env PORT=$PORT node server/index.mjs
@@ -144,8 +146,8 @@ This builds and switches Nuxt.js to production mode.
 source: clear
 features:
   - node lts
-root: public_html/static
 nginx:
+  root: public_html/static
   passenger:
     enabled: 'on'
     app_env: development
@@ -161,8 +163,8 @@ A bootstrapped SvelteKit website run in development mode (HMR works automaticall
 ### Switch to Production Mode
 
 ```yaml
-root: public_html/.svelte-kit/output/client
 nginx:
+  root: public_html/.svelte-kit/output/client
   passenger:
     enabled: on
     app_start_command: yarn preview --port $PORT --host
@@ -182,7 +184,7 @@ Let's extract those recipes meaning individually.
 
 ## Node environment
 
-The default Node version is `14.x`, which is the default provided from the OS.
+The default Node version is `16.x`, which is the default provided from the OS.
 
 To change Node version used to the latest (LTS) one, put this in runner:
 
@@ -195,9 +197,9 @@ It will install node in userland and all binaries will use it instead of the def
 
 You can also install other or specific version of Node.js e.g. `node latest`,  `node beta`,  `node 16.3.2`. This action will install Node.js in userland with the help of [webi script](https://webinstall.dev/node/) and [enabling Corepack](https://nodejs.org/dist/latest/docs/api/corepack.html) so package managers (npm & yarn & pnpm) can be used alongside userland node.
 
-## NginX Setup
+## NGINX Setup
 
-Binding Node.js through NginX is done by Passenger. To make the binding work, you need to make sure that your app can open port number using given environment variable (.e.g. `PORT`), and you point the root of your public file to a `public` directory.
+Binding Node.js through NGINX is done by Passenger. To make the binding work, you need to make sure that your app can open port number using given environment variable (.e.g. `PORT`), and you point the root of your public file to a `public` directory.
 
 ```yaml
 root: public_html/public
@@ -220,7 +222,7 @@ nginx:
       app_root: public_html/server
 ```
 
-Some frameworks like `Next.js` likes to serve a hidden static directory e.g. `/_next`. We can reduce server load by creating an extra `/_next` location so those files is directly handled (and properly cached) by NginX.
+Some frameworks like `Next.js` likes to serve a hidden static directory e.g. `/_next`. We can reduce server load by creating an extra `/_next` location so those files is directly handled (and properly cached) by NGINX.
 
 ```yaml
 nginx:
@@ -230,39 +232,15 @@ nginx:
       alias: public_html/.next/
 ```
 
-### Production vs Development Mode
+:::info 
 
-By default, Node.js is run in production mode. To run in development mode, you need to set `app_env` to `development`.
+There's so much more to cover about NGINX configuration! read more at [NGINX](../features/nginx.md#configure-nginx-for-general-apps) page.
 
-```yaml
-nginx:
-  passenger:
-    enabled: on
-    app_env: development
-    app_start_command: env PORT=$PORT npm start
-```
-
-Setting `app_env` to `development` will set `NODE_ENV` to development. You can also enable development server too into the `app_start_command` like above, it will run `npm start`. This setup also makes HMR (Hot Module Replacement) works out of the box.
-
-
-### WebSocket/WebRTC usage
-
-If your app is using WebSocket or WebRTC for persistent connection, it may creates confusion when passenger runs your app in multiple processes. You can set `sticky_sessions` to `on` to solve this.
-
-```yaml
-root: public_html/public
-nginx:
-  passenger:
-    enabled: on
-    app_start_command: env PORT=$PORT npm start
-    sticky_sessions: on
-```
-
-The sticky sessions works by writing a cookie to identify the process where it's initiated. You can read more at [their documentation source](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions).
+:::
 
 ## Package Install
 
-Package installs can be done just like usual `npm/yarn install` command. For a little advice, using these extra options is recommended in production:
+Package installs can be done just like usual `npm/yarn/pnpm install` command. For a little advice, using these extra options is recommended in production:
 
 ```
 npm ci
@@ -276,6 +254,7 @@ In meantime if your development has stable enough, you may want to clear the pac
 ```
 npm cache clean --force
 yarn cache clean --force
+pnpm cache clean --force
 ```
 
 ## Node.js Error Logs
@@ -283,15 +262,4 @@ yarn cache clean --force
 When your Node.js crashed during startup, a helpful error will be displayed in the browser. This aids you to diagnose if some configuration is wrong.
 
 (TODO) Unfortunately, we haven't found a way to capture Node.js error logs yet. You can (should?) do error logging to files using [builtin Node.js Console API](https://melvingeorge.me/blog/save-logs-to-files-nodejs) or use [Winston](https://www.npmjs.com/package/winston).
-
-
-## Restart Node.js
-
-To restart Node.js (e.g. after modifying the script). You can call the following command in CLI/SSH:
-
-```
-passenger-config restart-app /
-```
-
-The `/` means to restart all apps that you own. If you found warnings like `Permission denied` [it's a harmless warning](https://github.com/phusion/passenger/issues/2367).
 

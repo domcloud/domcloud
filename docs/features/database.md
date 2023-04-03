@@ -31,7 +31,7 @@ Remote Access is used to manage databases using your local software -- such as D
 
 PostgreSQL permits remote access by default.
 
-MySQL is more grained and by default doesn't allow remote access by default, you need to change it by go to the Webmin > Databases > Remote access and add `%.%.%.%` (next line above `localhost`) to allowed hosts list.
+MySQL is more grained and doesn't allow remote access by default. You need to change it by go to the Webmin -> Databases -> Remote access then add `%.%.%.%` and `%:%:%` (next line above `localhost`) to allowed hosts list.
 
 ### Timestamp
 

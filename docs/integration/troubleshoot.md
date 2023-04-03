@@ -10,14 +10,14 @@ sidebar_position: 4
 
 #### Portal
 
-+ The runner script is available as the alternative way to manage things in Virtualmin, even for things that didn't available there, like configuring NginX or Firewall.
++ The runner script is available as the alternative way to manage things in Virtualmin, even for things that didn't available there, like configuring NGINX or Firewall.
 + The runner script is capable to be triggered with GitHub Actions CI, useful for auto-syncing host code with GitHub repo.
 + We don't serve email transactions, however you can use third-party
 
-#### NginX
+#### NGINX
 
 + Use `ssl: enforce` to redirect all insecure traffic to secure one.
-+ NginX alone is capable of creating `E-Tag` cache to speed up static files delivery.
++ NGINX alone is capable of creating `E-Tag` cache to speed up static files delivery.
 + If you use Cloudflare, and you happen to get infinite redirection, please turn off the SSL proxy in Cloudflare.
 + We have built-in bursted rate-limit of 50 requests for 3 requests/seconds in each IP address.
 
@@ -41,7 +41,7 @@ sidebar_position: 4
 + Passenger Phusion Node.js works with CJS. If your project use ESM you need to use GLS.
 + Passenger Phusion will be activated if `passenger_enabled on` and no files present in destination path.
 + You can tell if Phusion is serving a file by checking `server: nginx + Phusion Passenger` HTTP header.
-+ Static files is often better to be handled within NginX alone to make use of `E-Tag` cache.
++ Static files is often better to be handled within NGINX alone to make use of `E-Tag` cache.
 + You can add environment variables by writing in `~/.env` (and use commands like this: `export NODE_ENV=production`)
 
 

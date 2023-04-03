@@ -148,47 +148,78 @@ This switches Laravel to production mode.
 
 Let's extract those recipes meaning individually.
 
-## NginX Setup
+## NGINX Setup
 
-### FastCGI on
+[NGINX](../features/nginx.md) can be configured to serve PHP files. PHP files are served by the PHP-FPM server. This works by writing `fastcgi_pass` directive in the NGINX configuration, which points to underlying PHP-FPM server proxy for given host.
+
+The minimum configuration to enable PHP is:
 
 ```yaml
 nginx:
   fastcgi: on
 ```
 
-This configuration enables FastCGI (PHP Processing) on NGINX.
-Without this, NginX will serve PHP files as static files.
+### `fastcgi` Options
+
+The [`fastcgi`](./runner.md#fastcgi) option has three options: `on`, `off`, `always`. The difference between three options:
+
+#### `fastcgi` Options `off`
+
+```
+location ~ \.php$ {
+    return 404;
+    fastcgi_pass ....;
+}
+```
+
+This essentially disables PHP support in NGINX because it directly return 404 without being forwarded to `fastcgi`. This is the default value for `fastcgi`.
+
+#### `fastcgi` Options `on`
+
+```
+location ~ \.php$ {
+    try_files $uri =404;
+    fastcgi_pass ......;
+}
+```
+
+This detects all URLs that ends with `.php` and forwards it to the PHP-FPM server. However, if the file is not found, it will return 404 without being forwarded to `fastcgi`.
+
+#### `fastcgi` Options `always`
+
+```
+location ~ \.php(/|$) {
+    fastcgi_pass ......;
+}
+```
+
+This detects all URLs that ends with `.php` or contains `.php` in the path and forwards it to the PHP-FPM server. The path after `.php` is sent as additional path in [$_SERVER\['PATH_INFO'\]](https://www.php.net/manual/en/reserved.variables.server.php#:~:text=the%20authentication%20type.-,%27PATH_INFO%27,-Contains%20any%20client).
+
+### Multiple Directory Setup
 
 If you have multiple directory setup, it's important to write `fastcgi: on`
 where the directory should also serve PHP files, for example:
 
 ```yaml
 nginx:
+  fastcgi: on
   locations:
   - match: /admin/
     root: public_app/public
     fastcgi: on
-  fastcgi: on
 ```
 
-If you curious, the `fastcgi: on` internally represents as this in NginX configuration:
-
-```conf
-location ~ \.php$ {
-    fastcgi_pass   unix:/path/to/socket/file.sock;
-}
-```
+The second `fastcgi: on` will make sure PHP files inside `/admin/` directory are also served by PHP-FPM.
 
 ### Rewrite root directory
 
 ```yaml
-root: public_html/public
+nginx:
+  root: public_html/public
 ```
 
 The default root directory is `public_html`, where app files are extracted from recipes.
-Some modern frameworks like Laravel and CodeIgniter put static files inside `public` folder
-to avoid leaking bare `*.php` files be accessed maliciously and creates RCE attack.
+Some modern frameworks like Laravel and CodeIgniter put static files inside `public` folder to avoid leaking bare `*.php` files be accessed maliciously and creates RCE attack.
 
 So when your app requires this behavior, you need to change the root folder to `public_html/public`.
 
@@ -267,7 +298,7 @@ The example above puts the whole laravel app inside `/app/` subfolder. Let's see
 3. `/web/login`: Resolves to `/public_html/index.php` and loads the landing page at `/web/login` (404 error).
 4. `/uploads/image.png`: Resolves to `/public_app/storage/app/public/image.png` and loads the image (if exist).
 
-You can read more about putting Laravel in subfolder using NginX in this [StackOverflow answer](https://stackoverflow.com/a/62965174/3908409).
+You can read more about putting Laravel in subfolder using NGINX in this [StackOverflow answer](https://stackoverflow.com/a/62965174/3908409).
 
 ## PHP environment setup
 
@@ -292,12 +323,6 @@ When PHP version is changed, it's also changing the `php` and `composer` version
 Alternatively, you can call the alternative `php` version using `php81`, `php80`, `php56`, etc.
 
 You can also do this for composer, e.g. ``php81 `which composer` install``.
-
-:::info
-
-While you also can change PHP version using webmin, it will not change the PHP version used by CLI/SSH. Always change PHP version using the runner like above.
-
-:::
 
 ## Composer install
 

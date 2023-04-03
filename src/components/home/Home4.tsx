@@ -78,7 +78,7 @@ export default function Home4() {
                             Mix and Match
                         </h2>
                         <p className="lead pe-5">
-                            We grant you access to the most powerful web proxy on the planet, NginX.<br />
+                            We grant you access to the most powerful web proxy on the planet, NGINX.<br />
                             With little patience, You can even mix two separate websites into one domain.
                         </p>
                     </div>

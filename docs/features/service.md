@@ -53,13 +53,13 @@ Combined with [VSCode SSH Remote](#vscode-ssh-remote), it can function as close 
 
 ## Ephemeral Ports
 
-Most ports are blocked except ephemeral ports (32768 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NginX.
+Most ports are blocked except ephemeral ports (32768 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NGINX.
 
 Please note that long-running background processes are not allowed in the server. It will be killed automatically.
 
 :::caution
 
-DOM Cloud is a shared hosting in nature, so other people might stumble across your randomly assigned ports (incoming traffic from ports can't be divided by domain name unlike if it's going through NginX). Never put any sensitive data if it's mean for development.
+DOM Cloud is a shared hosting in nature, so other people might stumble across your randomly assigned ports (incoming traffic from ports can't be divided by domain name unlike if it's going through NGINX). Never put any sensitive data if it's mean for development.
 
 :::
 

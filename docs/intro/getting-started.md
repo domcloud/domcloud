@@ -22,7 +22,7 @@ If you have some experience with Linux you should understand this concept alread
 
 You (as a admin of your own website) is only given a userland access. This mean you're able to upload files, databases, and apps under your own user, and that's it. We can't give you the full "system" daemon because the system is shared with other users. 
 
-Of course, some setup still requires root acccess. For instance, a proxy daemon (NginX) need to know "you" and your domain so it can forward internet traffic through your apps. This is done mainly through **Runner**, the core feature of our service.
+Of course, some setup still requires root acccess. For instance, a proxy daemon (NGINX) need to know "you" and your domain so it can forward internet traffic through your apps. This is done mainly through **Runner**, the core feature of our service.
 
 ## Runner
 

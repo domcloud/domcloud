@@ -25,3 +25,144 @@ You can check the current configuration by going to Check -> NGINX.
     height="500"
     loading="lazy"
 />
+
+The left side is the configurable options, and the right side is the current configuration applied in NGINX. The configurable option is written in YAML format, which when saved, applied as a new configuration configured via [the runner](./runner.md#nginx).
+
+Below is the example of the configuration:
+
+```yaml
+nginx:
+  fastcgi: 'on'
+  root: public_html
+  index: index.html index.php
+  ssl: 'on'
+```
+
+## Configure NGINX for HTTPS
+
+The [`ssl`](./runner.md#ssl-1) option has three options: `always`, `on`, `off`. The `always` option will force the server to redirect all HTTP traffic to HTTPS. The default value for `ssl` is `on`.
+
+## Configure NGINX for PHP
+
+The [`fastcgi`](./runner.md#fastcgi) option has three options: `always`, `on`, `off`. The default value for `fastcgi` is `off`.
+
+This section is covered more in the [PHP Deployment](../deployment/php.md#nginx-setup) section.
+
+## Configure NGINX for General Apps
+
+NGINX by default only forwards connection and can't invoke the desired app to run. We use [Phusion Passenger](https://www.phusionpassenger.com/) so we can configure NGINX to invoke the app and forwards HTTP requests.
+
+The minimum configuration to enable NGINX for general apps is:
+
+```yaml
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: on
+    app_start_command: env PORT=$PORT npm start
+```
+
+Which is equivalent to running `npm start` in the `public_html` (parent of root) directory, with the `PORT` environment variable set to the port that NGINX is listening to.
+
+Passenger's `enabled: on` config is required to indicate that Passenger's module is activated for given host.
+
+It is important that  `root` is set to the directory that contains the `public` directory. This is because NGINX will serve the `public` directory as the root directory for serving static files, and you don't want to expose the entire app directory to the public.
+
+If the app must be called from a subdirectory, you can use the `app_root` option to specify the directory that contains the app. For example, if the main app file is in `public_html/server/app.js`, you can set the `app_root` to `public_html/server`:
+
+```yaml
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: on
+    app_root: public_html/server
+    app_start_command: env PORT=$PORT node app.js
+```
+
+### PORT environment variable
+
+The `$PORT` environment variable is set by NGINX. It is a random port that's chosen to be proxied from NGINX. The app must listen to this port to receive HTTP requests.
+
+You can tell the app to listen to this port by setting the an environment variable via `env` like this:
+
+```yaml
+app_start_command: env PORT=$PORT node app.js
+```
+
+Or you can set the port using the app's argument if available:
+
+```yaml
+app_start_command: node app.js --port $PORT
+```
+
+### Set Environment Variables
+
+Passenger has three ways to set environment variables:
+
+### `app_env` option
+
+The [`app_env`](./runner#passenger) option is special option that's used to set environment mode. The default value is `production`. This option sets the value to the following environment variables:
+
++ `RAILS_ENV`
++ `RACK_ENV`
++ `WSGI_ENV`
++ `NODE_ENV`
++ `PASSENGER_APP_ENV`
+
+You can set this value other values such as `development` or `test`.
+
+### `env_var_list` option
+
+The [`env_var_list`](./runner#passenger) option is used to set environment variables directly from NGINX. It's a list of environment variables to set. The value is a string that's in the format of `KEY=VALUE`. For example:
+
+```yaml
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: env PORT=$PORT node app.js
+    env_var_list:
+      - APP_SECRET=SECRET_VALUE
+      - APP_CONFIG={"key":"value"}
+```
+
+### `~/.bashrc` file
+
+Passenger reads the `~/.bashrc` file to set environment variables. You can set environment variables in this way. For example run this command to edit the `~/.bashrc` file via SSH:
+
+```bash
+nano ~/.bashrc
+```
+
+Then add the following line to the file:
+
+```bash
+export APP_SECRET=SECRET_VALUE
+```
+
+The environment variable will be set when the app is started next time. 
+
+More information about setting environment variables can be found in the [Passenger documentation](https://www.phusionpassenger.com/docs/advanced_guides/in_depth/node/environment_variables.html).
+
+### Restarting App
+
+Any edits either in the app file or `~/.bashrc` file will not be applied until the app is restarted. You can restart the app forcibly by running this in SSH:
+
+```bash
+passenger-config restart-app /
+```
+
+More information about restarting app can be found in the [Passenger documentation](https://www.phusionpassenger.com/docs/tutorials/reloading_code/node/).
+
+### Websocket
+
+If the app uses Websocket, you have to enable sticky sessions in NGINX. This is because there will be multiple process spawned and Phusion Passenger will load balance the requests to the processes. If the requests are not sticky, the Websocket connection will be lost.
+
+```yaml
+sticky_sessions: on
+```
+
+You can read more about websocket usage at the [Passenger documentation](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions)
+
+### Language-Specific Configuration
+
+More information about configuring NGINX for specific languages can be found in the [Deployment](../deployment) section.

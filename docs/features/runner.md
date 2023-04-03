@@ -32,7 +32,7 @@ commands:
 - sed -i "s/utf8/utf8mb4/g" wp-config.php
 ```
 
-With a quick look, you can tell that it will download `https://wordpress.org/latest.zip` extracting and moving it out of `wordpress` directory, then creating a mysql database and signing SSL certificate, also configuring the correct NginX record for WordPress and perform quick `sed` operations to inject database credentials directly to the config files.
+With a quick look, you can tell that it will download `https://wordpress.org/latest.zip` extracting and moving it out of `wordpress` directory, then creating a mysql database and signing SSL certificate, also configuring the correct NGINX record for WordPress and perform quick `sed` operations to inject database credentials directly to the config files.
 
 Actually you don't have to understand them right now. If you used some popular software or framework, you can use the [template repository](https://github.com/domcloud/dom-templates).
 
@@ -147,7 +147,7 @@ Attempt to renew SSL certificate with Let's Encrypt.
 
 ### `root`
 
-Set directory root path. This also changes the `root` directive in NginX config.
+Set directory root path. This also changes the `root` directive in NGINX config.
 
 :::info
 Because of legacy reason, this is also available in root config.
@@ -272,7 +272,7 @@ For non-GLS these options are available too:
 
 :::info
 
-[GLS (Generic Language Support)](https://www.phusionpassenger.com/passenger6) is a cool concept where you can run any language or binaries within NginX with the help of Passenger. It's recommended to use GLS instead of the non-GLS options.
+[GLS (Generic Language Support)](https://www.phusionpassenger.com/passenger6) is a cool concept where you can run any language or binaries within NGINX with the help of Passenger. It's recommended to use GLS instead of the non-GLS options.
 
 :::
 

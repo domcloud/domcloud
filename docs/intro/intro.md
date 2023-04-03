@@ -47,7 +47,7 @@ We have tools, many of them, and they have their own separate pages.
 
 Inside the server we have many daemon services running:
 
-+ NginX (HTTP Proxy)
++ NGINX (HTTP Proxy)
 + Passenger Phusion (Runtime Manager)
 + PHP-FPM (PHP Runtime Manager)
 + SSL (HTTPS Certbot)
