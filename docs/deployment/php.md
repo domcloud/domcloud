@@ -157,7 +157,7 @@ nginx:
   fastcgi: on
 ```
 
-This configuration enables FastCGI (PHP Processing) on Nginx.
+This configuration enables FastCGI (PHP Processing) on NGINX.
 Without this, NginX will serve PHP files as static files.
 
 If you have multiple directory setup, it's important to write `fastcgi: on`
@@ -210,7 +210,7 @@ nginx:
 ```
 
 If you use frameworks, they also likes to handle custom routes. The `try_files:` configuration
-here is to instruct Nginx to try to serve the root `/index.php` file in case no static files found
+here is to instruct NGINX to try to serve the root `/index.php` file in case no static files found
 in the given request URL.
 
 ### Multiple website in a domain
@@ -346,7 +346,7 @@ Note that you can't change configs with `PHP_INI_SYSTEM` level because it's only
 
 ## PHP Error Logging
 
-The error logs can be seen in `Nginx Error Logs` in Virtualmin web UI.
+The error logs can be seen in `NGINX Error Logs` in Virtualmin web UI.
 You won't see error details in your website because we use production default settings.
 
 If you want to see the error details in website (not recommended!), change this setting in `.user.ini`:

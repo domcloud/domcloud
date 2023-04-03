@@ -208,7 +208,7 @@ Type: `object`.
 
 This is the NGINX configuration for a given host.
 
-All configurations below are not preserved at each config update. It's recommended to use the `Nginx` tab in the dashboard to reconfigure NGINX.
+All configurations below are not preserved at each config update. It's recommended to use the `NGINX` tab in the dashboard to reconfigure NGINX.
 
 ### `ssl`
 
@@ -289,7 +289,7 @@ Array objects which one or more of:
 + `fastcgi`: (same as above)
 + `passenger`: (same as above)
 
-Please read [Nginx Location directive](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) for more information.
+Please read [NGINX Location directive](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) for more information.
 
 :::info
 

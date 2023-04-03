@@ -68,7 +68,7 @@ This means that your SSL certificate has not been set or has expired. To update 
 
 If you encounter `ERR_CERTIFICATE_TRANSPARENCY_REQUIRED` after an SSL update, you don't need to panic because of an error due to cache and it will disappear in a few minutes.
 
-#### Nginx Error `403 Forbidden` page
+#### NGINX Error `403 Forbidden` page
 
 This means that NGINX cannot access the file due to a linux mode setting error in the file. In order to fix this easily you can run this on SSH:
 
@@ -76,7 +76,7 @@ This means that NGINX cannot access the file due to a linux mode setting error i
 chmod -R 750 ~/
 ``
 
-#### Nginx Error page `404 Found`
+#### NGINX Error page `404 Found`
 
 There are 2 possibilities:
 
@@ -89,10 +89,10 @@ There are 2 possibilities:
 This means that there is an error in your PHP, but unlike XAMPP, PHP by default will not raise an error on the website.
 
 You have 2 options for viewing the error:
-+ Via Webmin > Logs and Reports > Nginx Error Log
++ Via Webmin > Logs and Reports > NGINX Error Log
 + [Set in .user.ini](#fastcgi): `display_errors = On`
 
-#### Nginx Error `502 Bad Gateway` page
+#### NGINX Error `502 Bad Gateway` page
 
 It is possible that the file you uploaded is too large or the PHP script you are running is taking too long. You can fix this via [.user.ini](#fastcgi) file.
 

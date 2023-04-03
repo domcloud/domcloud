@@ -14,8 +14,8 @@ These popular system-wide linux tools are available out of the box:
 | :-- | :-- | :-- | :-- | :-- |
 | cmake | convert | composer | curl | gcc |
 | git | go | gpg2 | make | mysql |
-| nano | openssl | node | perl | phar |
-| php | postgres | python2 | python3 | ruby |
+| nano | openssl | ncdu | node | perl |
+| phar | php | psql | python  | ruby |
 | sed | ssh | sqlite3 | tar | unzip |
 | vi | vim | wget | yarn | zip |
 
@@ -79,4 +79,6 @@ Any application run through Passenger will be spawned into multiple processes. I
 
 If you want performant cache storage, look for other platform. Some of them may grant free Redis storage. Just make sure the cluster is in same region with what you use in DOM Cloud.
 
+### Managing File Storage
 
+If you need to delete unnecessary files in one of your hosts, use [ncdu](https://en.wikipedia.org/wiki/Ncdu). It's a disk usage analyzer available in all servers.
