@@ -161,7 +161,7 @@ nginx:
 
 ### `fastcgi` Options
 
-The [`fastcgi`](./runner.md#fastcgi) option has three options: `on`, `off`, `always`. The difference between three options:
+The [`fastcgi`](../features/runner.md#fastcgi) option has three options: `on`, `off`, `always`. The difference between three options:
 
 #### `fastcgi` Options `off`
 
