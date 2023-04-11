@@ -160,11 +160,14 @@ Set PHP (FastCGI) version. Available options:
 + `php 7.4` (default)
 + `php 8.0`
 + `php 8.1`
++ `php 8.2`
 + `php latest`
 
-Remember that `php 8.x` is an active release. It will automatically get incremented over time.
+Remember that `php 8.x` is an active release. 
 
-This also sets the `php` (and `composer`) to the right version in CLI/SSH.
+This also sets the `php` (and `composer`) to the right version in CLI/SSH. 
+
+PHP files that served through NginX are served with `php-fpm` (FastCGI Process Manager).
 
 ### `node`
 
@@ -174,10 +177,12 @@ Install specific NodeJS version. Available options:
 + `node latest`
 + `node beta`
 + `node x.y.z`
++ `node off`
 
-By default it's Node 14.x provided from system.
+By default it's Node 16.x provided from system.
 
-This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH.
+This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH. This installation is powered by [webi](https://webinstall.dev/node).
+
 
 ### `python`
 
@@ -186,10 +191,11 @@ Install specific Python version. Available options:
 + `python` or `python latest`
 + `python x.y`
 + `python x.y.z`
++ `python off`
 
-By default it's Python 3.6 provided from system.
+By default it's Python 3.9 provided from system.
 
-This also sets the `python` (and `pip`) to the right version in CLI/SSH.
+This also sets the `python` (and `pip`) to the right version in CLI/SSH. This installation is powered by [pyenv](https://github.com/pyenv/pyenv).
 
 ### `ruby`
 
@@ -197,8 +203,47 @@ Install specific Ruby version. Available options:
 
 + `ruby` or `ruby latest`
 + `ruby x.y.z`
++ `ruby off`
 
-By default it's Ruby 2.7 provided from system.
+By default it's Ruby 3.0 provided from system. This installation is powered by [rvm](https://rvm.io).
+
+
+### `deno`
+
+Install specific Deno version. Available options:
+
++ `deno` or `deno latest`
++ `deno beta`
++ `deno x.y.z`
++ `deno off`
+
+There's no default Deno version provided from system.
+
+This installation is powered by [webi](https://webinstall.dev/deno).
+
+### `go`
+
+Install specific Go version. Available options:
+
++ `go` or `go latest`
++ `go x.y.z`  
++ `go off`
+
+There's no default Go version provided from system.
+
+This installation is powered by [webi](https://webinstall.dev/golang).
+
+### `rust`
+
+Install specific Rust version. Available options:
+
++ `rust` or `rust latest`
++ `rust x.y.z`
++ `rust off`
+
+There's no default Rust version provided from system.
+
+This installation is powered by [rustup](https://rustup.rs).
 
 ---
 

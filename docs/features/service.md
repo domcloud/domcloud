@@ -13,9 +13,9 @@ These popular system-wide linux tools are available out of the box:
 | | | | | |
 | :-- | :-- | :-- | :-- | :-- |
 | cmake | convert | composer | curl | gcc |
-| git | go | gpg2 | make | mysql |
+| git | gpg2 | gzip | make | mysql |
 | nano | openssl | ncdu | node | perl |
-| phar | php | psql | python  | ruby |
+| phar | php | psql | python | ruby |
 | sed | ssh | sqlite3 | tar | unzip |
 | vi | vim | wget | yarn | zip |
 
