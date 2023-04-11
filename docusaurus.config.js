@@ -20,6 +20,9 @@ const config = {
       "data-domain": "domcloud.co"
     }
   ],
+  plugins: [
+    require.resolve('docusaurus-lunr-search')
+  ],
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
