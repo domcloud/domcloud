@@ -3,11 +3,30 @@ layout: docs
 title: The System Runner
 ---
 
+
+import ThemedImage from '@theme/ThemedImage';
+
+
 # The Runner
 
 The runner is the core feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also a CI (Continous Integration) tool that perform some tasks inside your website.
 
-For common script deployments, you don't have to write it yourself. You can start from existing recipes from [the deployment page](../deployment/index.md) or [recipe repository](https://github.com/domcloud/recipes).
+The system runner is accessible through `Deploy` tab in the website menu. 
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/new-progress-b.png",
+        light: "/assets/ss/new-progress-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+
+For common script deployments, there's existing recipes from [the deployment page](../deployment/index.md) or [recipe repository](https://github.com/domcloud/recipes).
 
 We make it as simple as possible to understand. We also make our runner script [open sourced](https://github.com/domcloud/bridge) so you take a better view of how it works if you want that.
 
@@ -34,18 +53,15 @@ commands:
 
 With a quick look, you can tell that it will download `https://wordpress.org/latest.zip` extracting and moving it out of `wordpress` directory, then creating a mysql database and signing SSL certificate, also configuring the correct NGINX record for WordPress and perform quick `sed` operations to inject database credentials directly to the config files.
 
-Actually you don't have to understand them right now. If you used some popular software or framework, you can use the [template repository](https://github.com/domcloud/dom-templates).
-
-Here's what you can configure:
-
+Here's what you can configure within the system runner:
 
 ## `source`
 
 Type: `string` or `object`. If it a string, it will be the `url`.
 
-If this value is set, it will download contents inside the host. The content can be either a ZIP file or a Git repository (to perform clone).
+If this value is set, it will download contents inside the host. The content can be either a ZIP file or a Git repository (to perform clone), or `clear` to simply clears the content.
 
-> CAUTION: This action will always **overwrite** all contents inside the host.
+> CAUTION: This option will always **overwrite** all contents inside the host. Use with caution.
 
 ### `url`
 The zip (or clone) URL to download. Required.

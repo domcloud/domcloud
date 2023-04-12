@@ -5,6 +5,8 @@ import IcNode from "simple-icons/icons/nodedotjs.svg";
 import IcPython from "simple-icons/icons/python.svg";
 import IcRuby from "simple-icons/icons/ruby.svg";
 import IcGo from "simple-icons/icons/go.svg";
+import IcRust from "simple-icons/icons/rust.svg";
+import IcDeno from "simple-icons/icons/deno.svg";
 import IcSqlite from "simple-icons/icons/sqlite.svg";
 import IcMariaDB from "simple-icons/icons/mariadb.svg";
 import IcPostgre from "simple-icons/icons/postgresql.svg";
@@ -13,7 +15,7 @@ export default function Home2() {
     return (
         <div className="px-4 py-5 my-5 text--center">
             <img className="d-block mx-auto mb-4" src="/assets/icon.png" alt="" height="72" />
-            <h1 className="display-5 fw-bold">A hosting service that serves all.</h1>
+            <h1 className="display-5 fw-bold">A hosting service that serves all</h1>
             <div className="col-lg-6 mx-auto">
                 <p className="lead mb-5">
                     This is not an optimistic hosting service that only run for a specific code language.<br />
@@ -22,34 +24,44 @@ export default function Home2() {
                 <p><small>Officially supported software languages</small></p>
                 <div className="container mt-3 mb-5">
                     <div className="row">
-                        <div className="col">
+                        <div className="col-3 my-2">
                             <a href="/docs/deployment/static-site">
                                 <IcHtml height={80} />
                             </a>
                         </div>
-                        <div className="col">
+                        <div className="col-3 my-2">
                             <a href="/docs/deployment/php">
                                 <IcPhp height={80} />
                             </a>
                         </div>
-                        <div className="col">
+                        <div className="col-3 my-2">
                             <a href="/docs/deployment/node">
                                 <IcNode height={80} />
                             </a>
                         </div>
-                        <div className="col">
+                        <div className="col-3 my-2">
                             <a href="/docs/deployment/python">
                                 <IcPython height={80} />
                             </a>
                         </div>
-                        <div className="col">
+                        <div className="col-3 my-2">
                             <a href="/docs/deployment/ruby">
                                 <IcRuby height={80} />
                             </a>
                         </div>
-                        <div className="col">
+                        <div className="col-3 my-2">
                             <a href="/docs/deployment/go">
                                 <IcGo height={80} />
+                            </a>
+                        </div>
+                        <div className="col-3 my-2">
+                            <a href="/docs/deployment/rust">
+                                <IcRust height={80} />
+                            </a>
+                        </div>
+                        <div className="col-3 my-2">
+                            <a href="/docs/deployment/deno">
+                                <IcDeno height={80} />
                             </a>
                         </div>
                     </div>

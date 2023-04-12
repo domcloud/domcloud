@@ -19,8 +19,8 @@ export default function Pricing() {
             description="Description will go into a meta tag in <head />">
             <div className="text--center my-5">
                 <h1>Pricing details</h1>
-                <p>For those who grow</p>
-                <p><i>Save 2 months for yearly plans!</i></p>
+                <p>Subscription options for those who grow</p>
+                <p><i>2 months discount for yearly plans!</i></p>
             </div>
             <div className="container my-5 pricing">
                 <div className="row justify-content-stretch">
@@ -172,7 +172,7 @@ export default function Pricing() {
             </div>
 
             <div className="container">
-                <Home7 title="Starts free" subtitle="No credit card required" />
+                <Home7 title="Starts Free" subtitle="No credit card required" />
             </div>
         </Layout>
     )

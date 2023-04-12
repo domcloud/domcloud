@@ -29,8 +29,8 @@ export default function Home4() {
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
                         <ThemedImage
                             sources={{
-                                dark: "/assets/ss/vscode-ssh-b.png",
-                                light: "/assets/ss/vscode-ssh-w.png"
+                                dark: "/assets/ss/ssh-preview.png",
+                                light: "/assets/ss/ssh-preview.png"
                             }}
                             alt=""
                             className="rounded-lg-3"
@@ -59,11 +59,14 @@ export default function Home4() {
                         </div>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
-                        <img
-                            className="rounded-lg-3"
-                            src="https://via.placeholder.com/600x400/cccccc/969696.png?text=TODO"
+                        <ThemedImage
+                            sources={{
+                                dark: "/assets/ss/vscode-ssh-b.png",
+                                light: "/assets/ss/vscode-ssh-w.png"
+                            }}
                             alt=""
-                            width="720"
+                            className="rounded-lg-3"
+                            height="480"
                         />
                     </div>
                 </div>
@@ -83,11 +86,14 @@ export default function Home4() {
                         </p>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
-                        <img
-                            className="rounded-lg-3"
-                            src="https://via.placeholder.com/600x400/cccccc/969696.png?text=TODO"
+                        <ThemedImage
+                            sources={{
+                                dark: "/assets/ss/nginx-preview.png",
+                                light: "/assets/ss/nginx-preview.png"
+                            }}
                             alt=""
-                            width="720"
+                            className="rounded-lg-3"
+                            height="480"
                         />
                     </div>
                 </div>
@@ -105,11 +111,14 @@ export default function Home4() {
                         </p>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
-                        <img
-                            className="rounded-lg-3"
-                            src="https://via.placeholder.com/600x400/cccccc/969696.png?text=TODO"
+                        <ThemedImage
+                            sources={{
+                                dark: "/assets/ss/dash-b.png",
+                                light: "/assets/ss/dash-w.png"
+                            }}
                             alt=""
-                            width="720"
+                            className="rounded-lg-3"
+                            height="480"
                         />
                     </div>
                 </div>
@@ -122,7 +131,7 @@ export default function Home4() {
                 >
                     <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
                         <h2 className="display-6 fw-bold h4">
-                            Simple but Powerful Runners
+                            Powerful System Runners
                         </h2>
                         <p className="lead pe-5">
                             From bootstrapping WordPress to repulling Git, it's your command center.<br />
@@ -131,11 +140,14 @@ export default function Home4() {
                         </p>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
-                        <img
-                            className="rounded-lg-3"
-                            src="https://via.placeholder.com/600x400/cccccc/969696.png?text=TODO"
+                        <ThemedImage
+                            sources={{
+                                dark: "/assets/ss/new-progress-b.png",
+                                light: "/assets/ss/new-progress-w.png"
+                            }}
                             alt=""
-                            width="720"
+                            className="rounded-lg-3"
+                            height="480"
                         />
                     </div>
                 </div>

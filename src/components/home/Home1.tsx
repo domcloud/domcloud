@@ -5,9 +5,6 @@ import { GitHub, Google } from "./Icon";
 export default function Home1() {
     return (
         <div className="px-4 pt-5 mb-5 text--center border-bottom bg">
-            <p>
-                <span className="badge badge--danger">Website In Construction</span>
-            </p>
 
             <h1 className="display-4 fw-bold">
                 Classic Web Hosting Made Easy &nbsp;
