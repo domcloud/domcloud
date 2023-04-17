@@ -163,6 +163,16 @@ sticky_sessions: on
 
 You can read more about websocket usage at the [Passenger documentation](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions)
 
-### Language-Specific Configuration
+## Language-Specific Configuration
 
 More information about configuring NGINX for specific languages can be found in the [Deployment](../deployment) section.
+
+## Global Configuration
+
+Global configuration of NGINX cannot be changed. However, some of the configuration are set as optimally as possible. You can see more about the global configuration in [this file](https://github.com/domcloud/container/blob/master/templates/nginx.conf). Some of the interesting configuration are:
+
++ Static files are cached with `max` expiration time.
++ Gzip are enabled for `css`, `js`, `svg` static files.
++ Maximum file upload size is set to 512MB.
++ There's [rate limit](https://www.nginx.com/blog/rate-limiting-nginx/) of 4 requests per second with 100 burst request per IP address to mitigate DoS attack.
+
