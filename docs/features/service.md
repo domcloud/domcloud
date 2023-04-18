@@ -82,3 +82,28 @@ If you want performant cache storage, look for other platform. Some of them may 
 ### Managing File Storage
 
 If you need to delete unnecessary files in one of your hosts, use [ncdu](https://en.wikipedia.org/wiki/Ncdu). It's a disk usage analyzer available in all servers.
+
+![](https://upload.wikimedia.org/wikipedia/commons/d/d7/Ncdu_screenshot.png)
+
+### Installed PHP Extensions
+
+PHP are installed as system wide. It's installed as in these commands:
+
+```
+yum install {php74,php80,php81,php82}-php-{bcmath,cli,common,devel,fpm,gd,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-zip,pgsql,process,sodium,soap,xml}
+```
+
+Here's the list of extensions available:
+
+
+|     |     |     |     |     |     |        |  |
+| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----------: | :-----: |
+| bcmath     | bz2        | calendar   | Core       | ctype      | curl       | date          | dom     |
+| exif       | fileinfo   | filter     | ftp        | gd         | gettext    | hash          | iconv   |
+| intl       | json       | libxml     | mbstring   | mongodb    | mysqli     | mysqlnd       | openssl |
+| pcntl      | pcre       | PDO        | pdo_mysql  | pdo_pgsql  | pdo_sqlite | pgsql         | Phar    |
+| posix      | readline   | Reflection | session    | shmop      | SimpleXML  | soap          | sockets |
+| sodium     | SPL        | sqlite3    | standard   | sysvmsg    | sysvsem    | sysvshm       | tokenizer |
+| xml        | xmlreader  | xmlwriter  | xsl        | Zend OPcache | zip        | zlib          |         |
+
+Custom extensions can't be installed as it's a shared hosting. However, you can download PHP yourself and attach it to Nginx via Passenger and FastCGI.
