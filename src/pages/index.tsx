@@ -9,9 +9,9 @@ export default function HomePage(): JSX.Element {
   return (
     <Layout>
       <PageMetadata
-        title={`DOM Cloud`}
-        description="DOM Cloud is a free and open-source hosting service for your web applications. Start hosting your web apps now!"
-        image="/assets/bg/canon.png"
+        title={`Starts your website!`}
+        description="DOM Cloud is a free, modern hosting service for your web applications. Start hosting your web apps now!"
+        image="/assets/bg/canon-home.png"
       />
       <main>
         <Home />
