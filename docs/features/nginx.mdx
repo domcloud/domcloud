@@ -4,7 +4,7 @@ title: NGINX and App Daemon
 
 import ThemedImage from '@theme/ThemedImage';
 
-Our server serves HTTP and HTTPS traffic using NGINX. NGINX is used to serve static files and proxy requests to the app daemon. Because it operates for all users on the server, only a limited set of features are configurable. It's only configurable using the [runner](./runner.md#nginx).
+Our server serves HTTP and HTTPS traffic using NGINX. NGINX is used to serve static files and proxy requests to the app daemon. Because it operates for all users on the server, only a limited set of features are configurable. It's only configurable using the [runner](./runner.mdx#nginx).
 
 If you don't familiar with NGINX, you can read some of good resorces here: 
 + [Official documentation](https://nginx.org/en/docs/)
@@ -26,7 +26,7 @@ You can check the current configuration by going to Check -> NGINX.
     loading="lazy"
 />
 
-The left side is the configurable options, and the right side is the current configuration applied in NGINX. The configurable option is written in YAML format, which when saved, applied as a new configuration configured via [the runner](./runner.md#nginx).
+The left side is the configurable options, and the right side is the current configuration applied in NGINX. The configurable option is written in YAML format, which when saved, applied as a new configuration configured via [the runner](./runner.mdx#nginx).
 
 Below is the example of the configuration:
 
@@ -40,13 +40,13 @@ nginx:
 
 ## Configure NGINX for HTTPS
 
-The [`ssl`](./runner.md#ssl-1) option has three options: `always`, `on`, `off`. The `always` option will force the server to redirect all HTTP traffic to HTTPS. The default value for `ssl` is `on`.
+The [`ssl`](./runner.mdx#ssl-1) option has three options: `always`, `on`, `off`. The `always` option will force the server to redirect all HTTP traffic to HTTPS. The default value for `ssl` is `on`.
 
 ## Configure NGINX for PHP
 
-The [`fastcgi`](./runner.md#fastcgi) option has three options: `always`, `on`, `off`. The default value for `fastcgi` is `off`.
+The [`fastcgi`](./runner.mdx#fastcgi) option has three options: `always`, `on`, `off`. The default value for `fastcgi` is `off`.
 
-This section is covered more in the [PHP Deployment](../deployment/php.md#nginx-setup) section.
+This section is covered more in the [PHP Deployment](../deployment/php.mdx#nginx-setup) section.
 
 ## Configure NGINX for General Apps
 

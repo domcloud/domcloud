@@ -56,4 +56,4 @@ If you want to ask, you can use the GitHub discussion board or contact us via em
 
 We reserve the right to change this privacy statement if needed; with or without notification with you. You can ask any questions regarding our privacy statement or our terms and conditions via the GitHub discussion board available at the bottom right button of this website.
 
-* You can view [archive of changes to this privacy statement here] (https://github.com/domcloud/dom-site/commits/master/privacy.md) *
+* You can view [archive of changes to this privacy statement here] (https://github.com/domcloud/dom-site/commits/master/privacy.mdx) *

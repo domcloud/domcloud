@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 PHP is a popular programming language for web development. PHP is served in production server using PHP-FPM.
 
-Popular PHP recipes is [CodeIgniter](https://codeigniter.com/) and [Laravel](https://laravel.com/). Please read our [Runner's Guide](../features/runner.md) first if you haven't.
+Popular PHP recipes is [CodeIgniter](https://codeigniter.com/) and [Laravel](https://laravel.com/). Please read our [Runner's Guide](../features/runner.mdx) first if you haven't.
 
 ## Recipes
 
@@ -150,7 +150,7 @@ Let's extract those recipes meaning individually.
 
 ## NGINX Setup
 
-[NGINX](../features/nginx.md) can be configured to serve PHP files. PHP files are served by the PHP-FPM server. This works by writing `fastcgi_pass` directive in the NGINX configuration, which points to underlying PHP-FPM server proxy for given host.
+[NGINX](../features/nginx.mdx) can be configured to serve PHP files. PHP files are served by the PHP-FPM server. This works by writing `fastcgi_pass` directive in the NGINX configuration, which points to underlying PHP-FPM server proxy for given host.
 
 The minimum configuration to enable PHP is:
 
@@ -161,7 +161,7 @@ nginx:
 
 ### `fastcgi` Options
 
-The [`fastcgi`](../features/runner.md#fastcgi) option has three options: `on`, `off`, `always`. The difference between three options:
+The [`fastcgi`](../features/runner.mdx#fastcgi) option has three options: `on`, `off`, `always`. The difference between three options:
 
 #### `fastcgi` Options `off`
 

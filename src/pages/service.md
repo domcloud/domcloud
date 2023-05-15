@@ -100,4 +100,4 @@ DOM Cloud reserves the right to change its policies at any time without notice.
 
 DOM Cloud and users agree to resolve disputes by deliberation and not in a class, consolidated, or representative action to reach a consensus. If the dispute cannot be resolved by deliberation, it will be resolved under the applicable legal provisions in Indonesia.
 
-*You can view the archive [changes to this statement and terms of service here](https://github.com/domcloud/domcloud-io/commits/master/service.md)*
+*You can view the archive [changes to this statement and terms of service here](https://github.com/domcloud/domcloud-io/commits/master/service.mdx)*
