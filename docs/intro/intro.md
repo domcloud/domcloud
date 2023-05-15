@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Introduction
+format: mdx
 ---
 
 # Introduction
@@ -62,6 +63,11 @@ We host a range of code language support and they have separate guides pages.
 + [Node.js](../deployment/node.md)
 + [Python](../deployment/python.md)
 + [Ruby](../deployment/ruby.md)
++ [Golang](../deployment/go.md)
++ [Deno](../deployment/deno.md)
++ [Rust](../deployment/rust.md)
++ [CMS](../deployment/cms.md)
++ [Static sites](../deployment/static-site.md)
 + [Other languages](../deployment/)
 
 ### Database Instance Support

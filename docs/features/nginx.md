@@ -1,5 +1,6 @@
 ---
 title: NGINX and App Daemon
+format: mdx
 ---
 
 import ThemedImage from '@theme/ThemedImage';

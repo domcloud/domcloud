@@ -1,4 +1,17 @@
 ---
 title: Rust
 sidebar_position: 7
+format: mdx
 ---
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Deploy Rust Apps
+
+Rust is a popular system programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety. 
+Rust is served as a compiled language, which means that you need to compile your Rust code before you can run it.
+
+Popular Rust web frameworks include [Rocket](https://rocket.rs/), [Actix](https://actix.rs/), [Tide](
+    

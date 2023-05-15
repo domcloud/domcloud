@@ -1,6 +1,7 @@
 ---
 title: Static Sites
 sidebar_position: 1
+format: mdx
 ---
 
 import Tabs from '@theme/Tabs';

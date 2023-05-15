@@ -1,5 +1,6 @@
 ---
 title: DNS Daemon
+format: mdx
 ---
 
 DNS is a service that translates domain names to IP addresses. 

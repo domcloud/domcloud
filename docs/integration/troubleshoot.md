@@ -2,6 +2,7 @@
 layout: docs
 title: Troubleshooting
 sidebar_position: 4
+format: mdx
 ---
 
 # Tips and Troubleshooting

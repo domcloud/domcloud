@@ -1,5 +1,6 @@
 ---
 title: Database Daemon
+format: mdx
 ---
 
 # Databases 

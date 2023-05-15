@@ -1,6 +1,7 @@
 ---
 title: Getting Started
 sidebar_position: 2
+format: mdx
 ---
 
 import ThemedImage from '@theme/ThemedImage';

@@ -1,5 +1,6 @@
 ---
 title: Firewall Daemon
+format: mdx
 ---
 
 Firewall is activated in all servers for additional network protection. It prevents both inbound and outbound connections for certain cases.

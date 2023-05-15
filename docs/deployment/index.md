@@ -1,13 +1,32 @@
 ---
 title: Deployments
 sidebar_position: 2
+format: mdx
 ---
 
 # Deploy Apps with DOM Cloud
 
-+ [Deploy Static Sites](static-site.md)
-+ [Deploy PHP Apps](php.md)
-+ [Deploy Node.js Apps](node.md)
-+ [Deploy Python Apps](python.md)
-+ [Deploy Ruby Apps](ruby.md)
-+ [Deploy Popular CMS Apps](cms.md)
+This section describes configuring web apps to make it work within DOM Cloud service.
+
+The configuration works by writing a YAML config that's sent to [the script runner](../features/runner.md). Please read it first if you haven't.
+
+:::caution
+
+Across this documentation you'll see a statement like `source: clear` which is a dangerous operation that wipes all files including user uploaded files permanently! Be cautious when copy and pasting configuration files.
+
+:::
+
+This section is divided by range of language compilers:
+
++ [PHP](./php.md)
++ [Node.js](./node.md)
++ [Python](./python.md)
++ [Ruby](./ruby.md)
++ [Golang](./go.md)
++ [Deno](./deno.md)
++ [Rust](./rust.md)
+
+There are also specific guides for specific framework or build system:
+
++ [Static sites](./static-site.md)
++ [CMS](./cms.md)

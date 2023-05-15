@@ -1,6 +1,7 @@
 ---
 title: Node.js
 sidebar_position: 3
+format: mdx
 ---
 
 import Tabs from '@theme/Tabs';

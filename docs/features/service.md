@@ -1,5 +1,6 @@
 ---
 title: Linux Utilities
+format: mdx
 ---
 
 # Services

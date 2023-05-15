@@ -1,6 +1,7 @@
 ---
 title: Our Philosophy
 sidebar_position: 3
+format: mdx
 ---
 # Our Philosophy
 

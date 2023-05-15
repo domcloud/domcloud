@@ -1,6 +1,7 @@
 ---
 title: PHP
 sidebar_position: 2
+format: mdx
 ---
 
 import Tabs from '@theme/Tabs';
@@ -41,8 +42,8 @@ This creates a simple PHP that outputs "Hello, World!" and load some useful deve
 source: clear
 features:
 - mysql
-root: public_html/public
 nginx:
+  root: public_html/public
   fastcgi: on
   locations:
   - match: /
@@ -77,18 +78,18 @@ This sets up CodeIgniter in production mode.
 
 ```yaml
 source: clear
-root: public_html/public
 features:
 - php latest
 - mysql
 nginx:
+  root: public_html/public
   fastcgi: on
   locations:
   - match: /
     try_files: $uri $uri/ /index.php$is_args$args
 commands:
 - composer create-project laravel/laravel .
-- mv .env.example .env
+- cp .env.example .env
 - sed -i "s/DB_HOST=127.0.0.1/DB_HOST=localhost/g" .env
 - sed -ri "s/DB_DATABASE=.*/DB_DATABASE=${DATABASE}/g" .env
 - sed -ri "s/DB_USERNAME=.*/DB_USERNAME=${USERNAME}/g" .env

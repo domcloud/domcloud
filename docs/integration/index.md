@@ -1,3 +1,4 @@
 ---
 title: Integration
+format: mdx
 ---

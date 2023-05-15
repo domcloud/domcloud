@@ -1,5 +1,6 @@
 ---
 title: CMS
+format: mdx
 ---
 
 import Tabs from '@theme/Tabs';
@@ -34,11 +35,21 @@ commands:
 - sed -i "s/utf8/utf8mb4/g" wp-config.php
 ```
 
+The script above downloads and extracts WordPress and setup the database.
+Also blocks `/xmlrpc.php` because it's a common DoS attack.
+
+To install `wp-cli`, a WordPress command line tool:
+
+```yaml
+commands:
+- curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+- chmod +x wp-cli.phar
+- mkdir -p ~/.local/bin/
+- mv wp-cli.phar ~/.local/bin/wp
+```
+
   </TabItem>
 </Tabs>
-
-This downloads and extracts WordPress and setup the database.
-Also blocks `/xmlrpc.php` because it's a common DoS attack.
 
 ## [Strapi](https://strapi.io) 
 

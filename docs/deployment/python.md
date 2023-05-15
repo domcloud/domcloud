@@ -1,6 +1,7 @@
 ---
 title: Python
 sidebar_position: 4
+format: mdx
 ---
 
 import Tabs from '@theme/Tabs';

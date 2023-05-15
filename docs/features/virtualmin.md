@@ -1,6 +1,7 @@
 ---
 layout: docs
 title: Virtualmin and Webmin
+format: mdx
 ---
 
 ## Manage servers with Virtualmin Panel
