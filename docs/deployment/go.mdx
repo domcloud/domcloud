@@ -25,15 +25,27 @@ source: clear
 features:
   - go latest
 nginx:
-    root: public_html/public
-    passenger:
-        enabled: on
-        app_start_command: env PORT=$PORT ./app
+  root: public_html/public
+  passenger:
+    enabled: on
+    app_start_command: env PORT=$PORT ./app
 commands:
-    - go mod init app
-    - go get github.com/gin-gonic/gin
-    - echo "package main\n\nimport \"github.com/gin-gonic/gin\"\n\nfunc main() {\n\tapp := gin.Default()\n\tapp.GET(\"/\", func(c *gin.Context) {\n\t\tc.String(200, \"Hello, World!\")\n\t})\n\tapp.Run()\n}" > app.go
-    - go build -o app
+  - go mod init app
+  - go get github.com/gin-gonic/gin
+  - filename: app.go
+    content: |
+      package main
+
+      import "github.com/gin-gonic/gin"
+
+      func main() {
+        app := gin.Default()
+        app.GET("/", func(c *gin.Context) {
+          c.String(200, "Hello, World!")
+        })
+        app.Run()
+      }
+  - go build -o app
 ```
 
 A simple Go website with [Gin](https://gin-gonic.com/) for development.
@@ -55,7 +67,24 @@ nginx:
 commands:
     - go mod init app
     - go get github.com/labstack/echo/v4
-    - echo "package main\n\nimport (\n\t\"net/http\"\n\n\t\"github.com/labstack/echo/v4\"\n\t\"github.com/labstack/echo/v4/middleware\"\n)\n\nfunc main() {\n\te := echo.New()\n\te.Use(middleware.Logger())\n\te.Use(middleware.Recover())\n\te.GET(\"/\", func(c echo.Context) error {\n\t\treturn c.String(http.StatusOK, \"Hello, World!\")\n\t})\n\te.Logger.Fatal(e.Start(\":$PORT\"))\n}" > app.go
+    - filename: app.go
+      content: |
+        package main
+
+        import (
+          "net/http"
+          "os"
+
+          "github.com/labstack/echo/v4"
+        )
+
+        func main() {
+          e := echo.New()
+          e.GET("/", func(c echo.Context) error {
+            return c.String(http.StatusOK, "Hello, World!")
+          })
+          e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
+        }
     - go build -o app
 ```
 
