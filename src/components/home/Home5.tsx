@@ -14,7 +14,7 @@ export default function Home5() {
                         <FaHdd />
                     </div>
                     <h2>Free Storage</h2>
-                    <p>1.5 GB of free total storage for up to 3 websites.</p>
+                    <p>1.5 GB of storage free for up to 3 websites.</p>
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">
@@ -22,16 +22,16 @@ export default function Home5() {
                     </div>
                     <h2>Free Domain</h2>
                     <p>
-                        Free <code>*.domcloud.io</code> domain for all your website.
+                        Built-in <code>*.domcloud.io</code> domain for free.
                     </p>
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">
                         <FaLock />
                     </div>
-                    <h2>Free SSL</h2>
+                    <h2>Free TLS Certificates</h2>
                     <p>
-                        Automatically secure your website with <i>Let's Encrypt</i>.
+                        Automatically enable HTTPS with <b>Let's Encrypt</b>.
                     </p>
                 </div>
             </div>

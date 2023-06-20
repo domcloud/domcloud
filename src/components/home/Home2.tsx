@@ -18,7 +18,7 @@ export default function Home2() {
             <h1 className="display-5 fw-bold">A hosting service that serves all</h1>
             <div className="col-lg-6 mx-auto">
                 <p className="lead mb-5">
-                    This is not an optimistic hosting service that only run for a specific code language.<br />
+                    This is not an optimistic hosting service that only works for a specific code language.<br />
                     Anything than can <u>run in linux</u>, can be <u>hosted here</u>.
                 </p>
                 <p><small>Officially supported software languages</small></p>

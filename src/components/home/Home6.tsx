@@ -5,7 +5,7 @@ export default function Home6() {
     return (<div className="container mb-5 map">
         <div className="card">
             <div className="card__body">
-                <h2 className="text--center">Global Insfrastructure</h2>
+                <h2 className="text--center">Multiple Server Locations</h2>
                 <p className="text--center">Serve website closest to the location of your audience</p>
                 <div style={{ position: 'relative' }}>
                     <img src="/assets/feat/worldmap.png" className="w-100" alt="" />

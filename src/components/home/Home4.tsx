@@ -11,12 +11,11 @@ export default function Home4() {
                 >
                     <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
                         <h2 className="display-6 fw-bold h4">
-                            Complete control over your server.
+                            Complete control over the server
                         </h2>
                         <p className="lead pe-5">
-                            No other hosting provider gives you this much control over your website.<br />
-                            We give you non-sudo SSH access to your websites for free.<br />
-                            Basic linux tools are available, of course.
+                            Access our servers via non-sudo SSH access to your websites.<br />
+                            Install additional tools, languages or compilers at your own will.
                         </p>
                         <div
                             className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
@@ -44,11 +43,11 @@ export default function Home4() {
             <div className="my-5">
                 <div className="row g-0 p-4  align-items-center shadow--md">
                     <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                        <h2 className="display-6 fw-bold h4">Your personal development server.</h2>
+                        <h2 className="display-6 fw-bold h4">Your personal development server</h2>
                         <p className="lead">
                             Use our web-based File Manager, Database Explorer and SSH Terminal.<br />
-                            Code everywhere on the go with VS Code via Remote SSH Access.<br />
-                            HMR works out of the box across the internet too.
+                            Code anywhere with VS Code via <a href="https://code.visualstudio.com/docs/remote/ssh" target="_blank" rel="noreferrer"><b>Remote Development using SSH</b></a>.<br />
+                            Hot Reload works out of the box, across the internet!
                         </p>
                         <div
                             className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
@@ -81,8 +80,8 @@ export default function Home4() {
                             Mix and Match
                         </h2>
                         <p className="lead pe-5">
-                            We grant you access to the most powerful web proxy on the planet, NGINX.<br />
-                            With little patience, You can even mix two separate websites into one domain.
+                            Our HTTP(s) server is powered by NGINX, a powerful web proxy, configurable for all users.<br />
+                            With a little reading, You will be able to even mix two separate websites into one domain.
                         </p>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
@@ -102,12 +101,10 @@ export default function Home4() {
             <div className="my-5">
                 <div className="row g-0 p-4  align-items-center shadow--md">
                     <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                        <h2 className="display-6 fw-bold h4">Smart resource saving.</h2>
+                        <h2 className="display-6 fw-bold h4">Smart resource saving</h2>
                         <p className="lead">
-                            Our server always automatically turn system down within 10 minutes of inactivity,<br />
-                            but will always wake up <u>in fraction of seconds</u> in incoming visit.<br />
-                            <b>Why? </b> to prevents memory leak, and make room for everyone else.<br />
-                            That's why our service can be so generous!
+                            Your app will not be running 24/7, but it will be spin up back almost instantly at incoming traffic.<br />
+                            This is a win-win solution for saving resources (and money!) you might not even notice it.
                         </p>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
@@ -131,12 +128,11 @@ export default function Home4() {
                 >
                     <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
                         <h2 className="display-6 fw-bold h4">
-                            Powerful System Runners
+                            Powerful Deployment Tool
                         </h2>
                         <p className="lead pe-5">
-                            From bootstrapping WordPress to repulling Git, it's your command center.<br />
-                            Hook it to your GitHub repo via a webhook and it becomes a CI/CD tool
-                            to keep your website and deployments sync!
+                            Manager server features, set up NGINX, run some commands, all in one script.<br />
+                            Add it to GitHub CI/CD tool to keep your repository and server code in sync!
                         </p>
                     </div>
                     <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
