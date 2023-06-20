@@ -8,28 +8,6 @@ import ThemedImage from '@theme/ThemedImage';
 
 Here in this page we will take a basic understanding about how DOM Cloud works and how to set up your own website quickly.
 
-## System Architecture
-
-DOM Cloud system is based on a monolithic web server. Everything is managed under a Linux system that everyone have an access to through their own userland data. Let's talk about our system architecture starting from this diagram:
-
-![Architecture](/assets/images/architecture.svg)
-
-There's a lot to unpack! Don't worry, we'll get through that by reading below.
-
-## System Daemon vs. Userland
-
-If you have some experience with Linux you should understand this concept already. A system daemon is all system processes that run under `root` user, which has privilenges of controlling everything in the system. A userland is user processes that locked under a constraint of given Linux user.
-
-You (as a admin of your own website) is only given a userland access. This mean you're able to upload files, databases, and apps under your own user, and that's it. We can't give you the full "system" daemon because the system is shared with other users. 
-
-Of course, some setup still requires root acccess. For instance, a proxy daemon (NGINX) need to know "you" and your domain so it can forward internet traffic through your apps. This is done mainly through **Runner**, the core feature of our service.
-
-## Runner
-
-The Runner is the way to configure things in the system. It's a web-based tool that allows you to configure your website, like adding a domain, adding a database, and adding a web app. It's also the way to configure the system daemon, like adding a proxy, adding a firewall, and adding a DNS.
-
-You can read more about Runner in the [Runner](../features/runner.mdx) page. For now, let's keep focus on how to setup your own website.
-
 ## Create a Website
 
 Go to [create a website](https://my.domcloud.co/user/host/create) page. If you haven't logged in, you will be redirected to the login page. Below is the screenshot of that page.
@@ -86,14 +64,14 @@ For some developers who already have the website code on GitHub, you can clone i
 
 :::info
 
-If you plan to integrate our service with GitHub, there's so much more about it. <br/> Read more about [GitHub integration](../integration/github.mdx).
+If you plan to integrate our service with GitHub, there's so much more to read about it. Read more about [GitHub integration](../integration/github.mdx).
 
 :::
 
 
 #### Custom Template
 
-This is the "template" that will be executed in the runner after the website has been created. When you choose option from **Start From Template** or **Clone From GitHub**, it will be automatically set to the template that is used by the selected option.
+This is the actual "template" that will be executed after the website has been created. When you choose option from **Start From Template** or **Clone From GitHub**, it will be automatically set to the template that is used by the selected option.
 
 ### Click "Add Host"
 
@@ -111,7 +89,9 @@ After clicking the "Add Host" button, you will be redirected to the runner page 
     loading="lazy"
 />
 
-If you keep watching the page there will be a message saying "Your website is ready!" and a button to open the website when it's ready.
+You have to wait until the setup is finished.
+
+When it finished there will be a message saying "Your website is ready!" and a button to open the website when it's ready.
 
 ## Managing Website
 
@@ -129,7 +109,9 @@ Every website has its own dashboard. Below is the screenshot of that page.
     loading="lazy"
 />
 
-One thing to note is that it has many tabs. One particular useful tab that you'll use often is the **Manage** tab. It contains links to edit your website and also credentials to access your website. Below is the screenshot of that page.
+The **Info** section contains information about your website, such as some general information including storage usage, bandwidth usage, and the server where your website is hosted.
+
+One particular useful tab that you'll use often is the **Manage** tab. It contains links to edit your website and also credentials to access your website. Below is the screenshot of that page.
 
 
 <ThemedImage
@@ -157,7 +139,7 @@ PhpMyAdmin and PhpPgAdmin is a web-based database management tool for MariaDB an
 
 :::info
 
-If you have problem accessing the database, you need to enable the database first through the Runner. <br/> Read more about [Configuring Databases](../features/database.mdx).
+If you have problem accessing the database, you need to enable the database first through the **Deploy** tab. <br/> Read more about [Configuring Databases](../features/database.mdx).
 
 :::
 
@@ -177,13 +159,42 @@ The WebSSH URL contains password in your URL for convenience. Don't open it on a
 
 #### Visual Studio Code
 
-This a link to [VS code](https://code.visualstudio.com/) to remotely edit the website via SSH. It's required to have the VS code installed on your computer. During entry, you will be asked for the SSH password, which is the same as your website password.
+This a link to [Visual Studio Code](https://code.visualstudio.com/) to remotely edit the website using SSH. It's required to have the VS code installed on your computer. During entry, you will be asked for the SSH password, which is the same as your website password.
 
 :::tip
 
-You can open the website in VS code in a particular directory to avoid clutter by opening the link from the dropdown menu.
+You can open the website in VS code in a particular directory (such as `./public_html`) to avoid slowdown by loading all userspace files, by opening the link from the dropdown menu.
 
 :::
+
+[**Read more about Remote Development using SSH**](https://code.visualstudio.com/docs/remote/ssh)
+
+## Deploy Tab
+
+The deploy tab is where you can configure the rest of your website. Below is the screenshot of that page.
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/new-progress-b.png",
+        light: "/assets/ss/new-progress-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+**It's a powerful tool** to configure (or automate) your website setup. It allows you to:
+
++ Configure NGINX rules and define how to boots up your websites
++ Configure databases, DNS, TLS, and other services
++ Install additional languages and tools
++ Run custom scripts to automate your deployment
+
+This feature alone is what makes DOM Cloud different from other hosting providers. It's a powerful tool that allows you to configure your website in any way you want. We have dozens of templates (called *recipes*) to setup your website with various languages and tools. You can also create your own recipes and share it with others.
+
+[**Read more about Deployments via Deploy Tab**](../deployment/)
 
 ## Other things to aware
 

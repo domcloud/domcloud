@@ -11,6 +11,7 @@ import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
 import './price.css';
 import Home7 from "../components/home/Home7";
+import Home5 from "../components/home/Home5";
 
 export default function Pricing() {
     return (
@@ -39,7 +40,7 @@ export default function Pricing() {
                                         <FaHdd /> <span><b>3 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>5 GiB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>15 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief /> <span>Maximum of <b>6 instances</b></span>
@@ -66,13 +67,13 @@ export default function Pricing() {
                                         <FaHdd /> <span><b>10 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>25 GiB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>50 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief />  <span>Maximum of <b>10 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers />  <span>Team of <b>5 users</b></span>
+                                        <FaUsers />  <span>Team of <b>4 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -86,20 +87,20 @@ export default function Pricing() {
                                 </div>
                                 <div className="card__body">
                                     <div className="text--center">
-                                        <h2 className="cap">12.50$</h2>
+                                        <h2 className="cap">15.00$</h2>
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>25 GiB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>30 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>100 GiB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>150 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief /> <span>Maximum of <b>25 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> <span>Team of <b>15 users</b></span>
+                                        <FaUsers /> <span>Team of <b>10 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -109,36 +110,7 @@ export default function Pricing() {
             </div>
 
             <div className="container px-4 pt-5" id="featured-3">
-                <h2 className="pb-2 border-bottom text--center">
-                    Want to try out? No Problem! <span className="badge badge--primary">it's free</span>
-                </h2>
-                <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                    <div className="feature col">
-                        <div className="feature-icon badge">
-                            <FaHdd />
-                        </div>
-                        <h2>Free Storage</h2>
-                        <p>1.5 GB of free storage for up to 3 websites.</p>
-                    </div>
-                    <div className="feature col">
-                        <div className="feature-icon badge">
-                            <FaGlobe />
-                        </div>
-                        <h2>Free Domain</h2>
-                        <p>
-                            Free <code>*.domcloud.io</code> domain for all your website.
-                        </p>
-                    </div>
-                    <div className="feature col">
-                        <div className="feature-icon badge">
-                            <FaLock />
-                        </div>
-                        <h2>Free SSL</h2>
-                        <p>
-                            Automatically secure your website with <i>Let's Encrypt</i>.
-                        </p>
-                    </div>
-                </div>
+                <Home5 title="Try before buy!" />
                 <h2 className="pb-2 border-bottom text--center">
                     Benefits for subscribers!  <span className="badge badge--success">support 💚</span>
                 </h2>
@@ -172,7 +144,7 @@ export default function Pricing() {
             </div>
 
             <div className="container">
-                <Home7 title="Starts Free" subtitle="No credit card required" />
+                <Home7 title="Starts Risk Free!" subtitle="No credit card required" />
             </div>
         </Layout>
     )

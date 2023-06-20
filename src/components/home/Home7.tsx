@@ -9,17 +9,17 @@ export default function Home7({ subtitle, title }) {
                 className="d-grid gap-2 d-md-flex justify-content-center my-4 mb-lg-3"
             >
                 <a
-                    className="button button--primary button--lg px-4 fw-bold"
-                    href="https://my.domcloud.co/register/"
-                >
-                    Sign up
-                </a>
-                <a
                     href="https://my.domcloud.co/login?with=google"
                     className="p-2 button button--secondary d-flex align-items-center shadow--lw"
                     title="With Google"
                 >
                     <Google />
+                </a>
+                <a
+                    className="button button--primary button--lg px-4 fw-bold"
+                    href="https://my.domcloud.co/register/"
+                >
+                    Sign up
                 </a>
                 <a
                     href="https://my.domcloud.co/login?with=github"
@@ -29,7 +29,7 @@ export default function Home7({ subtitle, title }) {
                     <GitHub />
                 </a>
             </div>
-            
+
             {subtitle}
         </div>
     )

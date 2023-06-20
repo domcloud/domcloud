@@ -2,13 +2,13 @@ import React from "react";
 import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hdd.svg';
 import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
 import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
-export default function Home5() {
+export default function Home5({ title }) {
     return (
         <div className="container px-4 py-5" id="featured-3">
             <h2 className="pb-2 border-bottom text--center">
-                Starter Features for you <span className="badge badge--primary">it's free</span>
+                {title} <span className="badge badge--primary">it's 100% free</span>
             </h2>
-            <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div className="row g-4 pt-5 row-cols-1 row-cols-lg-3">
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">
                         <FaHdd />
@@ -35,6 +35,11 @@ export default function Home5() {
                     </p>
                 </div>
             </div>
+            <p className="text--center pb-5 pt-3">
+                <a href="/docs/intro/free-plan" className="button button--link button--lg px-4 me-md-2">
+                    Read more about the free plan
+                </a>
+            </p>
         </div>
     )
 }

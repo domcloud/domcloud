@@ -15,9 +15,9 @@ export default function Home() {
             <Home2 />
             <Home3 />
             <Home4 />
-            <Home5 />
+            <Home5 title="Starter Features for you"/>
             <Home6 />
-            <Home7 title="Ready to try out?" subtitle={<a href="/price" className="button button--link button--lg px-4 ms-md-2">
+            <Home7 title="Ready? Try it for free!" subtitle={<a href="/price" className="button button--link button--lg px-4 ms-md-2">
                 See pricing
             </a>} />
         </div>
