@@ -1,10 +1,13 @@
 ---
 title: NGINX and App Daemon
+sidebar_position: 2
 ---
 
 import ThemedImage from '@theme/ThemedImage';
 
-Our server serves HTTP and HTTPS traffic using NGINX. NGINX is used to serve static files and proxy requests to the app daemon. Because it operates for all users on the server, only a limited set of features are configurable. It's only configurable using the [runner](./runner.mdx#nginx).
+Our server serves HTTP and HTTPS traffic using NGINX. NGINX is used to serve static files and proxy requests to your app. 
+
+Because it operates for all users on the server, only a limited set of features are configurable, the only way to configure it is via the [deployment system](./deploy.mdx#nginx).
 
 If you don't familiar with NGINX, you can read some of good resorces here: 
 + [Official documentation](https://nginx.org/en/docs/)
@@ -26,7 +29,7 @@ You can check the current configuration by going to Check -> NGINX.
     loading="lazy"
 />
 
-The left side is the configurable options, and the right side is the current configuration applied in NGINX. The configurable option is written in YAML format, which when saved, applied as a new configuration configured via [the runner](./runner.mdx#nginx).
+The left side is the configurable options, and the right side is the current configuration applied in NGINX. The configurable option is written in YAML format, which when saved, applied as a new configuration configured via [the runner](./deploy.mdx#nginx).
 
 Below is the example of the configuration:
 
@@ -40,17 +43,17 @@ nginx:
 
 ## Configure NGINX for HTTPS
 
-The [`ssl`](./runner.mdx#ssl-1) option has three options: `always`, `on`, `off`. The `always` option will force the server to redirect all HTTP traffic to HTTPS. The default value for `ssl` is `on`.
+The [`ssl`](./deploy.mdx#ssl-1) option has three options: `always`, `on`, `off`. The `always` option will force the server to redirect all HTTP traffic to HTTPS. The default value for `ssl` is `on`.
 
 ## Configure NGINX for PHP
 
-The [`fastcgi`](./runner.mdx#fastcgi) option has three options: `always`, `on`, `off`. The default value for `fastcgi` is `off`.
+The [`fastcgi`](./deploy.mdx#fastcgi) option has three options: `always`, `on`, `off`. The default value for `fastcgi` is `off`.
 
 This section is covered more in the [PHP Deployment](../deployment/php.mdx#nginx-setup) section.
 
 ## Configure NGINX for General Apps
 
-NGINX by default only forwards connection and can't invoke the desired app to run. We use [Phusion Passenger](https://www.phusionpassenger.com/) so we can configure NGINX to invoke the app and forwards HTTP requests.
+NGINX by default only forwards connection and can't invoke the desired app to run. We use [Phusion Passenger](https://www.phusionpassenger.com/) so we can tell NGINX to invoke the app and forwards HTTP requests.
 
 The minimum configuration to enable NGINX for general apps is:
 
@@ -81,19 +84,42 @@ nginx:
 
 ### PORT environment variable
 
-The `$PORT` environment variable is set by NGINX. It is a random port that's chosen to be proxied from NGINX. The app must listen to this port to receive HTTP requests.
+The `$PORT` environment variable is set by Phusion Passenger. It is a random port that's chosen as a HTTP proxy between your app and the internet. 
+**Your app must listen to `$PORT`** to be able receiving HTTP requests from NGINX.
 
 You can tell the app to listen to this port by setting the an environment variable via `env` like this:
 
 ```yaml
-app_start_command: env PORT=$PORT node app.js
+nginx:
+  passenger:
+    app_start_command: env PORT=$PORT node app.js
 ```
 
 Or you can set the port using the app's argument if available:
 
 ```yaml
-app_start_command: node app.js --port $PORT
+nginx:
+  passenger:
+    app_start_command: node app.js --port $PORT
 ```
+
+:::caution
+
+Your app must listen to the port that's set dynamically in the `app_start_command` option. 
+If you don't see a way to pass custom **`$PORT`** either via environment variables or app's argument,
+then you might want to ask your app's or its framework's developer to make it possible.
+
+:::
+
+
+:::info
+
+If you make a social media app bot, you'll realize that the only way to make it work is **via a webhook**.
+It's a limitation by design, as we're not allowing [any software running 24/7](./#it-will-not-be-always-available) and running a background polling. 
+
+Read it more for: [Telegram](https://core.telegram.org/bots/webhooks), [Discord](https://birdie0.github.io/discord-webhooks-guide/), [WhatsApp](https://developers.facebook.com/docs/whatsapp/webhooks/).
+
+:::
 
 ### Set Environment Variables
 
@@ -101,7 +127,7 @@ Passenger has three ways to set environment variables:
 
 ### `app_env` option
 
-The [`app_env`](./runner#passenger) option is special option that's used to set environment mode. The default value is `production`. This option sets the value to the following environment variables:
+The [`app_env`](./deploy.mdx#passenger) option is special option that's used to set environment mode. The default value is `production`. This option sets the value to the following environment variables:
 
 + `RAILS_ENV`
 + `RACK_ENV`
@@ -113,7 +139,7 @@ You can set this value other values such as `development` or `test`.
 
 ### `env_var_list` option
 
-The [`env_var_list`](./runner#passenger) option is used to set environment variables directly from NGINX. It's a list of environment variables to set. The value is a string that's in the format of `KEY=VALUE`. For example:
+The [`env_var_list`](./deploy.mdx#passenger) option is used to set environment variables directly from NGINX. It's a list of environment variables to set. The value is a string that's in the format of `KEY=VALUE`. For example:
 
 ```yaml
 nginx:
@@ -155,13 +181,21 @@ More information about restarting app can be found in the [Passenger documentati
 
 ### Websocket
 
-If the app uses Websocket, you have to enable sticky sessions in NGINX. This is because there will be multiple process spawned and Phusion Passenger will load balance the requests to the processes. If the requests are not sticky, the Websocket connection will be lost.
+If the app uses Websocket, you have to enable sticky sessions in NGINX. This is because there will be multiple process spawned and Phusion Passenger will load balance internet requests to many processes. If the requests are not "sticky", the Websocket connection will be lost.
 
 ```yaml
-sticky_sessions: on
+nginx:
+  passenger:
+    sticky_sessions: on
 ```
 
-You can read more about websocket usage at the [Passenger documentation](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions)
+You can read more about sticky sessions at the [Passenger documentation](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions)
+
+:::caution
+
+Server processes are often die, forked and respawned. **Never hold a global value in memory!** Use some kind of database (such as SQLite) when you want to handle one or more shared data such as websocket or authentication sessions.
+
+:::
 
 ## Language-Specific Configuration
 

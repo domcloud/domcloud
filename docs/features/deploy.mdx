@@ -1,17 +1,14 @@
 ---
 layout: docs
-title: The System Runner
+title: Deployment System
+sidebar_position: 1
 ---
-
 
 import ThemedImage from '@theme/ThemedImage';
 
+The deployment system is the main feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also can be used as a CI (Continous Integration) tool that perform some tasks inside your website.
 
-# The Runner
-
-The runner is the core feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also a CI (Continous Integration) tool that perform some tasks inside your website.
-
-The system runner is accessible through `Deploy` tab in the website menu. 
+The deployment system is accessible through `Deploy` tab in the website menu. 
 
 <ThemedImage
     sources={{
@@ -28,40 +25,55 @@ The system runner is accessible through `Deploy` tab in the website menu.
 
 For common script deployments, there's existing recipes from [the deployment page](../deployment/index.mdx) or [recipe repository](https://github.com/domcloud/recipes).
 
-We make it as simple as possible to understand. We also make our runner script [open sourced](https://github.com/domcloud/bridge) so you take a better view of how it works if you want that.
+We try to make it as simple as possible to understand. We also make our backend processing [open sourced](https://github.com/domcloud/bridge) so you take a better view of how it works if you want that.
 
-The script runner is in YAML format. For example to create a new WordPress instance:
+The script runner is in YAML format. Here's a simple overview:
 
 ```yaml
-source:
-  url: https://wordpress.org/latest.zip
-  directory: wordpress
-features: [mysql, ssl]
-nginx:
-  ssl: enforce
-  fastcgi: on
-  locations:
-  - match: /
-    try_files: $uri $uri/ /index.php$is_args$args
-commands:
-- cp wp-config-sample.php wp-config.php
-- sed -i "s/database_name_here/${DATABASE}/g" wp-config.php
-- sed -i "s/username_here/${USERNAME}/g" wp-config.php
-- sed -i "s/password_here/${PASSWORD}/g" wp-config.php
-- sed -i "s/utf8/utf8mb4/g" wp-config.php
+source: # Source URL from internet to replace all files in "public_html"
+features: # List of features to be enabled or configured or disabled
+nginx:  # NGINX configuration to be set for current website
+commands: # List of terminal commands that will be executed inside "public_html"
 ```
 
-With a quick look, you can tell that it will download `https://wordpress.org/latest.zip` extracting and moving it out of `wordpress` directory, then creating a mysql database and signing SSL certificate, also configuring the correct NGINX record for WordPress and perform quick `sed` operations to inject database credentials directly to the config files.
-
-Here's what you can configure within the system runner:
+Each of these keys are explained in details below.
 
 ## `source`
+
+Source URL from internet to replace all files in **~/public_html**. Common examples:
+
+```yaml
+# Clones octocat.github.io to  "~/public_html"
+source: https://github.com/octocat/octocat.github.io
+```
+
+```yaml
+# Download latest WordPress and extracts it from "wordpress" folder
+source: 
+  url: https://wordpress.org/latest.zip
+  directory: wordpress
+```
+
+```yaml
+# Removes all files and directories in "~/public_html"
+source: clear
+```
 
 Type: `string` or `object`. If it a string, it will be the `url`.
 
 If this value is set, it will download contents inside the host. The content can be either a ZIP file or a Git repository (to perform clone), or `clear` to simply clears the content.
 
-> CAUTION: This option will always **overwrite** all contents inside the host. Use with caution.
+:::tip
+
+This option is useful if your files is already in a public repository such as GitHub. If you need to upload the files from your local device use [Webmin File Manager](./virtualmin).
+
+:::
+
+:::danger
+
+This option will always **overwrite** all contents inside the host. Use with caution.
+
+:::
 
 ### `url`
 The zip (or clone) URL to download. Required.
@@ -87,6 +99,29 @@ Do Recursive clone of submodules? Default to `false`.
 
 ## `features`
 
+Enable, configure or disable one or more features in the website. Common examples:
+
+```yaml
+# Enable MySQL and PostgreSQL
+features:
+- mysql
+- postgresql
+```
+
+```yaml
+# Install latest Node.js and Python in the server
+features:
+- node
+- python
+```
+
+```yaml
+# Ask for a new TLS certificate from let's encrypt
+features:
+- ssl
+```
+
+
 Type: Array of `string` or `object`. If one item is a string, it will be converted to object (.e.g. `mysql on` become `{ mysql: on }`).
 
 This configures all features available for the host in DOM Cloud.
@@ -98,7 +133,7 @@ Configure MariaDB (MySQL) Database Server.
 + `mysql` or `mysql on` Enable MariaDB and create default DB.
 + `mysql create <dbname>` Create a new database with `<dbname>`.
 + `mysql drop <dbname>` Drop a database with `<dbname>`.
-+ `mysql off`. Disables `mysql` feature. **Caution: Also drop all DB  permanently**.
++ `mysql off`. Disables `mysql` feature. **Caution: Also drop all DB permanently**.
 
 ### `postgresql`
 
@@ -124,7 +159,7 @@ You can add multiple records with lists. For example:
 features:
 - dns:
   - add a sub-a 1.2.3.4
-  - add aaaa sub-a 1.2.3.4
+  - add aaaa sub-a 2001:1:2:3:4:5:6:7
   - add cname sub-b example.net.
   - add cname sub-c example.net.
 ```
@@ -136,6 +171,13 @@ DNS records for child server is handled automatically.
 When applying CNAME, looks out for the trailing dot (`.`) at the end of CNAME values. 
 
 It is required to specify the root domain, otherwise it will be appended with the parent domain.
+
+:::
+
+
+:::tip
+
+DNS records is also configurable via [Webmin DNS](./virtualmin).
 
 :::
 
@@ -152,32 +194,55 @@ It's intended for use of hosts with [low security measures](https://github.com/d
 
 :::caution
 
-Please note due to obvious PHP weakness in security, it's mandatory to turn on this feature for WordPress or any weakly protected PHP server.
+Please note due to obvious PHP weakness in security, it's advised to turn on this feature for WordPress or any weakly protected PHP server.
 
 :::
 
 
 ### `ssl`
 
-Attempt to renew SSL certificate with Let's Encrypt.
+Configure SSL or Attempt to renew SSL certificate with Let's Encrypt.
+
++ `ssl` or `ssl letsencrypt`, renew SSL certificate with Let's Encrypt.
++ `ssl always` Always redirect HTTP to HTTPS
++ `ssl on` Enable both HTTP to HTTPS
++ `ssl off` Disable HTTPS access (not recommended)
+
+### `http`
+
+Configure HTTP version for HTTPS.
+
++ `http 1` use HTTP version 1
++ `http 2` use HTTP version 2
 
 ### `root`
 
 Set directory root path. This also changes the `root` directive in NGINX config.
 
 :::info
-Because of legacy reason, this is also available in root config.
+`root` is configurable both in `features:` and `nginx:`. The following is equivalent:
+
+```yaml
+features:
+- root: public_html/public
+```
+
+```yaml
+nginx:
+  root: public_html/public
+```
+
 :::
 
 ### `php`
 
 Set PHP (FastCGI) version. Available options:
 
-+ `php 7.4` (default)
++ `php 7.4`
 + `php 8.0`
 + `php 8.1`
 + `php 8.2`
-+ `php latest`
++ `php latest` (default)
 
 Remember that `php 8.x` is an active release. 
 
@@ -265,21 +330,51 @@ This installation is powered by [rustup](https://rustup.rs).
 
 ## `nginx`
 
-Type: `object`.
+Configures NGINX for a given website. Common examples:
 
-This is the NGINX configuration for a given host.
+```yaml
+# Standard NGINX setup for PHP framework 
+nginx:
+  root: public_html/public
+  fastcgi: on
+  locations:
+  - match: /
+    try_files: $uri $uri/ /index.php$is_args$args
+```
+
+```yaml
+# Standard NGINX setup for Node.js via GLS
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: on
+    app_start_command: env PORT=$PORT node server.js
+```
+
+```yaml
+# Standard NGINX setup for Python through WSGI
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: on
+    python: .pyenv/shims/python
+features:
+  - python # This install python to .pyenv/shims/python
+commands:
+  - echo "from app import app as application" > passenger_wsgi.py    
+```
 
 All configurations below are not preserved at each config update. It's recommended to use the `NGINX` tab in the dashboard to reconfigure NGINX.
 
-### `ssl`
-
-HTTPS options: `on` (default), `always` (always redirect HTTP to HTTPS), `off` (not recommended).
-
 ### `fastcgi`
 
-Whether to enable or not enable PHP file execution: `on` or `off`. If omitted, `off` is the default.
+Whether to enable or not enable PHP file execution: `on`, `always` or `off`. If omitted, `off` is the default.
 
-You can override PHP settings via the `.user.ini` file in the document root. Once changed it will not change immediately due to cache, but usually takes no more than 5 minutes.
+:::tip
+
+Read more about `fastcgi` option in [Deployment for PHP](../deployment/php.mdx#nginx-setup).
+
+:::
 
 ### `error_pages`
 
@@ -289,9 +384,7 @@ List of error pages command. It's particularly useful for static websites. Read 
 + `404 =200 /200.html`: Assume `404` error as 200 OK and show `200.html` (SPA).
 + `500 502 503 504 /50x.html`: Show `50x` error as `50x.html`.
 
----
-
-## `passenger`
+### `passenger`
 
 If you want to run Non-PHP apps, you need to setup with [Passenger Phusion](https://www.phusionpassenger.com/). Passenger is an additional layer on top of NGINX to run any non-PHP apps.
 
@@ -323,21 +416,21 @@ Available options:
 + [`document_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_document_root): path to public document root (default is `root`). This value is relative to the user `$HOME` folder.
 + [`app_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_root): path to app root (default is parent of `root`). This value is relative to the user `$HOME` folder.
 
-For non-GLS these options are available too:
-+ `app_type`: Type of App
-+ `startup_file`: Startup filename
-+ `ruby`: Ruby path
-+ `nodejs`: Nodejs path
-+ `python`: Python path 
-+ `meteor_app_settings`: Meteor path
+For non-GLS (an alternative way if not using `app_start_command`) these options are available too:
++ [`app_type`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_type): Type of App
++ [`startup_file`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_startup_file): Startup filename
++ [`ruby`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_ruby): Path to Ruby executable
++ [`nodejs`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_nodejs): Path to Node.JS executable
++ [`python`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_python): Path to Python executable
++ [`meteor_app_settings`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_meteor_app_settings): Path to Meteor app settings
 
-:::info
+:::tip
 
-[GLS (Generic Language Support)](https://www.phusionpassenger.com/passenger6) is a cool concept where you can run any language or binaries within NGINX with the help of Passenger. It's recommended to use GLS instead of the non-GLS options.
+Read more about `passenger` option for general app in [NGINX and App daemon](./nginx.mdx#configure-nginx-for-general-apps).
 
 :::
 
-## `locations`
+### `locations`
 
 Array objects which one or more of:
 
@@ -354,7 +447,7 @@ Please read [NGINX Location directive](http://nginx.org/en/docs/http/ngx_http_co
 
 :::info
 
-`proxy_pass`, although it's popular, we're not supporting it because it's not a good practice to use it in a shared servers. You must use `passenger` instead.
+`proxy_pass`, although it's popular, it's not allowed because it's not a good practice to use it in a shared servers. You must use `passenger` instead.
 
 :::
 
@@ -367,9 +460,9 @@ Type: array of `string`.
 
 List of SSH commands in sequence. The starting directory is always `~/public_html`. If any exit code detected to be not zero, the execution chain stop.
 
-This is where all the things you usually put after the execution of `source`. Things like installing depedencies, bundling frontend or injecting database credential.
+This is where all the terminal commands written, for example to install depedencies, compiling binaries or injecting database credential.
 
-The list of commands is always executed after the `source` and `features` and before `nginx` and `root` list.
+The list of commands is always executed after the `source` and `features` and before `nginx`.
 
 #### Builtin envar for commands
 
@@ -385,7 +478,8 @@ These envars also will be set:
 + `CI=true`
 + `CONTINUOUS_INTEGRATION=true`
 + `DEBIAN_FRONTEND=noninteractive`
-+ `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8`
++ `LANG=en_US.UTF-8`
++ `LC_ALL=en_US.UTF-8`
 
 #### Builtin Git Credentials
 
@@ -403,10 +497,12 @@ We doesn't prevent you, for example to run `echo $GITHUB_TOKEN` in the `commands
 
 #### Time limit
 
-The time limit for overall script in single run is 10 minutes. If it's exceeded, the execution chain will automatically stop.
+The time limit for overall script in single run is 10 minutes. If it's exceeded, the execution chain will automatically stop by signaling both `SIGTERM` and `SIGKILL`.
 
 ---
 
 ## `subdomains` and `subdomain`
 
 `subdomains` is used to run specific commands for a given `subdomain` name. It's an array of objects with `subdomain`, some of the `features` and `commands` keys.
+
+When `subdomains` are used, some definitions such as `source`, `nginx`, `features` and `commands` is adjusted to apply for a given subdomain name, including changing the root exection to `~/domains/<subdomain_name>/public_html` instead of `~/public_html`.

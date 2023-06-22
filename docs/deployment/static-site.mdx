@@ -10,77 +10,61 @@ import TabItem from '@theme/TabItem';
 
 Static sites are websites that doesn't require server processing (e.g. connecting with database), so it only consist of HTML, CSS, JS files that sent as-is to the browser.
 
-While static sites are works out of the box, nowadays static sites needed to build from many kinds of frontend tooling.
+While static sites are works out of the box, modern static sites needed to build from many kinds of frontend tooling such as [Create React App](https://create-react-app.dev/), [Vite](https://vitejs.dev/), [Hugo](https://gohugo.io/) and [Jekyll](https://jekyllrb.com/) and many more.
 
-Most people built static sites with Node-based frontend tooling which includes [Create React App](https://create-react-app.dev/), [`Gatsby`](https://www.gatsbyjs.com/) and [`Vite`](https://vitejs.dev/). There are also other popular static site generators like [`Hugo`](https://gohugo.io/) and [`Jekyll`](https://jekyllrb.com/).
+## Pulling the code
 
-Please read our [Runner's Guide](../features/runner.mdx) first if you haven't.
+You can [upload existing files](../features/virtualmin.mdx) from your local machine or pull it from a Git repository:
 
-## Recipes
+```yaml
+# Clone from Git repository and write it to ~/public_html
+source: https://github.com/octocat/octocat.github.io
+```
+
+## Building the site
+
+If your site need to be built with a frontend tooling, you need to build it after pulling the code and adjust the NGINX configuration to serve the built files correctly.
+
 
 <Tabs>
-  <TabItem value="express" label="Express" default>
+  <TabItem value="create-react-app" label="Create React App" default>
 
 ```yaml
+# If you want to create from stratch, let's create a new template
 source: clear
-features: ['node lts']
-root: public_html/public
-nginx:
-  passenger:
-    enabled: on
-    app_start_command: env PORT=$PORT npm start
 commands:
-- npx express-generator .
-- npm i
+- yarn create react-app .
+# Install latest Node.js
+features:
+- node lts
 ```
 
-A simple express website that outputs "Hello Express!"
+```yaml
+# Build the site (after pulling or modifying the code)
+commands:
+- yarn install
+- yarn build
+```
+
+```yaml
+# Adjust NGINX (you only need to do this once)
+nginx:
+  # Set the root directory to the build directory
+  root: public_html/build
+  # Serve index.html for all requests
+  locations:
+  - match: /
+    try_files: $uri $uri/ /index.html
+```
 
   </TabItem>
-  <TabItem value="vite" label="Vite" default>
-
-```yaml
-source: clear
-features: ['node lts']
-nginx:
-  passenger:
-    enabled: on
-    app_start_command: env PORT=$PORT npm start
-commands:
-- npx express-generator .
-```
-
-A simple PHP that outputs "Hello, World!"
-
+  <TabItem value="vite" label="Vite">
+  TODO
   </TabItem>
-  <TabItem value="next" label="Next.js" default>
-
-```yaml
-source: clear
-features: ['node lts']
-nginx:
-  fastcgi: on
-commands:
-- echo "Hello, World!" > index.php
-```
-
-A simple PHP that outputs "Hello, World!"
-
+  <TabItem value="hugo" label="Hugo">
+  TODO
   </TabItem>
-  <TabItem value="strapi" label="Strapi" default>
-
-```yaml
-source: clear
-features: ['node lts']
-nginx:
-  fastcgi: on
-commands:
-- echo "Hello, World!" > index.php
-```
-
-A simple PHP that outputs "Hello, World!"
-
+  <TabItem value="jekyll" label="Jekyll">
+  TODO
   </TabItem>
 </Tabs>
-
-Let's extract those recipes meaning individually.
