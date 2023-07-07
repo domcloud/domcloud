@@ -2,19 +2,73 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://domcloud.co/blog</id>
     <title>DOM Cloud Blog</title>
-    <updated>2023-03-12T00:00:00.000Z</updated>
+    <updated>2023-07-08T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://domcloud.co/blog"/>
     <subtitle>DOM Cloud Blog</subtitle>
     <icon>https://domcloud.co/assets/icon/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Improving UX for Newbies!]]></title>
+        <id>https://domcloud.co/blog/improving-ux-for-newbies</id>
+        <link href="https://domcloud.co/blog/improving-ux-for-newbies"/>
+        <updated>2023-07-08T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This June 2023 update brings so much improvements to make things easier for newcomers! Here's the improvements since last March:]]></summary>
+        <content type="html"><![CDATA[<p>This June 2023 update brings so much improvements to make things easier for newcomers! Here's the improvements since last March:</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="directly-upload-project-files">Directly Upload Project Files<a href="#directly-upload-project-files" class="hash-link" aria-label="Direct link to Directly Upload Project Files" title="Direct link to Directly Upload Project Files">​</a></h2>
+<p>Previously, we only can import existing project via external Git repo. Today, we introduce a small utility that allows you to uploads your project from local files, and converting it to a public ZIP url:</p>
+<video width="80%" loop="" muted="" controls="" class="img-fluid border rounded-3 shadow--md mb-4"><source src="/assets/medias/upload-local-3ae44b199bcf63f4450d624a0fc8128b.webm" type="video/webm"><p>Sorry! Your browser does not support the video tag.</p></video>
+<p>Why it's useful? This utility eradicates to need of going to Webmin tool just to upload project files, and then adjusting the script needed depending on the framework used in that project. A huge time saver! Right?</p>
+<p>The upload script also automatically strips unnecessary files. In the video above, a project with over 400 MB get uploaded into 5 MB Zip file! This is because most of the heavy stuff from <code>node_modules</code> are stripped before upload.</p>
+<p>The uploaded ZIP file will be erased 3 days automatically after upload.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="more-templates">More Templates<a href="#more-templates" class="hash-link" aria-label="Direct link to More Templates" title="Direct link to More Templates">​</a></h2>
+<p>We introduced more templates to the start wizard (previously it's only 8). These templates consist of CMS or popular web framework by following each respective documentation. Templates are useful if you want to start a new website then continue editing it either via their CMS or directly in the files itself.</p>
+<img src="/assets/images/templates-fdd8b170147011e26d416b4803379427.png" width="80%" class="img-fluid border rounded-3 shadow--md mb-4" alt="">
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="connection-check-api">Connection Check API<a href="#connection-check-api" class="hash-link" aria-label="Direct link to Connection Check API" title="Direct link to Connection Check API">​</a></h2>
+<p>Troubleshooting why a website can't be accessed can be confusing for some users. The Connection Check API can be used to detect and fix common DNS and HTTPS if found, possibly with a fix button. This API can be accessed in <code>Check</code> -&gt; <code>Connection</code> menu.</p>
+<img src="/assets/images/check-con-w-a9db84832198560c8aa78cbf90d0557f.png" alt="" class="img-fluid border rounded-3 shadow--md mb-4 themedComponent_mlkZ themedComponent--light_NVdE" width="700" height="500" loading="lazy"><img src="/assets/images/check-con-b-41bc645345b62a04be5970c76b9c58a8.png" alt="" class="img-fluid border rounded-3 shadow--md mb-4 themedComponent_mlkZ themedComponent--dark_xIcU" width="700" height="500" loading="lazy">
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="more-web-portal-improvements">More Web Portal Improvements<a href="#more-web-portal-improvements" class="hash-link" aria-label="Direct link to More Web Portal Improvements" title="Direct link to More Web Portal Improvements">​</a></h2>
+<ul>
+<li>The logo is slighly adjusted for brevity.</li>
+<li>Webhook via GitHub Actions is available as alternative to GitHUb webhook API.</li>
+<li>The <strong>Visual Studio Code</strong> button now open <code>~/public_html</code> by default.</li>
+<li>Espanol language is added (contributed by our user!).</li>
+<li>The website list is sortable by clicking any column.</li>
+<li>Using better and more safe name random generator.</li>
+<li>Free plan renewal is extended to 2 months instead of 1 month after last login.</li>
+<li>If using email to register an account, that email must be verified before creating websites.</li>
+<li>Better error handling in YAML deploy script, also in many other parts of input validations.</li>
+<li>Many bugfixes, including PayPal payment support.</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="server-improvements">Server Improvements<a href="#server-improvements" class="hash-link" aria-label="Direct link to Server Improvements" title="Direct link to Server Improvements">​</a></h2>
+<p>As more people using NYC (New York) and FRA (France) servers, both RAM capacity is increased to 2 GB. Now all three servers (SGA, NYC and FRA) are using 1 vCPU and 2 GB RAM.</p>
+<p>All plans now approximately has 2x more bandwidth capacity, also the free plan has increased its bandwidth limit to 2GB from 1.5GB.</p>
+<p>We also increased the server security by use <a href="https://linux-audit.com/linux-system-hardening-adding-hidepid-to-proc/" target="_blank" rel="noopener noreferrer"><code>hidepid=2</code></a> to protect potentially sensitive information generated from CLI arguments.</p>
+<p>The operating system has been updated to <a href="https://rockylinux.org/news/rocky-linux-9-2-ga-release/" target="_blank" rel="noopener noreferrer">Rocky Linux 9.2</a> from 9.1.</p>
+<p>The system firewall now allows additional <a href="https://github.com/domcloud/bridge/commit/3bd8666f8013b3424637726b247a5053c7459d71" target="_blank" rel="noopener noreferrer">Social Media APIs</a> and <a href="https://github.com/domcloud/bridge/commit/8fb04f17a6100ea6e4a1e6235a380f8c6ac7e483" target="_blank" rel="noopener noreferrer">Email APIs</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="deployment-system-improvements">Deployment System Improvements<a href="#deployment-system-improvements" class="hash-link" aria-label="Direct link to Deployment System Improvements" title="Direct link to Deployment System Improvements">​</a></h2>
+<ul>
+<li>The deployment system now supports <code>go</code>, <code>rust</code> and <code>deno</code> installation.</li>
+<li>Installation of <code>ruby</code> and <code>python</code> gets quicker now because it's prefer compiled binary if possible.</li>
+<li>Removal of language compilers like <code>node off</code>, <code>python off</code>, etc.</li>
+<li>Part of NGINX config like <code>ssl [always|on|off]</code> and <code>http [1|2]</code> is configurable with <code>features</code>.</li>
+<li>Many more small bugfixes</li>
+</ul>
+<hr>
+<p>That's a lot of improvements in last quarter! We hope you enjoy our services, and we'll see you in the next update!</p>]]></content>
+        <author>
+            <name>Wildan Mubarok</name>
+            <uri>https://github.com/willnode</uri>
+        </author>
+        <category label="service" term="service"/>
+        <category label="update" term="update"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Updating OS Across Servers]]></title>
         <id>https://domcloud.co/blog/updating-os-across-servers</id>
         <link href="https://domcloud.co/blog/updating-os-across-servers"/>
         <updated>2023-03-12T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[DOM Cloud runs with Rocky Linux 8, which was migrated from CentOS 8 from sometime ago. Rocky Linux 9.1 is available since about three months ago, and I think it's matured enough to update the OS.]]></summary>
-        <content type="html"><![CDATA[<p>import ThemedImage from '@theme/ThemedImage';</p>
-<p><img loading="lazy" src="https://linuxiac.b-cdn.net/wp-content/uploads/2022/08/rocky-8-to-9.jpg" alt="" class="img_ev3q"></p>
+        <content type="html"><![CDATA[<p><img loading="lazy" src="https://linuxiac.b-cdn.net/wp-content/uploads/2022/08/rocky-8-to-9.jpg" alt="" class="img_ev3q"></p>
 <p>DOM Cloud runs with Rocky Linux 8, which was migrated from CentOS 8 from sometime ago. <a href="https://rockylinux.org/news/rocky-linux-9-1-ga-release/" target="_blank" rel="noopener noreferrer">Rocky Linux 9.1 is available</a> since about three months ago, and I think it's matured enough to update the OS.</p>
 <p>This update brings modern versions into system packages, notably PHP from 7.4 to 8.0, Node.js from 14 to 16, Python from 3.6 to 3.9, and many more. This update also fixes some parts of the system that is not working properly, such as the WebSSH service which was broken in some servers.</p>
 <p>We would like to highlight some other major updated for the last three months:</p>
@@ -23,17 +77,7 @@
 <p>As of this writing, there are 3 servers in total, each one in Asia, Europe, and North America. There are no plan to add more servers in the near future, as probably additional budget will be allocated to increase computational power instead. Time will tell.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="force-recalculation-of-disk-usage">Force Recalculation of Disk Usage<a href="#force-recalculation-of-disk-usage" class="hash-link" aria-label="Direct link to Force Recalculation of Disk Usage" title="Direct link to Force Recalculation of Disk Usage">​</a></h2>
 <p>Since limit enforcement is based on disk usage is running since three months ago... some of our users wondering if there's a way to instantly recalculate the disk usage, as it's not updated automatically (takes schedule about 3 days to update). We have added a button to force recalculation of disk usage via a new button in bottom right of the Team page.</p>
-<p>&lt;ThemedImage
-sources={{
-dark: "/assets/ss/team-detail-b.png",
-light: "/assets/ss/team-detail-w.png"
-}}
-alt=""
-className="img-fluid border rounded-3 shadow--md mb-4"
-width="700"
-height="500"
-loading="lazy"
-/&gt;</p>
+<img src="/assets/ss/team-detail-w.png" alt="" class="img-fluid border rounded-3 shadow--md mb-4 themedComponent_mlkZ themedComponent--light_NVdE" width="700" height="500" loading="lazy"><img src="/assets/ss/team-detail-b.png" alt="" class="img-fluid border rounded-3 shadow--md mb-4 themedComponent_mlkZ themedComponent--dark_xIcU" width="700" height="500" loading="lazy">
 <p>It is useful if you already run out of disk space and has deleted some files, so the website can be accessed again.</p>
 <p>To analyze which files are taking up the most disk space, you can use the <a href="https://en.wikipedia.org/wiki/Ncdu" target="_blank" rel="noopener noreferrer">ncdu</a> command. It's available in all servers, and you can run it via SSH.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="country-input-field">Country Input Field<a href="#country-input-field" class="hash-link" aria-label="Direct link to Country Input Field" title="Direct link to Country Input Field">​</a></h2>
@@ -129,14 +173,10 @@ loading="lazy"
         <link href="https://domcloud.co/blog/welcome-new-landing-page"/>
         <updated>2021-08-16T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!]]></summary>
-        <content type="html"><![CDATA[<p>import theVideo from './new-landing-page.webm';</p>
-<p>In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!</p>
+        <content type="html"><![CDATA[<p>In a very narrow free time window I successfully redesign (again) the landing page, in fewer than 24 hours!</p>
 <p>The new design reflects more about what this service about: it's for the niche, but packed with lots of server tooling that (hopefully) makes your dev life easier.</p>
 <p>I captured the screenshot (in video) below. I like the dark mode button!</p>
-<video width="100%" loop="" muted="" controls="">
-  <source src="{theVideo}" type="video/webm">
-  Sorry! Your browser does not support the video tag.
-</video>
+<video width="100%" loop="" muted="" controls=""><source src="/assets/medias/new-landing-page-97b6b4910e015a2e9115440bb850b2c1.webm" type="video/webm"><p>Sorry! Your browser does not support the video tag.</p></video>
 <p>If you wonder, this new landing site is built using <a href="https://docusaurus.io" target="_blank" rel="noopener noreferrer">Docusaurus</a>, replacing our old simple website that's powered by Jekyll. I saved <a href="https://web.archive.org/web/20220612080708/https://domcloud.co/" target="_blank" rel="noopener noreferrer">the old site in archive.org</a> if you wanted to see the difference.</p>
 <p>Anyway, I feel sorry that the proper blog and docs are just live today. Actually, a lot has gotten since 2 years I've been making this platform. Let's hope it get better every time!</p>
 <br>]]></content>
