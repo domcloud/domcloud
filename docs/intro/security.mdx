@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+title: Security Measures
+---
+
+This article describes the security measures that implemented in the system. Beware, this is an advanced topic.
+
+DOM Cloud is essentially a Linux VPS server that's shared for all users. While this maybe seems like a bad idea, when it done correctly it will work fine for most users. 
+
+Each servers currently installed with 1 vCPU and 2 GB RAM, which should be enough for most of web development task and average production server. This hardware spec may be increased as the time goes with available budget.
+
+## No Sudo
+
+When you create a website in DOM Cloud, you will be given a [SSH access](https://www.cloudflare.com/learning/access-management/what-is-ssh/), which then you can used it to install additional software or libraries in order to make your app working correctly.
+
+The only restriction is this: You can't elevate access with `sudo`. There are many tutorials out there that requires `sudo`, these will not work here as that will compromise the entire system, including other users data.
+
+Of course, there are some actions that requires sudo access, such as configuring NginX or DNS records. This is why [the deployment system](../features/deploy) exists, it facilitates some `sudo` actions in a safer way.
+
+The deployment system also has some shortcut to install language compilers, such as Node.JS, Python, Rust, Go, and many more. Refer to [its `features` section](../features/deploy#features). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with system-wide software.
+
+## No Background Services
+
+CPU and RAM are limited resources. To make room for everyone, server processes need to be shut down when it's no longer in use. In another word, there can't be any process run 24/7, it will be terminated when there's no traffic for more than 10 minutes.
+
+This is enforced by NginX proxies (PHP-FPM and Passenger) plus an additional cron job that does this: 
+
+```bash
+# Send SIGKILL (immediate kill) for all processes longer than 3 hours and it's not daemon processes.
+kill -9 $(ps --no-headers -eo pid,user,etimes | awk '{if ($3 > 10800 && $2 != "root" && $2 != "mysql" && $2 != "postgres".......) { print $1}}')
+```
+
+If your web apps requires some kind of background processes that must stays on for 24/7, then you might have designed its system architecture wrong. The most noticeable impact from this restriction is Chatbot. All chatbot must work by webhook, not by actively polling social media APIs.
+
+This is also the reason why there's only three database system supported: SQLite, MariaDB and PostgreSQL. The last two is managed by system daemon, so it's always available 24/7. 
+
+## Listing every other users
+
+**Due to how linux works, we can't hide usernames and domains for all users in the server.**
+
+Anyone with SSH access can do `ls /home` or `cat /etc/passwd` and determine what's domain other users has. We encourage everyone to not assume all URLs are private, and taken security measurements properly as if anyone public can open the website.
+
+## SSH/Server Password 
+
+**Server passwords must be treaten as personal password**, exposure on public can lead to anyone see and override your website internal data!
+
+Avoid managing your website in public devices. If you have to do that, make sure you do it in private browsing/incognito mode.
+

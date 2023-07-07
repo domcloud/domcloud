@@ -76,6 +76,7 @@ const config = {
         logo: {
           alt: 'DOM Cloud Logo',
           src: '/assets/icon.svg',
+          srcDark: '/assets/icon-dark.svg',
         },
         items: [
           { to: '/price', label: 'Pricing', position: 'left' },
