@@ -3,22 +3,37 @@ slug: improving-ux-for-newbies
 title: Improving UX for Newbies!
 authors: [willnode]
 tags: [service, update]
-image: https://linuxiac.b-cdn.net/wp-content/uploads/2022/08/rocky-8-to-9.jpg
+image: ./welcome-b.png
 ---
 
 import theVideo from './upload-local.webm';
 import templateImage from './templates.png';
 import checkConB from './check-con-b.png';
 import checkConW from './check-con-w.png';
+import welcomeB from './welcome-b.png';
+import welcomeW from './welcome-w.png';
 import ThemedImage from '@theme/ThemedImage';
 
-This June 2023 update brings so much improvements to make things easier for newcomers! Here's the improvements since last March:
+This June 2023 update brings so much improvements to make things easier for newcomers!
+
+<ThemedImage
+    sources={{
+        dark: welcomeB,
+        light: welcomeW,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+Aside from our welcome page above, here's all the improvements since last March:
 
 ## Directly Upload Project Files 
 
 Previously, we only can import existing project via external Git repo. Today, we introduce a small utility that allows you to uploads your project from local files, and converting it to a public ZIP url:
 
-<video width="80%" loop muted controls className="img-fluid border rounded-3 shadow--md mb-4">
+<video width="80%" loop muted controls className="img-fluid border d-block mx-auto rounded-3 shadow--md mb-4">
   <source src={theVideo} type="video/webm" />
   Sorry! Your browser does not support the video tag.
 </video>
@@ -33,7 +48,7 @@ The uploaded ZIP file will be erased 3 days automatically after upload.
 
 We introduced more templates to the start wizard (previously it's only 8). These templates consist of CMS or popular web framework by following each respective documentation. Templates are useful if you want to start a new website then continue editing it either via their CMS or directly in the files itself.
 
-<img src={templateImage} width="80%" className="img-fluid border rounded-3 shadow--md mb-4" alt=""/>
+<img src={templateImage} width="80%" className="img-fluid border rounded-3 shadow--md mb-4 d-block mx-auto" alt=""/>
 
 ## Connection Check API
 
@@ -45,7 +60,7 @@ Troubleshooting why a website can't be accessed can be confusing for some users.
         light: checkConW,
     }}
     alt=""
-    className="img-fluid border rounded-3 shadow--md mb-4"
+    className="img-fluid border rounded-3 shadow--md mb-4 d-block mx-auto"
     width="700"
     height="500"
     loading="lazy"
