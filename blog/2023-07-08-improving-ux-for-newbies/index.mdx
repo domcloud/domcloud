@@ -1,0 +1,90 @@
+---
+slug: improving-ux-for-newbies
+title: Improving UX for Newbies!
+authors: [willnode]
+tags: [service, update]
+image: https://linuxiac.b-cdn.net/wp-content/uploads/2022/08/rocky-8-to-9.jpg
+---
+
+import theVideo from './upload-local.webm';
+import templateImage from './templates.png';
+import checkConB from './check-con-b.png';
+import checkConW from './check-con-w.png';
+import ThemedImage from '@theme/ThemedImage';
+
+This June 2023 update brings so much improvements to make things easier for newcomers! Here's the improvements since last March:
+
+## Directly Upload Project Files 
+
+Previously, we only can import existing project via external Git repo. Today, we introduce a small utility that allows you to uploads your project from local files, and converting it to a public ZIP url:
+
+<video width="80%" loop muted controls className="img-fluid border rounded-3 shadow--md mb-4">
+  <source src={theVideo} type="video/webm" />
+  Sorry! Your browser does not support the video tag.
+</video>
+
+Why it's useful? This utility eradicates to need of going to Webmin tool just to upload project files, and then adjusting the script needed depending on the framework used in that project. A huge time saver! Right?
+
+The upload script also automatically strips unnecessary files. In the video above, a project with over 400 MB get uploaded into 5 MB Zip file! This is because most of the heavy stuff from `node_modules` are stripped before upload.
+
+The uploaded ZIP file will be erased 3 days automatically after upload.
+
+## More Templates 
+
+We introduced more templates to the start wizard (previously it's only 8). These templates consist of CMS or popular web framework by following each respective documentation. Templates are useful if you want to start a new website then continue editing it either via their CMS or directly in the files itself.
+
+<img src={templateImage} width="80%" className="img-fluid border rounded-3 shadow--md mb-4" alt=""/>
+
+## Connection Check API
+
+Troubleshooting why a website can't be accessed can be confusing for some users. The Connection Check API can be used to detect and fix common DNS and HTTPS if found, possibly with a fix button. This API can be accessed in `Check` -> `Connection` menu.
+
+<ThemedImage
+    sources={{
+        dark: checkConB,
+        light: checkConW,
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+
+## More Web Portal Improvements
+
++ The logo is slighly adjusted for brevity.
++ Webhook via GitHub Actions is available as alternative to GitHUb webhook API.
++ The **Visual Studio Code** button now open `~/public_html` by default.
++ Espanol language is added (contributed by our user!).
++ The website list is sortable by clicking any column.
++ Using better and more safe name random generator.
++ Free plan renewal is extended to 2 months instead of 1 month after last login.
++ If using email to register an account, that email must be verified before creating websites.
++ Better error handling in YAML deploy script, also in many other parts of input validations.
++ Many bugfixes, including PayPal payment support.
+
+## Server Improvements
+
+As more people using NYC (New York) and FRA (France) servers, both RAM capacity is increased to 2 GB. Now all three servers (SGA, NYC and FRA) are using 1 vCPU and 2 GB RAM. 
+
+All plans now approximately has 2x more bandwidth capacity, also the free plan has increased its bandwidth limit to 2GB from 1.5GB.
+
+We also increased the server security by use [`hidepid=2`](https://linux-audit.com/linux-system-hardening-adding-hidepid-to-proc/) to protect potentially sensitive information generated from CLI arguments.
+
+The operating system has been updated to [Rocky Linux 9.2](https://rockylinux.org/news/rocky-linux-9-2-ga-release/) from 9.1.
+
+The system firewall now allows additional [Social Media APIs](https://github.com/domcloud/bridge/commit/3bd8666f8013b3424637726b247a5053c7459d71) and [Email APIs](https://github.com/domcloud/bridge/commit/8fb04f17a6100ea6e4a1e6235a380f8c6ac7e483).
+
+## Deployment System Improvements 
+
++ The deployment system now supports `go`, `rust` and `deno` installation. 
++ Installation of `ruby` and `python` gets quicker now because it's prefer compiled binary if possible.
++ Removal of language compilers like `node off`, `python off`, etc.
++ Part of NGINX config like `ssl [always|on|off]` and `http [1|2]` is configurable with `features`.
++ Many more small bugfixes 
+
+---
+
+That's a lot of improvements in last quarter! We hope you enjoy our services, and we'll see you in the next update!
