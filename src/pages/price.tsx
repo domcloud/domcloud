@@ -40,7 +40,7 @@ export default function Pricing() {
                                         <FaHdd /> <span><b>3 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>15 GiB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>20 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief /> <span>Maximum of <b>6 instances</b></span>
@@ -67,7 +67,7 @@ export default function Pricing() {
                                         <FaHdd /> <span><b>10 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>50 GiB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>100 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief />  <span>Maximum of <b>10 instances</b></span>
@@ -94,7 +94,7 @@ export default function Pricing() {
                                         <FaHdd /> <span><b>30 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
-                                        <FaGlobe /> <span><b>150 GiB</b> Data Network / month</span>
+                                        <FaGlobe /> <span><b>500 GiB</b> Data Network / month</span>
                                     </div>
                                     <div className="item">
                                         <FaBrief /> <span>Maximum of <b>25 instances</b></span>
