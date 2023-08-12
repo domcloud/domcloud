@@ -1,0 +1,370 @@
+---
+title: Self-Hosting
+---
+
+# Self-Hosting
+
+This page is not for general users, this page used to keep track what softwares and services that I (DOM Cloud Developer) employ so that I don't forget the steps needed when I create a new server from stratch.
+
+## OS and Installation
+
+### Very basic stuff
+
+1. Install Rocky Linux, a RHEL system, the latest one.
+2. Install [Virtualmin](https://www.virtualmin.com/documentation/installation/automated/): `sh virtualmin-install --minimal --bundle LEMP`
+3. Install [Passenger](https://www.phusionpassenger.com/docs/advanced_guides/install_and_upgrade/nginx/install/oss/el9.html): `yum install nginx-mod-http-passenger`
+4. Enable quotas for `/`
+5. Set `port=2443` in `/etc/webmin/miniserv.conf`
+6. Set `PermitRootLogin yes` and `PasswordAuthentication yes` in `/etc/ssh/sshd_config`
+7. Disable all email related services, uninstall imap and dovecot if possible.
+9. Clone and set up [DOM Cloud Bridge](https://github.com/domcloud/bridge) with user `bridge`
+
+### Package installs
+
+PHP:
+
+
+:::info
+
+Uninstall all PHP from appstream first.
+
+:::
+
+```
+dnf install {php74,php80,php81,php82}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
+ln -s `which php82` /usr/local/bin/php
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+```
+
+Tools and libs:
+```
+dnf install certbot cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget yarn xz
+dnf install libcurl-devel libffi-devel libmd libsqlite3x-devel libreport-filesystem mesa-libGL perl-DBD-Pg passenger-devel perl-devel perl-macros readline-devel
+```
+
+Services:
+```
+dnf install do-agent earlyoom fail2ban-server postfix proftpd
+dnf install postgresql-server postgresql-contrib postgresql-server-devel
+```
+
+:::info
+
+Enable PostgreSQL service from webmin after installing it
+
+:::
+
+## Configuration Files
+
+### System Files
+
+```ini title="/etc/fstab"
+UUID=<uuid>       /       xfs     relatime,seclabel,uquota,inode64,gquota,attr2,rw             0       0
+UUID=<uuid>       /home   xfs     relatime,seclabel,uquota,inode64,gquota,attr2,rw,nofail      0       0
+proc              /proc   proc    defaults,nosuid,nodev,noexec,relatime,hidepid=2,gid=adm      0       0
+/swapfile         swap    swap    defaults,nofail                                              0       0
+```
+
+```ini title="/etc/environment" 
+LC_ALL="en_US.UTF-8"
+LC_CTYPE="en_US.UTF-8"
+LANGUAGE="en_US.UTF-8"
+```
+
+```yaml title="/etc/gemrc" 
+gem: --no-document
+```
+
+```ini title="/etc/gitconfig"
+[pull]
+        rebase = true
+```
+
+```conf title="/etc/resolv.conf"
+nameserver 127.0.0.1
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+```
+
+### Services
+
+```ini title="/etc/systemd/system/nginx.service.d/override.conf"
+[Service]
+LimitNOFILE=65535
+```
+
+```ini title=" /usr/lib/systemd/system/earlyoom.service"
+[Service]
+...
+SupplementaryGroups=adm
+...
+```
+
+```ini title=" /usr/lib/systemd/system/iptables.service"
+[Service]
+...
+ExecStartPre=ipset -! create whitelist hash:ip
+...
+```
+
+```ini title=" /usr/lib/systemd/system/ip6tables.service"
+[Service]
+...
+ExecStartPre=ipset -! create whitelist-v6 hash:ip family inet6
+...
+```
+
+```ini title="/etc/default/earlyoom"
+EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(cloudflared|node|python|php)$' --avoid '^(dnf|mysqld|postgres|nginx|polkitd)$'"
+```
+
+```ini title="/var/spool/cron/root"
+@daily passenger-config reopen-logs
+@reboot sudo /usr/bin/bash /home/daemon/public_html/src/whitelist/refresh.sh
+@hourly kill -9 $(ps --no-headers -eo pid,user,etimes | awk '{if ($3 > 10800 && $2 !~ /^(root|mysql|postgres|do-agent|named|polkitd|dbus|nginx|nobody|rpc|bridge)$/) {print $1}}')
+* * * * * pgrep PassengerAgent || systemctl restart nginx
+@weekly find /home -maxdepth 2 -name .cache -or -name .npm -type d -ctime +7 -exec rm -rf {} \;
+@monthly find /etc/letsencrypt/{csr,keys} -name *_csr-certbot.pem -type f -mtime +180 -exec rm -f {} ';'
+```
+
+### MariaDB
+
+```ini title="/etc/my.cnf.d/mariadb-server.cnf"
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/run/mariadb/mariadb.pid
+innodb_file_per_table = 1
+innodb_buffer_pool_size = 64M
+myisam_sort_buffer_size = 8M
+read_rnd_buffer_size = 512K
+net_buffer_length = 8K
+read_buffer_size = 256K
+sort_buffer_size = 512K
+table_open_cache = 64
+max_allowed_packet = 64M
+key_buffer_size = 16M
+```
+
+### PostgreSQL
+
+```ini title="/var/lib/pgsql/data/postgresql.conf"
+...
+listen_addresses = '*'
+max_connections = 1000
+...
+```
+
+```ini title="/var/lib/pgsql/data/pg_hba.conf"
+local   all             all                                     trust
+host    all             all             127.0.0.1/32            trust
+host    all             all             ::1/128                 trust
+local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+host    all             all             0.0.0.0/0               md5
+host    all             all             ::/0                    md5
+```
+
+### NGINX
+
+:::info
+
+In webmin, set **File or directory for new virtual hosts** to `/etc/nginx/conf.d/`
+
+:::
+
+```conf title="/etc/nginx/fastcgi.conf"
+fastcgi_param GATEWAY_INTERFACE CGI/1.1;
+fastcgi_param SERVER_SOFTWARE nginx;
+fastcgi_param QUERY_STRING $query_string;
+fastcgi_param REQUEST_METHOD $request_method;
+fastcgi_param CONTENT_TYPE $content_type;
+fastcgi_param CONTENT_LENGTH $content_length;
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+fastcgi_param REQUEST_URI $request_uri;
+fastcgi_param DOCUMENT_URI $document_uri;
+fastcgi_param DOCUMENT_ROOT $document_root;
+fastcgi_param SERVER_PROTOCOL $server_protocol;
+fastcgi_param REMOTE_ADDR $remote_addr;
+fastcgi_param REMOTE_PORT $remote_port;
+fastcgi_param SERVER_ADDR $server_addr;
+fastcgi_param SERVER_PORT $server_port;
+fastcgi_param SERVER_NAME $server_name;
+fastcgi_param PATH_INFO $fastcgi_path_info;
+fastcgi_param HTTPS $https;
+fastcgi_split_path_info ^(.+\.php)(/.+)$;
+fastcgi_read_timeout 600s;
+```
+
+```conf title="/etc/nginx/passenger.conf"
+passenger_root /usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini;
+passenger_ruby /usr/bin/ruby;
+passenger_python /usr/bin/python3;
+passenger_nodejs /usr/bin/node;
+passenger_friendly_error_pages on;
+passenger_disable_security_update_check on;
+passenger_disable_anonymous_telemetry on;
+passenger_instance_registry_dir /var/run/passenger-instreg;
+passenger_log_file /var/log/nginx/passenger.log;
+passenger_min_instances 0;
+passenger_pool_idle_time 900;
+passenger_max_pool_size 3;
+```
+
+```conf title="/etc/nginx/finetuning.conf"
+gzip_types text/css application/javascript image/svg+xml;
+gzip_min_length 1024;
+gzip_comp_level 3;
+gzip on;
+sendfile on;
+tcp_nopush on;
+tcp_nodelay on;
+keepalive_timeout 60;
+keepalive_requests 1000;
+types_hash_max_size 2048;
+directio 16m;
+output_buffers 3 512k;
+client_max_body_size 512m;
+disable_symlinks if_not_owner;
+proxy_http_version 1.1;
+ssl_protocols TLSv1.2 TLSv1.3;
+server_tokens off;
+merge_slashes off;
+ssl_session_cache shared:SSL:1m;
+ssl_session_timeout 1h;
+ssl_session_tickets off;
+ssl_early_data on;
+ssl_buffer_size 4k;
+```
+
+```conf title="/etc/nginx/nginx.conf" 
+user nginx;
+worker_processes auto;
+worker_rlimit_nofile 65535;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+include /usr/share/nginx/modules/*.conf;
+events {
+    worker_connections 10240;
+}
+http {
+    log_format main  '$remote_addr - $remote_user [$time_local] "$request" '
+					  '$status $body_bytes_sent "$http_referer" '
+					  '"$http_user_agent" "$http_x_forwarded_for"';
+    log_format scripts '$document_root$fastcgi_script_name > $request';
+    access_log /var/log/nginx/access.log main;
+    server_names_hash_bucket_size 1024;
+    limit_req_zone $binary_remote_addr zone=basic_limit:50m rate=4r/s;
+    limit_req zone=basic_limit burst=100 nodelay;
+    include /etc/nginx/mime.types;
+    include /etc/nginx/finetuning.conf;
+    include /etc/nginx/fastcgi.conf;
+    include /etc/nginx/passenger.conf;
+    default_type application/octet-stream;
+    map $sent_http_content_type $expires {
+        default off;
+        text/html epoch;
+        text/css max;
+        application/javascript max;
+        ~image/ max;
+        ~font/ max;
+        ~audio/ max;
+        ~video/ max;
+    }
+    expires $expires;
+    server {
+        server_name _;
+        listen <IPv4>;
+        listen [<IPv6>];
+        return 301 https://$host$request_uri;
+    }
+    include /etc/nginx/conf.d/*.conf;
+}
+```
+
+```conf title="/etc/logrotate.d/nginx"
+/var/log/nginx/*.log /var/log/virtualmin/*_log {
+    create 0640 nginx root
+    daily
+    rotate 10
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+    postrotate
+	/bin/kill -USR1 `cat /run/nginx.pid 2>/dev/null` 2>/dev/null || true
+    endscript
+}
+```
+
+### Fail2Ban
+
+```conf title="/etc/fail2ban/filter.d/wordpress-auth.conf"
+[Definition]
+failregex = ^<HOST> .* "POST /+xmlrpc.php .* 200 \d* ".*"$
+            ^<HOST> .* "POST /wp-login.php .* 200 \d* ".*"$
+ignoreregex =
+```
+
+```conf title="/etc/fail2ban/jail.local"
+[wordpress-auth]
+enabled = true
+port = http,https
+logpath = /var/log/virtualmin/*access_log
+maxretry = 2
+bantime = 43200
+```
+
+### Iptables 
+
+```conf title="/etc/sysconfig/iptables"
+*filter
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -m mport --dports 21,22,80,443,3306,5432 -j ACCEPT
+-A INPUT -p tcp --sport 53 --dport 53 -j ACCEPT
+-A INPUT -p udp --sport 53 --dport 53 -j ACCEPT
+-A INPUT -p tcp --dport 2443:2453 -j ACCEPT
+-A INPUT -p tcp --dport 32768:65535 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --dport 22 -j ACCEPT
+-A OUTPUT -p tcp --sport 53 --dport 53 -j ACCEPT
+-A OUTPUT -p udp --sport 53 --dport 53 -j ACCEPT
+-A OUTPUT -p tcp --dport 25 --sport 25 -j REJECT
+-A OUTPUT -m set -j ACCEPT --match-set whitelist dst
+COMMIT
+```
+
+```conf title="/etc/sysconfig/ip6tables"
+*filter
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+-A INPUT -p ipv6-icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -m mport --dports 21,22,80,443,3306,5432 -j ACCEPT
+-A INPUT -p tcp --sport 53 --dport 53 -j ACCEPT
+-A INPUT -p udp --sport 53 --dport 53 -j ACCEPT
+-A INPUT -p tcp --dport 2443:2453 -j ACCEPT
+-A INPUT -p tcp --dport 32768:65535 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp6-adm-prohibited
+-A FORWARD -j REJECT --reject-with icmp6-adm-prohibited
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+-A OUTPUT -p tcp --dport 22 -j ACCEPT
+-A OUTPUT -p tcp --sport 53 --dport 53 -j ACCEPT
+-A OUTPUT -p udp --sport 53 --dport 53 -j ACCEPT
+-A OUTPUT -p tcp --dport 25 --sport 25 -j REJECT
+-A OUTPUT -m set -j ACCEPT --match-set whitelist-v6 dst
+COMMIT
+```
