@@ -10,8 +10,8 @@
 
 
 <script src="https://stat.wellosoft.net/js/plausible.js" defer="defer" data-domain="domcloud.co"></script><link rel="stylesheet" href="/assets/css/styles.e60c4f24.css">
-<script src="/assets/js/runtime~main.f33c6172.js" defer="defer"></script>
-<script src="/assets/js/main.a324be20.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.8fac7ee0.js" defer="defer"></script>
+<script src="/assets/js/main.f961390e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}return t}()||function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
@@ -19,7 +19,7 @@
 <p>Static sites are websites that doesn&#x27;t require server processing (e.g. connecting with database), so it only consist of HTML, CSS, JS files that sent as-is to the browser.</p>
 <p>While static sites are works out of the box, modern static sites needed to build from many kinds of frontend tooling such as <a href="https://create-react-app.dev/" target="_blank" rel="noopener noreferrer">Create React App</a>, <a href="https://vitejs.dev/" target="_blank" rel="noopener noreferrer">Vite</a>, <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> and <a href="https://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> and many more.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="pulling-the-code">Pulling the code<a href="#pulling-the-code" class="hash-link" aria-label="Direct link to Pulling the code" title="Direct link to Pulling the code">​</a></h2>
-<p>You can <a href="/docs/features/virtualmin">upload existing files</a> from your local machine or pull it from a Git repository:</p>
+<p>You can <a href="/docs/features/editor">upload existing files</a> from your local machine or pull it from a Git repository:</p>
 <div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Clone from Git repository and write it to ~/public_html</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">source</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> https</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain">//github.com/octocat/octocat.github.io</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="building-the-site">Building the site<a href="#building-the-site" class="hash-link" aria-label="Direct link to Building the site" title="Direct link to Building the site">​</a></h2>
 <p>If your site need to be built with a frontend tooling, you need to build it after pulling the code and adjust the NGINX configuration to serve the built files correctly.</p>
