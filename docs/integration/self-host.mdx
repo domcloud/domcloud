@@ -10,7 +10,7 @@ This page is not for general users, this page used to keep track what softwares 
 
 ### Very basic stuff
 
-1. Install Rocky Linux, a RHEL system, the latest one.
+1. Install Rocky Linux, or any RHEL9 system (untested).
 2. Install [Virtualmin](https://www.virtualmin.com/documentation/installation/automated/): `sh virtualmin-install --minimal --bundle LEMP`
 3. Install [Passenger](https://www.phusionpassenger.com/docs/advanced_guides/install_and_upgrade/nginx/install/oss/el9.html): `yum install nginx-mod-http-passenger`
 4. Enable quotas for `/`
@@ -34,6 +34,7 @@ Uninstall all PHP from appstream first.
 dnf install {php74,php80,php81,php82}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
 ln -s `which php82` /usr/local/bin/php
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/php.ini \; 
 ```
 
 Tools and libs:
@@ -93,21 +94,21 @@ nameserver 1.0.0.1
 LimitNOFILE=65535
 ```
 
-```ini title=" /usr/lib/systemd/system/earlyoom.service"
+```ini title="/usr/lib/systemd/system/earlyoom.service"
 [Service]
 ...
 SupplementaryGroups=adm
 ...
 ```
 
-```ini title=" /usr/lib/systemd/system/iptables.service"
+```ini title="/usr/lib/systemd/system/iptables.service"
 [Service]
 ...
 ExecStartPre=ipset -! create whitelist hash:ip
 ...
 ```
 
-```ini title=" /usr/lib/systemd/system/ip6tables.service"
+```ini title="/usr/lib/systemd/system/ip6tables.service"
 [Service]
 ...
 ExecStartPre=ipset -! create whitelist-v6 hash:ip family inet6
@@ -115,16 +116,16 @@ ExecStartPre=ipset -! create whitelist-v6 hash:ip family inet6
 ```
 
 ```ini title="/etc/default/earlyoom"
-EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(cloudflared|node|python|php)$' --avoid '^(dnf|mysqld|postgres|nginx|polkitd)$'"
+EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(cloudflared|node|python|php)' --avoid '^(dnf|mariadbd|postgres|named|nginx|polkitd|do-agent|sshd)$'"
 ```
 
 ```ini title="/var/spool/cron/root"
 @daily passenger-config reopen-logs
-@reboot sudo /usr/bin/bash /home/daemon/public_html/src/whitelist/refresh.sh
-@hourly kill -9 $(ps --no-headers -eo pid,user,etimes | awk '{if ($3 > 10800 && $2 !~ /^(root|mysql|postgres|do-agent|named|polkitd|dbus|nginx|nobody|rpc|bridge)$/) {print $1}}')
 * * * * * pgrep PassengerAgent || systemctl restart nginx
+*/5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
 @weekly find /home -maxdepth 2 -name .cache -or -name .npm -type d -ctime +7 -exec rm -rf {} \;
-@monthly find /etc/letsencrypt/{csr,keys} -name *_csr-certbot.pem -type f -mtime +180 -exec rm -f {} ';'
+@monthly find /etc/letsencrypt/{csr,keys} -name *-certbot.pem -type f -mtime +180 -exec rm -f {} ';'
+@reboot sudo /usr/bin/bash /home/daemon/public_html/src/whitelist/refresh.sh
 ```
 
 ### MariaDB
@@ -215,16 +216,17 @@ passenger_max_pool_size 3;
 ```
 
 ```conf title="/etc/nginx/finetuning.conf"
+server_names_hash_max_size 131072;
+limit_req_zone $binary_remote_addr zone=basic_limit:50m rate=4r/s;
+limit_req zone=basic_limit burst=100 nodelay;
 gzip_types text/css application/javascript image/svg+xml;
 gzip_min_length 1024;
 gzip_comp_level 3;
 gzip on;
 sendfile on;
 tcp_nopush on;
-tcp_nodelay on;
 keepalive_timeout 60;
 keepalive_requests 1000;
-types_hash_max_size 2048;
 directio 16m;
 output_buffers 3 512k;
 client_max_body_size 512m;
@@ -233,6 +235,7 @@ proxy_http_version 1.1;
 ssl_protocols TLSv1.2 TLSv1.3;
 server_tokens off;
 merge_slashes off;
+msie_padding off;
 ssl_session_cache shared:SSL:1m;
 ssl_session_timeout 1h;
 ssl_session_tickets off;
@@ -251,14 +254,10 @@ events {
     worker_connections 10240;
 }
 http {
-    log_format main  '$remote_addr - $remote_user [$time_local] "$request" '
-					  '$status $body_bytes_sent "$http_referer" '
-					  '"$http_user_agent" "$http_x_forwarded_for"';
-    log_format scripts '$document_root$fastcgi_script_name > $request';
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
     access_log /var/log/nginx/access.log main;
-    server_names_hash_bucket_size 1024;
-    limit_req_zone $binary_remote_addr zone=basic_limit:50m rate=4r/s;
-    limit_req zone=basic_limit burst=100 nodelay;
     include /etc/nginx/mime.types;
     include /etc/nginx/finetuning.conf;
     include /etc/nginx/fastcgi.conf;
@@ -303,20 +302,36 @@ http {
 
 ### Fail2Ban
 
-```conf title="/etc/fail2ban/filter.d/wordpress-auth.conf"
+```ini title="/etc/fail2ban/filter.d/wordpress-auth.conf"
 [Definition]
 failregex = ^<HOST> .* "POST /+xmlrpc.php .* 200 \d* ".*"$
             ^<HOST> .* "POST /wp-login.php .* 200 \d* ".*"$
 ignoreregex =
 ```
 
-```conf title="/etc/fail2ban/jail.local"
+```ini title="/etc/fail2ban/jail.local"
+[DEFAULT]
+maxretry = 3
+bantime = 43200 ; 12h
+
+[sshd]
+enabled = true
+port    = ssh
+
+[webmin-auth]
+port    = 2443
+enabled = true
+
+[phpmyadmin-syslog]
+enabled = true
+
+[mysqld-auth]
+enabled = true
+
 [wordpress-auth]
 enabled = true
 port = http,https
 logpath = /var/log/virtualmin/*access_log
-maxretry = 2
-bantime = 43200
 ```
 
 ### Iptables 

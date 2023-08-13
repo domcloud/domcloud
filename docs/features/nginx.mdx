@@ -5,7 +5,7 @@ sidebar_position: 2
 
 import ThemedImage from '@theme/ThemedImage';
 
-Our server serves HTTP and HTTPS traffic using NGINX. NGINX is used to serve static files and proxy requests to your app. 
+Our server serves HTTP and HTTPS traffic using NGINX, it is used to serve static files and proxy requests to your app. 
 
 Because it operates for all users on the server, only a limited set of features are configurable, the only way to configure it is via the [deployment system](./deploy.mdx#nginx).
 
@@ -69,7 +69,7 @@ Which is equivalent to running `npm start` in the `public_html` (parent of root)
 
 Passenger's `enabled: on` config is required to indicate that Passenger's module is activated for given host.
 
-It is important that  `root` is set to the directory that contains the `public` directory. This is because NGINX will serve the `public` directory as the root directory for serving static files, and you don't want to expose the entire app directory to the public.
+It is important that  `root` is set to the directory that contains the `public` directory. This is because NGINX will serve the `public` directory as the root directory for serving static files as you don't want to expose the entire app scripts to the public.
 
 If the app must be called from a subdirectory, you can use the `app_root` option to specify the directory that contains the app. For example, if the main app file is in `public_html/server/app.js`, you can set the `app_root` to `public_html/server`:
 
@@ -203,10 +203,11 @@ More information about configuring NGINX for specific languages can be found in 
 
 ## Global Configuration
 
-Global configuration of NGINX cannot be changed. However, some of the configuration are set as optimally as possible. You can see more about the global configuration in [this file](https://github.com/domcloud/container/blob/master/templates/nginx.conf). Some of the interesting configuration are:
+Global configuration of NGINX cannot be changed. However, some of the configuration are set as optimally as possible. You can see more about the global configuration in [this file](../integration/self-host#nginx). Some of the interesting configuration are:
 
 + Static files are cached with `max` expiration time.
 + Gzip are enabled for `css`, `js`, `svg` static files.
 + Maximum file upload size is set to 512MB.
-+ There's [rate limit](https://www.nginx.com/blog/rate-limiting-nginx/) of 4 requests per second with 100 burst request per IP address to mitigate DoS attack.
++ There's [rate limit](https://www.nginx.com/blog/rate-limiting-nginx/) of 2 requests per second with 500 burst request per IP address to mitigate DoS attack.
++ [TLSv1.2](https://en.wikipedia.org/wiki/Transport_Layer_Security#History_and_development) is the minimum HTTPS version to support, which works for browsers as old as Windows 7 era (with IE 11), older browsers such as in Windows XP era will not be able to open your website.
 

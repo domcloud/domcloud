@@ -1,10 +1,10 @@
 ---
-title: DNS Daemon
+title: Domain Name Server
 ---
 
 DNS is a service that translates domain names to IP addresses. 
 
-Usually, it's enabled automatically for a given website if used with a custom domain. If you host a website with a custom domain, you can point the name server to these below to use our DNS service:
+If you host a website with a custom domain, you need to point the name server (in any registrar where you buy the domain) to these below:
 
 ```
 nsp.domcloud.io
@@ -12,3 +12,110 @@ nss.domcloud.io
 ```
 
 To add custom records to your domain, you can use the DNS Manager via Webmin -> DNS Records. You can also add or delete DNS records using [the deployment script](./deploy.mdx#dns).
+
+## How it works
+
+When you create a website with custom domain (other than `*.domcloud.io`), a `dns` service is activated from [the deployment script](./deploy.mdx#dns), it's activated automatically by our Portal UI.
+
+Any website where you buy a domain is called a registrar. We also sell domain, but you don't have to buy a domain from us, you just have to buy it from somewhere and set the nameserver to `nsp.domcloud.io` and `nss.domcloud.io`, which means that your domain DNS will be handled to us.
+
+Usually changing a name server takes a hour to a day to propagate across internet.
+
+### Directly add CNAME or A+AAAA record
+
+If you don't want giving a whole DNS to us, for example because you only host a subdomain here or you want a to better DNS handles it for you (e.g. Cloudflare), then you can directly add CNAME or A+AAAA at your DNS provider.
+
+Firstly, go to Manage tab at your website portal. At top left you'll find these information:
+
++ Hostname: **sga.domcloud.id**
++ IPv4: **68.183.191.223**
++ IPv6: **2400:6180:0:d1::770:4001**
+
+:::info
+
+Different server location provides different hostname and IP address!
+
+:::
+
+For example we'll hosting `sub.yourdomain.com` at DOM Cloud but using Cloudflare DNS, then in Cloudflare, add these records:
+
+![](/assets/images/cloudflare-add.png)
+
+`CNAME` is recommended instead of providing `A` and `AAAA` records, which directly giving an IP address. But it may be preferable to give `A` and `AAAA` records if you need to add e.g. root/apex domain.
+
+:::tip
+
+Go watch some YouTube related to DNS servers, examples:
+
++ [How DNS translates domain names to IP addresses](https://www.youtube.com/watch?v=GlZC4Jwf3xQ)
++ [DNS as Fast As Possible](https://www.youtube.com/watch?v=Rck3BALhI5c)
++ [DNS Explained in 100 Seconds](https://www.youtube.com/watch?v=UVR9lhUGAyU)
+
+:::
+
+## Troubleshooting
+
+DNS can be verified by using `nslookup` from your local terminal.
+
+### Checking if DNS is working at server
+
+First, make sure that DNS is enabled, to do that enter `nslookup <your-domain> <name-server>`, for example:
+
+```txt title="$> nslookup sga.domcloud.id nsp.domcloud.io"
+Server:		nsp.domcloud.io
+Address:	68.183.191.223#53
+
+Non-authoritative answer:
+Name:	sga.domcloud.id
+Address: 68.183.191.223
+```
+
+If the second address matches with IP address shown from manage tab, then DNS is enabled correctly. Any nonexistent domain is either returning wrong IP address or just refusing to answer depending on your local ISP settings:
+
+```txt title="$> nslookup nonexistantdomain.com nsp.domcloud.io"
+Server:		nsp.domcloud.io
+Address:	68.183.191.223#53
+
+** server can't find nonexistantdomain.com: REFUSED
+```
+
+If that's the case then you need to enable DNS [via the deployment script](./deploy.mdx#dns).
+
+### Checking if DNS is working at your end
+
+Just type `nslookup <your-domain>` at your terminal and it will use your local DNS. For example:
+
+```txt title="$> nslookup sga.domcloud.id"
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+Non-authoritative answer:
+Name:	sga.domcloud.id
+Address: 68.183.191.223
+```
+
+In that case my device talks to [1.1.1.1](https://1.1.1.1) to find that `sga.domcloud.id` points to `68.183.191.223`, which is a correct answer.
+
+A non existing DNS server may simply refuse to answer, or if not, gives incorrect IP address.
+
+```txt title="$> nslookup nonexistantdomain.com"
+Server:		1.1.1.1
+Address:	1.1.1.1#53
+
+** server can't find nonexistantdomain.com: NXDOMAIN
+```
+
+If that's the case try double checking the NS entries in your registrar, or wait until all caches invalidates.
+
+### Temporarily skip DNS at your end
+
+You can skip configuring DNS altogether by directly adding an IP record to `/etc/hosts`:
+
+```txt title="$> sudo nano /etc/hosts"
+68.183.191.223 nonexistantdomain.com
+```
+
+This way your device will happily points `nonexistantdomain.com` to `68.183.191.223` without dealing with DNS servers. Save after editing and restart your browser.
+
+Note that modifying `/etc/hosts` doesn't make the world care, at least your phone won't pickup that `/etc/hosts` you edited. This is why you have to buy a domain from a registrar.
+
