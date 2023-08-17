@@ -116,7 +116,7 @@ ExecStartPre=ipset -! create whitelist-v6 hash:ip family inet6
 ```
 
 ```ini title="/etc/default/earlyoom"
-EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(cloudflared|node|python|php)' --avoid '^(dnf|mariadbd|postgres|named|nginx|polkitd|do-agent|sshd)$'"
+EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoid '^(dnf|mariadbd|postmaster|named|nginx|polkitd|do-agent|sshd|php-fpm)$'"
 ```
 
 ```ini title="/var/spool/cron/root"

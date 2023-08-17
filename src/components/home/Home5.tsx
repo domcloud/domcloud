@@ -22,16 +22,16 @@ export default function Home5({ title }) {
                     </div>
                     <h2>Free Domain</h2>
                     <p>
-                        Built-in <code>*.domcloud.io</code> domain for free.
+                        Use <code>*.domcloud.io</code> domain for free.
                     </p>
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">
                         <FaLock />
                     </div>
-                    <h2>Free TLS Certificates</h2>
+                    <h2>Built-in Security</h2>
                     <p>
-                        Automatically enable HTTPS with <b>Let's Encrypt</b>.
+                        HTTPS, Firewall, Bot Protection for free.
                     </p>
                 </div>
             </div>

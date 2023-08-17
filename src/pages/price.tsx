@@ -7,8 +7,10 @@ import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
 import FaBrief from '@fortawesome/fontawesome-free/svgs/solid/briefcase.svg';
 import FaUsers from '@fortawesome/fontawesome-free/svgs/solid/users.svg';
 import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/atlas.svg';
+import FaArchive from '@fortawesome/fontawesome-free/svgs/solid/archive.svg';
 import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
+import FaBolt from '@fortawesome/fontawesome-free/svgs/solid/bolt.svg';
 import './price.css';
 import Home7 from "../components/home/Home7";
 import Home5 from "../components/home/Home5";
@@ -73,7 +75,7 @@ export default function Pricing() {
                                         <FaBrief />  <span>Maximum of <b>10 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers />  <span>Team of <b>4 users</b></span>
+                                        <FaUsers />  <span>Team of <b>3 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@ export default function Pricing() {
                                         <FaBrief /> <span>Maximum of <b>25 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> <span>Team of <b>10 users</b></span>
+                                        <FaUsers /> <span>Team of <b>5 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -124,11 +126,11 @@ export default function Pricing() {
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaCartPlus />
+                            <FaArchive />
                         </div>
-                        <h2>Add-ons Billing</h2>
+                        <h2>Backup Files</h2>
                         <p>
-                            No sudden over-usage shutdowns (coming soon).
+                            Backup your files and data at no additional cost
                         </p>
                     </div>
                     <div className="feature premium col">
@@ -137,7 +139,32 @@ export default function Pricing() {
                         </div>
                         <h2>Prioritized Support</h2>
                         <p>
-                            We'll seriously consider your support request.
+                            We'll seriously supporting your requests
+                        </p>
+                    </div>
+                    <div className="feature premium col">
+                        <div className="feature-icon badge">
+                            <FaUsers />
+                        </div>
+                        <h2>Teams</h2>
+                        <p>Multiple users manage websites together</p>
+                    </div>
+                    <div className="feature premium col">
+                        <div className="feature-icon badge">
+                            <FaCartPlus />
+                        </div>
+                        <h2>Addon Billing</h2>
+                        <p>
+                            Purchase additional resources at any time
+                        </p>
+                    </div>
+                    <div className="feature premium col">
+                        <div className="feature-icon badge">
+                            <FaBolt />
+                        </div>
+                        <h2>Higher Power</h2>
+                        <p>
+                            Better compute power for all users
                         </p>
                     </div>
                 </div>
