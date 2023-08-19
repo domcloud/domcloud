@@ -35,6 +35,12 @@ PostgreSQL permits remote access by default.
 
 MySQL is more grained and doesn't allow remote access by default. You need to change it by go to the Webmin -> Databases -> Remote access then add `%.%.%.%` and `%:%:%` (next line above `localhost`) to allowed hosts list.
 
+:::info
+
+When connecting with Remote Access, the hostname is your website domain or the server's IP address, not `localhost`.
+
+:::
+
 ### Timestamp
 
 The whole server always sets the clock in `UTC`.

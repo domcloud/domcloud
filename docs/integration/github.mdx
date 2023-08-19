@@ -5,4 +5,40 @@ sidebar_position: 2
 
 # GitHub Integration
 
-TODO
+Modern platform services able to fetch your code from GitHub and deploy it to the cloud. This page explains how to integrate your GitHub repository to DOM Cloud. 
+
+## Cloning from a Private Repository
+
+While cloning from a public repository won't take additional steps, a private repository requires a few more steps so we can clone it from our servers.
+
+DOM Cloud gives you SSH access and with that alone, you can clone your repo in `~/public_html` yourself just like how would you clone a private repo from your local terminal. 
+
+With that said, there's a secure way and less but quicker one.
+
+### Secure Way (with Deploy Keys)
+
+Deploy keys are SSH keys that grant read-only (or read-write) access to a repository. They are ideal for production servers because it will only allow access to a single repository, your other private repositories won't be exposed.
+
+### Git Token (less secure)
+
+You can use a Git token to clone your private repository. This is less secure because it will give access to all your private repositories.
+
+All you have to do is create a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with `repo` scope, and use it as your password when cloning your repository.
+
+```yaml
+source: https://:<your-github-token-here>@github.com/yourusername/yourrepo.git
+```
+
+## Webhook
+
+DOM Cloud provides public endpoint available to perform remote control for certain github events, this feature can be leveraged using GitHub action. Most of the time this feature is useful for keep syncing files between GitHub repo and files on DOM Cloud.
+
+To begin setup the webhook, go to Deploy tab and write the commands you want to execute and click "Setup Webhook". You'll be prompted with this dialog:
+
+![image](https://user-images.githubusercontent.com/20214420/128415871-7f7eca65-f85a-4123-9dfc-79f37d506e50.png)
+
+Put this file in `.github/workflows/domcloud.yml` (can be any filename) and before you push it to GitHub, add these  `WEBHOOK_SECRET`, `WEBHOOK_AUTH` to [Repository Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets). Note you might need to change "main" to your repo's desired main branch.
+
+Note if your host domain URL, username, or password is changed, then you need to update these variables accordingly. Maximum webhook calls is 50 times a day for a website.
+
+An example of working Webhook is [DOM Cloud's Bridge repo](https://github.com/domcloud/bridge/blob/main/.github/workflows/domcloud.yml), applying `git pull` of the software to all DOM Cloud servers once a commit has been pushed.
