@@ -60,16 +60,18 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/php.ini \; 
 ```
 
-Tools and libs:
+Tools, libs, services:
 ```
 dnf install certbot cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget yarn xz
-dnf install libcurl-devel libffi-devel libmd libsqlite3x-devel libreport-filesystem mesa-libGL perl-DBD-Pg passenger-devel perl-devel perl-macros readline-devel
+dnf install {libcurl,libffi,libsqlite3x,nettle,postgresql-server,passenger,perl,readline}-devel libmd libreport-filesystem mesa-libGL perl-DBD-Pg perl-macros
+dnf install do-agent earlyoom fail2ban-server postfix proftpd postgresql-server postgresql-contrib
 ```
 
-Services:
 ```
-dnf install do-agent earlyoom fail2ban-server postfix proftpd
-dnf install postgresql-server postgresql-contrib postgresql-server-devel
+wget https://rdfind.pauldreik.se/rdfind-1.6.0.tar.gz
+tar -xf rdfind-1.6.0.tar.gz ; cd rdfind-1.6.0
+./configure --disable-debug ; make install
+cd .. ; rm -rf rdfind-1.6.0
 ```
 
 :::info
@@ -146,9 +148,10 @@ EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoi
 @daily passenger-config reopen-logs
 * * * * * pgrep PassengerAgent || systemctl restart nginx
 */5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
-@weekly find /home -maxdepth 2 -name .cache -or -name .npm -type d -ctime +7 -exec rm -rf {} \;
 @monthly find /etc/letsencrypt/{csr,keys} -name *-certbot.pem -type f -mtime +180 -exec rm -f {} ';'
-@reboot sudo /usr/bin/bash /home/daemon/public_html/src/whitelist/refresh.sh
+@weekly find /home -maxdepth 1 -type d -ctime +7 -exec rm -rf {}/{.cache,.npm,Downloads,public_html/.yarn/cache,public_html/node_modules/.cache,.composer/cache} \;
+@monthly find /home -maxdepth 1 -type d -ctime +7 -exec rdfind -minsize 100000 -makehardlinks true -makeresultsfile false {}/{.vscode-server,.pyenv,.rvm,.cargo,.local,go,.rustup,public_html/node_modules} \;
+@reboot sudo /usr/bin/bash /home/bridge/public_html/src/whitelist/refresh.sh
 ```
 
 ### MariaDB

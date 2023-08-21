@@ -3,11 +3,11 @@ sidebar_position: 4
 title: Security Measures
 ---
 
-This article describes the security measures that implemented in the system. Beware, this is an advanced topic.
+This article describes the security measures that implemented in the system. 
 
 DOM Cloud is essentially a Linux VPS server that's shared for all users. While this maybe seems like a bad idea, when it done correctly it will work fine for most users. 
 
-Each servers currently installed with 1 vCPU and 2 GB RAM, which should be enough for most of web development task and average production server. This hardware spec may be increased as the time goes with available budget.
+Each servers currently installed with 1 vCPU and 1 or 2 GB RAM, which should be enough for most of web development task and average production server. This hardware spec may be increased as the time goes with available budget.
 
 ## No Sudo
 
@@ -21,18 +21,17 @@ The deployment system also has some shortcut to install language compilers, such
 
 ## No Background Services
 
-CPU and RAM are limited resources. To make room for everyone, server processes need to be shut down when it's no longer in use. In another word, there can't be any process run 24/7, it will be terminated when there's no traffic for more than 10 minutes.
+CPU and RAM are limited resources. To make room for everyone, server processes need to be shut down when it's no longer in use. In another word, there can't be any process run 24/7, it will be terminated when there's no traffic for more than 15 minutes.
 
-This is enforced by NginX proxies (PHP-FPM and Passenger) plus an additional cron job that does this: 
-
-```bash
-# Send SIGKILL (immediate kill) for all processes longer than 3 hours and it's not daemon processes.
-kill -9 $(ps --no-headers -eo pid,user,etimes | awk '{if ($3 > 10800 && $2 != "root" && $2 != "mysql" && $2 != "postgres".......) { print $1}}')
-```
+This is enforced by NginX proxies (PHP-FPM and Passenger) plus many many other daemons that's running in the background.
 
 If your web apps requires some kind of background processes that must stays on for 24/7, then you might have designed its system architecture wrong. The most noticeable impact from this restriction is Chatbot. All chatbot must work by webhook, not by actively polling social media APIs.
 
-This is also the reason why there's only three database system supported: SQLite, MariaDB and PostgreSQL. The last two is managed by system daemon, so it's always available 24/7. 
+:::danger
+
+Do not install any third-party background services that pings all the time such as Uptime Bots. This will cause your account to be terminated as it is direct violation for Fair Use (forcing the process to always run 24/7).
+
+:::
 
 ## Listing every other users
 
