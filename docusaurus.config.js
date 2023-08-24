@@ -10,6 +10,7 @@ const config = {
   tagline: 'Classic Web Hosting Made Easy',
   url: 'https://domcloud.co/',
   baseUrl: '/',
+  trailingSlash: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'assets/icon/favicon.ico',
@@ -117,10 +118,6 @@ const config = {
               {
                 label: 'Blog',
                 to: '/blog',
-              },
-              {
-                label: 'About',
-                to: '/about',
               },
             ],
           },
