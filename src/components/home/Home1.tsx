@@ -19,6 +19,7 @@ export default function Home1() {
                 >
                     <span>Starts for free: </span>
                     <a
+                        rel="nofollow"
                         href="https://my.domcloud.co/login?with=google"
                         className="p-2 mx-2 button button--secondary d-flex align-items-center shadow--lw"
                     >
@@ -26,6 +27,7 @@ export default function Home1() {
                         <span className="ms-2">Google</span>
                     </a>
                     <a
+                        rel="nofollow"
                         href="https://my.domcloud.co/login?with=github"
                         className="p-2 mx-2 button button--secondary d-flex align-items-center shadow--lw"
                     >

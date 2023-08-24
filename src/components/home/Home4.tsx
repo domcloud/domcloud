@@ -20,7 +20,7 @@ export default function Home4() {
                         <div
                             className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
                         >
-                            <a href="/docs/features/service" className="button button--link button--lg px-4 me-md-2">
+                            <a href="/docs/features/editor" className="button button--link button--lg px-4 me-md-2">
                                 Read documentation
                             </a>
                         </div>
@@ -52,7 +52,7 @@ export default function Home4() {
                         <div
                             className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
                         >
-                            <a href="/docs/features/service#vscode-ssh-remote" className="button button--link button--lg px-4 me-md-2">
+                            <a href="/docs/features/editor#vscode-ssh-remote" className="button button--link button--lg px-4 me-md-2">
                                 Read documentation
                             </a>
                         </div>
