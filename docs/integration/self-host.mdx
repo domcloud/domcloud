@@ -12,12 +12,12 @@ You can also use this page as a reference if you want to know what's running beh
 
 ### Very basic stuff
 
-1. Install Rocky Linux, or any RHEL9 system (untested).
-2. Install [Virtualmin](https://www.virtualmin.com/documentation/installation/automated/): `sh virtualmin-install --minimal --bundle LEMP`
-3. Install [Passenger](https://www.phusionpassenger.com/docs/advanced_guides/install_and_upgrade/nginx/install/oss/el9.html): `yum install nginx-mod-http-passenger`
-4. Enable quotas for `/`
+1. Install Rocky Linux latest or Ubuntu LTS, do `yum update`/`apt update`.
+2. Set `PermitRootLogin yes` (or `prohibit-password`) and `PasswordAuthentication yes` in `/etc/ssh/sshd_config`
+3. Install [Virtualmin](https://www.virtualmin.com/documentation/installation/automated/): `sh virtualmin-install.sh --minimal --bundle LEMP`
+4. Install [Passenger](https://www.phusionpassenger.com/docs/advanced_guides/install_and_upgrade/nginx/install/oss/el9.html)
+5. Enable quotas for `/`
 5. Set `port=2443` in `/etc/webmin/miniserv.conf`
-6. Set `PermitRootLogin yes` and `PasswordAuthentication yes` in `/etc/ssh/sshd_config`
 7. Disable all email related services, uninstall imap and dovecot if possible.
 9. Clone and set up [DOM Cloud Bridge](https://github.com/domcloud/bridge) with user `bridge`
 
@@ -43,7 +43,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-### Package installs
+### Package installs (RHEL)
 
 PHP:
 
@@ -80,6 +80,29 @@ Enable PostgreSQL service from webmin after installing it
 
 :::
 
+
+### Package installs (Debian)
+
+```
+apt-get remove firewalld
+apt-get install software-properties-common
+```
+
+```
+add-apt-repository ppa:ondrej/php; apt-get update
+apt-get install php{7.4,8.0,8.1,8.2}-{bcmath,cli,common,dev,fpm,gd,imap,igbinary,intl,mbstring,mysql,opcache,mongodb,readline,redis,zip,pgsql,soap,xml}
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+find /etc/php/ -maxdepth 1 -mindepth 1 -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/fpm/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/fpm/php.ini \; 
+```
+
+Tools, libs, services:
+```
+apt-get install certbot cmake git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz-utils
+apt-get install {libcurl4-openssl,libbz2,libffi,libgl,libsqlite3,nettle,libmd,libpq,passenger,libperl,libssl}-dev {libdbd-pg,libtemplate}-perl
+apt-get install earlyoom rdfind fail2ban postfix proftpd-core postgresql{,-contrib} bind9{,-host} mariadb-{common,server} webmin-virtualmin-nginx{,-ssl}
+apt-get autoremove
+```
+
 ## Configuration Files
 
 ### System Files
@@ -114,30 +137,24 @@ nameserver 1.0.0.1
 
 ### Services
 
-```ini title="/etc/systemd/system/nginx.service.d/override.conf"
+```ini title="systemctl edit nginx"
 [Service]
 LimitNOFILE=65535
 ```
 
-```ini title="/usr/lib/systemd/system/earlyoom.service"
+```ini title="systemctl edit earlyoom"
 [Service]
-...
 SupplementaryGroups=adm
-...
 ```
 
-```ini title="/usr/lib/systemd/system/iptables.service"
+```ini title="systemctl edit iptables"
 [Service]
-...
 ExecStartPre=ipset -! create whitelist hash:ip
-...
 ```
 
-```ini title="/usr/lib/systemd/system/ip6tables.service"
+```ini title="systemctl edit ip6tables"
 [Service]
-...
 ExecStartPre=ipset -! create whitelist-v6 hash:ip family inet6
-...
 ```
 
 ```ini title="/etc/default/earlyoom"
