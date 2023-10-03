@@ -7,8 +7,8 @@ DNS is a service that translates domain names to IP addresses.
 If you host a website with a custom domain, you need to point the name server (in any registrar where you buy the domain) to these below:
 
 ```
-nsp.domcloud.io
-nss.domcloud.io
+nsp.domcloud.co
+nss.domcloud.co
 ```
 
 To add custom records to your domain, you can use the DNS Manager via Webmin -> DNS Records. You can also add or delete DNS records using [the deployment script](./deploy.mdx#dns).
@@ -17,7 +17,7 @@ To add custom records to your domain, you can use the DNS Manager via Webmin -> 
 
 When you create a website with custom domain (other than `*.domcloud.io`), a `dns` service is activated from [the deployment script](./deploy.mdx#dns), it's activated automatically by our Portal UI.
 
-Any website where you buy a domain is called a registrar. We also sell domain, but you don't have to buy a domain from us, you just have to buy it from somewhere and set the nameserver to `nsp.domcloud.io` and `nss.domcloud.io`, which means that your domain DNS will be handled to us.
+Any website where you buy a domain is called a registrar. We also sell domain, but you don't have to buy a domain from us, you just have to buy it from somewhere and set the nameserver to `nsp.domcloud.co` and `nss.domcloud.co`, which means that your domain DNS will be handled to us.
 
 Usually changing a name server takes a hour to a day to propagate across internet.
 
@@ -61,8 +61,8 @@ DNS can be verified by using `nslookup` from your local terminal.
 
 First, make sure that DNS is enabled, to do that enter `nslookup <your-domain> <name-server>`, for example:
 
-```txt title="$> nslookup sga.domcloud.id nsp.domcloud.io"
-Server:		nsp.domcloud.io
+```txt title="$> nslookup sga.domcloud.id nsp.domcloud.co"
+Server:		nsp.domcloud.co
 Address:	68.183.191.223#53
 
 Non-authoritative answer:
@@ -72,8 +72,8 @@ Address: 68.183.191.223
 
 If the second address matches with IP address shown from manage tab, then DNS is enabled correctly. Any nonexistent domain is either returning wrong IP address or just refusing to answer depending on your local ISP settings:
 
-```txt title="$> nslookup nonexistantdomain.com nsp.domcloud.io"
-Server:		nsp.domcloud.io
+```txt title="$> nslookup nonexistantdomain.com nsp.domcloud.co"
+Server:		nsp.domcloud.co
 Address:	68.183.191.223#53
 
 ** server can't find nonexistantdomain.com: REFUSED
