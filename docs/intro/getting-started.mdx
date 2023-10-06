@@ -4,7 +4,7 @@ sidebar_position: 2
 ---
 
 import ThemedImage from '@theme/ThemedImage';
-
+import theVideo from '../../blog/2023-07-08-improving-ux-for-newbies/upload-local.webm';
 
 Here in this page we will take a basic understanding about how DOM Cloud works and how to set up your own website quickly.
 
@@ -24,7 +24,34 @@ Go to [create a website](https://my.domcloud.co/user/host/create) page. If you h
     loading="lazy"
 />
 
-The left side is the template you want to start with, while the right side sets the domain name and the server where you want to host your website. You can choose a template, the domain name and a server, then click the "Add Host" button. We explain more below.
+The left side is the template you want to start with, while the right side sets the domain name and the server where you want to host your website. 
+
+### Left side
+
+It's a template selector. It has three sections: **Start From Template**, **Upload or Clone**, **Custom Template**.
+
+#### Start From Template
+
+If you want to create a website from stratch, start from here. You just have to select which kind of framework or CMS you will start with.
+
+The CMS or Framework can be further edited directly using their respective admin tools from the website or VS Code editor (read below).
+
+#### Upload or Clone
+
+If you have an existing project on GitHub or your local computer, use this option.
+
+It's easy as dropping your project directory, or copy-pasting your repository URL on GitHub. Then, choose which framework or language it's used to.
+
+<video width="80%" loop muted controls className="img-fluid border d-block mx-auto rounded-3 shadow--md mb-4">
+  <source src={theVideo} type="video/webm" />
+  Sorry! Your browser does not support the video tag.
+</video>
+
+:::info
+
+If your GitHub repo is private, it will ask you to install a new SSH public key (so it can be cloned from this server). Read more about [GitHub Integration](../integration/github.mdx), this includes set-up a webhook to keep the website in sync with latest commits in repo.
+
+:::
 
 ### Right side
 
@@ -32,50 +59,27 @@ It has three fields: Username, Region, and Domain.
 
 #### Username
 
-This is the username you want to use to login to your website. You can use any username you want, but it must be unique. The username is invisible to the public, except if you choose a free domain.
+This is the username you want to use to identify logins to your website. You can leave it random or use any username you want, but it must be unique. This username is invisible to the public.
 
 #### Region
 
-This is the server where you want to host your website. You can choose any server you want that is available, preferably close with your target audience.
+This is the server where you want to host your website. You can choose any server you want that is available, preferably close with you or your target audience.
 
 #### Domain
 
-This is the domain name you want to use for your website. By default, it will be `[username].domcloud.io`, which is part of a free domain name provided by us. 
+This is the domain name you want to use for your website. By default, it will be using `*.domcloud.io`, which is part of a free domain name provided by us. 
 
+Using free domain has its own limitation: The name can't be customized and it cannot have custom records. This is intented to prevents malicious use of our platform. 
 
-:::info
+:::tip
 
-You can also use your own domain name, but you need to configure it first. <br/> Read more about [Custom Domain](../integration/).
-
-:::
-
-### Left side
-
-It's a template selector. It has three sections: Start From Template, Clone From GitHub, Custom Template.
-
-#### Start From Template
-
-The template is a pre-configured website that you can use as a starting point. It's mostly a preconfigured web apps that works out of the box.
-
-#### Clone From GitHub
-
-For some developers who already have the website code on GitHub, you can clone it directly to DOM Cloud. It will ask for GitHub access so it can clone your repository even if it's private.
-
-
-:::info
-
-If you plan to integrate our service with GitHub, there's so much more to read about it. Read more about [GitHub integration](../integration/github).
+You can use custom domain to personalize your website. Read more about [Custom Domain](../features/dns.mdx). In short, custom domain doesn't requires you to subscribe our paid plan nor buying domain from us.
 
 :::
 
+### Click "Add a Website"
 
-#### Custom Template
-
-This is the actual "template" that will be executed after the website has been created. When you choose option from **Start From Template** or **Clone From GitHub**, it will be automatically set to the template that is used by the selected option.
-
-### Click "Add Host"
-
-After clicking the "Add Host" button, you will be redirected to the runner page of the newly created website where you can watch the progress of the setup. Below is the screenshot of that page.
+After finishing the previous step, you will be directed to the runner page of the newly created website where you can watch the progress of the setup. Below is the screenshot of that page.
 
 <ThemedImage
     sources={{
@@ -130,16 +134,20 @@ Tools that you can use to manage your website are:
 
 #### Webmin
 
-Webmin is a web-based system management tool. It's mostly useful for managing files using a web interface. You can also use that to manage your databases (like adding new databases or importing from server files).
+Webmin is a web-based system management tool. It's mostly useful for:
+
++ Managing files using a web interface.
++ Creating, importing or dropping database.
++ Viewing NGINX access or error logs, and PHP logs.
++ Set up additional things our portal UI doesn't cover.
 
 #### PhpMyAdmin / PhpPgAdmin
 
 PhpMyAdmin and PhpPgAdmin is a web-based database management tool for MariaDB and PostgreSQL, respectively. During entry, you will be asked for the database username and password, which is the same as your website username and password (in Manage tab).
 
-
 :::info
 
-If you have problem accessing the database, you need to enable the database first through the **Deploy** tab. <br/> Read more about [Configuring Databases](../features/database).
+Database **is not enabled by default**. If you have problem accessing the database, you need to enable the database first through the **Deploy** tab. Read more about [Configuring Databases](../features/database).
 
 :::
 
@@ -163,7 +171,7 @@ ssh <username>@<domain>
 
 :::warning
 
-The WebSSH URL contains password in your URL for convenience. **Don't open it on a shared computer.**.
+The WebSSH URL contains password in your URL for convenience. **Don't open it on a shared computer.**
 
 :::
 
@@ -174,6 +182,12 @@ This a link to [Visual Studio Code](https://code.visualstudio.com/) to remotely 
 :::tip
 
 By default it opens `~/public_html`. If you want to open a different directory, use the link from dropdown menu.
+
+:::
+
+:::info
+
+When asked for which server's OS type VS Code connecting to, choose **Linux**.
 
 :::
 
@@ -208,7 +222,7 @@ This feature alone is what makes DOM Cloud different from other hosting provider
 
 ## Other things to aware
 
-This section covers advanced concepts that you need to know to use DOM Cloud. Refer back to our [architecture system diagram](#system-architecture) for overall overview.
+This section covers advanced concepts that you need to know to use DOM Cloud. There are many more to cover:
 
 - [Firewall Daemon](../features/security)
 - [Proxy and App Daemon](../features/nginx)
