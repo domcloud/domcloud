@@ -15,23 +15,23 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "0.0.0-5577",
-    "@docusaurus/preset-classic": "0.0.0-5577",
+    "@docusaurus/core": "0.0.0-5698",
+    "@docusaurus/preset-classic": "0.0.0-5698",
     "@fortawesome/fontawesome-free": "5.15.4",
-    "@giscus/react": "^2.2.8",
+    "@giscus/react": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
-    "bootstrap": "^5.2.3",
-    "clsx": "^1.2.1",
-    "docusaurus-lunr-search": "^2.3.2",
-    "prism-react-renderer": "^2.0.4",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "simple-icons": "^8.13.0"
+    "bootstrap": "^5.3.2",
+    "clsx": "^2.0.0",
+    "docusaurus-lunr-search": "^3.0.0",
+    "prism-react-renderer": "^2.1.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "simple-icons": "^9.16.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "0.0.0-5577",
-    "@tsconfig/docusaurus": "^1.0.7",
-    "typescript": "^5.0.4"
+    "@docusaurus/module-type-aliases": "2.4.3",
+    "@tsconfig/docusaurus": "^2.0.1",
+    "typescript": "^5.2.2"
   },
   "browserslist": {
     "production": [
