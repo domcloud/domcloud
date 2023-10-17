@@ -8,7 +8,7 @@ export default function Home6() {
                 <h2 className="text--center">Multiple Server Locations</h2>
                 <p className="text--center">Serve website closest to the location of your audience</p>
                 <div style={{ position: 'relative' }}>
-                    <img src="/assets/feat/worldmap.png" className="w-100" alt="" />
+                    <img src="/assets/feat/worldmap.png" className="w-100" alt="" loading="lazy"/>
                     <a href="#sg1" style={{
                         position: 'absolute',
                         top: '57.3%',

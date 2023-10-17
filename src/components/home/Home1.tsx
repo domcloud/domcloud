@@ -47,7 +47,6 @@ export default function Home1() {
                         className="img-fluid border rounded-3 shadow--md mb-4"
                         width="700"
                         height="500"
-                        loading="lazy"
                     />
                 </div>
             </div>

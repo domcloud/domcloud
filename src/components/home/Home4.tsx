@@ -34,6 +34,7 @@ export default function Home4() {
                             alt=""
                             className="rounded-lg-3"
                             height="480"
+                            loading="lazy"
                         />
                     </div>
                 </div>
@@ -66,6 +67,7 @@ export default function Home4() {
                             alt=""
                             className="rounded-lg-3"
                             height="480"
+                            loading="lazy"
                         />
                     </div>
                 </div>
@@ -93,6 +95,7 @@ export default function Home4() {
                             alt=""
                             className="rounded-lg-3"
                             height="480"
+                            loading="lazy"
                         />
                     </div>
                 </div>
@@ -116,6 +119,7 @@ export default function Home4() {
                             alt=""
                             className="rounded-lg-3"
                             height="480"
+                            loading="lazy"
                         />
                     </div>
                 </div>
@@ -144,6 +148,7 @@ export default function Home4() {
                             alt=""
                             className="rounded-lg-3"
                             height="480"
+                            loading="lazy"
                         />
                     </div>
                 </div>

@@ -33,7 +33,8 @@ export default function Home3() {
                         src="/assets/ss/templates.png"
                         alt=""
                         height="480"
-                    />
+                        loading="lazy"
+                        />
                 </div>
             </div>
         </div>
