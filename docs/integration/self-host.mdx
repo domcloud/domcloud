@@ -212,6 +212,22 @@ host    all             all             0.0.0.0/0               md5
 host    all             all             ::/0                    md5
 ```
 
+
+### SSL & Folder securities
+
+```
+mkdir -p /etc/nginx/conf.d && chmod 0750 $_
+mkdir -p /var/lib/ssl && chmod 0750 $_
+mkdir -p /var/lib/mysql && chmod 0750 $_
+```
+
+Set SSL key path template to `/var/lib/ssl/${DOM}/ssl.key` and all other as same key directory, so...
+
+```ini title="grep -r /var/lib/ssl /etc/webmin"
+/etc/webmin/virtual-server/config:key_tmpl=/var/lib/ssl/${DOM}/ssl.key
+/etc/webmin/virtual-server/templates/1:cert_key_tmpl=/var/lib/ssl/${DOM}/ssl.key
+```
+
 ### NGINX
 
 ```ini title="/etc/webmin/virtualmin-nginx/config"
