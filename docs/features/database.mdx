@@ -4,11 +4,21 @@ title: Database Providers
 
 Database is an integral part of any application. DOM Cloud provides a free, opt-in `MariaDB` and `PostgreSQL` database instance for every website in every tier. 
 
-:::tip
+### Initializing the Database
 
-Database is an **opt-in**, disabled by default. You have to enable it via the deployment script. See the section for enabling [MariaDB](./deploy.mdx#mysql) or [PostgreSQL](./deploy.mdx#postgresql).
+Databases is disabled by default. To enable it, go to [deploy tab](../intro/getting-started#deploy-tab) and execute one of these:
 
-:::
+```yml
+features:
+- mysql
+```
+
+```yml
+features:
+- postgresql
+```
+
+See the section in [MariaDB](./deploy.mdx#mysql) or [PostgreSQL](./deploy.mdx#postgresql) for more information.
 
 To view and edit the database using online tools, use *PhpMyAdmin* or *PhpPgAdmin*. Both available from manage tab.
 
@@ -23,9 +33,17 @@ You can't create or drop database from PhpMyAdmin, PhpPgAdmin or any external da
 After activating the database, you can provide the database credentials to your app:
 
 + Hostname: `localhost` (because the database always live in the same server)
-+ Username: Same username with server (see from manage tab)
-+ Password: Same password with server (see from manage tab)
-+ Database name: Usually username + `_db` unless you've create another DB
++ Username: Same username with server (see from [manage tab](../intro/getting-started#managing-website))
++ Password: Same password with server (see from [manage tab](../intro/getting-started#managing-website))
++ Database name: Usually username with suffix + `_db` unless you've created another DB
+  - For example with username `hello-world` then database name will be `hello_world_db`
+  - Check the correct database name from PhpMyAdmin or PhpPgAdmin
+
+:::caution
+
+Username and password is always different from the default. Don't assume `root` username with empty password will work for you.
+
+:::
 
 ### Remote Access
 
