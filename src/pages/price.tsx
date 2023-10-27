@@ -1,15 +1,16 @@
 import Layout from "@theme/Layout";
 import React from "react";
 
-import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hdd.svg';
+import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hard-drive.svg';
 import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
 import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
 import FaBrief from '@fortawesome/fontawesome-free/svgs/solid/briefcase.svg';
 import FaUsers from '@fortawesome/fontawesome-free/svgs/solid/users.svg';
-import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/atlas.svg';
-import FaArchive from '@fortawesome/fontawesome-free/svgs/solid/archive.svg';
+import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/book-atlas.svg';
+import FaArchive from '@fortawesome/fontawesome-free/svgs/solid/box-archive.svg';
 import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
+import FaChartPie from '@fortawesome/fontawesome-free/svgs/solid/chart-pie.svg';
 import FaBolt from '@fortawesome/fontawesome-free/svgs/solid/bolt.svg';
 import './price.css';
 import Home7 from "../components/home/Home7";
@@ -119,10 +120,10 @@ export default function Pricing() {
                 <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaAtlas />
+                            <FaChartPie />
                         </div>
-                        <h2>Custom Domain</h2>
-                        <p>Put the website to your own domain</p>
+                        <h2>Larger Capacity</h2>
+                        <p>More storage and data for higher traffic limit</p>
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">

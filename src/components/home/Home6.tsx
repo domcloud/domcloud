@@ -1,5 +1,5 @@
 import React from "react";
-import FaMapMarker from '@fortawesome/fontawesome-free/svgs/solid/map-marker-alt.svg';
+import FaMapMarker from '@fortawesome/fontawesome-free/svgs/solid/map-pin.svg';
 
 export default function Home6() {
     return (<div className="container mb-5 map">

@@ -46,6 +46,7 @@ svg {
 }
 .feature .feature-icon {
     background-color: var(--ifm-color-primary-dark);
+    box-shadow: rgb(0 0 0 / 50%) 2px 2px 6px 0px;;
 }
 .feature.premium .feature-icon {
     background-color: var(--ifm-color-success-dark);

@@ -1,7 +1,11 @@
 import React from "react";
-import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hdd.svg';
+import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hard-drive.svg';
 import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
+import FaSignal from '@fortawesome/fontawesome-free/svgs/solid/signal.svg';
 import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
+import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/book-atlas.svg';
+import FaStopwatch from '@fortawesome/fontawesome-free/svgs/solid/stopwatch.svg';
+
 export default function Home5({ title }) {
     return (
         <div className="container px-4 py-5" id="featured-3">
@@ -27,12 +31,33 @@ export default function Home5({ title }) {
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">
+                        <FaSignal />
+                    </div>
+                    <h2>Free Network Limit</h2>
+                    <p>2GB of monthly free outbound data network.</p>
+                </div>
+                <div className="feature col">
+                    <div className="feature-icon badge badge--primary">
+                        <FaStopwatch />
+                    </div>
+                    <h2>Quick Setup</h2>
+                    <p>It only takes minutes to deploy your website!</p>
+                </div>
+                <div className="feature col">
+                    <div className="feature-icon badge badge--primary">
                         <FaLock />
                     </div>
                     <h2>Built-in Security</h2>
                     <p>
-                        HTTPS, Firewall, Bot Protection for free.
+                        Built-in HTTPS, Firewall and Bot Protection.
                     </p>
+                </div>
+                <div className="feature col">
+                    <div className="feature-icon badge badge--primary">
+                        <FaAtlas />
+                    </div>
+                    <h2>Custom Domain</h2>
+                    <p>No cost to set up a custom domain.</p>
                 </div>
             </div>
             <p className="text--center pb-5 pt-3">
