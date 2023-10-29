@@ -3,106 +3,132 @@ title: Go
 sidebar_position: 6
 ---
 
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Deploy Go Apps
 
 Go is a popular programming language for backend development. Go is served as a compiled language, which means you need to compile your code before running it. This is different from interpreted languages like PHP, Python, and Ruby.
 
-Popular Go recipes include [Gin](https://gin-gonic.com/) and [Echo](https://echo.labstack.com/). Please read our [Runner's Guide](../features/deploy.mdx) first if you haven't.
+There is no default `go` compiler at system level. You have to install it first through deployment scripts.
 
-## Recipes
+:::warning
 
-<Tabs>
-  <TabItem value="gin" label="Gin" default>
+Serving Go apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
 
-### Init
+:::
 
-```yaml
+## Example
+
+The deployment script below installs the latest `go` compiler and compiles `main.go` and serves that `main` binary. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/go.yml"
 source: clear
 features:
-  - go latest
+  - go
 nginx:
   root: public_html/public
   passenger:
-    enabled: on
-    app_start_command: env PORT=$PORT ./app
+    enabled: "on"
+    app_start_command: env PORT=$PORT ./main
 commands:
-  - go mod init app
-  - go get github.com/gin-gonic/gin
-  - filename: app.go
+  - filename: main.go
     content: |
       package main
 
-      import "github.com/gin-gonic/gin"
+      import (
+        "fmt"
+        "net/http"
+        "os"
+        "runtime"
+        "strings"
+      )
+
+      const html_text = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Go App</title>
+        <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+      </head>
+      <body class="p-5 text-center">
+        <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+            class="img-fluid rounded-circle"></p>
+        <h1 class="mb-3">Hello, world!</h1>
+        <p>Serving from Go version %s</p>
+        <p class="text-muted">DOM Cloud</p>
+      </body>
+      </html>
+      `
+
+      func home(w http.ResponseWriter, req *http.Request) {
+        w.Header().Set("Content-Type", "text/html")
+        version := strings.Replace(runtime.Version(), "go", "", 1)
+        fmt.Fprintf(w, html_text, version)
+      }
 
       func main() {
-        app := gin.Default()
-        app.GET("/", func(c *gin.Context) {
-          c.String(200, "Hello, World!")
-        })
-        app.Run()
+        http.HandleFunc("/", home)
+        port := os.Getenv("PORT")
+        if port == "" {
+          fmt.Print("PORT environment variable not set")
+          os.Exit(1)
+        }
+        http.ListenAndServe("127.0.0.1:"+port, nil)
       }
+
+  - go build main.go
+```
+
+For existing golang apps, use this deployment script. This project must have a `go.mod` initialized.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/go-binary.yml"
+features:
+  - go
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT ./app
+commands:
+  - go mod download
   - go build -o app
 ```
 
-A simple Go website with [Gin](https://gin-gonic.com/) for development.
+## Serving via `go run`
 
-  </TabItem>
-  <TabItem value="echo" label="Echo">
-    
-### Init
-    
-```yaml 
-source: clear
+It's possible to run the app via `go run .`. This eliminates the need to compile the binary, although startup time may be a little bit slower.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/go-gls.yml"
 features:
-  - go latest
+  - go
 nginx:
-    root: public_html/public
-    passenger:
-        enabled: on
-        app_start_command: env PORT=$PORT ./app
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT go run .
 commands:
-    - go mod init app
-    - go get github.com/labstack/echo/v4
-    - filename: app.go
-      content: |
-        package main
-
-        import (
-          "net/http"
-          "os"
-
-          "github.com/labstack/echo/v4"
-        )
-
-        func main() {
-          e := echo.New()
-          e.GET("/", func(c echo.Context) error {
-            return c.String(http.StatusOK, "Hello, World!")
-          })
-          e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
-        }
-    - go build -o app
+  - go mod download
 ```
 
-A simple Go website with [Echo](https://echo.labstack.com/) for development.
+## Use other Go versions
 
-  </TabItem>
-
-</Tabs>
- 
-## Go Environment
-
-You can specify the Go version in the `features` section. For example, `go 1.16.5` will install Go 1.16.5. You can also use `go latest` to install the latest version of Go.
+To switch golang version use feature syntax like `go stable`, `go beta`, `go v1.19`, etc. Check your current go version using `go version` in SSH.
 
 ```yaml
 features:
-  - go latest
+  - go v1.19
 ```
 
-There are no builtin Go compiler in system files. You need to install Go first before using it.
+Go install scripts is powered by [webi](https://webinstall.dev/golang/). 
 
+## App Restart
 
+Your app do not restarted automatically after file changes.
+
+To restart, run `restart` via SSH.
+
+## App Logging
+
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+
+Please use a proper logging mechanism such as [the standard log library](https://pkg.go.dev/log) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin.

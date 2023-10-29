@@ -62,8 +62,8 @@ find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize
 
 Tools, libs, services:
 ```
-dnf install certbot cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget yarn xz
-dnf install {libcurl,libffi,libsqlite3x,nettle,postgresql-server,passenger,perl,readline}-devel libmd libreport-filesystem mesa-libGL perl-DBD-Pg perl-macros
+dnf install certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget yarn xz
+dnf install {libcurl,libffi,libsqlite3x,libtool-ltdl,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel libmd libreport-filesystem mesa-libGL perl-DBD-Pg perl-macros
 dnf install do-agent earlyoom fail2ban-server postfix proftpd postgresql-server postgresql-contrib
 ```
 

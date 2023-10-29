@@ -2,3 +2,113 @@
 title: Deno
 sidebar_position: 8
 ---
+
+# Deploy Deno Apps
+
+Deno is a popular programming language for backend development. Deno is served as an intepreted language, which means you don't need to compile your code beforehand.
+
+There is no default `deno` compiler at system level. You have to install it first through deployment scripts.
+
+:::warning
+
+Serving Deno apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args. You also have to give network and any other relevant system permissions to the script.
+
+:::
+
+## Example
+
+The deployment script below installs the latest `deno` compiler and writes `app.ts` and serves that with `--allow-net` permissions. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/deno.yml"
+source: clear
+features:
+  - deno latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: deno run --allow-net app.ts --port=$PORT
+commands:
+  - filename: app.ts
+    content: |
+      import { parse } from "https://deno.land/std@0.194.0/flags/mod.ts";
+
+      const flags = parse(Deno.args, {
+          string: ["port"],
+          default: { port: "8080" },
+      });
+
+      const html_text = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Deno App</title>
+          <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+      </head>
+      <body class="p-5 text-center">
+          <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+                  class="img-fluid rounded-circle"></p>
+          <h1 class="mb-3">Hello, world!</h1>
+          <p>Serving from Deno version ${Deno.version.deno}</p>
+          <p class="text-muted">DOM Cloud</p>
+      </body>
+      </html>
+      `
+
+      const server = Deno.listen({ port: parseInt(flags.port) });
+
+      for await (const conn of server) {
+        serveHttp(conn);
+      }
+
+      async function serveHttp(conn: Deno.Conn) {
+        const httpConn = Deno.serveHttp(conn);
+        for await (const requestEvent of httpConn) {
+          requestEvent.respondWith(
+            new Response(html_text, {
+              headers: {
+                  "content-type": "text/html",
+              },
+              status: 200,
+            }),
+          );
+        }
+      }
+```
+
+For existing deno apps, use this deployment script. Please adjust relevant fields such as the startup file (change `app.ts`), allowed features (change `--allow-net`) and how `$PORT` is delivered (either `deno ... --port=$PORT` or `env PORT=$PORT deno ...`).
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/deno-gls.yml"
+features:
+  - deno latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: deno run --allow-net app.ts --port=$PORT
+```
+
+## Use other Deno versions
+
+To switch Deno version use feature syntax like `deno stable`, `deno beta`, `deno v1.13`, etc. Check your current Deno version using `deno --version` in SSH.
+
+```yaml
+features:
+  - deno v1.13
+```
+
+Deno install scripts is powered by [webi](https://webinstall.dev/deno/). 
+
+## App Restart
+
+Your app do not restarted automatically after file changes.
+
+To restart, run `restart` via SSH.
+
+## App Logging
+
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+
+Please use a proper logging mechanism such as [the standard log library](https://deno.land/std@0.204.0/log/mod.ts) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin.

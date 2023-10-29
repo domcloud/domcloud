@@ -3,10 +3,8 @@ import React from "react";
 
 import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hard-drive.svg';
 import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
-import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
 import FaBrief from '@fortawesome/fontawesome-free/svgs/solid/briefcase.svg';
 import FaUsers from '@fortawesome/fontawesome-free/svgs/solid/users.svg';
-import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/book-atlas.svg';
 import FaArchive from '@fortawesome/fontawesome-free/svgs/solid/box-archive.svg';
 import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
