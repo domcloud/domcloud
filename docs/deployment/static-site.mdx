@@ -21,50 +21,142 @@ You can [upload existing files](../features/editor.mdx) from your local machine 
 source: https://github.com/octocat/octocat.github.io
 ```
 
-## Building the site
+## Serving the static files
+
+How the server processes files are depends on NGINX configurations. The simplest configuration for website that only serves static files is this:
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html.yml"
+nginx:
+  index: index.html
+  error_pages:
+    - 404 /404.html
+```
+
+The config above set directory root to be `index.html` and using `/404.html` only if the desired page is not found in the file.
+
+## Single-page Application (SPA)
+
+For some websites with advanced interaction, it's desirable to put all traffic into one file. The correct configuration is defined below:
+
+```yaml title=""
+nginx:
+  locations:
+    - match: /
+      try_files: $uri /index.html
+```
+
+The config above sets all traffic to `/index.html` unless there's an existing file for requested URL (that's for asset files such as images). Beware that the config above could impact SEO because all pages not desired is also resolved as `200 OK`, so it's not suitable for SEO-Focused websites (.e.g. landing pages).
+
+## Pages that requires building
+
 
 If your site need to be built with a frontend tooling, you need to build it after pulling the code and adjust the NGINX configuration to serve the built files correctly.
 
+Here are some popular frontend tooling and it's correct configurations:
+
 
 <Tabs>
-  <TabItem value="create-react-app" label="Create React App" default>
+  <TabItem value="create-react-app" label="CreateReactApp" default>
 
-```yaml
-# If you want to create from stratch, let's create a new template
-source: clear
-commands:
-- yarn create react-app .
-# Install latest Node.js
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-cra.yml"
 features:
-- node lts
-```
-
-```yaml
-# Build the site (after pulling or modifying the code)
-commands:
-- yarn install
-- yarn build
-```
-
-```yaml
-# Adjust NGINX (you only need to do this once)
+  - node lts
 nginx:
-  # Set the root directory to the build directory
   root: public_html/build
-  # Serve index.html for all requests
   locations:
-  - match: /
-    try_files: $uri $uri/ /index.html
+    - match: /
+      try_files: $uri $uri/ /index.html
+commands:
+  - yarn install
+  - yarn build
 ```
 
   </TabItem>
   <TabItem value="vite" label="Vite">
-  TODO
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-vite.yml"
+features:
+  - node lts
+nginx:
+  root: public_html/dist
+commands:
+  - npm install
+  - npm run build
+```
+
   </TabItem>
-  <TabItem value="hugo" label="Hugo">
-  TODO
+  <TabItem value="gatsby" label="Gatsby">
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-gatsby.yml"
+features:
+  - node lts
+nginx:
+  root: public_html/build
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.html
+commands:
+  - yarn install
+  - yarn build
+```
+
+  </TabItem>
+  <TabItem value="docusaurus" label="Docusaurus">
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-docusaurus.yml"
+features:
+  - node lts
+nginx:
+  root: public_html/build
+  error_pages:
+    - 404 /404.html
+commands:
+  - yarn install
+  - yarn build
+```
+
   </TabItem>
   <TabItem value="jekyll" label="Jekyll">
-  TODO
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-jekyll.yml"
+features:
+  - ruby latest
+nginx:
+  root: public_html/_site
+  error_pages:
+    - 404 /404.html
+commands:
+  - test -f Gemfile && bundle install || (bundle init && bundle add jekyll webrick)
+  - jekyll build
+```
+
+  </TabItem>
+  <TabItem value="mkdocs" label="MkDocs">
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-mkdocs.yml"
+# TODO
+```
+
+  </TabItem>
+  <TabItem value="slatedocs" label="SlateDocs">
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-slatedocs.yml"
+# TODO
+```
+
+  </TabItem>
+  <TabItem value="hugo" label="Hugo">
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-hugo.yml"
+# TODO
+```
+
+  </TabItem>
+  <TabItem value="hexo" label="Hexo">
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-hexo.yml"
+# TODO
+```
+
   </TabItem>
 </Tabs>

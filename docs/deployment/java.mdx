@@ -1,5 +1,45 @@
 ---
 title: Java
+sidebar_position: 9
 ---
 
+# Deploy Java Apps
+
+Java is a programming language popularly used globally. Java is served as a compiled language, which means you need to compile your code before running it. 
+
+There is no default `java` compiler at system level. You have to install it first through deployment scripts.
+
+
+:::warning
+
+Serving Java apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
+
+:::
+
+## Example
+
 TODO
+
+## Existing Java projects
+
+TODO
+
+## Use other Java versions
+
+TODO (install it yourself)
+
+## App Management
+
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
+
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
+
+## App Logging
+
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+
+Please use a proper logging mechanism such as [log4j](https://logging.apache.org/log4j/2.x/) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin.
