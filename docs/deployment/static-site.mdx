@@ -34,11 +34,11 @@ nginx:
 
 The config above set directory root to be `index.html` and using `/404.html` only if the desired page is not found in the file.
 
-## Single-page Application (SPA)
+## Single-Page Application (SPA)
 
 For some websites with advanced interaction, it's desirable to put all traffic into one file. The correct configuration is defined below:
 
-```yaml title=""
+```yaml title="https://github.com/domcloud/recipes/blob/master/html-spa.yml"
 nginx:
   locations:
     - match: /
@@ -79,6 +79,8 @@ features:
   - node lts
 nginx:
   root: public_html/dist
+    - match: /
+      try_files: $uri $uri/ /index.html
 commands:
   - npm install
   - npm run build
@@ -134,6 +136,8 @@ commands:
   <TabItem value="mkdocs" label="MkDocs">
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/html-mkdocs.yml"
+features:
+  - python latest
 # TODO
 ```
 
@@ -141,6 +145,8 @@ commands:
   <TabItem value="slatedocs" label="SlateDocs">
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/html-slatedocs.yml"
+features:
+  - ruby latest
 # TODO
 ```
 
@@ -148,6 +154,8 @@ commands:
   <TabItem value="hugo" label="Hugo">
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/html-hugo.yml"
+features:
+  - go latest
 # TODO
 ```
 
@@ -155,6 +163,8 @@ commands:
   <TabItem value="hexo" label="Hexo">
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/html-hexo.yml"
+features:
+  - node latest
 # TODO
 ```
 
