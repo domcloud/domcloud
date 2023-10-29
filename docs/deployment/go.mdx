@@ -77,7 +77,7 @@ commands:
   - go build main.go
 ```
 
-For existing golang apps, use this deployment script. This project must have a `go.mod` initialized.
+For existing golang apps, use this deployment script. This project must have a `go.mod` initialized and has package name as `main`.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/go-binary.yml"
 features:
@@ -129,6 +129,6 @@ To restart, run `restart` via SSH.
 
 We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
 
-Please use a proper logging mechanism such as [the standard log library](https://pkg.go.dev/log) then write it to a log file, or any other solution that suits you.
+Please use a proper logging mechanism such as [the standard logging library](https://pkg.go.dev/log) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin.

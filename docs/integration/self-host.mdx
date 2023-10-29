@@ -43,6 +43,10 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
+```bash
+echo "passenger-config restart-app ~" > /usr/local/bin/restart && chmod 755 $_
+```
+
 ### Package installs (RHEL)
 
 PHP:
@@ -218,7 +222,6 @@ host    all             all             ::/0                    md5
 ```
 mkdir -p /etc/nginx/conf.d && chmod 0750 $_
 mkdir -p /var/lib/ssl && chmod 0750 $_
-mkdir -p /var/lib/mysql && chmod 0750 $_
 ```
 
 Set SSL key path template to `/var/lib/ssl/${DOM}/ssl.key` and all other as same key directory, so...
