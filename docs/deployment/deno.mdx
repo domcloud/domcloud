@@ -99,11 +99,13 @@ features:
 
 Deno install scripts is powered by [webi](https://webinstall.dev/deno/). 
 
-## App Restart
+## App Management
 
-Your app do not restarted automatically after file changes.
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
 
-To restart, run `restart` via SSH.
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
 
 ## App Logging
 

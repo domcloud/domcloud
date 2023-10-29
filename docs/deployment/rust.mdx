@@ -3,14 +3,147 @@ title: Rust
 sidebar_position: 7
 ---
 
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Deploy Rust Apps
 
-Rust is a popular system programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety. 
-Rust is served as a compiled language, which means that you need to compile your Rust code before you can run it.
+Rust is an advanced programming language popularly used for speed thanks to manual memory management. Rust is served as an compile language, which means you need to compile your code before running it. 
 
-Popular Rust web frameworks include [Rocket](https://rocket.rs/), [Actix](https://actix.rs/), [Tide](
-    
+There is no default `rust` compiler at system level. You have to install it first through deployment scripts.
+
+
+:::warning
+
+Serving Rust apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
+
+:::
+
+## Example
+
+The deployment script below installs the latest `rust` compiler and compiles `main.rs` and serves that `main` binary. 
+
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/rust.yml"
+source: clear
+features:
+  - rust
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT ./main
+commands:
+  - filename: main.rs
+    content: |
+      use std::{env,str};
+      use std::io::Write;
+      use std::net::TcpListener;
+      use std::process::Command;
+
+      const HTTP_HEADER: &str = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n";
+      const HTML_TEXT: &str = r#"
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Rust App</title>
+          <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+      </head>
+      <body class="p-5 text-center">
+          <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+                  class="img-fluid rounded-circle"></p>
+          <h1 class="mb-3">Hello, world!</h1>
+          <p>Serving from Rust version {}</p>
+          <p class="text-muted">DOM Cloud</p>
+      </body>
+      </html>
+      "#;
+
+      fn get_version() -> String {
+          let stdout = Command::new("rustc")
+              .arg("-V")
+              .output()
+              .expect("failed to execute process")
+              .stdout;
+
+          let text = str::from_utf8(&stdout).unwrap().to_string();
+          let chunks: Vec<&str> = text.split(" ").collect();
+
+          chunks[1].to_string()
+      }
+
+      fn main() {
+          let port = env::var("PORT").expect("$PORT is not set");
+          let socket_addr = "127.0.0.1".to_string() + ":" + &port;
+          let listener = TcpListener::bind(socket_addr).unwrap();
+          let version = get_version();
+          println!("Listening for connections on port {}", port);
+
+          for stream in listener.incoming() {
+              match stream {
+                  Ok(mut stream) => {
+                      let response = HTTP_HEADER.to_string() + &HTML_TEXT.replace("{}", &version);
+                      stream.write(response.as_bytes()).unwrap();
+                  }
+                  Err(e) => {
+                      println!("Unable to connect: {}", e);
+                  }
+              }
+          }
+      }
+  - rustc main.rs
+```
+
+## Existing Rust projects
+
+For existing rust apps, use this deployment script. This project must have a `Cargo.toml` initialized.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/rust-binary.yml"
+features:
+  - rust
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT ./target/release/app
+commands:
+  - cargo build --release -o target/release/app
+```
+
+It's possible to run the app via `cargo run`. This eliminates the need to compile the binary, although startup time may be a little bit slower.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/rust-gls.yml"
+features:
+  - rust
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT cargo run
+commands:
+  - cargo build
+```
+
+## Use other Rust versions
+
+To switch rust version use feature syntax like `rust latest`, `rust 1.73.0`, etc. Check your current rust version using `rustc --version` in SSH.
+
+```yaml
+features:
+  - rust 1.73.0
+```
+
+Rust install scripts is powered by [rustup](https://rustup.rs). 
+
+## App Management
+
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
+
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
+
+## App Logging
+
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+
+Please use a proper logging mechanism such as [the standard logging library](https://docs.rs/log/latest/log/) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin.

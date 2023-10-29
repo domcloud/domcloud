@@ -14,7 +14,7 @@ There's a default python interpreter from system but we recommend you to install
 
 :::warning
 
-Serving Python apps can be run using WSGI or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via WSGI, please note the default app name (that's `passenger_wsgi.py`) and the path to python interpreter to run with.
+Serving Python apps can be run using WSGI or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via WSGI, please note the default app name (that's `passenger_wsgi.py`) and the path of python interpreter to run with.
 
 :::
 
@@ -83,7 +83,6 @@ commands:
   - test -f requirements.txt && pip install -r $_
 ```
 
-For projects that's use ASGI, we recommend to use [`uvicorn` web server](https://www.uvicorn.org/) and use deployment script below.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/python-uvicorn.yml"
 features:
@@ -102,7 +101,25 @@ Other deployment scripts we offer also listed below.
 <Tabs>
   <TabItem value="gls" label="GLS" default>
 
-The GLS binding is the simplest for any custom web server written in Python. The requirement to use this is your app must listen to given `PORT` env/args (either `python ... --port=$PORT` or `env PORT=$PORT python ...`)
+The GLS binding is the basic for any custom web server either for Python and other code languages. The requirement to use this is your app must listen to given `PORT` env/args (either `python ... --port=$PORT` or `env PORT=$PORT python ...`)
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/python-gls.yml"
+features:
+  - python latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT python app.py
+commands:
+  - test -f requirements.txt && pip install -r $_
+```
+
+  </TabItem>
+  <TabItem value="asgi" label="ASGI">
+
+
+For projects that's use ASGI, we recommend to use [`uvicorn` web server](https://www.uvicorn.org/) and use deployment script below.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/python-gls.yml"
 features:
@@ -163,20 +180,22 @@ commands:
 
 ## Use other Python versions
 
-To switch golang version use feature syntax like `python stable`, `python latest`, `python 3.8.1`, `python 3.8`, etc. Check your current python version using `python --version` in SSH.
+To switch python version use feature syntax like `python stable`, `python latest`, `python 3.8.1`, `python 3.8`, etc. Check your current python version using `python --version` in SSH.
 
 ```yaml
 features:
-  - go 3.8.1
+  - python 3.8.1
 ```
 
 Python install scripts is powered by [pyenv](https://github.com/pyenv/pyenv). 
 
-## App Restart
+## App Management
 
-Your app do not restarted automatically after file changes.
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
 
-To restart, run `restart` via SSH.
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
 
 ## App Logging
 

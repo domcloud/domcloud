@@ -5,4 +5,117 @@ sidebar_position: 5
 
 # Deploy Ruby Apps
 
-TODO
+Ruby is an advanced programming language popularly used for web development thanks to Ruby on Rails. Ruby is served as an interpreted language, which means you don't need to compile your code before running it. 
+
+There's a default python interpreter from system but we recommend you to install it as your own through deployment scripts.
+
+:::warning
+
+Serving Ruby apps can be run using Config.ru or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via Config.ru binding, please note the default app name (that's `config.ru`) and the path of ruby interpreter to run with.
+
+:::
+
+## Example
+
+The deployment script below installs the latest `ruby` compiler and writes `app.rb` and serves that through `config.ru` bindings. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/ruby.yml"
+features:
+  - ruby latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    ruby: .rvm/rubies/default/bin/ruby
+source: clear
+commands:
+  - filename: app.rb
+    content: |
+      $html_text = <<-TEXT
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Ruby App</title>
+          <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+      </head>
+      <body class="p-5 text-center">
+          <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+                  class="img-fluid rounded-circle"></p>
+          <h1 class="mb-3">Hello, world!</h1>
+          <p>Serving from Ruby version %{ver}</p>
+          <p class="text-muted">DOM Cloud</p>
+      </body>
+      </html>
+      TEXT
+
+      class App
+        def call(env)
+          return [200, 
+              {"content-type" => "text/html"}, 
+              [$html_text % {ver: RUBY_VERSION}]]
+        end
+      end
+  - filename: config.ru
+    content: |
+      require './app'
+      run App.new
+```
+
+## Existing Ruby projects
+
+For existing ruby apps, use the deployment script below. Note this template requires `config.ru` to be exist within project files, additionally with Gemfile to install packages.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/ruby-ru.yml"
+features:
+  - ruby latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    ruby: .rvm/rubies/default/bin/ruby
+commands:
+  - test -f Gemfile && bundle install
+```
+
+For Ruby on Rails, the template below includes basic setup like rake db migration and precompiling frontend assets.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/ruby-rails.yml"
+features:
+  - ruby latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    ruby: .rvm/rubies/default/bin/ruby
+commands:
+  - test -f Gemfile && bundle install || (bundle init && bundle add rails)
+  - rails db:migrate && rake db:setup && rails db:seed || true
+  - rake assets:precompile
+```
+
+## Use other Ruby versions
+
+To switch ruby version use feature syntax like `ruby stable`, `ruby latest`, `ruby 3.1.1`, etc. Check your current ruby version using `ruby --version` in SSH.
+
+```yaml
+features:
+  - ruby 3.1.1
+```
+
+Ruby install scripts is powered by [rvm](https://github.com/rvm/rvm). 
+
+## App Management
+
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
+
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
+
+## App Logging
+
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+
+Please use a proper logging mechanism such as [the standard logging library](https://ruby-doc.org/stdlib-2.4.0/libdoc/logger/rdoc/Logger.html) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin.

@@ -2,3 +2,80 @@
 title: Bun
 sidebar_position: 9
 ---
+
+# Deploy Bun Apps
+
+Bun is a recently popular programming language for Node altertive. Bun is served as an intepreted language, which means you don't need to compile your code beforehand.
+
+There is no default `bun` compiler at system level. You have to install it first through deployment scripts.
+
+:::warning
+
+Serving Bun apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
+
+:::
+
+## Example
+
+The deployment script below installs the latest `bun` compiler and writes `app.ts` and serves that. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/bun.yml"
+source: clear
+features:
+  - bun latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT bun app.ts
+commands:
+  - filename: app.ts
+    content: |
+      const server = Bun.serve({
+      port: parseInt(Bun.env.PORT || "3000"),
+      fetch(request) {
+          return new Response("Welcome to Bun!");
+      },
+      });
+
+      console.log(`Listening on localhost: ${server.port}`);
+```
+
+For existing bun apps, use this deployment script. Please adjust relevant fields such as the startup file (change `app.ts`) and how `$PORT` is delivered (either `bun ... --port=$PORT` or `env PORT=$PORT bun ...`).
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/bun-gls.yml"
+features:
+  - bun latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT bun app.ts
+```
+
+## Use other Bun versions
+
+To switch Bun version use feature syntax like `bun latest`, `bun beta`, `bun 1.0.0`, etc. Check your current Bun version using `bun --version` in SSH.
+
+```yaml
+features:
+  - bun 1.0.0
+```
+
+Bun install scripts is powered by [webi](https://webinstall.dev/bun/). 
+
+## App Management
+
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
+
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
+
+## App Logging
+
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+
+Please use a proper logging mechanism such as [Pino](https://github.com/pinojs/pino) or [Winston](https://github.com/winstonjs/winston) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin.

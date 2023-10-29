@@ -6,260 +6,184 @@ sidebar_position: 3
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploy Node.js Apps
+# Deploy Node Apps
 
-Node.js is a highly-efficient JavaScript runtime environment that executes JavaScript code as a server.
-Node.js is served using Phusion Passenger inside NGINX.
+Node is a beginner-friendly programming language popularly used for machine learning and other scientific projects. Node is served as an interpreted language, which means you don't need to compile your code before running it. 
 
-Popular Node.js recipes include [Express](https://expressjs.com/), [Next.js](https://nextjs.org/), [Nuxt.js](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/). Please read our [Runner's Guide](../features/deploy.mdx) first if you haven't.
+There's a default Node interpreter from system but we recommend you to install it as your own through deployment scripts.
 
-:::info
+:::warning
 
-This guide only covers running a Node.js server, not about statically rendered pages like from `Create React App`, `Webpack`, `Parcel` or `Gatsby`.
-If your application is intented to be as a static site, you should read our [Static Site Guide](./static-site.mdx) instead.
+Serving Node apps can be run using CJS-only binding or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via CJS-only binding, please note the default app name (that's `app.js`) and the path of node interpreter to run with.
 
 :::
 
-## Recipes
+## Example
+
+The deployment script below installs the latest `node` compiler and writes `app.js` and serves that through CJS-only bindings. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/node.yml"
+source: clear
+features:
+  - node latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_type: node
+    startup_file: app.js
+    node: .local/opt/node/bin/node
+commands:
+  - filename: app.js
+    content: |
+      const http = require('http');
+      const html_text = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Node App</title>
+          <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+      </head>
+      <body class="p-5 text-center">
+          <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+                  class="img-fluid rounded-circle"></p>
+          <h1 class="mb-3">Hello, world!</h1>
+          <p>Serving from Node version ${process.version}</p>
+          <p class="text-muted">DOM Cloud</p>
+      </body>
+      </html>
+      `
+      const server = http.createServer((req, res) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end(html_text);
+      });
+      server.listen(process.env.PORT || 8080);
+```
+
+With CJS-only bindings, it doesn't matter what port number `server.listen` is being assigned, it will be [corrected automagically](https://www.phusionpassenger.com/docs/advanced_guides/in_depth/node/reverse_port_binding.html). However with CJS-only bindings, you can't use [ESM-style imports](https://konstantin.digital/blog/es-modules-all-you-need-to-know), you have to use GLS as the only option if your project uses that.
+
+## Existing Node projects
+
+For existing node apps, use the deployment script below. Note the startup file name (`app.js`) and the package installer (whether you're using `npm`/`yarn`/`pnpm` these all are already installed with the help of [corepack](https://github.com/nodejs/corepack)).
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/node-cjs.yml"
+features:
+  - node lts
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_type: node
+    startup_file: app.js
+commands:
+  - npm install
+```
+
+Other deployment scripts we offer also listed below.
 
 <Tabs>
-  <TabItem value="express" label="Express" default>
+  <TabItem value="esm" label="ESM" default>
 
-### Init in Development Mode
+For projects that using ESM-style imports, GLS binding can be used as it's the basic for any custom web server either for Node and other code languages. The requirement to use this is your app must listen to given `PORT` env/args (either `node ... --port=$PORT` or `env PORT=$PORT node ...`). You can also use alternative calls such as `npm start` here.
 
-```yaml
-source: clear
+```yaml title="https://github.com/domcloud/recipes/blob/master/node-esm.yml"
 features:
   - node lts
 nginx:
   root: public_html/public
   passenger:
-    enabled: on
-    app_env: development
-    app_start_command: env PORT=$PORT npx nodemon ./bin/www
+    enabled: "on"
+    app_start_command: env PORT=$PORT node app.js
 commands:
-- npx express-generator --view=pug --css=less --git .
-- npm i
-- npm add -D nodemon
+  - npm install
 ```
-
-A simple express website with [nodemon](https://nodemon.io/) for development.
-
-### Switch to Production Mode
-
-```yaml
-nginx:
-  root: public_html/public
-  passenger:
-    enabled: on
-    app_start_command: env PORT=$PORT npm start
-```
-
-This switches Express to production mode.
 
   </TabItem>
-  <TabItem value="next" label="Next.js" default>
+  <TabItem value="nextjs" label="Next.js">
 
-### Init in Development Mode
+This is a typical deployment script for [Next.js](https://nextjs.org/).
 
-```yaml
-source: clear
+```yaml title="https://github.com/domcloud/recipes/blob/master/node-nextjs.yml"
 features:
   - node lts
 nginx:
   root: public_html/public
   passenger:
-    enabled: on
-    app_env: development
-    app_start_command: env PORT=$PORT yarn dev
-commands:
-  - yarn create next-app .
-```
-
-A bootstrapped Next.js website run in development mode (HMR works automatically).
-
-### Switch to Production Mode
-
-```yaml
-nginx:
-  root: public_html/public
-  passenger:
-    enabled: on
+    enabled: "on"
     app_start_command: env PORT=$PORT yarn start
   locations:
     - match: /_next/
       alias: public_html/.next/
 commands:
-- yarn build
+  - yarn install
+  - yarn build
 ```
-
-This builds and switches Next.js to production mode.
 
   </TabItem>
-  <TabItem value="nuxt" label="Nuxt.js" default>
+  <TabItem value="nuxtjs" label="Nuxt.js">
 
-### Init in Development Mode
+This is a typical deployment script for [Nuxt.js](https://nuxtjs.org/).
 
-```yaml
-source: clear
+```yaml title="https://github.com/domcloud/recipes/blob/master/node-nuxtjs.yml"
 features:
   - node lts
-nginx:
-  root: public_html/public
-  passenger:
-    enabled: on
-    app_env: development
-    app_start_command: env PORT=$PORT yarn dev
-commands:
-  - npx nuxi init .
-  - yarn
-```
-
-A bootstrapped Nuxt.js website run in development mode.
-
-:::caution
-
-WIP: HMR does not work with Nuxt.js yet. 
-
-:::
-
-### Switch to Production Mode
-
-```yaml
 nginx:
   root: public_html/.output/public
   passenger:
-    enabled: on
+    enabled: "on"
     app_start_command: env PORT=$PORT node server/index.mjs
 commands:
+  - yarn install
   - yarn build
 ```
 
-This builds and switches Nuxt.js to production mode.
-
   </TabItem>
-  <TabItem value="sveltekit" label="SvelteKit" default>
+  <TabItem value="sveltekit" label="SvelteKit">
 
-### Init in Development Mode
+This is a typical deployment script for [SvelteKit](https://kit.svelte.dev/).
 
-```yaml
-source: clear
+```yaml title="https://github.com/domcloud/recipes/blob/master/node-sveltekit.yml"
 features:
   - node lts
 nginx:
-  root: public_html/static
-  passenger:
-    enabled: 'on'
-    app_env: development
-    app_start_command: 'yarn dev --port $PORT --host'
-commands:
-  - yes "" | yarn create svelte > /dev/null
-  - yarn
-```
-
-A bootstrapped SvelteKit website run in development mode (HMR works automatically).
-
-
-### Switch to Production Mode
-
-```yaml
-nginx:
   root: public_html/.svelte-kit/output/client
   passenger:
-    enabled: on
+    enabled: "on"
     app_start_command: yarn preview --port $PORT --host
     app_root: public_html
 commands:
+  - yarn install
   - yarn build
 ```
-
-This builds and switches SvelteKit to production mode.
 
   </TabItem>
 </Tabs>
 
----
 
-Let's extract those recipes meaning individually.
+## Use other Node versions
 
-## Node environment
-
-The default Node version is `16.x`, which is the default provided from the OS.
-
-To change Node version used to the latest (LTS) one, put this in runner:
+To switch node version use feature syntax like `node stable`, `node latest`, `node 16.2.1`, `node 16`, etc. Check your current node version using `node --version` in SSH.
 
 ```yaml
 features:
-- node lts
+  - node 16.2.1
 ```
 
-It will install node in userland and all binaries will use it instead of the default one.
+Node install scripts is powered by [nvm](https://github.com/nvm-sh/nvm). 
 
-You can also install other or specific version of Node.js e.g. `node latest`,  `node beta`,  `node 16.3.2`. This action will install Node.js in userland with the help of [webi script](https://webinstall.dev/node/) and [enabling Corepack](https://nodejs.org/dist/latest/docs/api/corepack.html) so package managers (npm & yarn & pnpm) can be used alongside userland node.
+## App Management
 
-## NGINX Setup
+Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
 
-Binding Node.js through NGINX is done by Passenger. To make the binding work, you need to make sure that your app can open port number using given environment variable (.e.g. `PORT`), and you point the root of your public file to a `public` directory.
+Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
 
-```yaml
-root: public_html/public
-nginx:
-  passenger:
-    enabled: on
-    app_start_command: env PORT=$PORT npm start
-```
+See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
 
-If your setup is complex (e.g. using multiple websites in a domain) you can tell which exactly the `app_root` directory your app is serving from. Just make sure your root directory is outside of your app directory.
+## App Logging
 
-```yaml
-root: public_html/client/dist
-nginx:
-  locations:
-  - match: /api
-    passenger:
-      enabled: on
-      app_start_command: env PORT=$PORT npm start
-      app_root: public_html/server
-```
+We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
 
-Some frameworks like `Next.js` likes to serve a hidden static directory e.g. `/_next`. We can reduce server load by creating an extra `/_next` location so those files is directly handled (and properly cached) by NGINX.
+Please use a proper logging mechanism such as [Pino](https://github.com/pinojs/pino) or [Winston](https://github.com/winstonjs/winston) then write it to a log file, or any other solution that suits you.
 
-```yaml
-nginx:
-  locations:
-    # optimizing static cache
-    - match: /_next/
-      alias: public_html/.next/
-```
-
-:::info 
-
-There's so much more to cover about NGINX configuration! read more at [NGINX](../features/nginx.mdx#configure-nginx-for-general-apps) page.
-
-:::
-
-## Package Install
-
-Package installs can be done just like usual `npm/yarn/pnpm install` command. For a little advice, using these extra options is recommended in production:
-
-```
-npm ci
-yarn install --immutable
-```
-
-### Clear packager cache
-
-In meantime if your development has stable enough, you may want to clear the packager cache to save space.
-
-```
-npm cache clean --force
-yarn cache clean --force
-pnpm cache clean --force
-```
-
-## Node.js Error Logs
-
-When your Node.js crashed during startup, a helpful error will be displayed in the browser. This aids you to diagnose if some configuration is wrong.
-
-(TODO) Unfortunately, we haven't found a way to capture Node.js error logs yet. You can (should?) do error logging to files using [builtin Node.js Console API](https://melvingeorge.me/blog/save-logs-to-files-nodejs) or use [Winston](https://www.npmjs.com/package/winston).
-
+NGINX errors and traffic logs can be examined via Webmin.
