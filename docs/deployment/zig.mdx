@@ -30,12 +30,12 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT ./main
+    app_start_command: env PORT=$PORT ./target/release/app
 commands:
-  - filename: main.rs
+  - filename: src/main.rs
     content: |
       // TODO
-  - zig build
+  - zig build-exe src/main.zig --output-dir target/release
 ```
 
 ## Existing Zig projects
@@ -44,14 +44,14 @@ For existing zig apps, use this deployment script. This project must have a `zig
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/zig-binary.yml"
 features:
-  - zig
+  - zig latest
 nginx:
   root: public_html/public
   passenger:
     enabled: "on"
     app_start_command: env PORT=$PORT ./target/release/app
 commands:
-  - zig build
+  - zig build-exe src/main.zig --output-dir target/release
 ```
 
 ## Use other Zig versions
