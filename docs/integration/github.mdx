@@ -3,6 +3,8 @@ title: GitHub Integration
 sidebar_position: 2
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+
 # GitHub Integration
 
 Modern platform services able to fetch your code from GitHub and deploy it to the cloud. This page explains how to integrate your GitHub repository to DOM Cloud. 
@@ -18,6 +20,40 @@ With that said, there's a secure way and less but quicker one.
 ### Secure Way (with Deploy Keys)
 
 Deploy keys are SSH keys that grant read-only (or read-write) access to a repository. They are ideal for production servers because it will only allow access to a single repository, your other private repositories won't be exposed.
+
+When you enter a GitHub private repo URL, you'll be prompted to click the *Attach deploy key* button.
+
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/github-deploy-prompt-b.png",
+        light: "/assets/ss/github-deploy-prompt-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    loading="lazy"
+/>
+
+Then a dialog box appear to let you enter the newly generated key to your repo. This is a valid public key from `ssh-keygen` that need to be inserted to be one of your [repo's deploy key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#set-up-deploy-keys). Click *Open repository's deploy key configuration* for a quick shortcut.
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/github-deploy-insert-b.png",
+        light: "/assets/ss/github-deploy-insert-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    loading="lazy"
+/>
+
+Then click *I have added this public key* to finish the setup. A private key will be inserted as part of deployment script. You don't have to do anything for that.
+
+:::info
+
+To enable editing and pushing new commits to a private repo directly from inside the server, check the `Allow write access` box. 
+
+:::
+
 
 ### Git Token (less secure)
 

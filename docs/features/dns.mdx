@@ -43,6 +43,12 @@ For example we'll hosting `sub.yourdomain.com` at DOM Cloud but using Cloudflare
 
 `CNAME` is recommended instead of providing `A` and `AAAA` records, which directly giving an IP address. But it may be preferable to give `A` and `AAAA` records if you need to add e.g. root/apex domain.
 
+:::warning
+
+If you experience infinite redirects when using Cloudflare, disable its proxy <br/> (under `Proxy status`).
+
+:::
+
 :::tip
 
 Go watch some YouTube related to DNS servers, examples:
