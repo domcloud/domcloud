@@ -66,3 +66,11 @@ The whole server always sets the clock in `UTC`.
 A good idea to handle timezone is done by client processing (Javascript), both after getting the data from database/AJAX and before sending data/Posts to server.
 
 If you don't care about timezone and you think it's safe to assume that your website is only accessed in one timezone, you can set the timezone in the backend using [date_default_timezone_set](https://www.php.net/manual/en/function.date-default-timezone-set.php) for PHP or [`TZ` env](https://medium.com/developer-rants/time-zones-in-node-js-fc5a5b51906a) for non-PHP (set it to passenger's `env_var_list`). 
+
+### Other Database System
+
+Only three database system is supported: `MariaDB`, `PostgreSQL`, `SQLite`. For caching we recommend you to leverage filesystem.
+
+You can also use third party databases that's also cheap (or even free) such as [Redis Labs](https://redis.com/try-free/), [Firebase Firestore](https://firebase.google.com/products/firestore) or [MongoDB Atlas](https://www.mongodb.com/products/platform/cloud), just make sure the cluster is close enough within our server. 
+
+**Spinning your own database system is discouraged**.
