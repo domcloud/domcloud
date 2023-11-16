@@ -44,7 +44,16 @@ WantedBy=multi-user.target
 ```
 
 ```bash
-echo "passenger-config restart-app ~" > /usr/local/bin/restart && chmod 755 $_
+echo "passenger-config restart-app ~" > /usr/local/bin/restart && chmod 755 /usr/local/bin/restart
+```
+
+```bash
+mkdir /etc/skel/public_html
+pushd /etc/skel/public_html
+mkdir .well-known
+touch favicon.ico
+wget https://gist.githubusercontent.com/willnode/0efb7e2d70a2a8005c690d887d0cdb8a/raw/499b82245fd4d430d77f4c1febd4419d869d1109/index.html
+popd
 ```
 
 ### Package installs (RHEL)
@@ -66,9 +75,9 @@ find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize
 
 Tools, libs, services:
 ```
-dnf install certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget yarn xz
+dnf install certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz
 dnf install {libcurl,libffi,libsqlite3x,libtool-ltdl,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel libmd libreport-filesystem mesa-libGL perl-DBD-Pg perl-macros
-dnf install do-agent earlyoom fail2ban-server postfix postgresql-server postgresql-contrib
+dnf install earlyoom fail2ban-server iptables-services postfix postgresql-server postgresql-contrib
 ```
 
 ```
@@ -419,9 +428,11 @@ logpath = /var/log/virtualmin/*access_log
 :FORWARD ACCEPT [0:0]
 -A INPUT -p icmp -j ACCEPT
 -A INPUT -i lo -j ACCEPT
--A INPUT -p tcp -m mport --dports 21,22,80,443,3306,5432 -j ACCEPT
--A INPUT -p tcp --sport 53 --dport 53 -j ACCEPT
--A INPUT -p udp --sport 53 --dport 53 -j ACCEPT
+-A INPUT -p tcp -m multiport --dports 22,80,443,3306,5432 -j ACCEPT
+-A INPUT -p tcp -m tcp --sport 53 -j ACCEPT
+-A INPUT -p udp -m udp --sport 53 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A INPUT -p udp -m udp --dport 53 -j ACCEPT
 -A INPUT -p tcp --dport 2443:2453 -j ACCEPT
 -A INPUT -p tcp --dport 32768:65535 -j ACCEPT
 -A INPUT -j REJECT --reject-with icmp-host-prohibited
@@ -429,9 +440,12 @@ logpath = /var/log/virtualmin/*access_log
 -A OUTPUT -o lo -j ACCEPT
 -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
 -A OUTPUT -p tcp --dport 22 -j ACCEPT
--A OUTPUT -p tcp --sport 53 --dport 53 -j ACCEPT
--A OUTPUT -p udp --sport 53 --dport 53 -j ACCEPT
--A OUTPUT -p tcp --dport 25 --sport 25 -j REJECT
+-A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 25 -j REJECT
+-A OUTPUT -p tcp -m tcp --sport 25 -j REJECT
 -A OUTPUT -m set -j ACCEPT --match-set whitelist dst
 COMMIT
 ```
@@ -443,9 +457,11 @@ COMMIT
 :FORWARD ACCEPT [0:0]
 -A INPUT -p ipv6-icmp -j ACCEPT
 -A INPUT -i lo -j ACCEPT
--A INPUT -p tcp -m mport --dports 21,22,80,443,3306,5432 -j ACCEPT
--A INPUT -p tcp --sport 53 --dport 53 -j ACCEPT
--A INPUT -p udp --sport 53 --dport 53 -j ACCEPT
+-A INPUT -p tcp -m multiport --dports 22,80,443,3306,5432 -j ACCEPT
+-A INPUT -p tcp -m tcp --sport 53 -j ACCEPT
+-A INPUT -p udp -m udp --sport 53 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A INPUT -p udp -m udp --dport 53 -j ACCEPT
 -A INPUT -p tcp --dport 2443:2453 -j ACCEPT
 -A INPUT -p tcp --dport 32768:65535 -j ACCEPT
 -A INPUT -j REJECT --reject-with icmp6-adm-prohibited
@@ -453,9 +469,12 @@ COMMIT
 -A OUTPUT -o lo -j ACCEPT
 -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
 -A OUTPUT -p tcp --dport 22 -j ACCEPT
--A OUTPUT -p tcp --sport 53 --dport 53 -j ACCEPT
--A OUTPUT -p udp --sport 53 --dport 53 -j ACCEPT
--A OUTPUT -p tcp --dport 25 --sport 25 -j REJECT
+-A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 53 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 53 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 25 -j REJECT
+-A OUTPUT -p tcp -m tcp --sport 25 -j REJECT
 -A OUTPUT -m set -j ACCEPT --match-set whitelist-v6 dst
 COMMIT
 ```
