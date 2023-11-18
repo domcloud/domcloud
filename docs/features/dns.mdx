@@ -2,6 +2,8 @@
 title: Domain Name Server
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+
 DNS is a service that translates domain names to IP addresses. 
 
 If you host a website with a custom domain, you need to point the name server (in any registrar where you buy the domain) to these below:
@@ -11,7 +13,23 @@ nsp.domcloud.co
 nss.domcloud.co
 ```
 
+After that, change the website's domain name in DOM Cloud's Portal (Select a website -> Admin -> Change Domain). Then, check your website connectivity in menu Check -> Check Connection. If it shown like an image below, then your set up is done correctly.
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/check-conn-b.png",
+        light: "/assets/ss/check-conn-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+
 To add custom records to your domain, you can use the DNS Manager via Webmin -> DNS Records. You can also add or delete DNS records using [the deployment script](./deploy.mdx#dns).
+
 
 ## How it works
 
