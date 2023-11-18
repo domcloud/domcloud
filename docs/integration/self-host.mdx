@@ -62,15 +62,17 @@ PHP:
 
 :::info
 
-Uninstall all PHP from appstream first.
+Uninstall all PHP from appstream first. (`yum remove php-*`)
 
 :::
 
 ```
+dnf install epel-release http://rpms.remirepo.net/enterprise/remi-release-9.rpm 
 dnf install {php74,php80,php81,php82}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
 ln -s `which php82` /usr/local/bin/php
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/php.ini \; 
+find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dynamic/pm = ondemand/g'
 ```
 
 Tools, libs, services:
