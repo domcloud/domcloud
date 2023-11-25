@@ -30,17 +30,79 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT ./target/release/app
+    app_start_command: env PORT=$PORT ./main
 commands:
-  - filename: src/main.rs
+  - filename: main.zig
     content: |
-      // TODO
-  - zig build-exe src/main.zig --output-dir target/release
+      const std = @import("std");
+      const debug = std.debug;
+      const getenv = std.os.getenv;
+      const Server = std.http.Server;
+      const parseInt = std.fmt.parseInt;
+      const allocPrintZ = std.fmt.allocPrintZ;
+      const parseIp = std.net.Address.parseIp;
+  
+      const body =
+          \\<!DOCTYPE html>
+          \\<html>
+          \\<head>
+          \\  <title>Zig App</title>
+          \\  <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+          \\</head>
+          \\<body class="p-5 text-center">
+          \\  <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+          \\      class="img-fluid rounded-circle"></p>
+          \\  <h1 class="mb-3">Hello, world!</h1>
+          \\  <p>Serving from Zig version {s}</p>
+          \\  <p class="text-muted">DOM Cloud</p>
+          \\</body>
+          \\</html>
+      ;
+  
+      pub fn getVersion(allocator: std.mem.Allocator) []const u8 {
+          const zV = std.ChildProcess.exec(.{
+              .allocator = allocator,
+              .argv = &[_][]const u8{ "zig", "version" },
+          }) catch unreachable;
+          defer allocator.free(zV.stderr);
+          return zV.stdout;
+      }
+  
+      pub fn main() !void {
+          var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+          const allocator = gpa.allocator();
+          var server = Server.init(allocator, .{ .reuse_address = true });
+          const port = try parseInt(u16, getenv("PORT") orelse "3000", 10);
+          try server.listen(try parseIp("127.0.0.1", port));
+          debug.print("Listening to 127.0.0.1:{d}\n", .{port});
+          const version = getVersion(allocator);
+          const respBody = try allocPrintZ(allocator, body, .{version});
+  
+          defer allocator.free(respBody);
+          defer allocator.free(version);
+          defer server.deinit();
+          defer debug.assert(gpa.deinit() == .ok);
+  
+          while (true) {
+              var resp = try server.accept(.{ .allocator = allocator });
+              defer resp.deinit();
+              while (resp.reset() != .closing) {
+                  try resp.wait();
+  
+                  resp.transfer_encoding = .{ .content_length = respBody.len };
+                  try resp.headers.append("Content-Type", "text/http");
+                  try resp.do();
+                  try resp.writeAll(respBody);
+                  try resp.finish();
+              }
+          }
+      }
+  - zig build-exe main.zig 
 ```
 
 ## Existing Zig projects
 
-For existing zig apps, use this deployment script. This project must have a `zig.mod` initialized.
+For existing zig apps, use this deployment script. This project must have a `build.zig` initialized. You may need to change the start path if your app is not compiled to `./zig-out/bin/app`.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/zig-binary.yml"
 features:
@@ -49,18 +111,32 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT ./target/release/app
+    app_start_command: env PORT=$PORT ./zig-out/bin/app
 commands:
-  - zig build-exe src/main.zig --output-dir target/release
+  - zig build
+```
+
+It's possible to run the app via `zig build run`. This eliminates the need to compile the binary, although startup time may be a little bit slower.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/zig-gls.yml"
+features:
+  - zig latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT zig build run
+commands:
+  - zig build
 ```
 
 ## Use other Zig versions
 
-To switch zig version use feature syntax like `zig latest`, `zig 0.9.0`, etc. Check your current zig version using `zig --version` in SSH.
+To switch zig version use feature syntax like `zig latest`, `zig 0.11.0`, etc. Check your current zig version using `zig --version` in SSH.
 
 ```yaml
 features:
-  - zig 0.9.0
+  - zig 0.11.0
 ```
 
 Zig install scripts is powered by [webi](https://webinstall.dev/zig/). 
