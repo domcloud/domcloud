@@ -381,8 +381,34 @@ display_errors = On
 display_startup_errors = On
 ```
 
+If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` to enable debug mode.  
+
 ## Restarting PHP
 
 PHP doesn't need restart. Changing PHP files instantly changes the running server code.
 
 The PHP-FPM instance itself is running as `ondemand` and goes inactive after 5 minutes of no traffic.
+
+## Troubleshooting
+
+Some error codes you might be encounter when developing PHP apps.
+
+### 404 (Not Found)
+
+A 404 error from NGINX means There's no PHP or any static file found for given path.
+
+### 500 (Blank Error)
+
+A 500 error with empty body means your PHP apps has a critical error but won't emit any error message because the default production settings is used. You need to identify the exact reason by reading [PHP Error Logs](#php-error-logging).
+
+### 502 (Bad Gateway)
+
+A 502 error from NGINX means PHP configuration is corrupted and need to renitialized.
+
+You can fix it by switching its PHP version. The configuration should can reheal itself.
+
+```
+features:
+- php 7.4
+- php 8.2
+```

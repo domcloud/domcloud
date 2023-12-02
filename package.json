@@ -15,9 +15,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.0.0",
-    "@docusaurus/preset-classic": "^3.0.0",
-    "@fortawesome/fontawesome-free": "6.4.2",
+    "@docusaurus/core": "^3.0.1",
+    "@docusaurus/preset-classic": "^3.0.1",
+    "@fortawesome/fontawesome-free": "6.5.1",
     "@giscus/react": "^2.3.0",
     "@mdx-js/react": "^3.0.0",
     "bootstrap": "^5.3.2",
@@ -26,10 +26,10 @@
     "prism-react-renderer": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "simple-icons": "^9.21.0"
+    "simple-icons": "^10.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.0.0",
+    "@docusaurus/module-type-aliases": "3.0.1",
     "@tsconfig/docusaurus": "^2.0.2",
     "typescript": "^5.3.2"
   },

@@ -1,6 +1,6 @@
 import React from "react";
 import FaHdd from '@fortawesome/fontawesome-free/svgs/solid/hard-drive.svg';
-import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
+import FaTime from '@fortawesome/fontawesome-free/svgs/solid/business-time.svg';
 import FaSignal from '@fortawesome/fontawesome-free/svgs/solid/signal.svg';
 import FaLock from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
 import FaAtlas from '@fortawesome/fontawesome-free/svgs/solid/book-atlas.svg';
@@ -22,19 +22,17 @@ export default function Home5({ title }) {
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">
-                        <FaGlobe />
-                    </div>
-                    <h2>Free Domain</h2>
-                    <p>
-                        Use <code>*.domcloud.io</code> domain for free.
-                    </p>
-                </div>
-                <div className="feature col">
-                    <div className="feature-icon badge badge--primary">
                         <FaSignal />
                     </div>
                     <h2>Free Network Limit</h2>
                     <p>2GB of monthly free outbound data network.</p>
+                </div>
+                <div className="feature col">
+                    <div className="feature-icon badge badge--primary">
+                        <FaTime />
+                    </div>
+                    <h2>Free Forever</h2>
+                    <p>No trial limit as long as you keep using it</p>
                 </div>
                 <div className="feature col">
                     <div className="feature-icon badge badge--primary">

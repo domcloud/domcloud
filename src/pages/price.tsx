@@ -125,6 +125,15 @@ export default function Pricing() {
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
+                            <FaGlobe />
+                        </div>
+                        <h2>Free Domain</h2>
+                        <p>
+                            Use <code>*.domcloud.dev</code> domain for free.
+                        </p>
+                    </div>
+                    <div className="feature premium col">
+                        <div className="feature-icon badge">
                             <FaArchive />
                         </div>
                         <h2>Backup Files</h2>
@@ -154,16 +163,7 @@ export default function Pricing() {
                         </div>
                         <h2>Addon Billing</h2>
                         <p>
-                            Purchase additional resources at any time
-                        </p>
-                    </div>
-                    <div className="feature premium col">
-                        <div className="feature-icon badge">
-                            <FaBolt />
-                        </div>
-                        <h2>Higher Power</h2>
-                        <p>
-                            Better compute power for all users
+                            (soon) Purchase more resources at any time
                         </p>
                     </div>
                 </div>

@@ -9,7 +9,6 @@ sidebar_position: 12
 
 There is no default `dotnet` compiler at system level. You have to install it first through deployment scripts.
 
-
 :::warning
 
 Serving .NET apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
@@ -18,15 +17,102 @@ Serving .NET apps requires to be run via GLS, that's mean you have to listen fro
 
 ## Example
 
-TODO
+
+The deployment script below installs the latest `dotnet` compiler and writes `Program.cs` and run it directly. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/dotnet.yml"
+source: clear
+features:
+  - dotnet latest
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT dotnet run
+commands:
+  - dotnet new console --name App
+  - filename: Program.cs
+    content: |
+      using System.Text;
+      using System.Net;
+      class HttpServer
+      {
+          public static HttpListener listener = new();
+          public static string pageBody = @"      
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>DotNet App</title>
+              <link rel=""stylesheet"" href=""//unpkg.com/bootstrap/dist/css/bootstrap.min.css"">
+          </head>
+          <body class=""p-5 text-center"">
+              <p><img src=""//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200"" 
+                  class=""img-fluid rounded-circle""></p>
+              <h1 class=""mb-3"">Hello, world!</h1>
+              <p>Serving from DotNet version {0}</p>
+              <p class=""text-muted"">DOM Cloud</p>
+          </body>
+          </html>
+          ";
+
+
+          public static async Task HandleIncomingConnections()
+          {
+              string version = Environment.Version.ToString();
+              byte[] pageData = Encoding.UTF8.GetBytes(string.Format(pageBody, version));
+              while (true)
+              {
+                  // Will wait here until we hear from a connection
+                  HttpListenerContext ctx = await listener.GetContextAsync();
+
+                  // Peel out the requests and response objects
+                  HttpListenerResponse resp = ctx.Response;
+
+                  resp.ContentType = "text/html";
+                  resp.ContentEncoding = Encoding.UTF8;
+                  resp.ContentLength64 = pageData.LongLength;
+
+                  await resp.OutputStream.WriteAsync(pageData);
+                  resp.Close();
+              }
+          }
+
+          public static void Main(string[] args)
+          {
+              // Create a Http server and start listening for incoming connections
+              string? port = Environment.GetEnvironmentVariable("PORT") ?? "3000";
+              listener.Prefixes.Add($"http://localhost:{port}/");
+              listener.Start();
+              Console.WriteLine("Listening for connections on localhost:{0}", port);
+
+              // Handle requests
+              Task listenTask = HandleIncomingConnections();
+              listenTask.GetAwaiter().GetResult();
+
+              // Close the listener
+              listener.Close();
+          }
+      }
+```
+
 
 ## Existing .NET projects
 
-TODO
+Existing Dotnet projects can run directly from source code. This eliminates the need to compile the code into a binary, although startup time may be a little bit slower to start.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/dotnet-gls.yml"
+features:
+  - dotnet lts
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT dotnet run
+```
 
 ## Use other .NET versions
 
-To switch dotnet version use feature syntax like `dotnet latest`, `dotnet 0.8.0`, etc. Check your current dotnet version using `dotnet --version` in SSH.
+To switch dotnet version use feature syntax like `dotnet latest`, `dotnet 0.9.0`, etc. Check your current dotnet version using `dotnet --version` in SSH.
 
 ```yaml
 features:

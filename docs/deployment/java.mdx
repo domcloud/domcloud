@@ -18,15 +18,96 @@ Serving Java apps requires to be run via GLS, that's mean you have to listen fro
 
 ## Example
 
-TODO
+The deployment script below installs the latest `java` compiler and writes `Main.java` and run it directly. 
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/java.yml"
+source: clear
+features:
+  - java
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT java Main.java
+commands:
+  - filename: Main.java
+    content: |
+      import java.io.IOException;
+      import java.io.OutputStream;
+      import java.net.InetSocketAddress;
+
+      import com.sun.net.httpserver.HttpExchange;
+      import com.sun.net.httpserver.HttpHandler;
+      import com.sun.net.httpserver.HttpServer;
+
+      public class Main {
+          public static void main(String[] args) throws Exception {
+              String portStr = System.getenv("PORT");
+              int port = portStr == null ? 3000 : Integer.parseInt(portStr);
+              HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+              System.out.println("Server is listening to localhost:" + port);
+              server.createContext("/", new DefaultHandler());
+              server.setExecutor(null); // creates a default executor
+              server.start();
+          }
+      }
+
+      class DefaultHandler implements HttpHandler {
+          private static String template = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Java App</title>
+              <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+            </head>
+            <body class="p-5 text-center">
+              <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+                  class="img-fluid rounded-circle"></p>
+              <h1 class="mb-3">Hello, world!</h1>
+              <p>Serving from Java version %s</p>
+              <p class="text-muted">DOM Cloud</p>
+            </body>
+            </html>
+          """;
+
+          public void handle(HttpExchange t) throws IOException {
+              String version = Runtime.version().toString();
+              String response = String.format(template, version);
+              t.sendResponseHeaders(200, response.length());
+              OutputStream os = t.getResponseBody();
+              os.write(response.getBytes());
+              os.close();
+          }
+      }
+```
+
 
 ## Existing Java projects
 
-TODO
+Existing Java projects can run directly from source code. This eliminates the need to compile the code into a JAR file, although startup time may be a little bit slower to start.
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/java-gls.yml"
+features:
+  - java
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT java Main.java
+```
 
 ## Use other Java versions
 
-TODO (install it yourself)
+To switch Java version use feature syntax like `java latest`, `java 18`, etc. Check your current dotnet version using `java --version` in SSH.
+
+```yaml
+features:
+  - java 18
+```
+
+Java install scripts is powered by [Microsoft OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/download). 
+Some old Java versions (such as JDK 8) is not available and you might need to install yourself.
+
 
 ## App Management
 

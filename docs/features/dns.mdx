@@ -6,6 +6,8 @@ import ThemedImage from '@theme/ThemedImage';
 
 DNS is a service that translates domain names to IP addresses. 
 
+## Switching to our DNS
+
 If you host a website with a custom domain, you need to point the name server (in any registrar where you buy the domain) to these below:
 
 ```
@@ -30,20 +32,25 @@ After that, change the website's domain name in DOM Cloud's Portal (Select a web
 
 To add custom records to your domain, you can use the DNS Manager via Webmin -> DNS Records. You can also add or delete DNS records using [the deployment script](./deploy.mdx#dns).
 
+:::warning
+
+This method delegates your domain name server to our server. There could be some issues if you using this method e.g. If you already share some records with other services or your registrar have a strict policy about DNSSEC. In this case you're better [using CNAME/A+AAAA records instead](#directly-add-cname-or-a+aaaa-record).
+
+:::
 
 ## How it works
 
-When you create a website with custom domain (other than `*.domcloud.io`), a `dns` service is activated from [the deployment script](./deploy.mdx#dns), it's activated automatically by our Portal UI.
+When you create a website with custom domain (other than `*.domcloud.dev`), a `dns` service is activated from [the deployment script](./deploy.mdx#dns), it's activated automatically by our Portal UI.
 
 Any website where you buy a domain is called a registrar. We also sell domain, but you don't have to buy a domain from us, you just have to buy it from somewhere and set the nameserver to `nsp.domcloud.co` and `nss.domcloud.co`, which means that your domain DNS will be handled to us.
 
 Usually changing a name server takes a hour to a day to propagate across internet.
 
-### Directly add CNAME or A+AAAA record
+## Directly add CNAME or A+AAAA record
 
 If you don't want giving a whole DNS to us, for example because you only host a subdomain here or you want a to better DNS handles it for you (e.g. Cloudflare), then you can directly add CNAME or A+AAAA at your DNS provider.
 
-Firstly, go to Manage tab at your website portal. At top left you'll find these information:
+Firstly, [go to Manage tab](../intro/getting-started.mdx#managing-website) at your website portal. At top left you'll find these information:
 
 + Hostname: **sga.domcloud.id**
 + IPv4: **68.183.191.223**
@@ -74,6 +81,30 @@ Go watch some YouTube related to DNS servers, examples:
 + [How DNS translates domain names to IP addresses](https://www.youtube.com/watch?v=GlZC4Jwf3xQ)
 + [DNS as Fast As Possible](https://www.youtube.com/watch?v=Rck3BALhI5c)
 + [DNS Explained in 100 Seconds](https://www.youtube.com/watch?v=UVR9lhUGAyU)
+
+:::
+
+## Sharing A Domain
+
+If you host a course or school/institutional and interested in using our platform for hosting student projects, your students (verified by using institutional emails to register an account) can be free of charge by using your existing institutional domain by setup these records. 
+
+Let's say you want to share `*.sites.yourschool.edu` domain to your staffs and students that have access to emails under `@yourschool.edu` and `@student.yourschool.edu`. Then in your add these in your DNS:
+
+1. CNAME or A+AAAA records for wildcard domain (`*.sites.yourschool.edu`) to one of our servers.
+2. a TXT record for base domain (`sites.yourschool.edu`) with value `domcloud-authorized-email-domains=yourschool.edu,student.yourschool.edu` for additional security.
+
+After that any account that uses `@student.yourschool.edu` or `@yourschool.edu` can register `*.sites.yourschool.edu` domains.
+
+:::warning
+
+Your students and staffs must register a Google/GitHub login that uses `@yourschool.edu` / `@student.yourschool.edu` or after adding and verifying a secondary email assosiated with that.
+
+:::
+
+
+:::danger
+
+Absense of TXT record while adding a wildcard CNAME/A+AAAA records will make anyone can register under your domain for bad purposes without permission!
 
 :::
 
