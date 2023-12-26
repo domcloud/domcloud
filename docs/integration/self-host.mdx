@@ -129,6 +129,11 @@ proc              /proc   proc    defaults,nosuid,nodev,noexec,relatime,hidepid=
 /swapfile         swap    swap    defaults,nofail                                              0       0
 ```
 
+```ini title="/etc/security/limits.conf"
+root             soft    nofile          65535
+# note: linux hardlimit is 524288 (ulimit -Hn)
+```
+
 ```ini title="/etc/environment" 
 LC_ALL="en_US.UTF-8"
 LC_CTYPE="en_US.UTF-8"
