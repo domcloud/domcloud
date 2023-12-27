@@ -77,9 +77,10 @@ find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dyn
 
 Tools, libs, services:
 ```
-dnf install certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz
-dnf install {libcurl,libffi,libsqlite3x,libtool-ltdl,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay}
-dnf install earlyoom fail2ban-server iptables-services postfix postgresql-server postgresql-contrib
+dnf install certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz \
+{libcurl,libffi,libsqlite3x,libtool-ltdl,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
+libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay,Text-ASCIITable} \
+earlyoom fail2ban-server iptables-services postfix postgresql-server postgresql-contrib
 ```
 
 ```
@@ -183,6 +184,7 @@ EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoi
 
 ```ini title="/var/spool/cron/root"
 @daily passenger-config reopen-logs
+@weekly /usr/bin/node /home/bridge/public_html/sudocleanssl.js 
 * * * * * pgrep PassengerAgent || systemctl restart nginx
 0 * * * * find '/var/spool/cron/' -not -name root -type f | xargs sed -i '/^\s*(\*|\d+,)/d'
 */5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
@@ -237,14 +239,14 @@ host    all             all             ::/0                    md5
 
 ```
 mkdir -p /etc/nginx/conf.d && chmod 0750 $_
-mkdir -p /var/lib/ssl && chmod 0750 $_
+mkdir -p /etc/ssl/virtualmin && chmod 0750 $_
 ```
 
-Set SSL key path template to `/var/lib/ssl/${DOM}/ssl.key` and all other as same key directory, so...
+Set SSL key path template to `/etc/ssl/virtualmin/${ID}/ssl.key` and all other as same key directory, so...
 
-```ini title="grep -r /var/lib/ssl /etc/webmin"
-/etc/webmin/virtual-server/config:key_tmpl=/var/lib/ssl/${DOM}/ssl.key
-/etc/webmin/virtual-server/templates/1:cert_key_tmpl=/var/lib/ssl/${DOM}/ssl.key
+```ini title="grep -r /etc/ssl/virtualmin /etc/webmin"
+/etc/webmin/virtual-server/config:key_tmpl=/etc/ssl/virtualmin/${ID}/ssl.key
+/etc/webmin/virtual-server/templates/1:cert_key_tmpl=/etc/ssl/virtualmin/${ID}/ssl.key
 ```
 
 ### NGINX
