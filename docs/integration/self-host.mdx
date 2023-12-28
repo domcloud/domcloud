@@ -183,15 +183,16 @@ EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoi
 ```
 
 ```ini title="/var/spool/cron/root"
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /etc/webmin/status/monitor.pl
+0 * * * * find '/var/spool/cron/' -not -name root -type f | xargs sed -i '/^\s*(\*|\d+,)/d'
+* * * * * pgrep PassengerAgent || systemctl restart nginx
+*/5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
 @daily passenger-config reopen-logs
 @weekly /usr/bin/node /home/bridge/public_html/sudocleanssl.js 
-* * * * * pgrep PassengerAgent || systemctl restart nginx
-0 * * * * find '/var/spool/cron/' -not -name root -type f | xargs sed -i '/^\s*(\*|\d+,)/d'
-*/5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
 @weekly find /home -maxdepth 1 -type d -ctime +7 -exec rm -rf {}/{.cache,.npm,Downloads,public_html/.yarn/cache,public_html/node_modules/.cache,.composer/cache} \;
 @monthly find /home -maxdepth 1 -type d -ctime +7 -exec rdfind -minsize 100000 -makehardlinks true -makeresultsfile false {}/{.vscode-server,.pyenv,.rvm,.cargo,.local,go,.rustup,public_html/node_modules} \;
-@monthly find /etc/letsencrypt/{csr,keys} -name *-certbot.pem -type f -mtime +180 -exec rm -f {} ';'
-@reboot sudo /usr/bin/bash /home/bridge/public_html/src/whitelist/refresh.sh
+@monthly find /etc/letsencrypt/{csr,keys} -name *.pem -type f -mtime +180 -exec rm -f {} ';'
+@reboot sleep 60 && sudo /usr/bin/bash /home/bridge/public_html/src/whitelist/refresh.sh
 ```
 
 ### MariaDB
