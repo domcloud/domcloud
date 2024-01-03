@@ -65,7 +65,7 @@ If this value is set, it will download contents inside the host. The content can
 
 :::tip
 
-This option is useful if your files is already in a public repository such as GitHub. If you need to upload the files from your local device use [Webmin File Manager](./editor).
+This option is useful if your files is already in a public repository such as GitHub. If you need to upload the files from your local device use [Webmin File Manager](./editor.mdx).
 
 :::
 
@@ -231,8 +231,19 @@ features:
 nginx:
   root: public_html/public
 ```
+### `docker`
 
-:::
+Configure Docker (podman) capability. Only for users with `Pro` plan.
+
++ `docker on` or `docker` Enable docker.
++ `docker off` Disable docker.
+
+With this enabled it changes two things:
+
++ `subuid` and `subgid` for given host username are added into system config to allow podman rootless to works.
++ `.killignore` for given host username are added into system to allow background processes run 24/7.
+
+The `podman` CLI is always available regardless of this settings as this is provided from a system-wide install packages.
 
 ### `php`
 

@@ -350,7 +350,8 @@ The composer cache locates in `~/.composer/cache/`.
 
 The PHP INI configuration is useful to tweak the PHP behavior such at upload size limits.
 While you can't directly change the PHP INI located in system files, you can create `.user.ini`
-into PHP root folder (typically `~/public_html/.user.ini`) and tweak the config there.
+into PHP root folder (check `root` in NGINX e.g. `~/public_html/.user.ini` or `~/public_html/public/.user.ini`) 
+and tweak the config there.
 
 An example of PHP INI configuration is:
 
@@ -362,6 +363,8 @@ post_max_size = 32M
 See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php).
 To see default values or if your change has been in effect, use `phpinfo()`.
 
+PHP ini are loaded within 5 minutes of cache.
+
 :::caution
 
 PHP INI doesn't work? You may need to wait until the PHP process is restarted, which typically about 5 minutes without traffic or after about 500 requests.
@@ -372,9 +375,10 @@ Note that you can't change configs with `PHP_INI_SYSTEM` level because it's only
 ## PHP Error Logging
 
 The error logs can be seen in `NGINX Error Logs` in Virtualmin web UI.
+
 You won't see error details in your website because we use production default settings.
 
-If you want to see the error details in website (not recommended!), change this setting in `.user.ini`:
+If you want to see the error details directly in website, change this setting in `.user.ini`:
 
 ```ini title="~/public_html/.user.ini"
 display_errors = On
@@ -397,9 +401,13 @@ Some error codes you might be encounter when developing PHP apps.
 
 A 404 error from NGINX means There's no PHP or any static file found for given path.
 
+Please note that files in Linux are case-sensitive, unlike Windows, e.g. `api.php` is different with `Api.php` same thing applies with folder names.
+
 ### 500 (Blank Error)
 
-A 500 error with empty body means your PHP apps has a critical error but won't emit any error message because the default production settings is used. You need to identify the exact reason by reading [PHP Error Logs](#php-error-logging).
+A 500 error with empty body means your PHP apps has a critical error but won't emit any error message because the default production settings is used. 
+
+You need to identify the exact reason by reading [PHP Error Logs](#php-error-logging).
 
 ### 502 (Bad Gateway)
 

@@ -11,6 +11,7 @@ import IcBun from "simple-icons/icons/bun.svg";
 import IcJava from "simple-icons/icons/openjdk.svg";
 import IcDotNet from "simple-icons/icons/dotnet.svg";
 import IcZig from "simple-icons/icons/zig.svg";
+import IcDocker from "simple-icons/icons/podman.svg";
 
 import IcSqlite from "simple-icons/icons/sqlite.svg";
 import IcMariaDB from "simple-icons/icons/mariadb.svg";
@@ -26,14 +27,9 @@ export default function Home2() {
                     This is not an optimistic hosting service that only works for a specific code language.<br />
                     Anything than can <u>run in linux</u>, can be <u>hosted here</u>.
                 </p>
-                <p><small>Officially supported software compilers</small></p>
+                <p><small>Officially supported software compilers and interpreters</small></p>
                 <div className="container mt-3 mb-5">
                     <div className="row">
-                        <div className="col-3 my-2">
-                            <a href="/docs/deployment/static-site">
-                                <IcHtml height={80} />
-                            </a>
-                        </div>
                         <div className="col-3 my-2">
                             <a href="/docs/deployment/php">
                                 <IcPhp height={80} />
@@ -87,6 +83,11 @@ export default function Home2() {
                         <div className="col-3 my-2">
                             <a href="/docs/deployment/zig">
                                 <IcZig height={80} />
+                            </a>
+                        </div>
+                        <div className="col-3 my-2">
+                            <a href="/docs/deployment/docker">
+                                <IcDocker height={80} />
                             </a>
                         </div>
                     </div>
