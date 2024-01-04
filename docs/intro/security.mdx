@@ -15,9 +15,9 @@ When you create a website in DOM Cloud, you will be given a [SSH access](https:/
 
 The only restriction is this: You can't elevate access with `sudo`. There are many tutorials out there that requires `sudo`, these will not work here as that will compromise the entire system, including other users data.
 
-Of course, there are some actions that requires sudo access, such as configuring NginX or DNS records. This is why [the deployment system](../features/deploy) exists, it facilitates some `sudo` actions in a safer way.
+Of course, there are some actions that requires sudo access, such as configuring NginX or DNS records. This is why [the deployment system](../features/deploy.mdx) exists, it facilitates some `sudo` actions in a safer way.
 
-The deployment system also has some shortcut to install language compilers, such as Node.JS, Python, Rust, Go, and many more. Refer to [its `features` section](../features/deploy#features). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with system-wide software.
+The deployment system also has some shortcut to install language compilers, such as Node.JS, Python, Rust, Go, and many more. Refer to [its `features` section](../features/deploy.mdx#features). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with system-wide software.
 
 ## No Background Services
 
@@ -26,6 +26,13 @@ CPU and RAM are limited resources. To make room for everyone, server processes n
 This is enforced by NginX proxies (PHP-FPM and Passenger) plus many many other daemons that's running in the background.
 
 If your web apps requires some kind of background processes that must stays on for 24/7, then you might have designed its system architecture wrong. The most noticeable impact from this restriction is Chatbot. All chatbot must work by webhook, not by actively polling social media APIs.
+
+
+:::info
+
+We recently allowing users to bypass the *'No Background Services'* policy for `Pro` plan users because of our ability to [use Docker](../deployment/docker.mdx) within our service.
+
+:::
 
 :::danger
 
@@ -39,9 +46,12 @@ Do not install any third-party background services that pings all the time such 
 
 Anyone with SSH access can do `ls /home` or `cat /etc/passwd` and determine what's domain other users has. We encourage everyone to not assume all URLs are private, and taken security measurements properly as if anyone public can open the website.
 
+Note that this doesn't mean anyone can read your server code. We treat security seriously.
+
 ## SSH/Server Password 
 
 **Server passwords must be treaten as personal password**, exposure on public can lead to anyone see and override your website internal data!
 
 Avoid managing your website in public devices. If you have to do that, make sure you do it in private browsing/incognito mode.
 
+If you have leaking your server password, please change it ASAP wither from Webmin UI or our Portal UI.

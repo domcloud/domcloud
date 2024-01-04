@@ -5,16 +5,12 @@ sidebar_position: 15
 
 # Deploy Docker Apps (Pro Plan Only)
 
-Docker in DOM Cloud is powered by [Podman](https://podman.io/). It's always run in rootless mode and allows running 24/7. Because of how powerful and resouce consuming this is only available with `Pro` user plan.
+Docker in DOM Cloud is powered by [Podman](https://podman.io/). It's always run in [rootless mode](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and allows running 24/7. Because of how powerful and resouce consuming this is only available with `Pro` user plan.
 
-The `podman` CLI is available as a system-wide install packages. `docker` is simply an alias to `podman`. A preconfiguration is required by activating `podman` feature via system runner to assign `subuid` and `subgid` and instructing system-wide killer programs to not killing any background processes for current host.
+The `podman` CLI is available as a system-wide packages. `docker` is simply an alias to `podman`. A preconfiguration is required by activating `podman` feature via system runner to:
 
-:::warning
-
-Experimental! Currently activated only in Singapore servers. Contact us to make it available for other servers.
-
-:::
-
++ assign `/etc/subuid` + `/etc/subgid` to allow podman rootless using sub uids for assigning containers.
++ assign `/var/lib/systemd/linger` to allow processes not get killed when SSH session terminates.
 
 ## Example
 
@@ -31,3 +27,42 @@ nginx:
 commands:
   - docker pull quay.io/libpod/banner
 ```
+
+Let's examine the reason why we use `docker run` commands as such:
+
+- Using `run` with `--rm`  will create a new container and removing it as soon as it's not used anymore. 
+- It's important to do it this way as `$PORT` from `-p $PORT:80` is allocated dynamically from passenger's phusion.
+- The `80` from `-p $PORT:80` implies that the app (`quay.io/libpod/banner`) is listening on port `80` inside the container. 
+- `--name webserver` denotes the name of this container is `webserver` for easy debugging when inspecting via SSH later.
+
+### Example with Docker Compose
+
+TODO
+
+## Differences
+
+Using docker has benefit compared other deployment system. These includes:
+
+### Allow additional background services
+
+Adding entries to `/var/lib/systemd/linger` will make sure that your processes won't get killed anytime you log out from SSH session. This also means you can add custom database system (like MongoDB and Redis) simply by pulling and starting the database service with detached mode (or using docker's compose).
+
+Note that with this benefit limitations by Fair Usage still implies. We won't restrict your CPU and RAM limits but still watching overall system performance and deliberately kills it if it proven to abuse our resources. Additionally, there should be no public port exposed to the host other than what's given from passenger's `$PORT` to avoid depleting server's ports allocations.
+
+### Allow building apps by Continous Integration (CI)
+
+While other deployment system is benefited by simpler DX (you can code and fix bugs directly in production) and incremental builds, there are often a reasonable choices to use CI to build apps and only deliver the binary to us via docker images.
+
+One of the benefit is you will be able to version your binaries via CI artifacts, this including releasing binaries via code versioning. This also added more security by not exposing your valuable source code to us, and lesser computation and storage used for compiling binaries by delegating it to CI instead of from our server.
+
+... (example deployment code)
+
+### Advanced logging and microservice managements
+
+Here are some additional reasons to use docker:
+
++ Use `docker compose` to configure your apps along with its service depedencies
++ Use `docker ps` to inspect running containers, Use `docker logs` to inspect logs
++ Allow limiting CPU and RAM resources 
++ And many more...
+
