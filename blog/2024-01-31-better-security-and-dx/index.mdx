@@ -1,0 +1,96 @@
+---
+slug: better-security-and-dx
+title: Better Security and DX
+authors: [willnode]
+tags: [service, update]
+---
+
+This January 2024 bring many improvements into security and developer experiences!
+
+## Security Enforcement
+
+Last six months has been a roller coaster for us since more users came in and put some resource-intensive background tasks that depletes server resources.
+
+We introduced a [background task killer](https://github.com/domcloud/bridge/blob/main/sudokill.js) which kills processes that's left spawn detached from main process (coming from PHP-FPM or Passenger Phusion). This task killer runs every 5 minutes and kills all background process running more than 60 seconds. Of course, this exclude users who currently logging in via SSH so things like VS Code server can still run unaffected. 
+
+We also running a routine check to make sure that no user-made cron job is running no more than hourly. 
+
+Lastly, we made a decision to mandatorily enable firewall for all free users. This effectively disables any ability that leads to spam and proxy bot, keeping our server clean while still continuing to provide a generous free plan. 
+
+## Experimental Docker Support
+
+Docker support is tricky as it's requiring root access. Now, we're able to utilize docker by using Podman in rootless mode. However, some tricky setup is required to make it work. 
+
+Docker feature can be enabled via runner. But in order to do it you need to be in Kit plan or above. This is because we need to disable our background task killer and allows the software to run 24/7. 
+
+You can read more about the [Docker feature](../../docs/deployment/docker.mdx) in the documentation.
+
+## Deploy key GitHub
+
+Last time we showcased that you can clone project from GitHub to our websites. What about private repositories?
+
+Private repositories are tricky because you need an access before able to read the code. In the past we've used to request Full Access token but it's risky for our users as the whole user's private projects is exposed. We need a way to be able exposing only one private project not the whole private repo.
+
+Enter [deploy keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys). Deploy keys are public keys which used like SSH logins to authenticate from automatic scripts. When we detect that your repo URL is private during prompting a new website with clone option, we ask you to install a public key into the repo. 
+
+![deploy key](./deploykey.png)
+
+This public key is generated from a pair of private-public key that's just generated for you. While the public key is inserted into repository, the private key is installed into the server. The key generated is created from this command:
+
+```bash
+ssh-keygen -t ecdsa -b 256 -C -f $file -q -N ''
+```
+
+## Backup System
+
+We all have times where we need to prepare a backup in case things broke our website in future. This is why we introduce a backup system.
+
+Our new backup system leveraged by S3-like storage object which is very cheap in terms of cloud cost. When you create a backup, all website data including files and databases are zipped into one backup file then uploaded into our S3-like storage. You can download the backup or ask us to restore it. Backups will not be removed in case the origin website instance is deleted.
+
+To access backup go the [Backup tab](https://my.domcloud.co/user/backup/) in portal. Backup creation can only be done for subscribing users at no additional cost. 
+
+## Plan Adjustments
+
+We've increased monthly data cap to enable larger traffic within the same plan:
+
++ Lite: 15GB -> 20GB / month
++ Kit: 50GB -> 100GB/ month
++ Pro: 150GB -> 500GB / month 
+
+We also reduce minimum payment from 10$ to 4.5$. This allows you to purchase a Lite plan for 3 months instead of 7 months.
+
+## Web Portal Improvements
+
++ The Web SSH interface is changed to [webssh2](https://github.com/billchurch/webssh2) enabling secure login using POST.
++ [Filestash Web Admin](https://filestash.domcloud.co/) is available for easier web-based file uploads
++ Our registrar-related email communications is now using english
++ You can create a new template from existing websites
++ You can now change a website's password
++ You can see NGINX and App logs from portal
++ You can print invoices for any purchases
++ DNS is now automatically turned on/off when renaming domains
++ You can now place a TAR URL file as a template
+
+## Server Improvements
+
++ We have enabled three new server locations 🎉
+  - Osaka, Japan
+  - Bangalore, India
+  - Sao Paolo, Brazil
++ Singapore and New York is now upgraded to 2 vCPU and 2GB RAM
++ PHP default upload file size is now set to 512 MB
++ `*.domcloud.dev` and `*.dom.my.id` will use shared SSL to avoid depleting Let's Encrypt limit
++ Rocky Linux OS has been upgraded from 9.2 to 9.3
++ NGINX has been upgraded from 1.20 to 1.22
++ PHP 8.3 is available and should be the default
++ Installed `awscli` and `nvim`
+
+## Deployment System Improvements
+
+
++ Deploy scripts duration limit is increased from 10 to 15 minutes.
++ Deploy scripts now throttles to 60 per day instead of 5 per hour 
++ Deploy scripts now have dotglob enabled, enabling `rm -rf` automatically includes dotfiles
++ Updated java, zig, deno, bun deployment instructions
+
+That's a lot of improvements in last six months! We hope you enjoy our services, and we'll see you in the next update!

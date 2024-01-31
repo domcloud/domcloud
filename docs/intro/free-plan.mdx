@@ -27,11 +27,17 @@ Our free plan comes with the following features:
 
 ## Default Domain Availability
 
-A subscription (as low as a Lite plan) is needed to use our default domain `*.domcloud.dev`. This is to protect our free domain from abuse and illegal activities such as spam or phising. You still can use our service for free by purchasing a domain from anywhere. 
+A free but randomized domain is available with `*.dom.my.id` suffix. This domain should not be used for anything but testing or demo as the domain name is not customizable.
 
-Purchasing your own domain is recommended at least for SEO, consistency and flexibility of your website. If you don't want to pay subscription and don't want to purchase a domain you might be interested to look for a free domain elsewhere such as [nic.eu.org](https://nic.eu.org) or many other services that provides \[D\]DNS for free.
+A subscription (as low as a Lite plan) is needed to use `*.domcloud.dev` domain. This domain is customizable (always matching the website's username). This domain is preferred over the former for personal sites and it will remain the same even if your account goes back to free plan.
+
+Purchasing your own domain (like `*.com`) is recommended if you need branding and SEO for your website. You can purchase a domain either from us or any other registrar. To use a custom domain for websites hosted in DOM Cloud see [the DNS setup page](../features/dns.mdx).
 
 You can also [share a domain](../features/dns.mdx#sharing-a-domain) securely for institutional or learning purposes.
+
+## Third-Party API Access
+
+All websites created with free plan has [firewall](../features/security.mdx#outbound-connection) enabled. This blocks outgoing HTTP connection from server except to the [list of whitelisted sites](https://github.com/domcloud/bridge/blob/main/src/whitelist/sites.conf). This is implemented so that our generous free plan will not be abused for malicious bot, proxy and phising sites. To enable any third-party access, you need to upgrade your plan then disable firewall at individual websites.
 
 ## Expiration Date
 
@@ -43,7 +49,7 @@ The whole point of having this expiration date system for all users with free pl
 
 ## Upgrading to Paid Plan
 
-Upgrading to a paid plan is easy, you can do it at any time from your account dashboard. Once you upgrade, you will get the benefits of extra storage and more network data transfer. Our billing system doesn't charge you automatically, so if you don't want to continue using the paid plan when it due, your account will be downgraded to the free plan automatically with another extra 60 days.
+Upgrading to a paid plan is easy, you can do it at any time from [your account dashboard](https://my.domcloud.co/user/upgrade). Once you upgrade, you will get the benefits of extra storage and more network data transfer. Our billing system doesn't charge you automatically, so if you don't want to continue using the paid plan when it due, your account will be downgraded to the free plan automatically with another extra 60 days.
 
 ## What Happens When It Expires?
 

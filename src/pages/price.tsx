@@ -9,7 +9,7 @@ import FaArchive from '@fortawesome/fontawesome-free/svgs/solid/box-archive.svg'
 import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
 import FaChartPie from '@fortawesome/fontawesome-free/svgs/solid/chart-pie.svg';
-import FaBolt from '@fortawesome/fontawesome-free/svgs/solid/bolt.svg';
+import FaBolt from '@fortawesome/fontawesome-free/svgs/solid/network-wired.svg';
 import './price.css';
 import Home7 from "../components/home/Home7";
 import Home5 from "../components/home/Home5";
@@ -125,11 +125,20 @@ export default function Pricing() {
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
+                            <FaBolt />
+                        </div>
+                        <h2>Unblocked Outside Access</h2>
+                        <p>
+                            Allow all third-party API calls from server
+                        </p>
+                    </div>
+                    <div className="feature premium col">
+                        <div className="feature-icon badge">
                             <FaGlobe />
                         </div>
-                        <h2>Free Domain</h2>
+                        <h2>Personalized Domain</h2>
                         <p>
-                            Use <code>*.domcloud.dev</code> domain for free.
+                            Use personalized domain for free
                         </p>
                     </div>
                     <div className="feature premium col">
@@ -143,15 +152,6 @@ export default function Pricing() {
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaQuestion />
-                        </div>
-                        <h2>Prioritized Support</h2>
-                        <p>
-                            We'll seriously supporting your requests
-                        </p>
-                    </div>
-                    <div className="feature premium col">
-                        <div className="feature-icon badge">
                             <FaUsers />
                         </div>
                         <h2>Teams</h2>
@@ -159,11 +159,11 @@ export default function Pricing() {
                     </div>
                     <div className="feature premium col">
                         <div className="feature-icon badge">
-                            <FaCartPlus />
+                            <FaQuestion />
                         </div>
-                        <h2>Addon Billing</h2>
+                        <h2>Prioritized Support</h2>
                         <p>
-                            (soon) Purchase more resources at any time
+                            We'll seriously supporting your requests
                         </p>
                     </div>
                 </div>

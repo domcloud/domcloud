@@ -77,7 +77,7 @@ find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dyn
 
 Tools, libs, services:
 ```
-dnf install awscli certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz \
+dnf install awscli certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail strace tar time vim wget xz \
 {libcurl,libffi,libsqlite3x,libtool-ltdl,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
 libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay,Text-ASCIITable} podman podman-docker slirp4netns \
 earlyoom fail2ban-server iptables-services postfix postgresql-server postgresql-contrib

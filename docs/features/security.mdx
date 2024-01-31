@@ -25,11 +25,11 @@ Ephemeral ports are only allowed to be used for local development inside the ser
 
 ### Outbound Connection
 
-Outbound connection is for outgoing traffic to the internet. It's allowed for all ports and protocols by default, except port `25`, it's blocked to prevent SMTP / Email abuse. If you need to send emails, you can use a third-party email relay services that uses a more secure `587` port or via HTTP/REST API.
+Outbound connection is for outgoing internet connection from the server. It's allowed for all ports and protocols by default, except port `25`, it's blocked to prevent SMTP / Email abuse. If you need to send emails, you can use a third-party email relay services that uses a more secure `587` port or via HTTP/REST API.
 
 There are also additional measures to prevent abuse, by enabling `firewall` via [the deployment system](./deploy.mdx#firewall). It blocks all outbound connection except for sites that are [whitelisted](https://github.com/domcloud/bridge/blob/main/src/whitelist/sites.conf). It works by resolving all whitelisted sites to IP addresses and allow only those IP addresses to be accessed.
 
-This `firewall` feature is opt-in and can be turned off at will. The feature is mostly used for installation for weakly secured PHP servers like WordPress. To check if the feature is enabled, you can go to Check -> Firewall menu.
+This `firewall` feature is **permanently enabled** for free users. For premium users it's opt-in and can be turned off at will. This feature is recommended to be used for installation of weakly secured servers like WordPress. To check if the feature is enabled, you can go to Check -> Firewall menu.
 
 ## Fail2Ban Service 
 
