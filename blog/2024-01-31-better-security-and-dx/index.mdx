@@ -63,13 +63,17 @@ We also reduce minimum payment from 10$ to 4.5$. This allows you to purchase a L
 
 + The Web SSH interface is changed to [webssh2](https://github.com/billchurch/webssh2) enabling secure login using POST.
 + [Filestash Web Admin](https://filestash.domcloud.co/) is available for easier web-based file uploads
++ When uploading template files from local folder, binary files is now filtered
++ Our portal email communications is now using fully localized language
 + Our registrar-related email communications is now using english
 + You can create a new template from existing websites
 + You can now change a website's password
 + You can see NGINX and App logs from portal
 + You can print invoices for any purchases
 + DNS is now automatically turned on/off when renaming domains
-+ You can now place a TAR URL file as a template
++ Improved localization coverage, including adding spanish language
++ Improved check connection detection
++ Stroger registration requirement when registering using email
 
 ## Server Improvements
 
@@ -79,19 +83,29 @@ We also reduce minimum payment from 10$ to 4.5$. This allows you to purchase a L
   - Sao Paolo, Brazil
 + Singapore and New York is now upgraded to 2 vCPU and 2GB RAM
 + PHP default upload file size is now set to 512 MB
-+ `*.domcloud.dev` and `*.dom.my.id` will use shared SSL to avoid depleting Let's Encrypt limit
 + Rocky Linux OS has been upgraded from 9.2 to 9.3
 + NGINX has been upgraded from 1.20 to 1.22
 + PHP 8.3 is available and should be the default
-+ Installed `awscli` and `nvim`
++ Fail2Ban retry limit increased from 3 to 10 attempts
++ Let's Encrypt schedule will stop retrying if fail multiple times
++ Added Discord, VSCode, PayPal, Google SiteKit as whitelisted firewall sites
++ Installed `awscli`, `nvim` and `btop`
 
 ## Deployment System Improvements
 
 
-+ Deploy scripts duration limit is increased from 10 to 15 minutes.
-+ Deploy scripts now throttles to 60 per day instead of 5 per hour 
-+ Deploy scripts now have dotglob enabled, enabling `rm -rf` automatically includes dotfiles
++ Overall script duration limit is increased from 10 to 15 minutes.
++ Rate limit throttles to 60 per day instead of 5 per hour 
++ Commands now has dotglob enabled, enabling `rm -rf` automatically includes dotfiles
++ `*.domcloud.dev` and `*.dom.my.id` will use shared SSL to avoid depleting Let's Encrypt limit
++ All user processes will be killed before deleting websites
++ You can now place a `.tar.gz` file as a `source` URL
 + In NGINX config, a passenger `set_header_list` can be set to include custom header info like `proxy_set_header`
-+ Updated java, zig, deno, bun deployment instructions
++ Fixed handling `root` and `ssl` for subdomain
++ Added `ssl self-sign` feature to enable self signing SSL
++ `nginx` handling is now executed first before scripts
++ `java` install feature is available, we use dotnet build for the binary
++ Another install feature includes `zig`, `bun`, `dotnet` deployment instructions
++ `ftp` is no longer available. Use SFTP (FTP over SSH) which is always available
 
 That's a lot of improvements in last six months! We hope you enjoy our services, and we'll see you in the next update!
