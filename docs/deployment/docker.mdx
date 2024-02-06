@@ -3,6 +3,14 @@ title: Docker
 sidebar_position: 15
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+
+export const port = (() => Math.trunc(Math.random() * 23000 + 9000))()
+
+export const PortSpan = () => {
+  return <span>{port}</span>
+}
+
 # Deploy Docker Apps (Kit and Pro Plan)
 
 Docker in DOM Cloud is powered by [Podman](https://podman.io/). It's always run in [rootless mode](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and allows running 24/7. Because of how powerful and resouce consuming this is only available with `Kit` and `Pro` user plan.
@@ -10,34 +18,96 @@ Docker in DOM Cloud is powered by [Podman](https://podman.io/). It's always run 
 The `podman` CLI is available as a system-wide packages. `docker` is simply an alias to `podman`. A preconfiguration is required by activating `podman` feature via system runner to:
 
 + assign `/etc/subuid` + `/etc/subgid` to allow podman rootless using sub uids for assigning containers.
-+ assign `/var/lib/systemd/linger` to allow processes not get killed when SSH session terminates.
++ assign `/var/lib/systemd/linger` to allow backround processes not get killed when SSH session terminates.
+
+## Port Allocation Policy
+
+A docker service should run all the time and have a standby port hidden from the internet. 
+
+Remember that DOM Cloud servers is a shared hosting environment, so only expose your port only for public-facing service. A port between 9000 and 32000 is a recommended port number. A port number 32768 and above is not recommended as it's an ephemeral ports only for internal/test usage (firewall don't block incoming traffic for them).
+
+We'll choose this number for you by random for use through the documentation: <code><PortSpan /></code>
 
 ## Example
 
-The deployment script below activates `docker` capabilities and using `quay.io/libpod/banner` with port forwarding to given `$PORT` managed by passenger.
+The deployment script below activates `docker` capabilities and starts a "hello world" podman container for demo.
 
-```yaml title="https://github.com/domcloud/recipes/blob/master/docker.yml"
+<CodeBlock language="yaml" title="https://github.com/domcloud/recipes/blob/master/docker.yml">{`
 source: clear
 features:
   - docker
 nginx:
   passenger:
     enabled: 'on'
-    app_start_command: docker run --rm -t --name webserver -p $PORT:80 quay.io/libpod/banner
+    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:localhost:${port}'
 commands:
-  - docker pull quay.io/libpod/banner
-```
+  - docker run -t --name webserver -p ${port}:80 quay.io/libpod/banner`.trim()
+}</CodeBlock>
+
 
 Let's examine the reason why we use `docker run` commands as such:
 
-- Using `run` with `--rm`  will create a new container and removing it as soon as it's not used anymore. 
-- It's important to do it this way as `$PORT` from `-p $PORT:80` is allocated dynamically from passenger's phusion.
+- Using `run`  will create and start a new container pulled from [`quay.io/libpod/banner`](https://quay.io/libpod/banner).
+- We're forwarding from host's port with number {port} to container's port with number `80`. This port number is permanent.
 - The `80` from `-p $PORT:80` implies that the app (`quay.io/libpod/banner`) is listening on port `80` inside the container. 
 - `--name webserver` denotes the name of this container is `webserver` for easy debugging when inspecting via SSH later.
+- `socat` is used as port forwarder from `$PORT` given from passenger phusion to <code>{port}</code> which your docker 
 
 ### Example with Docker Compose
 
-TODO
+To use `docker-compose.yml`, you need to run it via `podman-compose`. `docker compose` is not available [due to Podman version](https://stackoverflow.com/q/77411286) is still on `4.6.1`.
+
+The example below setup [Plausible self-hosting](https://github.com/plausible/hosting) with their database depedencies.
+
+<CodeBlock language="yaml" title="https://github.com/domcloud/recipes/blob/master/boot-plausible.yml">{`
+# Requires Kit plan or higher!
+source: https://github.com/plausible/hosting
+features:
+  - docker
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: 'on'
+    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:localhost:${port}'
+commands:
+  - get_hash() { openssl rand -base64 64 | tr -d '\\n'; }
+  - sed -i 's/8000:8000/${port}:8000/g' docker-compose.yml
+  - echo BASE_URL=https://$DOMAIN > plausible-conf.env
+  - echo SECRET_KEY_BASE=\`get_hash\` >> plausible-conf.env
+  - podman-compose down
+  - podman-compose up -d`.trim()
+}</CodeBlock>
+
+### Boot at system startup
+
+While it's infrequent, our server may restart during scaling and other reasons. So future-proof your docker instance using systemd. That will make your docker app run at boot.
+
+```yaml
+commands:
+  - mkdir -p ~/.config/systemd/user
+  - filename: app.service
+    content: |
+      [Unit]
+      Description=App Daemon
+      After=network-online.target
+
+      [Service]
+      Type=simple
+      WorkingDirectory=%h/public_html
+      ExecStart=/usr/bin/env podman-compose up -d
+      ExecReload=/usr/bin/env podman-compose down
+      Restart=always
+
+      [Install]
+      WantedBy=default.target
+  - mv app.service ~/.config/systemd/user/app.service
+  - systemctl --user daemon-reload
+  - systemctl --user start app
+  - systemctl --user enable app
+```
+
+After this have been implemented you can also start, restart and stop your docker app using `systemctl --user start app`, `systemctl --user restart app` and `systemctl --user stop app` respectively.
+
 
 ## Differences
 

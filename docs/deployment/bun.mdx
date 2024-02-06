@@ -11,7 +11,7 @@ There is no default `bun` compiler at system level. You have to install it first
 
 :::warning
 
-Serving Bun apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
+Serving Bun apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args. `Bun.serve` is already doing this if you don't set the `port` explicitly.
 
 :::
 
@@ -27,21 +27,41 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT bun app.ts
+    app_start_command: env PORT=$PORT bunfix bun app.ts
 commands:
   - filename: app.ts
     content: |
+      const html_text = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>Bun App</title>
+          <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+      </head>
+      <body class="p-5 text-center">
+          <p><img src="//images.unsplash.com/photo-1465153690352-10c1b29577f8?fit=crop&w=200&h=200" 
+                  class="img-fluid rounded-circle"></p>
+          <h1 class="mb-3">Hello, world!</h1>
+          <p>Serving from Bun version ${Bun.version}</p>
+          <p class="text-muted">DOM Cloud</p>
+      </body>
+      </html>
+      `
       const server = Bun.serve({
-      port: parseInt(Bun.env.PORT || "3000"),
-      fetch(request) {
-          return new Response("Welcome to Bun!");
-      },
+        fetch(request) {
+            return new Response(html_text, {
+              headers: { "Content-Type": "text/html" },
+            });
+        },
       });
-
-      console.log(`Listening on localhost: ${server.port}`);
 ```
 
-For existing bun apps, use this deployment script. Please adjust relevant fields such as the startup file (change `app.ts`) and how `$PORT` is delivered (either `bun ... --port=$PORT` or `env PORT=$PORT bun ...`).
+Note three things:
+- `Bun.serve` already set the `port` arg from `PORT` env by default
+- `bunfix bun app.ts` is used to run Bun with [a workaround of an ongoing issue](https://github.com/domcloud/proxy-fix)
+- This bunfix proxies request to the bun app, this proxy currently doesn't support Websocket 
+
+For existing bun apps, use this deployment script. Please adjust relevant fields such as the startup file (change `app.ts`) and how `$PORT` is delivered (via `env PORT=$PORT bunfix bun ...`).
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/bun-gls.yml"
 features:
@@ -50,7 +70,7 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT bun app.ts
+    app_start_command: env PORT=$PORT bunfix bun app.ts
 ```
 
 ## Use other Bun versions
@@ -74,8 +94,10 @@ See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGI
 
 ## App Logging
 
-We do not have built-in logging capability at this time. Only startup problems displayed in the browser.
+You can see app log from Check -> Check Process Logs tab. Only startup problems displayed in the browser.
 
-Please use a proper logging mechanism such as [Pino](https://github.com/pinojs/pino) or [Winston](https://github.com/winstonjs/winston) then write it to a log file, or any other solution that suits you.
+Bun can show runtime errors in browser by setting `app_env: development` in the `passenger` config of NGINX.
 
-NGINX errors and traffic logs can be examined via Webmin.
+It's recommended to use a proper logging mechanism such as [Pino](https://github.com/pinojs/pino) or [Winston](https://github.com/winstonjs/winston) then write it to a log file, or any other solution that suits you.
+
+NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.
