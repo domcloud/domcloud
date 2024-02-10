@@ -1,40 +1,71 @@
 import React from "react";
-import { GitHub, Google } from "./Icon";
+import FaMapMarker from '@fortawesome/fontawesome-free/svgs/solid/map-pin.svg';
 
-export default function Home7({ subtitle, title }) {
-    return (
-        <div className="px-4 py-5 my-5 text--center">
-            <h2 className="display-3 fw-bold">{title}</h2>
-
-            <div
-                className="d-grid gap-2 d-sm-flex my-2 justify-content-sm-center align-items-center"
-            >
-                <a
-                    href="https://my.domcloud.co/register"
-                    className="p-2 button button--secondary font-lg d-flex align-items-center shadow--lw"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" style={{fill: 'currentcolor'}} viewBox="0 0 16 16">
-                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
-                    </svg>
-                    <span className="ms-2">Email</span>
-                </a>
-                <a
-                    href="https://my.domcloud.co/login?with=google"
-                    className="p-2 button button--secondary d-flex align-items-center shadow--lw"
-                >
-                    <Google />
-                    <span className="ms-2">Google</span>
-                </a>
-                <a
-                    href="https://my.domcloud.co/login?with=github"
-                    className="p-2 button button--secondary d-flex align-items-center shadow--lw"
-                >
-                    <GitHub />
-                    <span className="ms-2">GitHub</span>
-                </a>
+export default function Home7() {
+    return (<div className="container mb-5 map">
+        <div className="card">
+            <div className="card__body">
+                <h2 className="text--center">Global Server Region</h2>
+                <p className="text--center">Pick one closest to the location of your visitors</p>
+                <div style={{ position: 'relative' }}>
+                    <img src="/assets/feat/worldmap.png" className="w-100" alt="" loading="lazy"/>
+                    <a href="#sga" style={{
+                        position: 'absolute',
+                        top: '57.3%',
+                        left: '75.8%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)'
+                    }} >
+                        <FaMapMarker/>
+                    </a>
+                    <a href="#nyc" style={{
+                        position: 'absolute',
+                        top: '31.5%',
+                        left: '27.8%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)',
+                    }} >
+                        <FaMapMarker />
+                    </a>
+                    <a href="#fra" style={{
+                        position: 'absolute',
+                        top: '25.8%',
+                        left: '49.3%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)',
+                    }} >
+                        <FaMapMarker />
+                    </a>
+                    <a href="#osa" style={{
+                        position: 'absolute',
+                        top: '35.1%',
+                        left: '82.9%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)',
+                    }} >
+                        <FaMapMarker />
+                    </a>
+                    <a href="#blr" style={{
+                        position: 'absolute',
+                        top: '49.2%',
+                        left: '68.1%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)',
+                    }} >
+                        <FaMapMarker />
+                    </a>
+                    <a href="#sao" style={{
+                        position: 'absolute',
+                        top: '71.5%',
+                        left: '34.2%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)',
+                    }} >
+                        <FaMapMarker />
+                    </a>
+                </div>
+                <p className="text--center"><a href="https://github.com/domcloud/domcloud/issues/22" target="_blank" rel="noopener noreferrer">Psst... Want more location?</a></p>
             </div>
-
-            {subtitle}
         </div>
-    )
+    </div>)
 }

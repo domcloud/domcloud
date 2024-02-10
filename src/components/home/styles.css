@@ -51,6 +51,9 @@ svg {
 .feature.premium .feature-icon {
     background-color: var(--ifm-color-success-dark);
 }
+.feature.performance .feature-icon {
+    background-color: var(--ifm-color-warning-dark);
+}
 .map svg {
     fill: var(--ifm-color-primary-dark);
     filter: drop-shadow(0 -2px 4px white);

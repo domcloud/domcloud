@@ -11,7 +11,7 @@ import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
 import FaChartPie from '@fortawesome/fontawesome-free/svgs/solid/chart-pie.svg';
 import FaBolt from '@fortawesome/fontawesome-free/svgs/solid/network-wired.svg';
 import './price.css';
-import Home7 from "../components/home/Home7";
+import Home7 from "../components/home/Home8";
 import Home5 from "../components/home/Home5";
 
 export default function Pricing() {
@@ -127,7 +127,7 @@ export default function Pricing() {
                         <div className="feature-icon badge">
                             <FaBolt />
                         </div>
-                        <h2>Unblocked Outside Access</h2>
+                        <h2>Unblocked API Access</h2>
                         <p>
                             Allow all third-party API calls from server
                         </p>
