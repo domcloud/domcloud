@@ -112,6 +112,7 @@ export default function Home2() {
                         </div>
                     </div>
                 </div>
+                <p className="text-right mt-5"><small><i>*) logos are just representation, we're not affiliated with them :)</i></small></p>
             </div>
         </div>
     )

@@ -59,7 +59,7 @@ commands:
 Note three things:
 - `Bun.serve` already set the `port` arg from `PORT` env by default
 - `bunfix bun app.ts` is used to run Bun with [a workaround of an ongoing issue](https://github.com/domcloud/proxy-fix)
-- This bunfix proxies request to the bun app, this proxy currently doesn't support Websocket 
+- This bunfix proxies request to the bun app, this proxy support HTTP and Websocket 
 
 For existing bun apps, use this deployment script. Please adjust relevant fields such as the startup file (change `app.ts`) and how `$PORT` is delivered (via `env PORT=$PORT bunfix bun ...`).
 

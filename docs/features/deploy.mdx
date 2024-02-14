@@ -131,8 +131,8 @@ This configures all features available for the host in DOM Cloud.
 Configure MariaDB (MySQL) Database Server.
 
 + `mysql` or `mysql on` Enable MariaDB and create default DB.
-+ `mysql create <dbname>` Create a new database with `<dbname>`.
-+ `mysql drop <dbname>` Drop a database with `<dbname>`.
++ `mysql create <dbname>` Create a new database with `<username>_<dbname>`.
++ `mysql drop <dbname>` Drop a database with `<username>_<dbname>`.
 + `mysql off`. Disables `mysql` feature. **Caution: Also drop all DB permanently**.
 
 ### `postgresql`
@@ -140,8 +140,8 @@ Configure MariaDB (MySQL) Database Server.
 Configure PostgreSQL Database Server.
 
 + `postgresql` or `postgresql on` Enable PostgreSQL and create default DB.
-+ `postgresql create <dbname>` Create a new database with `<dbname>`.
-+ `postgresql drop <dbname>` Drop a database with `<dbname>`.
++ `postgresql create <dbname>` Create a new database with `<username>_<dbname>`.
++ `postgresql drop <dbname>` Drop a database with `<username>_<dbname>`.
 + `postgresql off`. Disables `postgresql` feature. **Caution: Also drop all DB permanently**.
 
 ### `dns`
@@ -177,7 +177,7 @@ It is required to specify the root domain, otherwise it will be appended with th
 
 :::tip
 
-DNS records is also configurable via [Webmin DNS](./editor).
+DNS records is also configurable via [Webmin DNS](./editor.mdx).
 
 :::
 
@@ -190,20 +190,16 @@ Configure Whitelist Firewall.
 
 Firewall is an additional protection to make sure the host won't send any outgoing request not defined [in the whitelist](https://github.com/domcloud/bridge/blob/main/src/whitelist/sites.conf). 
 
-It's intended for use of hosts with [low security measures](https://github.com/domcloud/domcloud/issues/10). It's recommended for any host who doesn't use any third-party API.
-
-:::caution
-
-Please note due to obvious PHP weakness in security, it's advised to turn on this feature for WordPress or any weakly protected PHP server.
-
-:::
+See the [relevant security description](../features/security.mdx) regarding this feature.
 
 
 ### `ssl`
 
 Configure SSL or Attempt to renew SSL certificate with Let's Encrypt.
 
-+ `ssl` or `ssl letsencrypt`, renew SSL certificate with Let's Encrypt.
++ `ssl`, renew SSL certificate with shared domain (if available) or using Let's Encrypt if it not exists yet or starts to expire.
++ `ssl letsencrypt`, renew SSL certificate with Let's Encrypt forcibly.
++ `ssl selfsign`, renew SSL certificate with Self-signed certificate forcibly.
 + `ssl always` Always redirect HTTP to HTTPS
 + `ssl on` Enable both HTTP to HTTPS
 + `ssl off` Disable HTTPS access (not recommended)
@@ -256,13 +252,14 @@ Set PHP (FastCGI) version. Available options:
 + `php 8.0`
 + `php 8.1`
 + `php 8.2`
++ `php 8.3`
 + `php latest` (default)
 
-Remember that `php 8.x` is an active release. 
-
-This also sets the `php` (and `composer`) to the right version in CLI/SSH. 
+Remember that `php 8.x` is an active release. Changing this version also sets the `php` (and `composer`) to the right version in CLI/SSH. 
 
 PHP files that served through NginX are served with `php-fpm` (FastCGI Process Manager).
+
+You can't install custom PHP versions or any PHP modules since these are installed by RHEL system packages. However if you're expert enough you can install a PHP binary yourself then use Passenger Phusion GLS to run PHP by FastCGI.
 
 ### `node`
 
@@ -274,9 +271,9 @@ Install specific NodeJS version. Available options:
 + `node x.y.z`
 + `node off`
 
-By default it's Node 16.x provided from system.
+By default it's Node 18.x provided from RHEL system packages.
 
-This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH. This installation is powered by [webi](https://webinstall.dev/node).
+This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH. This installation is powered by [`webi`](https://webinstall.dev/node). All given node version is downloaded in binary/compiled version from [the official registry](https://nodejs.org/download/release) to keep switching version fast.
 
 
 ### `python`
@@ -285,13 +282,20 @@ Install specific Python version. Available options:
 
 + `python` or `python latest`
 + `python lts` or `python stable`
++ `python system`
 + `python x.y`
 + `python x.y.z`
 + `python off`
 
-By default it's Python 3.9 provided from system.
+By default it's Python 3.9 provided from RHEL system packages, equivalent with `python system`.
 
 This also sets the `python` (and `pip`) to the right version in CLI/SSH. This installation is powered by [pyenv](https://github.com/pyenv/pyenv).
+
+If you have problem creating virtual envs please using `pyenv virtualenv` or just use version `python system` which also works and always isolated for current user.
+
+The difference with `python system` and `python off` is the latter will remove `pyenv` and all former local python installations.
+
+The installer will try to download binary/compiled version from [community builds](https://github.com/indygreg/python-build-standalone) if requested version is available to keep switching version fast.
 
 ### `ruby`
 
@@ -302,7 +306,8 @@ Install specific Ruby version. Available options:
 + `ruby x.y.z`
 + `ruby off`
 
-By default it's Ruby 3.0 provided from system. This installation is powered by [rvm](https://rvm.io).
+By default it's Ruby 3.0 provided from RHEL system packages. This installation is powered by [rvm](https://rvm.io). 
+The installer will try to download binary/compiled version from [RVM builds](https://rvm_io.global.ssl.fastly.net/binaries/centos/9/x86_64/) if requested version is available to keep switching version fast.
 
 
 ### `deno`
@@ -314,9 +319,21 @@ Install specific Deno version. Available options:
 + `deno x.y.z`
 + `deno off`
 
-There's no default Deno version provided from system.
+There's no Deno installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [webi](https://webinstall.dev/deno).
+This installation is powered by [`webi`](https://webinstall.dev/deno).
+
+### `bun`
+
+Install specific Bun.js version. Available options:
+
++ `bun` or `bun latest`
++ `bun x.y.z`
++ `bun off`
+
+There's no Bun.js installed in system-wide binaries. You must specify this feature to make it available.
+
+This installation is powered by [`webi`](https://webinstall.dev/bun).
 
 ### `go`
 
@@ -326,9 +343,9 @@ Install specific Go version. Available options:
 + `go x.y.z`  
 + `go off`
 
-There's no default Go version provided from system.
+There's no Go installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [webi](https://webinstall.dev/golang).
+This installation is powered by [`webi`](https://webinstall.dev/golang).
 
 ### `rust`
 
@@ -338,9 +355,45 @@ Install specific Rust version. Available options:
 + `rust x.y.z`
 + `rust off`
 
-There's no default Rust version provided from system.
+There's no Rust installed in system-wide binaries. You must specify this feature to make it available.
 
 This installation is powered by [rustup](https://rustup.rs).
+
+### `java`
+
+Install specific Java version. Available options:
+
++ `java` or `java latest`
++ `java x.y.z`
++ `java off`
+
+There's no Java installed in system-wide binaries. You must specify this feature to make it available.
+
+This installation is powered by [Microsoft OpenJDK builds](https://aka.ms/download-jdk). Only versions provided by them is available to install.
+
+### `dotnet`
+
+Install specific .NET Core version. Available options:
+
++ `dotnet` or `dotnet latest`
++ `dotnet x.y.z`
++ `dotnet off`
+
+There's no .NET Core installed in system-wide binaries. You must specify this feature to make it available.
+
+This installation is powered by [Microsoft .NET Core builds](https://dotnet.microsoft.com/en-us/download/dotnet). Only versions provided by them is available to install.
+
+### `zig`
+
+Install specific Zig version. Available options:
+
++ `zig` or `zig latest`
++ `zig x.y.z`
++ `zig off`
+
+There's no Zig installed in system-wide binaries. You must specify this feature to make it available.
+
+This installation is powered by [`webi`](https://webinstall.dev/zig). 
 
 ---
 
@@ -429,7 +482,6 @@ Available options:
 + [`app_start_command`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_start_command): [Passenger GLS](https://www.phusionpassenger.com/docs/advanced_guides/gls/) command to start the app with `$PORT` as the port where your app is listening to.
 + [`friendly_error_pages`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_friendly_error_pages): `on` (default) or `off`
 + [`base_uri`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_base_uri): base URL for the app (default is `/`).
-+ [`sticky_sessions`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions): `on` or `off` (default). Enable this for websocket support.
 + [`document_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_document_root): path to public document root (default is `root`). This value is relative to the user `$HOME` folder.
 + [`app_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_root): path to app root (default is parent of `root`). This value is relative to the user `$HOME` folder.
 
@@ -464,7 +516,7 @@ Please read [NGINX Location directive](http://nginx.org/en/docs/http/ngx_http_co
 
 :::info
 
-`proxy_pass`, although it's popular, it's not allowed because it's not a good practice to use it in a shared servers. You must use `passenger` instead.
+`proxy_pass`, although it's popular, it's not allowed because it's not a good practice to use it in a shared servers. If you have to redirect TCP connections you can also use `socat`.
 
 :::
 
