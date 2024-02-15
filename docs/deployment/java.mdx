@@ -98,15 +98,15 @@ nginx:
 
 ## Use other Java versions
 
-To switch Java version use feature syntax like `java latest`, `java 18`, etc. Check your current dotnet version using `java --version` in SSH.
+To switch Java version use feature syntax like `java latest`, `java 18`, etc. Check your current Java version using `java --version` in SSH.
 
 ```yaml
 features:
   - java 18
 ```
 
-Java install scripts is powered by [Microsoft OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/download). 
-Some old Java versions (such as JDK 8) is not available and you might need to install yourself.
+Java installation binaries is used from [Adoptium Project](https://adoptium.net/). Only latest build from them in each major version (as low as `jdk 8`) is available to download using this feature.
+
 
 
 ## App Management

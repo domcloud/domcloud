@@ -181,15 +181,7 @@ More information about restarting app can be found in the [Passenger documentati
 
 ### Websocket
 
-If the app uses Websocket, you have to enable sticky sessions in NGINX. This is because there will be multiple process spawned and Phusion Passenger will load balance internet requests to many processes. If the requests are not "sticky", the Websocket connection will be lost.
-
-```yaml
-nginx:
-  passenger:
-    sticky_sessions: on
-```
-
-You can read more about sticky sessions at the [Passenger documentation](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_sticky_sessions)
+Websocket should works out of the box since only one app is spawned per website configuration.
 
 :::caution
 
