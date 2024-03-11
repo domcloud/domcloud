@@ -37,18 +37,16 @@ export default function Home1() {
                 </div>
             </div>
             <div className="overflow-hidden" style={{ maxHeight: '30vh' }}>
-                <div className="container px-5">
-                    <ThemedImage
-                        sources={{
-                            dark: "/assets/ss/dash-b.png",
-                            light: "/assets/ss/dash-w.png"
-                        }}
-                        alt=""
-                        className="img-fluid border rounded-3 shadow--md mb-4"
-                        width="700"
-                        height="500"
-                    />
-                </div>
+                <ThemedImage
+                    sources={{
+                        dark: "/assets/ss/dash-b.png",
+                        light: "/assets/ss/dash-w.png"
+                    }}
+                    alt=""
+                    className="img-fluid border rounded-3 shadow--md mb-4 mw-100"
+                    width="700"
+                    height="500"
+                />
             </div>
         </div>
     );

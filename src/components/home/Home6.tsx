@@ -8,7 +8,7 @@ import FaStopwatch from '@fortawesome/fontawesome-free/svgs/solid/location-pin-l
 
 export default function Home6() {
     return (
-        <div className="container px-4 py-5" id="featured-3">
+        <div className="container px-4 py-5 text-center">
             <h2 className="pb-2 border-bottom text--center">
                 Speed? We got you covered ⚡ 
             </h2>

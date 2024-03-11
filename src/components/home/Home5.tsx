@@ -8,7 +8,7 @@ import FaStopwatch from '@fortawesome/fontawesome-free/svgs/solid/stopwatch.svg'
 
 export default function Home5({ title }) {
     return (
-        <div className="container px-4 py-5" id="featured-3">
+        <div className="container px-4 py-5 text-center">
             <h2 className="pb-2 border-bottom text--center">
                 {title} <span className="badge badge--primary">it's 100% free</span>
             </h2>

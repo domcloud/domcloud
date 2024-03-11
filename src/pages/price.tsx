@@ -110,7 +110,7 @@ export default function Pricing() {
                 </div>
             </div>
 
-            <div className="container px-4 pt-5" id="featured-3">
+            <div className="container px-4 pt-5 text-center">
                 <Home5 title="Try before buy!" />
                 <h2 className="pb-2 border-bottom text--center">
                     Benefits for subscribers!  <span className="badge badge--success">support 💚</span>
