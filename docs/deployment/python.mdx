@@ -83,7 +83,6 @@ commands:
   - test -f requirements.txt && pip install -r $_
 ```
 
-
 ```yaml title="https://github.com/domcloud/recipes/blob/master/python-uvicorn.yml"
 features:
   - python latest
@@ -187,7 +186,21 @@ features:
   - python 3.8.1
 ```
 
-Python install scripts is powered by [pyenv](https://github.com/pyenv/pyenv). 
+Python install scripts is powered by [pyenv](https://github.com/pyenv/pyenv). Python binaries is provided by [indygreg/python-build-standalone](https://github.com/indygreg/python-build-standalone/). When just mentioning `python` it's equivalent with `python system` which installing pyenv but still using system-wide python.
+
+:::warning
+
+The python binaries currently have issues that they [don't have shared libraries](https://github.com/indygreg/python-build-standalone/issues/227) which make `venv` or some legacy pip install broken. We advise to stick into `python system` until this is resolved. 
+
+However if you have to upgrade simply refer to version which there's no binary version (e.g. `3.11.0`) to make pyenv compile the python binary, which is always works.
+
+:::
+
+### Installing depedencies
+
+Installing python depedencies can be tricky and easily overlooked. We have system-wide installation of `pip` and `pipenv`. When `python` feature is installed, `pyenv` will be available to shim `python` and `pip` to your terminal profile. When changing python version using pyenv, the python interpreter will be installed to `.pyenv/shims/python`.
+
+When installing with `pipenv` all depedencies are installed within a custom virtualenv. You shouldn't have to use `python` feature at all because `pipenv` already does it for you. To run the customized python and it's pip installation in NGINX use `env PORT=$PORT pipenv run python app.py` in `app_start_command`.
 
 ## App Management
 
@@ -204,3 +217,4 @@ You can see app log from Check -> Check Process Logs tab. Only startup problems 
 Please use a proper logging mechanism such as [the standard logging library](https://docs.python.org/3/library/logging.html) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.
+
