@@ -5,9 +5,23 @@ title: Security Measures
 
 This article describes the security measures that implemented in the system. 
 
-DOM Cloud is essentially a Linux VPS server that's shared for all users. While this maybe seems like a bad idea, when it done correctly it will work fine for most users. 
+DOM Cloud is essentially a Linux VPS server that's shared for all users. While this maybe seems like a bad idea, when it done correctly it will work fine and save a lot of infra cost for most users. 
 
-Each servers currently installed with 1 vCPU and 1 or 2 GB RAM, which should be enough for most of web development task and average production server. This hardware spec may be increased as the time goes with available budget.
+DOM Cloud has six servers with different spec tier level:
+
+Tier I: 2 vCPU 4 GB RAM
+- `sga.domcloud.co` (Singapore)
+- `nyc.domcloud.co` (New York)
+
+Tier II: 1 vCPU 1 GB RAM
+- `fra.domcloud.co` (Frankfurt)
+- `tyo.domcloud.co` (Tokyo)
+- `blr.domcloud.co` (Bangalore)
+- `sao.domcloud.co` (Sao Paolo)
+
+These hardware specs may change as the time goes with available budget.
+
+If you're happen to close with tier II servers, think of your website usecase. If you only want to host and simple website, go to in Tier II because ping time really matters. If your app can't run in Tier II, or it loads so long or hangs too commonly, then try moving it on Tier I server.  
 
 ## No Sudo
 
