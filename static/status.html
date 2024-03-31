@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const servers = [
+            "sga.domcloud.co",
+            "nyc.domcloud.co",
+            "ams.domcloud.co",
+            "tyo.domcloud.co",
+            "blr.domcloud.co",
+            "sao.domcloud.co",
+        ]
+
+        async function main() {
+            let data = [];
+            for (const server of servers) {
+                const p = await fetch(`https://${server}/status/test`);
+                const item = {
+                    name: server,
+                    test: await p.json()
+                }
+                data.push(item)
+            }
+            console.log(data);
+            document.body.innerText = JSON.stringify(data);
+        }
+
+        main();
+    </script>
+</body>
+</html>
