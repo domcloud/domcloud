@@ -3,34 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
+    <style>
+        iframe {
+            width: 100%;
+            height: calc(50vh - 80px);
+        }
+        pre {
+            margin: 0;
+            text-align: center;
+        }
+    </style>
+    <title>Status Page</title>
 </head>
 <body>
-    <script>
-        const servers = [
-            "sga.domcloud.co",
-            "nyc.domcloud.co",
-            "ams.domcloud.co",
-            "tyo.domcloud.co",
-            "blr.domcloud.co",
-            "sao.domcloud.co",
-        ]
-
-        async function main() {
-            let data = [];
-            for (const server of servers) {
-                const p = await fetch(`https://${server}/status/test`);
-                const item = {
-                    name: server,
-                    test: await p.json()
-                }
-                data.push(item)
-            }
-            console.log(data);
-            document.body.innerText = JSON.stringify(data);
-        }
-
-        main();
-    </script>
+    <div class="container-fluid">
+        <div class="row g-0">
+            <div class="col-12 my-3" style="text-align: center;">
+                <h1>See <a href="https://stats.uptimerobot.com/AA77Xt9Jx8">Human-readable status page</a> instead</h1>
+            </div>
+            <div class="col-4">
+                <pre><code>sga.domcloud.co</code></pre>
+                <iframe title="Test" src="https://sga.domcloud.co/status/test"></iframe>
+            </div>
+            <div class="col-4">
+                <pre><code>nyc.domcloud.co</code></pre>
+                <iframe title="Test" src="https://nyc.domcloud.co/status/test"></iframe>
+            </div>
+            <div class="col-4">
+                <pre><code>ams.domcloud.co</code></pre>
+                <iframe title="Test" src="https://ams.domcloud.co/status/test"></iframe>
+            </div>
+            <div class="col-4">
+                <pre><code>tyo.domcloud.co</code></pre>
+                <iframe title="Test" src="https://tyo.domcloud.co/status/test"></iframe>
+            </div>
+            <div class="col-4">
+                <pre><code>blr.domcloud.co</code></pre>
+                <iframe title="Test" src="https://blr.domcloud.co/status/test"></iframe>
+            </div>
+            <div class="col-4">
+                <pre><code>sao.domcloud.co</code></pre>
+                <iframe title="Test" src="https://sao.domcloud.co/status/test"></iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
