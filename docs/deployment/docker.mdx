@@ -13,12 +13,15 @@ export const PortSpan = () => {
 
 # Deploy Docker Apps (Kit and Pro Plan)
 
-Docker in DOM Cloud is powered by [Podman](https://podman.io/). It's always run in [rootless mode](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and allows running 24/7. Because of how powerful and resouce consuming this is only available with `Kit` and `Pro` user plan.
+Docker in DOM Cloud is powered by [Docker rootless mode](https://docs.docker.com/engine/security/rootless/). Enabling docker features is implicitly allows running 24/7 (doesn't have to actually using docker). Because of how powerful and resouce consuming this is only available with `Kit` and `Pro` user plan.
 
-The `podman` CLI is available as a system-wide packages. `docker` is simply an alias to `podman`. A preconfiguration is required by activating `podman` feature via system runner to:
+> We recommend to use this feature only in Tier I servers (SGA and NYC) as they offer the most computing resources we currently offer
 
-+ assign `/etc/subuid` + `/etc/subgid` to allow podman rootless using sub uids for assigning containers.
+When this feature enabled, these things applied:
+
++ assign `/etc/subuid` + `/etc/subgid` to allow docker using sub uids for assigning containers.
 + assign `/var/lib/systemd/linger` to allow backround processes not get killed when SSH session terminates.
++ registering `dockerd` as user-scoped systemd daemon by `dockerd-rootless-setuptool.sh` and set it to run at startup.
 
 ## Port Allocation Policy
 
@@ -30,7 +33,7 @@ We'll choose this number for you by random for use through the documentation: <c
 
 ## Example
 
-The deployment script below activates `docker` capabilities and starts a "hello world" podman container for demo.
+The deployment script below activates `docker` capabilities and starts a "hello world" container for demo.
 
 <CodeBlock language="yaml" title="https://github.com/domcloud/recipes/blob/master/docker.yml">{`
 source: clear
@@ -55,7 +58,7 @@ Let's examine the reason why we use `docker run` commands as such:
 
 ### Example with Docker Compose
 
-To use `docker-compose.yml`, you need to run it via `podman-compose`. `docker compose` is not available [due to Podman version](https://stackoverflow.com/q/77411286) is still on `4.6.1`.
+To use `docker-compose.yml`, you can to run it via `docker compose`.
 
 The example below setup [Plausible self-hosting](https://github.com/plausible/hosting) with their database depedencies.
 
@@ -74,40 +77,15 @@ commands:
   - sed -i 's/8000:8000/${port}:8000/g' docker-compose.yml
   - echo BASE_URL=https://$DOMAIN > plausible-conf.env
   - echo SECRET_KEY_BASE=\`get_hash\` >> plausible-conf.env
-  - podman-compose down
-  - podman-compose up -d`.trim()
+  - docker compose up -d`.trim()
 }</CodeBlock>
 
-### Boot at system startup
+### Managing systemd daemon
 
-While it's infrequent, our server may restart during scaling and other reasons. So future-proof your docker instance using systemd. That will make your docker app run at boot.
+Your docker instance is registered as user-scoped systemd service. You can call these systemd commands to diagnose docker problems
 
-```yaml
-commands:
-  - mkdir -p ~/.config/systemd/user
-  - filename: app.service
-    content: |
-      [Unit]
-      Description=App Daemon
-      After=network-online.target
-
-      [Service]
-      Type=simple
-      WorkingDirectory=%h/public_html
-      ExecStart=/usr/bin/env podman-compose up -d
-      ExecReload=/usr/bin/env podman-compose down
-      Restart=always
-
-      [Install]
-      WantedBy=default.target
-  - mv app.service ~/.config/systemd/user/app.service
-  - systemctl --user daemon-reload
-  - systemctl --user start app
-  - systemctl --user enable app
-```
-
-After this have been implemented you can also start, restart and stop your docker app using `systemctl --user start app`, `systemctl --user restart app` and `systemctl --user stop app` respectively.
-
++ `systemctl status docker --user`
++ `systemctl <start|stop|enable|disable> docker --user`
 
 ## Differences
 
@@ -126,13 +104,3 @@ While other deployment system is benefited by simpler DX (you can code and fix b
 One of the benefit is you will be able to version your binaries via CI artifacts, this including releasing binaries via code versioning. This also added more security by not exposing your valuable source code to us, and lesser computation and storage used for compiling binaries by delegating it to CI instead of from our server.
 
 ... (example deployment code)
-
-### Advanced logging and microservice managements
-
-Here are some additional reasons to use docker:
-
-+ Use `docker compose` to configure your apps along with its service depedencies
-+ Use `docker ps` to inspect running containers, Use `docker logs` to inspect logs
-+ Allow limiting CPU and RAM resources 
-+ And many more...
-

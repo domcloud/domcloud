@@ -37,6 +37,7 @@ Type=simple
 User=bridge
 WorkingDirectory=/home/bridge/public_html
 ExecStart=/usr/bin/node /home/bridge/public_html/app.js
+TimeoutStopSec=5
 Restart=always
 
 [Install]
@@ -88,6 +89,11 @@ wget https://rdfind.pauldreik.se/rdfind-1.6.0.tar.gz
 tar -xf rdfind-1.6.0.tar.gz ; cd rdfind-1.6.0
 ./configure --disable-debug ; make install
 cd .. ; rm -rf rdfind-1.6.0
+```
+
+```
+dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin fuse-overlayfs slirp4netns
 ```
 
 ```
@@ -218,7 +224,7 @@ socket=/var/lib/mysql/mysql.sock
 log-error=/var/log/mariadb/mariadb.log
 pid-file=/run/mariadb/mariadb.pid
 innodb_file_per_table = 1
-innodb_buffer_pool_size = 64M
+innodb_buffer_pool_size = 128MB
 myisam_sort_buffer_size = 8M
 read_rnd_buffer_size = 512K
 net_buffer_length = 8K
@@ -227,6 +233,7 @@ sort_buffer_size = 512K
 table_open_cache = 64
 max_allowed_packet = 64M
 key_buffer_size = 16M
+max_connections = 4096
 ```
 
 ### PostgreSQL
@@ -234,7 +241,8 @@ key_buffer_size = 16M
 ```ini title="/var/lib/pgsql/data/postgresql.conf"
 ...
 listen_addresses = '*'
-max_connections = 1000
+max_connections = 4096
+shared_buffers = 128MB
 ...
 ```
 

@@ -232,17 +232,17 @@ nginx:
 
 ### `docker`
 
-Configure Docker (podman) capability. Only for users with `Pro` plan.
+Configure Docker capability. Only for users with `Kit` and `Pro` plan.
 
 + `docker on` or `docker` Enable docker.
 + `docker off` Disable docker.
 
 With this enabled it changes two things:
 
-+ `usermod --add-subuids --add-subgids $USERNAME` to allow podman rootless using sub uids for assigning containers.
++ `usermod --add-subuids --add-subgids $USERNAME` to allow docker rootless using sub uids for assigning containers.
 + `loginctl enable-linger $USERNAME` to allow processes not get killed when SSH session terminates.
 
-The `podman` CLI is always available regardless of this settings as this is provided from a system-wide install packages.
+The `docker` CLI is always available regardless of this settings as this is provided from a system-wide install packages.
 
 ### `php`
 

@@ -11,7 +11,7 @@ import IcBun from "simple-icons/icons/bun.svg";
 import IcJava from "simple-icons/icons/openjdk.svg";
 import IcDotNet from "simple-icons/icons/dotnet.svg";
 import IcZig from "simple-icons/icons/zig.svg";
-import IcDocker from "simple-icons/icons/podman.svg";
+import IcDocker from "simple-icons/icons/docker.svg";
 
 import IcSqlite from "simple-icons/icons/sqlite.svg";
 import IcMariaDB from "simple-icons/icons/mariadb.svg";
