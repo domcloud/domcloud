@@ -126,7 +126,11 @@ const config = {
             title: 'Contact Us',
             items: [
               {
-                label: 'Forum',
+                label: 'Discord (ID)',
+                href: 'https://discord.gg/ee6xre2q8W',
+              },
+              {
+                label: 'Forum (EN)',
                 href: 'https://github.com/domcloud/domcloud-co/discussions/',
               },
               {
