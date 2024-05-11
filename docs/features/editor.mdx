@@ -1,12 +1,87 @@
 ---
 layout: docs
-title: Virtualmin and Webmin
+title: Editor Tools
 ---
 
-## Manage servers with Virtualmin Panel
+import ThemedImage from '@theme/ThemedImage';
+
+
+Our online editor tools is available from the manage tab:
+
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/new-manage-b.png",
+        light: "/assets/ss/new-manage-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+The password is blurred but can be copied. To access SSH and databases you can use username and password provided in this page. The hostname and IPv4/IPv6 is also provided to access our server via tools from your PC.
+
+At left-bottom part is a clickable link to quickly open supported tools:
+
++ SSH: Opening `ssh://` URI (the password is not set in URL, but copied after you click the link)
++ MySQL: Opening `mysql://` URI (the password is set in URL)
++ PostgreSQL: Opening `postgresql://` URI (the password is set in URL)
+
+At right-side part is our online tools available. You don't need to install anything (except VSCode tool).
+
+## Visual Studio Code (Remote Link)
+
+This is a direct link to Edit your website via [SSH Remote](https://code.visualstudio.com/docs/remote/ssh). The password is not provided in the URL, but copied after you click the link. Simply paste when prompted password.
+
+The prompted with the what's the remote host, **choose Linux**.
+
+Sometimes after long usage, the SSH disconnect itself and you need to enter the password again.
+
+To keep not asking password, please [setup identity keys](https://www.freecodecamp.org/news/the-ultimate-guide-to-ssh-setting-up-ssh-keys/).
+
+By default it opens `~/public_html` folder. To open other folder you can click (More info) and enter specified folder, or simply open another folder in your VSCode remote session.
+
+Your VS Code extenstion, installation and settings is saved here in the server. So this also can be your cloud IDE. You can actually go further with using [vscode.dev](https://vscode.dev) to code on the go where VSCode app is not installed.
+
+## WebSSH
+
+WebSSH is an online tool use access your server via SSH. Simply click the link and it will grant you the access. The password is provided via POST so your browser won't save it.
+
+The webSSH session always starts from `~`. You most likely want to type `cd ~/public_html` before doing anything else.
+
+Most likely you'll use this for quick editing files and install depedencies. This is a much better alternative than using `commands:` from usual deployment tools. 
+
+To quickly edit file, use `nano` or `vim`. More tools available just like how you would do with linux. But becareful with some keyboard shortcuts like `escape` or `ctrl+w` since that most likely interpreted with your browser. We recommend to use VSCode for extensive code editing.
+
+Remember that DOM Cloud is essentially just another VM running under linux, but it's much more secure. You'll not be able to do `sudo` like everyone else who also uses the server. Your changes and installation is persistent.
+
+You can also install additional programs here but we recommend you to use [the deployment feature](./deploy.mdx) to install many popular software compilers, to keep you from having headache of googling linux stuff.
+
+
+## PhpMyAdmin and PhpPgAdmin
+
+This is online tools to access MySQL and PostgreSQL. You need to copy username and password from manage tab to get in.
+
+Keep note that the database itself is opt-in, you need to [enable it beforehand](./database.mdx). Please click the link for more information such as creating another DB instance (can't do it from this tool).
+
+## Filestash
+
+This is online tools to access and edit files quickly with friedly UI. Most file tasks is available here, except extracting zip files.
+
+## Webmin (Virtualmin)
 
 The Virtualmin Panel gives you ability to manage files, subservers and databases.
 
 Here are an introduction video to demonstrate its UI features.
 
 <iframe width="100%" height="500px" src="https://www.youtube.com/embed/OENyJFI_w0Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Most likely you will need to access Webmin to:
+
++ Access File Editor (much more complete than Filestash)
++ Access Database Editor (can add and remove database and run migrations from server file)
++ Access DNS Editor (has more friendly UI than our DNS editor)
++ Create subservers (same as "merge parent" checked when creating new websites)
+

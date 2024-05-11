@@ -12,12 +12,15 @@ These popular system-wide linux tools are available out of the box:
 
 | | | | | |
 | :-- | :-- | :-- | :-- | :-- |
-| cmake | convert | composer | curl | gcc |
-| git | gpg2 | gzip | make | mysql |
-| nano | openssl | ncdu | node | perl |
-| phar | php | psql | python | ruby |
-| sed | ssh | sqlite3 | tar | unzip |
-| vi | vim | wget | yarn | zip |
+| btop | cmake | composer | convert | curl |
+| dig | docker | gcc | g++ | git |
+| gpg2 | gzip | htop | iftop | jq |
+| lsof | make | mysql | nano | ncdu |
+| node | nslookup | openssl | perl | phar |
+| php | psql | python | rsync | ruby |
+| sed | sendmail | ssh | sqlite3 | strace |
+| tar | unzip | vi | vim | wget |
+| yarn | zip |
 
 :::info
 
@@ -25,41 +28,37 @@ Don't rely on their version as it's OS wide and can be changed anytime though sy
 
 :::
 
-## VSCode SSH Remote
+## Cron Job
 
-You can use [VSCode](https://code.visualstudio.com/) to edit your files and code remotely. It's a great tool quickly edit files just like you're editing locally.
+You can create cron jobs by running `crontab -e` from SSH. It will open vim to edit cronjob for your server.
 
-To use it, you need to install the [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) extension. Then, you can launch a session from the Manage tab.
+Please note, the minimum interval for cronjob is once in every hour; lesser than that and the system will delete your cron entries automatically!
 
-:::tip
+## Phussion Passenger Tools
 
-To avoid clutter, you can open the VSCode SSH Remote session inside a subdirectory. Open using the dropdown right next to the `Visual Studio Code` button in manage tab.
+There's `passenger-status` and `passenger-config` to diagnose your app if you happen to use passenger apps.
 
-:::
+The `restart` CLI tool is also to forcefully restart your currently running apps under NGINX. It's equivalent as `passenger-config restart-app ~`.
 
-## HMR (Hot Module Replacement)
+To check passenger apps logs, you have to check it from our UI panel.
 
-HMR is a feature that allows you to edit your code and see the changes immediately without reloading the website.
+## Docker Tools 
 
-While DOM Cloud primary usage is for hosting production websites, it doesn't stop you from using it for development. Some recipes in [deployment section](../deployment/index.mdx) can make HMR works out of the box, those are includes:
+There's `docker` and `systemctl --user` when you [activate `docker` feature](../deployment/docker.mdx) via deployment system.
 
-+ Laravel (with Laravel UI)
-+ Create React App
-+ Vite
-+ Next.js
-+ SvelteKit
+To manage docker apps including viewing logs, you have to check it via `docker` CLI tool.
 
-Combined with [VSCode SSH Remote](#vscode-ssh-remote), it can function as close to local development in the cloud (like CodeSandbox or Github's Codespaces).
+This docker is run with rootless mode. Hence some features is unavailable such as limiting by CPU and RAM.
 
 ## Ephemeral Ports
 
 Most ports are blocked except ephemeral ports (32768 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NGINX.
 
-Please note that long-running background processes are not allowed in the server. It will be killed automatically.
+Please note that long-running background processes are not allowed in the server. It will be killed automatically as soon as you log-out from SSH session.
 
 :::caution
 
-DOM Cloud is a shared hosting in nature, so other people might stumble across your randomly assigned ports (incoming traffic from ports can't be divided by domain name unlike if it's going through NGINX). Never put any sensitive data if it's mean for development.
+DOM Cloud is a shared VM, so other people might stumble across your randomly assigned ports (incoming traffic from ports can't be divided by domain name unlike if it's going through NGINX). Never put any sensitive data if it's mean for development!
 
 :::
 
@@ -68,7 +67,7 @@ DOM Cloud is a shared hosting in nature, so other people might stumble across yo
 To automatically run with server public IP and random ports, use syntax like this:
 
 ```bash
-npm run dev -- --host `hostname -I | cut -d " " -f1` --port `shuf -n 1 -i 49152-65535`
+npm run dev -- --host $(hostname -I | cut -d " " -f1) --port $(shuf -n 1 -i 32768-65535)
 ```
 
 :::
@@ -81,7 +80,7 @@ If you want performant cache storage, look for other platform. Some of them may 
 
 ### Managing File Storage
 
-If you need to delete unnecessary files in one of your hosts, use [ncdu](https://en.wikipedia.org/wiki/Ncdu). It's a disk usage analyzer available in all servers.
+If you need to delete caches and other unnecessary files in one of your hosts, use [ncdu](https://en.wikipedia.org/wiki/Ncdu). It's a disk usage analyzer available in all servers. This is a great tool to use if you run out of disk space.
 
 ![](https://upload.wikimedia.org/wikipedia/commons/d/d7/Ncdu_screenshot.png)
 

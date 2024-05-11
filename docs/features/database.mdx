@@ -6,7 +6,7 @@ Database is an integral part of any application. DOM Cloud provides a free, opt-
 
 ### Initializing the Database
 
-Databases is disabled by default. To enable it, go to [deploy tab](../intro/getting-started#deploy-tab) and execute one of these:
+Databases is opt-in, disabled by default. To enable it, go to [deploy tab](../intro/getting-started#deploy-tab) and execute one of these:
 
 ```yml
 features:
@@ -24,7 +24,7 @@ To view and edit the database using online tools, use *PhpMyAdmin* or *PhpPgAdmi
 
 :::info
 
-You can't create or drop database from PhpMyAdmin, PhpPgAdmin or any external database client. You have to do that from Webmin UI or [deployment script](./deploy#features).
+You can't create or drop database from PhpMyAdmin, PhpPgAdmin or any external database client. You have to do that from Webmin UI or [deployment script](./deploy.mdx#features).
 
 :::
 
@@ -61,7 +61,7 @@ When connecting with Remote Access, the hostname is your website domain or the s
 
 ### Timestamp
 
-The whole server always sets the clock in `UTC`.
+Our server always sets the clock in `UTC`.
 
 A good idea to handle timezone is done by client processing (Javascript), both after getting the data from database/AJAX and before sending data/Posts to server.
 
@@ -73,4 +73,4 @@ Only three database system is supported: `MariaDB`, `PostgreSQL`, `SQLite`. For 
 
 You can also use third party databases that's also cheap (or even free) such as [Redis Labs](https://redis.com/try-free/), [Firebase Firestore](https://firebase.google.com/products/firestore) or [MongoDB Atlas](https://www.mongodb.com/products/platform/cloud), just make sure the cluster is close enough within our server. 
 
-**Spinning your own database system is discouraged**.
+If you wish to spin up a custom database server, you might be better deploy your website [using docker](../deployment/docker.mdx).

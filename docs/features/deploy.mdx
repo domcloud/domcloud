@@ -71,7 +71,7 @@ This option is useful if your files is already in a public repository such as Gi
 
 :::danger
 
-This option will always **overwrite** all contents inside the host. Use with caution.
+This option will always **overwrite** all contents inside the host. Use with caution!
 
 :::
 
@@ -183,15 +183,14 @@ DNS records is also configurable via [Webmin DNS](./editor.mdx).
 
 ### `firewall`
 
-Configure Whitelist Firewall.
+Configure outgoing firewall in your domain. Only configurable for users with `Lite`, `Kit` and `Pro` plan.
 
-+ `firewall on` or `firewall` Enable firewall.
-+ `firewall off` Disable firewall.
++ `firewall on` or `firewall` Enable firewall (default for free users).
++ `firewall off` Disable firewall (default for subscribing users).
 
-Firewall is an additional protection to make sure the host won't send any outgoing request not defined [in the whitelist](https://github.com/domcloud/bridge/blob/main/src/whitelist/sites.conf). 
+Firewall is an additional protection to make sure the host won't send any outgoing request not defined [in the whitelist](https://github.com/domcloud/bridge/blob/main/src/whitelist/sites.conf).
 
 See the [relevant security description](../features/security.mdx) regarding this feature.
-
 
 ### `ssl`
 
@@ -210,6 +209,8 @@ Configure HTTP version for HTTPS.
 
 + `http 1` use HTTP version 1
 + `http 2` use HTTP version 2
+
+Using HTTP version 2 can be faster and beneficial on some websites.
 
 ### `root`
 
@@ -237,10 +238,11 @@ Configure Docker capability. Only for users with `Kit` and `Pro` plan.
 + `docker on` or `docker` Enable docker.
 + `docker off` Disable docker.
 
-With this enabled it changes two things:
+With this enabled it doing three things:
 
 + `usermod --add-subuids --add-subgids $USERNAME` to allow docker rootless using sub uids for assigning containers.
 + `loginctl enable-linger $USERNAME` to allow processes not get killed when SSH session terminates.
++ `dockerd-rootless-setuptool.sh install` to install docker daemon in user-scope.
 
 The `docker` CLI is always available regardless of this settings as this is provided from a system-wide install packages.
 
@@ -259,7 +261,7 @@ Remember that `php 8.x` is an active release. Changing this version also sets th
 
 PHP files that served through NginX are served with `php-fpm` (FastCGI Process Manager).
 
-You can't install custom PHP versions or any PHP modules since these are installed by RHEL system packages. However if you're expert enough you can install a PHP binary yourself then use Passenger Phusion GLS to run PHP by FastCGI.
+You can't install custom PHP versions or any PHP modules since these are installed by RHEL system packages. However if you're expert enough you can install a PHP binary yourself then use Passenger Phusion GLS to run PHP by FastCGI. Read more on [how to deploy PHP websites](../deployment/php.mdx).
 
 ### `node`
 
@@ -271,9 +273,9 @@ Install specific NodeJS version. Available options:
 + `node x.y.z`
 + `node off`
 
-By default it's Node 18.x provided from RHEL system packages.
+By default it's Node 18.x provided from RHEL system packages. Note that the default system doesn't provide Corepack and supplemental package managers like yarn (berry version) or pnpm.
 
-This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH. This installation is powered by [`webi`](https://webinstall.dev/node). All given node version is downloaded in binary/compiled version from [the official registry](https://nodejs.org/download/release) to keep switching version fast.
+This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH and corepack will enabled. This installation is powered by [`webi`](https://webinstall.dev/node). All given node version is downloaded in binary/compiled version from [the official registry](https://nodejs.org/download/release) to keep switching version fast. Read more on [how to deploy Node apps](../deployment/node.mdx).
 
 
 ### `python`
@@ -295,7 +297,7 @@ If you have problem creating virtual envs please using `pyenv virtualenv` or jus
 
 The difference with `python system` and `python off` is the latter will remove `pyenv` and all former local python installations.
 
-The installer will try to download binary/compiled version from [community builds](https://github.com/indygreg/python-build-standalone) if requested version is available to keep switching version fast.
+The installer will try to download binary/compiled version from [community builds](https://github.com/indygreg/python-build-standalone) if available to keep switching version fast. Read more on [how to deploy Python apps](../deployment/python.mdx).
 
 ### `ruby`
 
@@ -306,9 +308,9 @@ Install specific Ruby version. Available options:
 + `ruby x.y.z`
 + `ruby off`
 
-By default it's Ruby 3.0 provided from RHEL system packages. This installation is powered by [rvm](https://rvm.io). 
-The installer will try to download binary/compiled version from [RVM builds](https://rvm_io.global.ssl.fastly.net/binaries/centos/9/x86_64/) if requested version is available to keep switching version fast.
+By default it's Ruby 3.0 provided from RHEL system packages. All instalations with ruby gems has `--no-document` implied from global settings to keep installation minimal and fast. 
 
+This installation is powered by [rvm](https://rvm.io). It will try to download compiled version from [RVM builds](https://rvm_io.global.ssl.fastly.net/binaries/centos/9/x86_64/) if available to keep switching version fast. Read more on [how to deploy Ruby apps](../deployment/ruby.mdx).
 
 ### `deno`
 
@@ -321,7 +323,7 @@ Install specific Deno version. Available options:
 
 There's no Deno installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [`webi`](https://webinstall.dev/deno).
+This installation is powered by [`webi`](https://webinstall.dev/deno). Read more on [how to deploy Deno apps](../deployment/deno.mdx).
 
 ### `bun`
 
@@ -333,7 +335,9 @@ Install specific Bun.js version. Available options:
 
 There's no Bun.js installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [`webi`](https://webinstall.dev/bun).
+When configuring NGINX with `bun` you have to prefix it with `bunfix` which is installed by default.
+
+This installation is powered by [`webi`](https://webinstall.dev/bun). Read more on [how to deploy Bun.js apps](../deployment/bun.mdx).
 
 ### `go`
 
@@ -345,7 +349,7 @@ Install specific Go version. Available options:
 
 There's no Go installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [`webi`](https://webinstall.dev/golang).
+This installation is powered by [`webi`](https://webinstall.dev/golang). Read more on [how to deploy Go apps](../deployment/go.mdx).
 
 ### `rust`
 
@@ -357,19 +361,20 @@ Install specific Rust version. Available options:
 
 There's no Rust installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [rustup](https://rustup.rs).
+This installation is powered by [rustup](https://rustup.rs). It will install minimal profile to keep switching versions fast. Read more on [how to deploy Rust apps](../deployment/rust.mdx).
 
 ### `java`
 
 Install specific Java version. Available options:
 
 + `java` or `java latest`
++ `java stable` or `java lts`
 + `java x.y.z`
 + `java off`
 
 There's no Java installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [Adoptium Project](https://adoptium.net/). Only latest build from them in each major version (as low as `jdk 8`) is available to download using this feature.
+This installation is powered by [Adoptium Project](https://adoptium.net/). Only latest build from them in each major version (as low as `jdk 8`) is available to download using this feature. Read more on [how to deploy Java apps](../deployment/java.mdx).
 
 ### `dotnet`
 
@@ -381,19 +386,20 @@ Install specific .NET Core version. Available options:
 
 There's no .NET Core installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [Microsoft .NET Core builds](https://dotnet.microsoft.com/en-us/download/dotnet). Only versions provided by them is available to install.
+This installation is powered by [Microsoft .NET Core builds](https://dotnet.microsoft.com/en-us/download/dotnet). Only versions provided by them is available to install. Read more on [how to deploy .NET Core apps](../deployment/dotnet.mdx).
 
 ### `zig`
 
 Install specific Zig version. Available options:
 
 + `zig` or `zig latest`
++ `zig beta`
 + `zig x.y.z`
 + `zig off`
 
 There's no Zig installed in system-wide binaries. You must specify this feature to make it available.
 
-This installation is powered by [`webi`](https://webinstall.dev/zig). 
+This installation is powered by [`webi`](https://webinstall.dev/zig). Read more on [how to deploy Zig apps](../deployment/zig.mdx).
 
 ---
 
@@ -546,23 +552,16 @@ These envars also will be set:
 
 + `CI=true`
 + `CONTINUOUS_INTEGRATION=true`
-+ `DEBIAN_FRONTEND=noninteractive`
 + `LANG=en_US.UTF-8`
 + `LC_ALL=en_US.UTF-8`
++ `PIP_PROGRESS_BAR=off`
++ `XDG_RUNTIME_DIR=/run/user/$(id -u)`
++ `DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus`
 
-#### Builtin Git Credentials
+These shell extras also be set:
 
-If you have logged in with GitHub with repo access, an envar `$GITHUB_TOKEN` will be available for you to use. Together with Git Credentials API, it will grant the access to your private repos along with all `git` commands run from the Runner.
-
-This is useful for cloning or pulling private repos after a webhook is received, for example.
-
-:::caution
-
-This does have security implication and we have taken some security measures to prevent leaks. For example, since it's provided within envar, you `git` commands will break if run within SSH. That's because its doesn't saved anywhere in the server.
-
-We doesn't prevent you, for example to run `echo $GITHUB_TOKEN` in the `commands` list and use it as the token used for SSH session. But we do recommend you to not do that.
-
-:::
++ `unset HISTFILE TERM`
++ `shopt -s dotglob`
 
 #### Time limit
 

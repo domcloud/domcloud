@@ -232,7 +232,11 @@ because it will also tell Virtualmin to use this folder as e.g. SSL verification
 
 :::
 
-### Reroute index.php
+### Reroute PHP Files
+
+There's two kind of reroutes: To hide `.php` extension or reroute all to top `index.php` file.
+
+To reroute to top `index.php` file:
 
 ```yaml
 nginx:
@@ -245,6 +249,16 @@ nginx:
 If you use frameworks, they also likes to handle custom routes. The `try_files:` configuration
 here is to instruct NGINX to try to serve the root `/index.php` file in case no static files found
 in the given request URL.
+
+To hide `.php` extension for files, you can use this:
+
+```yaml
+nginx:
+  locations:
+  - match: /
+    try_files: $uri $uri/ $uri.php
+  fastcgi: on
+```
 
 ### Multiple website in a domain
 
