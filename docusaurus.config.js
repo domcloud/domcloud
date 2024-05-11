@@ -13,6 +13,7 @@ const config = {
   trailingSlash: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  onBrokenAnchors: 'ignore',
   favicon: 'assets/icon/favicon.ico',
   scripts: [
     {
