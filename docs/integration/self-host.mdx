@@ -92,6 +92,13 @@ cd .. ; rm -rf rdfind-1.6.0
 ```
 
 ```
+wget https://github.com/therootcompany/pathman/releases/download/v0.6.0/pathman-v0.6.0-linux-amd64_v1.tar.gz
+tar -xf pathman-v0.6.0-linux-amd64_v1.tar.gz
+mv pathman-v0.6.0-linux-amd64_v1 /usr/local/bin/pathman
+rm -f pathman-v0.6.0-linux-amd64_v1.tar.gz
+```
+
+```
 dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin fuse-overlayfs slirp4netns
 ```
