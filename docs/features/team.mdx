@@ -1,0 +1,42 @@
+# Team Access
+
+For subscribing users, you can share your account to your team so they can manage your platform.
+
+For each user (you!), there's only one team available. You can invite team by adding their email. This email must be exist and an account in DOM Cloud.
+
+The role access are explained here:
+
+## Owner
+
+This is **you**. Basically only you can gain control to everything. You can't give "owner" role to any other parties (yet).
+
+The owner role is exclusively can do:
+- Upgrade or extend plan
+- View billing history
+- Buy or transfer new domains
+- Rename or delete account
+
+## Admin
+
+This is the role to manage everything except financial features. If you give them this role, then you also trust them to do destructive operations.
+
+The admin role is exclusively can do:
+- Manage, restore or delete backup
+- Create, transfer or delete websites
+- Changing a website domain, username or password
+- Changing name server or protection settings in domain
+- Accessing webmin panel
+- Perform destructive operation in deployment systems like
+  - Using `source:` to overwrite all the files
+  - Changing Firewall, DNS and NGINX config
+  - Creating or deleting databases
+
+## Member
+
+This is the role we recommend for developers as they able to do everything that essentially a non sudoers can do.
+
+The admin role is exclusively can do:
+- Login to Database either remotely or via web
+- Login to SSH features like VSCode and Filemin
+- Running deployment systems and creating webhooks
+- Create or download backups

@@ -88,11 +88,11 @@ export default function Pricing() {
                                 </div>
                                 <div className="card__body">
                                     <div className="text--center">
-                                        <h2 className="cap">15.00$</h2>
+                                        <h2 className="cap">10.00$</h2>
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>30 GiB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>10 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
                                         <FaGlobe /> <span><b>500 GiB</b> Data Network / month</span>
@@ -108,6 +108,12 @@ export default function Pricing() {
                         </div>
                     </div>
                 </div>
+
+                <p className="text--center pb-5 pt-3">
+                    <a href="/docs/intro/compare-plans" className="button button--link button--lg px-4 me-md-2">
+                        Read more about comparing our plans
+                    </a>
+                </p>
             </div>
 
             <div className="container px-4 pt-5 text-center">

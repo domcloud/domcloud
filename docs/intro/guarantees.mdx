@@ -37,17 +37,21 @@ If your website runs for a mission critical project, you might need to consider 
 
 ## Guarantees
 
-Don't mind will all the drawbacks above? Great! Here are the things that we think you will like:
+Don't mind with all the drawbacks above? Great! Here are the things that we think you'll love:
 
 ### File Access
 
 File access is often underrated in today's cloud computing world. The reason you wouldn't see people running PHP web-apps inside containers often is because this language is heavily depends with local file operations (e.g. for sessions and file uploads). 
 
-Having file access is the simplest way to avoid cache and store data problem. If you're not choosing a monolithic service then you would have take alternative solutions like Redis or Memcached for cache and S3 storages for file uploads. Most people gave up using horizontally scalable system because it's too complex to manage.
+Having file access is the simplest way to avoid cache and store data problem. If you're not choosing a monolithic service then you would have take alternative solutions like Redis or Memcached for cache and S3 storages for file uploads. Most people gave up using horizontally scalable system because it's either too complex or too costly to manage.
+
+Files in DOM Cloud can be accessed and edited using our Deployment System, Webmin, SSH or VSCode Editor.
 
 ### Incremental Build
 
-If your web app have a particularly large packages depedency, this will help you a lot. Unlike standard CI/CD, when you do e.g. `npm install`, the existing `node_modules` will not be cleared, thus speeding up the overall build time.
+If your web app have a particularly large packages depedency, this will help you a lot. Unlike standard CI/CD, when you do depedency installs like `npm install`, the existing `node_modules` will not be cleared, thus speeding up the overall build time.
+
+This is because our system is simply a custom-managed Virtual Machine. We don't apply containerization, just raw Linux capabilites.
 
 ### Simple Hot Fixes
 

@@ -1,0 +1,115 @@
+# Compare Plans
+
+This documentation provides details on the various pricing plans available, their features, and the differences between each plan. 
+
+## Free Plan
+
+- **Monthly Price**: Free
+- **Storage Limit**: 1.5 GB (1536 MB)
+- **Network Limit**: 2 GB (2048 MB)
+- **Max Web Instances**: 3
+- **Max Users in Team**: 1
+- **Features Level**: 
+  - Firewall is permanently enabled
+  - Custom domain enabled
+  - Uncostumizable free domain is available
+
+This plan is suitable for trying out the service. We explain more in the [Free plan documentation](./free-plan.mdx).
+
+## Lite Plan
+
+- **Monthly Price**: $1.5 USD
+- **Storage Limit**: 3 GB (3072 MB)
+- **Network Limit**: 20 GB (20480 MB)
+- **Max Web Instances**: 6
+- **Max Users in Team**: 2
+- **Features Level**:
+  - Customizable free domain
+  - Firewall can be disabled
+  - Backups are available
+
+This plan is ideal for development or internal tools. This is our cheapest plan to unlock optional features we can cheaply cover.
+
+### Free vs. Lite
+
+- You can disable the firewall for enabling 3rd-party API access
+- You can create, download and restore backups
+- You can use our customizable free domain (*.domcloud.dev)
+- You have a significantly increased Network limit for moderate traffic (~20k monthly views for 1 MB pages)
+- You can prepaid the plan to a year or more to avoid your data being deleted because of not logging-in for months
+- You can add one of your engineering team to manage hosts in your account
+
+### Tips for those who considering Lite Plan
+
+- You definitely want to start from here if your website is new or just a hobby
+- This plan is not for highly complex system (which should uses docker)
+
+## Kit Plan
+
+- **Monthly Price**: $5.0 USD
+- **Storage Limit**: 10 GB (10240 MB)
+- **Network Limit**: 100 GB (102400 MB)
+- **Max Web Instances**: 10
+- **Max Users in Team**: 3
+- **Features Level**:
+  - All in Lite plan
+  - Docker and long-running services
+  - Scheduled backups are available
+
+This plan is ideal for production sites. This is the plan where your subscription can be reinvested again for higher computing spec in our platform.
+
+### Lite vs. Kit
+
+- Kit offers a significant upgrade in both storage and network limit to accomodate a typically high traffic websites
+- You can add docker and other long-running services including installing your own database setup
+- You can schedule backups now
+
+### Tips for those who considering Kit Plan
+
+- You definitely want to start from here if your website is complex enough
+- This plan is offered for a typically ideal startups (one each for key person in product, backend and frontend)
+
+## Pro Plan
+
+- **Monthly Price**: $10.0 USD
+- **Storage Limit**: 10 GB (10240 MB)
+- **Network Limit**: 500 GB (512000 MB)
+- **Max Web Instances**: 25
+- **Max Users in Team**: 5
+- **Features Level**:
+  - All in kit plan
+  - Significantly high network cap
+
+This plan is suitable for websites with high demand in traffic. This is for websites that cover institional-wide level like news or community forums.
+
+### Kit vs. Pro
+
+- Pro offers a significant upgrade in network limit to accomodate ~500k monthly views for 1 MB pages
+
+### Tips for those who considering Pro Plan
+
+- You are most likely want to combine our services like Clouflare (for CDN and Bot Protection)
+
+### Max Plan
+
+- **Monthly Price**: $20.0 USD
+- **Storage Limit**: 50 GB (51200 MB)
+- **Network Limit**: 1 TB (1024000 MB)
+- **Max Web Instances**: 100
+- **Max Users in Team**: 20
+- **Features Level**:
+  - All in pro plan
+  - Significantly high storage cap
+
+This plan is designed for websites with high demand in data. This is for websites that has a huge number of team and data.
+
+### Pro vs. Max
+
+- Max offers a significant upgrade in storage limit and double in network cap for 1 million views
+- Max offers a typical corporate setup for so many key person. Please utilize CI for non key person.
+
+### Tips for those who considering Max Plan
+
+- You are most likely want to combine our services like Clouflare (for CDN and Bot Protection)
+- You are most likely want to use S3-like services for user generated content (so you can opmitize our storage cap for databases)
+- We are most likely will increase our server capacity under your own choice to accomodate your need of high traffic websites.
