@@ -174,10 +174,10 @@ More information about setting environment variables can be found in the [Passen
 Any edits either in the app file or `~/.bashrc` file will not be applied until the app is restarted. You can restart the app forcibly by running `restart` in SSH, which will actually calls:
 
 ```bash
-passenger-config restart-app ~
+killall -u $USER
 ```
 
-More information about restarting app can be found in the [Passenger documentation](https://www.phusionpassenger.com/docs/tutorials/reloading_code/node/).
+The alternative way to restart app can be found in the [Passenger documentation](https://www.phusionpassenger.com/docs/tutorials/reloading_code/node/).
 
 ### Websocket
 

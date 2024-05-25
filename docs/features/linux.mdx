@@ -38,7 +38,7 @@ Please note, the minimum interval for cronjob is once in every hour; lesser than
 
 There's `passenger-status` and `passenger-config` to diagnose your app if you happen to use passenger apps.
 
-The `restart` CLI tool is also to forcefully restart your currently running apps under NGINX. It's equivalent as `passenger-config restart-app ~`.
+The `restart` CLI tool is also to forcefully restart your currently running apps under NGINX. It's equivalent as `killall -u $USER`.
 
 To check passenger apps logs, you have to check it from our UI panel.
 
