@@ -52,7 +52,7 @@ This docker is run with rootless mode. Hence some features is unavailable such a
 
 ## Ephemeral Ports
 
-Most ports are blocked except ephemeral ports (32768 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NGINX.
+Most ports are blocked except ephemeral ports (32000 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NGINX.
 
 Please note that long-running background processes are not allowed in the server. It will be killed automatically as soon as you log-out from SSH session.
 
@@ -67,7 +67,7 @@ DOM Cloud is a shared VM, so other people might stumble across your randomly ass
 To automatically run with server public IP and random ports, use syntax like this:
 
 ```bash
-npm run dev -- --host $(hostname -I | cut -d " " -f1) --port $(shuf -n 1 -i 32768-65535)
+npm run dev -- --host $(hostname -I | cut -d " " -f1) --port $(shuf -n 1 -i 32000-65535)
 ```
 
 :::

@@ -85,7 +85,7 @@ Other deployment scripts we offer also listed below.
 <Tabs>
   <TabItem value="esm" label="ESM" default>
 
-For projects that using ESM-style imports, GLS binding can be used as it's the basic for any custom web server either for Node and other code languages. The requirement to use this is your app must listen to given `PORT` env/args (either `node ... --port=$PORT` or `env PORT=$PORT node ...`). You can also use alternative calls such as `npm start` here.
+For projects that using ESM-style imports, GLS binding can be used as it's the basic for any custom web server either for Node and other code languages. The requirement to use this is your app must listen to given `PORT` env/args (either `node ... --port=$PORT` or `env PORT=$PORT node ...`). You can also use alternative calls such as `node app.js` here.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/node-esm.yml"
 features:
@@ -94,9 +94,27 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT node app.js
+    app_start_command: env PORT=$PORT npm start
 commands:
   - npm install
+```
+
+  </TabItem>
+  <TabItem value="tsc" label="TSC" default>
+
+For Node.js projects that using typescript, you need to build it first and let NGINX serve your JS scripts. We assume you're using a similar boilerplate [we linked here](https://github.com/GeekyAnts/express-typescript).
+
+```yaml title="https://github.com/domcloud/recipes/blob/master/node-tsc.yml"
+features:
+  - node lts
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: env PORT=$PORT npm start
+commands:
+  - npm install
+  - npm run build
 ```
 
   </TabItem>
@@ -179,6 +197,14 @@ Your app do not restarted automatically after file changes. To restart, run `res
 Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
 
 See [NGINX and App Daemon](../features/nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
+
+## App Development
+
+If you're editing your Node.js app in place (e.g. using Visual Studio Code Remote), it is helpful to run a separate Node instance so you can see your changes live using `nodemon` or `npm run dev` or other similar tools.
+
+The requirement is you need to use port `32000` or above, since these port will not be blocked from the server. So when starting a development instance, use something like `PORT=31234 npm run dev` in SSH.
+
+To apply your changes back to NGINX, run your build flow (e.g. `npm run build`) then restart it by calling `restart` on SSH.
 
 ## App Logging
 
