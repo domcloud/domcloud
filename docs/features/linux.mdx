@@ -34,6 +34,24 @@ You can create cron jobs by running `crontab -e` from SSH. It will open vim to e
 
 Please note, the minimum interval for cronjob is once in every hour; lesser than that and the system will delete your cron entries automatically!
 
+## Installing Shared Libraries
+
+When you in a situation in needing linking C libraries but unable to do that because of lack to `sudo` access, you might need to download and build from the source as the alternative solution.
+
+To do that, when you `configure` a C project, make sure to have prefix set to `$HOME/.local` instead of usual `/usr/local` so the installation will look like this:
+
+```bash
+./configure --prefix=$HOME/.local
+make
+make install
+```
+
+Then export `LD_LIBRARY_PATH` to that local folder permanently so your app can find the shared library.
+
+```bash
+echo export LD_LIBRARY_PATH=\$HOME/.local/lib:\$LD_LIBRARY_PATH > ~/.bashrc
+```
+
 ## Phussion Passenger Tools
 
 There's `passenger-status` and `passenger-config` to diagnose your app if you happen to use passenger apps.
@@ -48,11 +66,11 @@ There's `docker` and `systemctl --user` when you [activate `docker` feature](../
 
 To manage docker apps including viewing logs, you have to check it via `docker` CLI tool.
 
-This docker is run with rootless mode. Hence some features is unavailable such as limiting by CPU and RAM.
+This docker is run with rootless mode. Hence some features is unavailable such as limiting by CPU and RAM and binding to port <= 1024.
 
 ## Ephemeral Ports
 
-Most ports are blocked except ephemeral ports (32000 - 65535). You can use them for local development inside the server, including running a custom TCP listener without going though NGINX.
+Most ports are blocked except ephemeral ports (32000 - 65535). You can use them for local development inside the server, including running a custom development without going though NGINX.
 
 Please note that long-running background processes are not allowed in the server. It will be killed automatically as soon as you log-out from SSH session.
 
@@ -67,7 +85,9 @@ DOM Cloud is a shared VM, so other people might stumble across your randomly ass
 To automatically run with server public IP and random ports, use syntax like this:
 
 ```bash
-npm run dev -- --host $(hostname -I | cut -d " " -f1) --port $(shuf -n 1 -i 32000-65535)
+export HOST=$(hostname -I | cut -d " " -f1)
+export PORT=$(shuf -n 1 -i 32000-65535)
+npm run dev -- --host $HOST --port $PORT
 ```
 
 :::
@@ -107,4 +127,4 @@ Here's the list of extensions available:
 |  standard   |  sysvmsg    |sysvsem |   sysvshm     |tokenizer|    xml      |
 | xmlreader   | xmlwriter   |   xsl  | Zend OPcache  |   zip   |    zlib     |
 
-Custom extensions can't be installed as it's a shared hosting. However, you can download PHP yourself and attach it to Nginx via Passenger and FastCGI.
+Custom extensions can't be installed as it's a shared across system. However, you can download PHP yourself and attach it to Nginx via Passenger and FastCGI.
