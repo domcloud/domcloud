@@ -49,7 +49,8 @@ make install
 Then export `LD_LIBRARY_PATH` to that local folder permanently so your app can find the shared library.
 
 ```bash
-echo export LD_LIBRARY_PATH=\$HOME/.local/lib:\$LD_LIBRARY_PATH > ~/.bashrc
+echo 'export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+echo 'export LIBRARY_PATH=$HOME/.local/lib:$LIBRARY_PATH' >> ~/.bashrc
 ```
 
 ## Phussion Passenger Tools
