@@ -5,6 +5,8 @@ authors: [willnode]
 tags: [service, update]
 ---
 
+import deployKey from './deploykey.png';
+
 This January 2024 bring many improvements into security and developer experiences!
 
 ## Security Enforcement
@@ -33,7 +35,7 @@ Private repositories are tricky because you need an access before able to read t
 
 Enter [deploy keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys). Deploy keys are public keys which used like SSH logins to authenticate from automatic scripts. When we detect that your repo URL is private during prompting a new website with clone option, we ask you to install a public key into the repo. 
 
-![deploy key](./deploykey.png)
+<img src={deployKey} className="mx-auto d-block mx-auto img-fluid mb-4" width="70%"/>
 
 This public key is generated from a pair of private-public key that's just generated for you. While the public key is inserted into repository, the private key is installed into the server. The key generated is created from this command:
 

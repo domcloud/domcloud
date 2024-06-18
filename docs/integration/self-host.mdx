@@ -69,7 +69,7 @@ Uninstall all PHP from appstream first. (`yum remove php-*`)
 
 ```
 dnf install epel-release http://rpms.remirepo.net/enterprise/remi-release-9.rpm 
-dnf install php{74,80,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
+dnf install php{74,80,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-imagick,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
 ln -s `which php83` /usr/local/bin/php
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/php.ini \; 
@@ -144,6 +144,20 @@ apt-get install earlyoom rdfind fail2ban postfix postgresql{,-contrib} bind9{,-h
 apt-get autoremove
 ```
 
+NGINX Unit
+```
+cat << EOF > /etc/yum.repos.d/unit.repo
+[unit]
+name=unit repo
+baseurl=https://packages.nginx.org/unit/rhel/$releasever/$basearch/
+gpgcheck=0
+enabled=1
+EOF
+yum install unit -y
+wget -qO- https://github.com/domcloud/proxy-unit/releases/download/v0.3.1/proxy-unit-linux-amd64.tar.gz | tar xz 
+rm -rf /usr/local/bin/{build,port} && mv index.js /usr/local/bin/port && mv build /usr/local/bin/build
+```
+
 ## Configuration Files
 
 ### System Files
@@ -206,7 +220,7 @@ ExecStartPre=ipset -! create whitelist-v6 hash:ip family inet6
 ```
 
 ```ini title="/etc/default/earlyoom"
-EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoid '^(dnf|mariadbd|postmaster|named|nginx|polkitd|do-agent|sshd|php-fpm)$'"
+EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoid '^(dnf|mariadbd|postmaster|named|nginx|unitd|polkitd|do-agent|sshd|php-fpm)$'"
 ```
 
 ```ini title="/var/spool/cron/root"

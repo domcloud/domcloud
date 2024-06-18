@@ -1,0 +1,155 @@
+---
+slug: reaching-wide-and-speed
+title: Reaching Wide and Speed
+authors: [willnode]
+tags: [service, update]
+---
+
+import modernUiB from './modernui-b.png';
+import modernUiW from './modernui-w.png';
+import paletteB from './palette-b.jpg';
+import paletteW from './palette-w.jpg';
+import deploymentW from './deployment-w.jpg';
+import deploymentB from './deployment-b.jpg';
+import nginxW from './nginx-w.jpg';
+import nginxB from './nginx-b.jpg';
+import metamaskW from './metamask-w.jpg';
+import metamaskB from './metamask-b.jpg';
+import translations from './translations.jpg';
+import ThemedImage from '@theme/ThemedImage';
+
+This June 2024 update brings a lot of improvements in DX and our server speed!
+
+## I use Tailwind, BTW
+
+We migrated from Bootstrap to Tailwind CSS in our portal UI! Actually Bootstrap is good but doesn't have many controls and customization we're looking for, especially the new horizontal navbar that we needed.
+
+<ThemedImage
+    sources={{
+        dark: modernUiB,
+        light: modernUiW,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+For a bonus, we introduce theme palettes to ease your eyes. Maybe you like a little green or blue to remind yourself to get a sunshine?
+
+<ThemedImage
+    sources={{
+        dark: paletteB,
+        light: paletteW,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+We also fixed our UX flow to address many pain based on user feedbacks, such as adding helper inputs to common tasks in deployment systems such as adding new features and applying new config from existing frameworks.
+
+<ThemedImage
+    sources={{
+        dark: deploymentB,
+        light: deploymentW,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+We also experimenting with NGINX config editor to cover common cases so you don't have to edit the YAML config manually and understand what it does easily.
+
+<ThemedImage
+    sources={{
+        dark: nginxB,
+        light: nginxW,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+
+## Experimental NGINX Unit
+
+[NGINX Unit](https://unit.nginx.org/) is a polyglot server much like Phusion Passenger, a polyglot server that we currently use.
+
+During our experiment we found that while NGINX Unit have much harder learning curve, it is much resilient with restarts and has more rich in features. We ended up making it easier anyway with the introduction of [another proxy tool](https://github.com/domcloud/proxy-unit) that makes the integration much easier later.
+
+We apply Unit to our WebSSH tools and it dramatically increases its reliability as the WebSSH connection survives during NGINX restarts, instead of the previous behavior where the Websocket connection dies when it does restart. It also have an option to separate logs and dynamic spawning comparable to Phusion.
+
+As the configuration will be made available and it's proven to be better over time we'll sunset our integration with Passenger. Stay tuned for updates!
+
+## More Localization Efforts
+
+We have two big updates to increase our reach to consumers.
+
+First, we're starting to accept crypto payments. Currently, we only accept ETH in Ethererium Mainnet via [Metamask](https://metamask.io/). We hope we can accept more currencies and wallets integration as we're start seeing more payment in crypto.
+
+
+
+<ThemedImage
+    sources={{
+        dark: metamaskB,
+        light: metamaskW,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+Second, we're expanding our portal translation to 12 languages. Before then, it was just three. While we currently relies on machine translation, you can help us improve it by submitting PR requests to our [localization efforts Repository on GitHub](https://github.com/domcloud/dom-i18n)
+
+<ThemedImage
+    sources={{
+        dark: translations,
+        light: translations,
+    }}
+    alt=""
+    className="mx-auto d-block mx-auto img-fluid mb-4"
+    width="70%"
+    loading="lazy"
+/>
+
+
+## More Web Portal Improvements
+
++ We revamped our create website flow to be much less confusing
++ You can interactively add feature or copy from existing template from deployment tabs
++ We've fixed our account password reset and domain transfer flow
++ We apply translations for Recaptha and Google One-Tap login
++ We styled our backend error messages and put it out for l10n
++ We added a page for showing logs from App, PHP or Nginx
++ We automatically copy password when user clicking VSCode Remote button
+
+## Server Improvements
+
++ Singapore and New York is now upgraded to 2 vCPU and 4GB RAM 🎉
++ We changed from podman to docker to simplify working with user daemon
++ We installed NGINX Unit for alternative polyglot server from Phusion Passenger
++ We added [pathman](https://github.com/therootcompany/pathman), [pipenv](https://github.com/pypa/pipenv), [xplr](https://github.com/sayanarijit/xplr) and [port](https://github.com/domcloud/proxy-unit) to global system commands
++ We refined `restart` command to reliably restart web app from NGINX
++ We're [adjusting our pricing model](/docs/intro/compare-plans) and introducing `Max` plan.
++ We've added Resend API, Google Recaptha API, Imgur API, MongoDB API to whitelist
++ We've fixing RVM, Zig and Dotnet installation under firewall
++ Firewall now handled more reliably as we also pin IP addresses to /etc/hosts
+
+
+## Deployment System Improvements
+
++ We added more templates: Nuxt.js, SvelteKit, Payload CMS and Moodle
++ We added interactive editor for editing NGINX config
++ Switching from free domain in and out is now seamless and free-from-error
++ If the admin made changes on behalf of user request or maintenance, we show "Ran by System Mod"
++ We've fixed our deployment system for bun using [bunfix](https://github.com/domcloud/proxy-fix)
++ We use Temurin to resolve Java binaries, which also enabling Java 8 installations
++ We added implementations to manage systemd user via deployment system
++ Rust feature now uses minimal installation profile
++ `autoindex` feature can be toggled on in NGINX config
+
