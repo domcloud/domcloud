@@ -213,3 +213,40 @@ You can see app log from Check -> Check Process Logs tab. Only startup problems 
 Please use a proper logging mechanism such as [Pino](https://github.com/pinojs/pino) or [Winston](https://github.com/winstonjs/winston) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.
+
+## Troubleshooting
+
+### `FATAL ERROR: Reached heap limit Allocation failed` during package installation
+
+We limit all processes to have either 2GB (Tier I server) or 512MB RAM (Tier II server) to avoid crashing the whole system. 
+
+Most likely you're installing with `npm` which is bad at managing memory, please use `yarn` instead.
+
+### `digital envelope routines::unsupported` during script builds
+
+You're using Create-React-App but having version that uses old OpenSSL.
+
+Please update your depedencies to latest version with `npx npm-upgrade`. For `Create-React-App`, please try `yarn create react-app my-app` locally and copy all of their depedencies to your project.
+
+### Server is disabled due to storage violation
+
+Please clear all yarn/npm caches. If you're not sure, use `ncdu` on SSH.
+
+### `You should not run the Vite HMR server in CI environments. You should build your assets for production instead`
+
+Please do not run `npm run dev` or `npm start` in deployments. That's not how it works. Most likely what you want to do `npm run build`.
+
+If you want to run `npm run dev` for live-in-production edits, use PORT > 32000 (e.g. `PORT=33210 npm run dev`).
+
+### `error: cannot pull with rebase: You have unstaged changes.`
+
+You have uncommitted changes in your server. To resolve it please do `git stash` then `git pull`. Take your stashed changes back with `git stash pop`.
+
+### `pnpm: command not found`
+
+You need to add `node` feature in your deployment script. Which enables `corepack` and `pnpm`.
+
+### Any other error
+
+Please open WebSSH or VSCode remote to fix it yourself. Or chat us if you stuck with "but it works on my machine".
+

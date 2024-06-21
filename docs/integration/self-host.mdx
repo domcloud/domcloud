@@ -101,6 +101,7 @@ rm -f pathman-v0.6.0-linux-amd64_v1.tar.gz
 ```
 dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin fuse-overlayfs slirp4netns
+modprobe ip_tables && echo "ip_tables" >> /etc/modules
 ```
 
 ```
@@ -146,7 +147,7 @@ apt-get autoremove
 
 NGINX Unit
 ```
-cat << EOF > /etc/yum.repos.d/unit.repo
+cat << 'EOF' > /etc/yum.repos.d/unit.repo
 [unit]
 name=unit repo
 baseurl=https://packages.nginx.org/unit/rhel/$releasever/$basearch/
@@ -154,8 +155,16 @@ gpgcheck=0
 enabled=1
 EOF
 yum install unit -y
+systemctl enable unit --now
 wget -qO- https://github.com/domcloud/proxy-unit/releases/download/v0.3.1/proxy-unit-linux-amd64.tar.gz | tar xz 
 rm -rf /usr/local/bin/{build,port} && mv index.js /usr/local/bin/port && mv build /usr/local/bin/build
+```
+
+```ini title="systemctl edit unit"
+[Service]
+Environment="UNITD_OPTIONS=--pid /var/run/unit/unit.pid"
+Restart=always
+RestartSec=15s
 ```
 
 ## Configuration Files
@@ -169,9 +178,18 @@ proc              /proc   proc    defaults,nosuid,nodev,noexec,relatime,hidepid=
 /swapfile         swap    swap    defaults,nofail                                              0       0
 ```
 
+Tier I
+
 ```ini title="/etc/security/limits.conf"
 root             soft    nofile          65535
-# note: linux hardlimit is 524288 (ulimit -Hn)
+@nginx           hard    nofile          2048000
+```
+
+Tier II
+
+```ini title="/etc/security/limits.conf"
+root             soft    nofile          65535
+@nginx           hard    nofile          512000
 ```
 
 ```ini title="/etc/environment" 

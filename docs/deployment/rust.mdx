@@ -147,3 +147,10 @@ You can see app log from Check -> Check Process Logs tab. Only startup problems 
 Please use a proper logging mechanism such as [the standard logging library](https://docs.rs/log/latest/log/) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.
+
+## Troubleshooting
+
+### `Execution took more than 600s, exiting gracefully`
+
+Please run `cargo build --release` via SSH instead.
+

@@ -80,12 +80,14 @@ commands:
   - docker compose up -d`.trim()
 }</CodeBlock>
 
+The interesting part is how we connect NGINX to server by modifying `docker-compose.yml`.
+
 ### Managing systemd daemon
 
 Your docker instance is registered as user-scoped systemd service. You can call these systemd commands to diagnose docker problems
 
 + `systemctl status docker --user`
-+ `systemctl <start|stop|enable|disable> docker --user`
++ `systemctl start docker --user`
 
 ## Differences
 
@@ -97,10 +99,3 @@ Adding entries to `/var/lib/systemd/linger` will make sure that your processes w
 
 Note that with this benefit limitations by Fair Usage still implies. We won't restrict your CPU and RAM limits but still watching overall system performance and deliberately kills it if it proven to abuse our resources. Additionally, there should be no public port exposed to the host other than what's given from passenger's `$PORT` to avoid depleting server's ports allocations.
 
-### Allow building apps by Continous Integration (CI)
-
-While other deployment system is benefited by simpler DX (you can code and fix bugs directly in production) and incremental builds, there are often a reasonable choices to use CI to build apps and only deliver the binary to us via docker images.
-
-One of the benefit is you will be able to version your binaries via CI artifacts, this including releasing binaries via code versioning. This also added more security by not exposing your valuable source code to us, and lesser computation and storage used for compiling binaries by delegating it to CI instead of from our server.
-
-... (example deployment code)
