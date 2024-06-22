@@ -3,19 +3,11 @@ title: Docker
 sidebar_position: 15
 ---
 
-import CodeBlock from '@theme/CodeBlock';
-
-export const port = (() => Math.trunc(Math.random() * 23000 + 9000))()
-
-export const PortSpan = () => {
-  return <span>{port}</span>
-}
-
 # Deploy Docker Apps (Kit and Pro Plan)
 
-Docker in DOM Cloud is powered by [Docker rootless mode](https://docs.docker.com/engine/security/rootless/). Enabling docker features is implicitly allows running 24/7 (doesn't have to actually using docker). Because of how powerful and resouce consuming this is only available with `Kit` and `Pro` user plan.
+Docker in DOM Cloud is powered by [Docker rootless mode](https://docs.docker.com/engine/security/rootless/). Enabling docker features is implicitly allows running 24/7 (doesn't have to actually using docker). Because of how powerful and resouce consuming this is only available starting with `Kit` plan.
 
-> We recommend to use this feature only in Tier I servers (SGA and NYC) as they offer the most computing resources we currently offer
+> Docker is available only in [Tier I servers](../intro/security.mdx) as they offer the most computing resources we currently offer
 
 When this feature enabled, these things applied:
 
@@ -23,38 +15,31 @@ When this feature enabled, these things applied:
 + assign `/var/lib/systemd/linger` to allow backround processes not get killed when SSH session terminates.
 + registering `dockerd` as user-scoped systemd daemon by `dockerd-rootless-setuptool.sh` and set it to run at startup.
 
-## Port Allocation Policy
-
-A docker service should run all the time and have a standby port hidden from the internet. 
-
-Remember that DOM Cloud servers is a shared hosting environment, so only expose your port only for public-facing service. A port between 9000 and 32000 is a recommended port number. A port number 32000 and above is not recommended as it's an ephemeral ports only for internal/test usage (firewall don't block incoming traffic for them).
-
-We'll choose this number for you by random for use through the documentation: <code><PortSpan /></code>
-
 ## Example
 
 The deployment script below activates `docker` capabilities and starts a "hello world" container for demo.
 
-<CodeBlock language="yaml" title="https://github.com/domcloud/recipes/blob/master/docker.yml">{`
+```yaml title=https://github.com/domcloud/recipes/blob/master/docker.yml
+# Requires Kit plan or higher!
 source: clear
 features:
   - docker
 nginx:
   passenger:
     enabled: 'on'
-    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:localhost:${port}'
+    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:$$RESERVED_IP$$:8080'
 commands:
-  - docker run -t --name webserver -p ${port}:80 quay.io/libpod/banner`.trim()
-}</CodeBlock>
-
+  - docker run -d --rm --name webserver -p $$RESERVED_IP$$:8080:80 quay.io/libpod/banner
+```
 
 Let's examine the reason why we use `docker run` commands as such:
 
-- Using `run`  will create and start a new container pulled from [`quay.io/libpod/banner`](https://quay.io/libpod/banner).
-- We're forwarding from host's port with number {port} to container's port with number `80`. This port number is permanent.
-- The `80` from `-p $PORT:80` implies that the app (`quay.io/libpod/banner`) is listening on port `80` inside the container. 
+- Using `docker run` will create and start a new container pulled from [`quay.io/libpod/banner`](https://quay.io/libpod/banner).
+- We're forwarding to `$$RESERVED_IP$$` with a given port which is a random local IPv4 address `127.x.x.x`. 
 - `--name webserver` denotes the name of this container is `webserver` for easy debugging when inspecting via SSH later.
-- `socat` is used as port forwarder from `$PORT` given from passenger phusion to <code>{port}</code> which your docker 
+- `socat` is used as port forwarder from NGINX to `$$RESERVED_IP$$:8080` which is what the docker container listen to.
+
+The `$$RESERVED_IP$$` is a special constant and you can see the value replaced once the script has been deployed.
 
 ### Example with Docker Compose
 
@@ -62,7 +47,7 @@ To use `docker-compose.yml`, you can to run it via `docker compose`.
 
 The example below setup [Plausible self-hosting](https://github.com/plausible/hosting) with their database depedencies.
 
-<CodeBlock language="yaml" title="https://github.com/domcloud/recipes/blob/master/boot-plausible.yml">{`
+```yaml title=https://github.com/domcloud/recipes/blob/master/docker.yml
 # Requires Kit plan or higher!
 source: https://github.com/plausible/hosting
 features:
@@ -71,31 +56,70 @@ nginx:
   root: public_html/public
   passenger:
     enabled: 'on'
-    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:localhost:${port}'
+    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:$$RESERVED_IP$$:8000'
 commands:
   - get_hash() { openssl rand -base64 64 | tr -d '\\n'; }
-  - sed -i 's/8000:8000/${port}:8000/g' docker-compose.yml
+  - sed -i 's/8000:8000/$$RESERVED_IP$$:8080:8000/g' docker-compose.yml
   - echo BASE_URL=https://$DOMAIN > plausible-conf.env
   - echo SECRET_KEY_BASE=\`get_hash\` >> plausible-conf.env
-  - docker compose up -d`.trim()
-}</CodeBlock>
+  - docker compose up -d
+```
 
-The interesting part is how we connect NGINX to server by modifying `docker-compose.yml`.
+We use the same technique to force docker listen to custom `$$RESERVED_IP$$`. Since many projects have variety of docker compose setup, you might have to manually edit your `docker-compose.yml` to expose the port that NGINX can listen to.
 
-### Managing systemd daemon
+## Port Allocation Policy
+
+Many docker compose setup have port exposed to local ports such as `9000` by default. If you leave them unconfigured you'll be surprised that it doesn't work, because we block them for your safety.
+
+If you just want to expose your port for local development, you can change the port to above than 32000 (e.g. `33000` or `34567`). Be careful that anyone also see that exposed port regardless of the domain, which is why we recommend to bind your docker instance to a loopback address and bind them through NGINX.
+
+## Managing systemd daemon
 
 Your docker instance is registered as user-scoped systemd service. You can call these systemd commands to diagnose docker problems
 
 + `systemctl status docker --user`
 + `systemctl start docker --user`
 
-## Differences
+## Custom systemd daemon
 
-Using docker has benefit compared other deployment system. These includes:
+You can also create your own System daemon in userspace for your own background service. For instance, you might want to install your own PHP with additional extensions we don't cover.
 
-### Allow additional background services
+```bash
+mkdir -p $HOME/.local/share/systemd/user
+cat << EOF > $HOME/.local/share/systemd/user/custom-php.service
+[Unit]
+Description=FPM
+Documentation=Custom PHP FPM
+After=network.target
 
-Adding entries to `/var/lib/systemd/linger` will make sure that your processes won't get killed anytime you log out from SSH session. This also means you can add custom database system (like MongoDB and Redis) simply by pulling and starting the database service with detached mode (or using docker's compose).
+[Service]
+Type=simple
+WorkingDirectory=$HOME
+ExecStart=/opt/remi/php74/root/usr/sbin/php-fpm -c $HOME/etc/php7.4 -y $HOME/etc/php-fpm.conf -F
+TimeoutStopSec=5
+Restart=always
 
-Note that with this benefit limitations by Fair Usage still implies. We won't restrict your CPU and RAM limits but still watching overall system performance and deliberately kills it if it proven to abuse our resources. Additionally, there should be no public port exposed to the host other than what's given from passenger's `$PORT` to avoid depleting server's ports allocations.
+[Install]
+WantedBy=default.target
+EOF
+cat << EOF > $HOME/etc/php-fpm.conf
+error_log = $HOME/logs/php-fpm.log 
+[wordpress_site]
+listen = $HOME/etc/php.sock
+listen.owner = $USER
+listen.group = $USER
+pm = ondemand 
+pm.max_children = 10 
+pm.process_idle_timeout = 10s
+EOF
 
+systemctl enable custom-php --user
+systemctl start custom-php --user
+```
+
+Then bind like this:
+
+```yaml
+features:
+- php etc/php.sock
+```
