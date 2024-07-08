@@ -67,6 +67,46 @@ commands:
 
 We use the same technique to force docker listen to custom `$$RESERVED_IP$$`. Since many projects have variety of docker compose setup, you might have to manually edit your `docker-compose.yml` to expose the port that NGINX can listen to.
 
+## Healthcheck
+
+While your app and it services runs 24/7, sometimes your app can crash on itself. Make sure your docker containers can heal itself by adding health checks and run an additional [autoheal container](https://github.com/willfarrell/docker-autoheal). Please make sure the container autoheal binds docker.sock with your own rootless docker sock path by running `echo $DOCKER_HOST` from terminal.
+
+```diff
+services:
++ autoheal:
++   restart: always
++   image: willfarrell/autoheal
++   environment:
++     - AUTOHEAL_CONTAINER_LABEL=all
++   volumes:
++     - /run/user/1234/docker.sock:/var/run/docker.sock
+  plausible_db:
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
++   healthcheck:
++     test: pg_isready
+
+  plausible:
+    image: ghcr.io/plausible/community-edition:v2.1.1
+    restart: always
+    command: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
++   healthcheck:
++     test: wget --no-verbose --tries=1 --spider http://127.0.0.1:8000 || exit 1
+    depends_on:
+      plausible_db:
++       condition: service_healthy
+    ports:
+      - 127.0.0.1:8000:8000
+    env_file:
+      - plausible-conf.env
+```
+
+Then run `docker compose up -d` again.
+
 ## Port Allocation Policy
 
 Many docker compose setup have port exposed to local ports such as `9000` by default. If you leave them unconfigured you'll be surprised that it doesn't work, because we block them for your safety.

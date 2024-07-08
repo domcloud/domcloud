@@ -84,6 +84,15 @@ libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay,Text-ASCI
 earlyoom fail2ban-server iptables-services postfix postgresql-server postgresql-contrib
 ```
 
+Security Repository Setup
+```bash
+# Fixes CVE-2024-6387 (OpenSSH) and CVE-2024-2961 (Glibc)
+dnf install rocky-security-release -y
+dnf config-manager --enable security-common
+yum install openssh-8.7p1-38.el9_4.security.0.5.x86_64
+echo "exclude=openssh openssh-clients openssh-server" > /etc/yum.conf
+```
+
 ```
 wget https://rdfind.pauldreik.se/rdfind-1.6.0.tar.gz
 tar -xf rdfind-1.6.0.tar.gz ; cd rdfind-1.6.0
@@ -147,13 +156,6 @@ apt-get autoremove
 
 NGINX Unit
 ```
-cat << 'EOF' > /etc/yum.repos.d/unit.repo
-[unit]
-name=unit repo
-baseurl=https://packages.nginx.org/unit/rhel/$releasever/$basearch/
-gpgcheck=0
-enabled=1
-EOF
 yum install unit -y
 systemctl enable unit --now
 wget -qO- https://github.com/domcloud/proxy-unit/releases/download/v0.3.1/proxy-unit-linux-amd64.tar.gz | tar xz 
@@ -356,14 +358,14 @@ fastcgi_read_timeout 600s;
 ```
 
 ```conf title="/etc/nginx/passenger.conf"
-passenger_root /usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini;
-passenger_ruby /usr/bin/ruby;
+# passenger_root /usr/share/ruby/vendor_ruby/phusion_passenger/locations.ini;
+# passenger_ruby /usr/bin/ruby;
+# passenger_instance_registry_dir /var/run/passenger-instreg;
 passenger_python /usr/bin/python3;
 passenger_nodejs /usr/bin/node;
 passenger_friendly_error_pages on;
 passenger_disable_security_update_check on;
 passenger_disable_anonymous_telemetry on;
-passenger_instance_registry_dir /var/run/passenger-instreg;
 passenger_log_file /var/log/nginx/passenger.log;
 passenger_min_instances 0;
 passenger_max_pool_size 10;

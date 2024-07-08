@@ -246,6 +246,10 @@ You have uncommitted changes in your server. To resolve it please do `git stash`
 
 You need to add `node` feature in your deployment script. Which enables `corepack` and `pnpm`.
 
+### Git changes after depedency install
+
+Please add `--frozen-lockfile` to npm/yarn/pnpm install to prevent changing the lockfile. Also, you might want to add `"packageManager"` changes to your `package.json` because we have corepack enabled by default.
+
 ### Any other error
 
 Please open WebSSH or VSCode remote to fix it yourself. Or chat us if you stuck with "but it works on my machine".
