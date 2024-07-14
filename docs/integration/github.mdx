@@ -78,3 +78,5 @@ Put this file in `.github/workflows/domcloud.yml` (can be any filename) and befo
 Note if your host domain URL, username, or password is changed, then you need to update these variables accordingly. Maximum webhook calls is 50 times a day for a website.
 
 An example of working Webhook is [DOM Cloud's Bridge repo](https://github.com/domcloud/bridge/blob/main/.github/workflows/domcloud.yml), applying `git pull` of the software to all DOM Cloud servers once a commit has been pushed.
+
+If you wanted to build your app binaries via CI instead of from server, you can [see this example repo](https://github.com/domcloud/example-rust-todo). Doing it this way is beneficial to save your storage quota. 
