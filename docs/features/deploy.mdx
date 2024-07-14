@@ -515,16 +515,37 @@ Array objects which one or more of:
 + `rewrite`: Rewrite URL directive
 + `try_files`: Try files URL directive
 + `return`: Return code directive
++ `proxy_pass`: Proxy to local port or `unit`
 + `fastcgi`: (same as above)
 + `passenger`: (same as above)
 
 Please read [NGINX Location directive](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) for more information.
 
-:::info
+---
 
-`proxy_pass`, although it's popular, it's not allowed because it's not a good practice to use it in a shared servers. If you have to redirect TCP connections you can also use `socat`.
+## `unit`
 
-:::
+Type: `object`
+
+NGINX Unit is a newer polyglot alternative to `passenger` features much simpler deployment system, logging and persistent instance across NGINX reload. The use of `unit` is much recommended albeit experimental.
+
+NGINX Unit can bind to NGINX via `proxy_pass: unit` directive, then the app must listen to IPv4 localhost (127.0.0.1) and `$PORT` env much like how Passenger GLS works. This is the minimal settings to make it works:
+
+```yaml
+nginx:
+  root: public_html/public
+  proxy_pass: unit
+unit:
+  # Bun.serve() always listen to $PORT
+  app_start_command: bun .  
+```
+
+Available options:
+
++ `app_start_command` (required) a string command equivalent with how would you run the app in SSH/bash
++ `app_root` (optional) a string path of app working directory (defaults to `public_html`)
++ `env_var_list` (optional) array of header values in the format of `KEY=VALUE`
+
 
 ---
 
@@ -565,7 +586,7 @@ These shell extras also be set:
 
 #### Time limit
 
-The time limit for overall script in single run is 10 minutes. If it's exceeded, the execution chain will automatically stop by signaling both `SIGTERM` and `SIGKILL`.
+The time limit for overall script in single run is 15 minutes. If it's exceeded, the execution chain will automatically stop by signaling both `SIGTERM` and `SIGKILL`.
 
 ---
 
