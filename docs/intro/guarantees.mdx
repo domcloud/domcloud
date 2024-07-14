@@ -25,7 +25,9 @@ We given users a raw access (SSH) to the server, so they can do whatever they wa
 
 In addition of training ML models, we don't allow crypto, phising, DoS, spam, and other malicious activities. We have a [terms of service](/service) that you should read.
 
-We don't measure nor limit RAM/CPU usage because it's nature. But, we have an alert if the CPU usage is too high continously. If it does happen, we have to kill the process forcibly so it doesn't impact other websites for too long. We could terminate an account if it comes again repeatedly.
+We limit RAM for any instance up to 2GB of RAM for Tier I servers and 512MB RAM for Tier II servers. While this is particularly high standard for shared hosting like us, it's done that way since we want to only allocate high memory for temporary things like compiling your apps.
+
+Never allocate RAM/CPU usage beyond necessary. We have an alert if the CPU usage is too high continously. If it does happen, we have to kill the process forcibly so it doesn't impact other websites for too long. We could terminate an account if it comes again repeatedly.
 
 If your website has too much traffic, memory or CPU usage, but your website is legitimate, we may contact you so we can take an alternate agreement such that your website resource usage doesn't impact other websites.
 
