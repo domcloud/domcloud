@@ -95,10 +95,18 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/domcloud/domcloud',
+            to: 'https://discord.gg/ee6xre2q8W',
             position: 'right',
+            label: 'Discord',
+            target: '_blank',
+            className: 'header-discord-link',
+          },
+          {
+            to: 'https://github.com/domcloud/domcloud',
+            position: 'right',
+            label: 'GitHub',
+            target: '_blank',
             className: 'header-github-link',
-            'aria-label': 'GitHub repository',
           },
         ],
       },
@@ -126,19 +134,19 @@ const config = {
             title: 'Contact Us',
             items: [
               {
-                label: 'Discord (ID)',
+                label: 'Community - Discord',
                 href: 'https://discord.gg/ee6xre2q8W',
               },
               {
-                label: 'Forum (EN)',
-                href: 'https://github.com/domcloud/domcloud-co/discussions/',
-              },
-              {
-                label: 'Twitter',
+                label: 'News - Twitter',
                 href: 'https://twitter.com/domcloud_co',
               },
               {
-                label: 'Chat',
+                label: 'Open Source - GitHub',
+                href: 'https://domcloud.co/domcloud/domcloud',
+              },
+              {
+                label: 'Chat - Telegram',
                 href: 'https://t.me/WIIIN0DE',
               },
             ],

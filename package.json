@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "dev": "docusaurus start",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
@@ -15,23 +16,22 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.3.2",
-    "@docusaurus/preset-classic": "^3.3.2",
+    "@docusaurus/core": "^3.4.0",
+    "@docusaurus/preset-classic": "^3.4.0",
     "@fortawesome/fontawesome-free": "6.5.2",
     "@giscus/react": "^3.0.0",
-    "@mdx-js/react": "^3.0.1",
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
     "docusaurus-lunr-search": "^3.4.0",
     "prism-react-renderer": "^2.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "simple-icons": "^11.14.0"
+    "simple-icons": "^13.1.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.3.2",
+    "@docusaurus/module-type-aliases": "3.4.0",
     "@tsconfig/docusaurus": "^2.0.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.3"
   },
   "browserslist": {
     "production": [
