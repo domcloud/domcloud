@@ -27,7 +27,7 @@ Our free plan comes with the following features:
 
 ## Default Domain Availability
 
-A free but randomized domain is available with `*.dom.my.id` suffix. This domain should not be used for anything but testing or demo as the domain name is not customizable.
+A free but randomized domain is available with `*.dom.my.id` suffix. This domain should not be used for anything but testing or demo as the domain name is not customizable and has safety features that can't be removed.
 
 A subscription (as low as a Lite plan) is needed to use `*.domcloud.dev` domain. This domain is customizable (always matching the website's username). This domain is preferred over the former for personal sites and it will remain the same even if your account goes back to free plan.
 
@@ -38,6 +38,16 @@ You can also [share a domain](../features/dns.mdx#sharing-a-domain) securely for
 ## Third-Party API Access
 
 All websites created with free plan has [firewall](../features/security.mdx#outbound-connection) enabled. This blocks outgoing HTTP connection from server except to the [list of whitelisted sites](https://github.com/domcloud/bridge/blob/main/src/whitelist/sites.conf). This is implemented so that our generous free plan will not be abused for malicious bot, proxy and phising sites. To enable any third-party access, you need to upgrade your plan then disable firewall at individual websites.
+
+## Safety Against Malware and Phishing
+
+When using free domains, anyone visiting your website will be prompted with this banner:
+
+![Free domain banner](/assets/ss/freedomainbanner.png)
+
+It works by detecting whether the [referer header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) is matching with the domain. Clicking the "trust" button will simply reloads the webpage with correct referer (automatically done by browser). There are no way to prevent this behavior in free domain so switch to \*.domcloud.dev domain or custom domain if you need to get rid from this banner page.
+
+Free domains are susceptible to phising contents and we're looking at ways to preventing it from happening. This is why this security measurements are done, although it comes with another undesired effects, such as APIs targeting this domain will not work if not coming with correct referer header.
 
 ## Expiration Date
 

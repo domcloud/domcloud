@@ -250,12 +250,13 @@ EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoi
 * * * * * pgrep PassengerAgent || systemctl restart nginx
 */5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
 @daily passenger-config reopen-logs
-@weekly /usr/bin/node /home/bridge/public_html/sudocleanssl.js 
+@weekly systemctl restart webmin
+@weekly /usr/bin/node /home/bridge/public_html/sudocleanssl.js
 @weekly find /var/spool/clientmqueue /var/webmin/diffs -mindepth 1 -delete
 @weekly find /home -maxdepth 1 -type d -ctime +1 -exec rm -rf {}/{.cache,.npm,Downloads,public_html/.yarn/cache,public_html/node_modules/.cache,.composer/cache} \;
 @weekly find /home -maxdepth 1 -type d -ctime +1 -exec rdfind -minsize 100000 -makehardlinks true -makeresultsfile false {}/{.vscode-server,.pyenv,.rvm,.cargo,.local,go,.rustup,public_html/node_modules} \;
 @monthly find /etc/letsencrypt/{csr,keys} -name *.pem -type f -mtime +180 -exec rm -f {} ';'
-@reboot sleep 60 && sudo /usr/bin/bash /home/bridge/public_html/src/whitelist/refresh.sh
+@reboot sleep 60 && /usr/bin/bash /home/bridge/public_html/src/whitelist/refresh.sh
 ```
 
 ### MariaDB
