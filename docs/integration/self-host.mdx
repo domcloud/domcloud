@@ -250,7 +250,7 @@ EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoi
 * * * * * pgrep PassengerAgent || systemctl restart nginx
 */5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
 @daily passenger-config reopen-logs
-@weekly systemctl restart webmin
+@weekly systemctl restart webmin unit
 @weekly /usr/bin/node /home/bridge/public_html/sudocleanssl.js
 @weekly find /var/spool/clientmqueue /var/webmin/diffs -mindepth 1 -delete
 @weekly find /home -maxdepth 1 -type d -ctime +1 -exec rm -rf {}/{.cache,.npm,Downloads,public_html/.yarn/cache,public_html/node_modules/.cache,.composer/cache} \;

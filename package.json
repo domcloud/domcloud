@@ -16,13 +16,13 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.4.0",
-    "@docusaurus/preset-classic": "^3.4.0",
+    "@docusaurus/core": "3.4.0",
+    "@docusaurus/preset-classic": "3.4.0",
     "@fortawesome/fontawesome-free": "6.5.2",
     "@giscus/react": "^3.0.0",
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
-    "docusaurus-lunr-search": "^3.4.0",
+    "docusaurus-lunr-search": "3.4.0",
     "prism-react-renderer": "^2.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
