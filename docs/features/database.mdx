@@ -2,7 +2,7 @@
 title: Database Providers
 ---
 
-Database is an integral part of any application. DOM Cloud provides a free, opt-in `MariaDB` and `PostgreSQL` database instance for every website in every tier. 
+Database is an integral part of any application. DOM Cloud provides a free, opt-in **MariaDB 10.11** and **PostgreSQL 16.4** database instance for every website in every tier. 
 
 ### Initializing the Database
 
@@ -69,45 +69,47 @@ If you don't care about timezone and you think it's safe to assume that your web
 
 ### Supported PostgreSQL Extensions
 
+These optional PostgreSQL extensions can be activated using `CREATE EXTENSION` clause on a given database:
+
 | Extension Name                | Description                                                                                                                          | Link                                                                            |
 |-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
 | `btree_gin`                   | Provides support for GIN (Generalized Inverted Index) indexing for B-tree data types.                                                 | [Documentation](https://www.postgresql.org/docs/current/btree-gin.html)          |
 | `btree_gist`                  | Provides support for GiST (Generalized Search Tree) indexing for B-tree data types.                                                   | [Documentation](https://www.postgresql.org/docs/current/btree-gist.html)         |
 | `citext`                      | A case-insensitive text data type extension.                                                                                          | [Documentation](https://www.postgresql.org/docs/current/citext.html)             |
 | `cube`                        | Provides data types and functions to support multidimensional cubes.                                                                  | [Documentation](https://www.postgresql.org/docs/current/cube.html)               |
-| `dict_int`                    | Provides an example dictionary template for integers.                                                                                | [Documentation](https://www.postgresql.org/docs/current/dict-int.html)           |
+| `dict_int`                    | Provides an example dictionary template for integers.                                                                                 | [Documentation](https://www.postgresql.org/docs/current/dict-int.html)           |
 | `earthdistance`               | Provides functions for calculating great-circle distances between points on the Earth's surface.                                      | [Documentation](https://www.postgresql.org/docs/current/earthdistance.html)      |
 | `fuzzystrmatch`               | Provides functions to perform "fuzzy" string matching, including soundex and levenshtein distance.                                    | [Documentation](https://www.postgresql.org/docs/current/fuzzystrmatch.html)      |
-| `hstore`                      | A key-value store within PostgreSQL, allowing you to store sets of key/value pairs within a single PostgreSQL value.                 | [Documentation](https://www.postgresql.org/docs/current/hstore.html)             |
-| `intarray`                    | Provides support for indexed arrays of integers.                                                                                     | [Documentation](https://www.postgresql.org/docs/current/intarray.html)           |
+| `hstore`                      | A key-value store within PostgreSQL, allowing you to store sets of key/value pairs within a single PostgreSQL value.                  | [Documentation](https://www.postgresql.org/docs/current/hstore.html)             |
+| `intarray`                    | Provides support for indexed arrays of integers.                                                                                      | [Documentation](https://www.postgresql.org/docs/current/intarray.html)           |
 | `isn`                         | Provides data types for various international standard numbers, such as ISBN, ISMN, and ISSN.                                         | [Documentation](https://www.postgresql.org/docs/current/isn.html)                |
-| `jsonb_plperl`                | Provides support for storing JSONB data types with Perl's PL/Perl procedural language.                                                | [Documentation](https://www.postgresql.org/docs/current/plperl.html)             |
-| `lo`                          | Provides support for large objects within PostgreSQL.                                                                                | [Documentation](https://www.postgresql.org/docs/current/largeobjects.html)       |
-| `ltree`                       | Provides a data type for representing labels of data stored in a hierarchical tree-like structure.                                   | [Documentation](https://www.postgresql.org/docs/current/ltree.html)              |
-| `pgcrypto`                    | Provides cryptographic functions for PostgreSQL, including encryption, decryption, hashing, and more.                                | [Documentation](https://www.postgresql.org/docs/current/pgcrypto.html)           |
+| `lo`                          | Provides support for large objects within PostgreSQL.                                                                                 | [Documentation](https://www.postgresql.org/docs/current/largeobjects.html)       |
+| `ltree`                       | Provides a data type for representing labels of data stored in a hierarchical tree-like structure.                                    | [Documentation](https://www.postgresql.org/docs/current/ltree.html)              |
+| `pgcrypto`                    | Provides cryptographic functions for PostgreSQL, including encryption, decryption, hashing, and more.                                 | [Documentation](https://www.postgresql.org/docs/current/pgcrypto.html)           |
 | `pg_trgm`                     | Provides functions and operators for determining the similarity of text based on trigram matching.                                    | [Documentation](https://www.postgresql.org/docs/current/pgtrgm.html)             |
 | `plpgsql`                     | PostgreSQL's procedural language for SQL, allowing for control structures, complex calculations, and error handling in SQL scripts.   | [Documentation](https://www.postgresql.org/docs/current/plpgsql.html)            |
 | `seg`                         | Provides a "seg" data type for representing line segments in two-dimensional space.                                                   | [Documentation](https://www.postgresql.org/docs/current/seg.html)                |
 | `tablefunc`                   | Provides functions for manipulating tables, such as crosstab functions.                                                               | [Documentation](https://www.postgresql.org/docs/current/tablefunc.html)          |
-| `tcn`                         | Provides support for Triggered Change Notification, allowing for notification of changes in the database.                            | [Documentation](https://www.postgresql.org/docs/current/tcn.html)                |
-| `tsm_system_rows`             | A table sampling method that returns a specified number of rows.                                                                     | [Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)    |
-| `tsm_system_time`             | A table sampling method that returns rows from a table based on the system time.                                                     | [Documentation](https://www.postgresql.org/docs/current/tsm-system-time.html)    |
-| `unaccent`                    | Provides a dictionary and function to remove accents (diacritics) from strings.                                                      | [Documentation](https://www.postgresql.org/docs/current/unaccent.html)           |
-| `uuid-ossp`                   | Provides functions to generate universally unique identifiers (UUIDs).                                                               | [Documentation](https://www.postgresql.org/docs/current/uuid-ossp.html)          |
-| `pg_uuidv7`                   | Provides support for UUID version 7, a new type of universally unique identifier.                                                    | [Documentation](https://github.com/fboulnois/pg_uuidv7)                                        |
-| `pgrouting`                   | Extends PostGIS with geospatial routing functionality.                                                                               | [Documentation](https://pgrouting.org/)                                          |
-| `address_standardizer`        | Standardizes address data for geocoding purposes.                                                                                     | [Documentation](https://postgis.net/docs/manual-2.5/Address_Standardizer.html)              |
-| `address_standardizer_data_us`| Provides US address data for the address standardizer extension.                                                                      | [Documentation](https://postgis.net/docs/manual-2.5/Address_Standardizer.html#idp56180176)  |
+| `tcn`                         | Provides support for Triggered Change Notification, allowing for notification of changes in the database.                             | [Documentation](https://www.postgresql.org/docs/current/tcn.html)                |
+| `tsm_system_rows`             | A table sampling method that returns a specified number of rows.                                                                      | [Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)    |
+| `tsm_system_time`             | A table sampling method that returns rows from a table based on the system time.                                                      | [Documentation](https://www.postgresql.org/docs/current/tsm-system-time.html)    |
+| `unaccent`                    | Provides a dictionary and function to remove accents (diacritics) from strings.                                                       | [Documentation](https://www.postgresql.org/docs/current/unaccent.html)           |
+| `uuid-ossp`                   | Provides functions to generate universally unique identifiers (UUIDs).                                                                | [Documentation](https://www.postgresql.org/docs/current/uuid-ossp.html)          |
+| `pg_uuidv7`                   | Provides support for UUID version 7, a new type of universally unique identifier.                                                     | [Documentation](https://github.com/fboulnois/pg_uuidv7)                          |
 | `postgis`                     | A spatial database extender for PostgreSQL, providing support for geographic objects.                                                 | [Documentation](https://postgis.net/docs/manual-2.5/postgis_installation.html)              |
 | `postgis_raster`              | Extends PostGIS with raster data support, allowing the storage, query, and analysis of raster data types.                             | [Documentation](https://postgis.net/docs/manual-2.5/RT_FAQ.html)                            |
 | `postgis_sfcgal`              | Extends PostGIS with advanced 3D capabilities provided by the SFCGAL library.                                                         | [Documentation](https://postgis.net/docs/manual-2.5/using_postgis_sfcgal.html)              |
 | `postgis_tiger_geocoders`     | Provides geocoding functions using the U.S. Census TIGER/Line data.                                                                   | [Documentation](https://postgis.net/docs/manual-2.5/Geocode.html)                           |
 | `postgis_topology`            | Extends PostGIS with topology support, allowing the representation of topological structures.                                         | [Documentation](https://postgis.net/docs/manual-2.5/postgis_topology.html)                  |
-| `timescaledb`                 | An extension that provides scalable time-series data management built on PostgreSQL.                                                 | [Documentation](https://docs.timescale.com/)                                     |
-| `vector`                     | A vector data type extension, useful for implementing machine learning models and similar functionalities.                           | [Documentation](https://github.com/pgvector/pgvector)                   |
+| `address_standardizer`        | Standardizes address data for geocoding purposes.                                                                                     | [Documentation](https://postgis.net/docs/manual-2.5/Address_Standardizer.html)              |
+| `address_standardizer_data_us`| Provides US address data for the address standardizer extension.                                                                      | [Documentation](https://postgis.net/docs/manual-2.5/Address_Standardizer.html)  |
+| `pgrouting`                   | Extends PostGIS with geospatial routing functionality.                                                                                | [Documentation](https://pgrouting.org/)                                          |
+| `timescaledb`                 | An extension that provides scalable time-series data management built on PostgreSQL.                                                  | [Documentation](https://docs.timescale.com/)                                     |
+| `vector`                      | A vector data type extension, useful for implementing machine learning models and similar functionalities.                            | [Documentation](https://github.com/pgvector/pgvector)                   |
 
+### Other Database System
 
-###Only three database system is supported: `MariaDB`, `PostgreSQL`, `SQLite`. For caching we recommend you to leverage filesystem.
+Only three database system is supported: `MariaDB`, `PostgreSQL`, `SQLite`. For caching we recommend you to leverage filesystem.
 
 You can also use third party databases that's also cheap (or even free) such as [Redis Labs](https://redis.com/try-free/), [Firebase Firestore](https://firebase.google.com/products/firestore) or [MongoDB Atlas](https://www.mongodb.com/products/platform/cloud), just make sure the cluster is close enough within our server. 
 
