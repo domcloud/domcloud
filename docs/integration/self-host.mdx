@@ -70,9 +70,8 @@ Uninstall all PHP from appstream first. (`yum remove php-*`)
 
 ```
 dnf install epel-release http://rpms.remirepo.net/enterprise/remi-release-9.rpm 
-dnf install php{74,80,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-imagick,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
+dnf install php{74,80,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-imagick,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml} composer
 ln -s `which php83` /usr/local/bin/php
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/php.ini \; 
 find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dynamic/pm = ondemand/g'
 ```
@@ -82,16 +81,47 @@ Tools, libs, services:
 dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail strace tar time vim wget xz \
 {libcurl,libffi,libsqlite3x,libtool-ltdl,libyaml,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
 libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay,Text-ASCIITable} \
-earlyoom fail2ban-server iptables-services postfix postgresql-server postgresql-contrib
+earlyoom fail2ban-server iptables-services postfix
 ```
 
-Security Repository Setup
-```bash
-# Fixes CVE-2024-6387 (OpenSSH) and CVE-2024-2961 (Glibc)
-dnf install rocky-security-release -y
-dnf config-manager --enable security-common
-yum install openssh-8.7p1-38.el9_4.security.0.5.x86_64
-echo "exclude=openssh openssh-clients openssh-server" > /etc/yum.conf
+NGINX (Use newer module version):
+```
+dnf module reset nginx
+dnf module enable nginx:1.24
+yum update
+```
+
+MariaDB (Use newer module version):
+```
+dnf module reset mariadb
+dnf module enable mariadb
+yum update
+```
+
+PostgreSQL 16 (Use Dedicated Yum repo):
+```
+dnf config-manager --enable crb
+dnf install https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+dnf install -y postgresql16-server postgresql16-contrib postgis34_16 pgrouting_16 pgvector_16 pg_uuidv7_16 timescaledb_16
+/usr/pgsql-16/bin/postgresql-16-setup initdb
+update-alternatives --config pgsql-psql
+for ext in "postgis" "postgis_raster" "postgis_sfcgal" "postgis_tiger_geocoders" "postgis_topology" "earthdistance" "address_standardizer" "address_standardizer_data_us" "pgrouting" "pg_uuidv7" "vector"; do
+  echo "trusted = true" >> "/usr/pgsql-16/share/extension/$ext.control"
+done
+```
+
+Node (Use newer module version):
+```
+dnf module reset node
+dnf module enable node:20
+yum update
+```
+
+Ruby (Use newer module version):
+```
+dnf module reset ruby
+dnf module enable ruby:3.3
+yum update
 ```
 
 ```
@@ -143,7 +173,6 @@ apt-get install software-properties-common
 ```
 add-apt-repository ppa:ondrej/php; apt-get update
 apt-get install php{7.4,8.0,8.1,8.2}-{bcmath,cli,common,dev,fpm,gd,imap,igbinary,intl,mbstring,mysql,opcache,mongodb,readline,redis,zip,pgsql,soap,xml}
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 find /etc/php/ -maxdepth 1 -mindepth 1 -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/fpm/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/fpm/php.ini \; 
 ```
 
@@ -282,7 +311,7 @@ max_connections = 4096
 
 ### PostgreSQL
 
-```ini title="/var/lib/pgsql/data/postgresql.conf"
+```ini title="/var/lib/pgsql/16/data/postgresql.conf"
 ...
 listen_addresses = '*'
 max_connections = 4096
@@ -290,13 +319,13 @@ shared_buffers = 128MB
 ...
 ```
 
-```ini title="/var/lib/pgsql/data/pg_hba.conf"
-local   all             all                                     trust
-host    all             all             127.0.0.1/32            trust
-host    all             all             ::1/128                 trust
-local   replication     all                                     trust
-host    replication     all             127.0.0.1/32            trust
-host    replication     all             ::1/128                 trust
+```ini title="/var/lib/pgsql/16/data/pg_hba.conf"
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            ident
+host    all             all             ::1/128                 ident
+local   replication     all                                     peer
+host    replication     all             127.0.0.1/32            ident
+host    replication     all             ::1/128                 ident
 host    all             all             0.0.0.0/0               md5
 host    all             all             ::/0                    md5
 ```
