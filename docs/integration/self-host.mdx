@@ -70,8 +70,9 @@ Uninstall all PHP from appstream first. (`yum remove php-*`)
 
 ```
 dnf install epel-release http://rpms.remirepo.net/enterprise/remi-release-9.rpm 
-dnf install php{74,80,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-imagick,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml} composer
-ln -s `which php83` /usr/local/bin/php
+dnf install php{74,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-imagick,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
+ln -s `which php83` /usr/bin/php
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 find /etc/opt/remi/ -maxdepth 1 -name 'php*' -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/php.ini \; 
 find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dynamic/pm = ondemand/g'
 ```
@@ -80,8 +81,8 @@ Tools, libs, services:
 ```
 dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail strace tar time vim wget xz \
 {libcurl,libffi,libsqlite3x,libtool-ltdl,libyaml,nettle,openldap,postgresql-server,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
-libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay,Text-ASCIITable} \
-earlyoom fail2ban-server iptables-services postfix
+libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,macros,Crypt-SSLeay,Text-ASCIITable,IO-Tty} \
+earlyoom fail2ban-server iptables-services postfix mariadb-server
 ```
 
 NGINX (Use newer module version):
@@ -112,15 +113,8 @@ done
 
 Node (Use newer module version):
 ```
-dnf module reset node
-dnf module enable node:20
-yum update
-```
-
-Ruby (Use newer module version):
-```
-dnf module reset ruby
-dnf module enable ruby:3.3
+dnf module reset nodejs
+dnf module enable nodejs:20
 yum update
 ```
 
@@ -145,6 +139,12 @@ modprobe ip_tables && echo "ip_tables" >> /etc/modules
 ```
 
 ```
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+dnf install yarn -y
+```
+
+```
+dnf install python3-pip
 pip3 install pipenv
 pip3 install awscli
 ```
@@ -153,7 +153,7 @@ pip3 install awscli
 ```
 wget https://github.com/sayanarijit/xplr/releases/latest/download/xplr-linux.tar.gz
 tar -xzvf xplr-linux.tar.gz
-mv xplr /usr/local/lib/xplr
+mv xplr /usr/local/bin/xplr
 ```
 
 :::info
