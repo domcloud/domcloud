@@ -139,7 +139,7 @@ modprobe ip_tables && echo "ip_tables" >> /etc/modules
 ```
 
 ```
-curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo > /etc/yum.repos.d/yarn.repo
 dnf install yarn -y
 ```
 
@@ -154,6 +154,11 @@ pip3 install awscli
 wget https://github.com/sayanarijit/xplr/releases/latest/download/xplr-linux.tar.gz
 tar -xzvf xplr-linux.tar.gz
 mv xplr /usr/local/bin/xplr
+```
+
+```bash
+wget -O /usr/local/bin/neofetch https://github.com/hykilpikonna/hyfetch/raw/1.4.11/neofetch
+chmod +x /usr/local/bin/neofetch
 ```
 
 :::info
@@ -184,7 +189,7 @@ apt-get install earlyoom rdfind fail2ban postfix postgresql{,-contrib} bind9{,-h
 apt-get autoremove
 ```
 
-NGINX Unit
+NGINX Unit (x64 only)
 ```
 yum install unit -y
 systemctl enable unit --now

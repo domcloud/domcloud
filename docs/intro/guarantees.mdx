@@ -3,39 +3,33 @@ title: Our Guarantees
 sidebar_position: 3
 ---
 
-We want everyone make use of our services for a better experience with putting things online. Personally, the reason I (the founder) created this service because I once struggled to find a web hosting service that's good enough for a university project.
+We want everyone make use of our cloud platorm for a better experience with putting things online. Personally, the reason I (the founder) created this platform because I once struggled to find a web hosting service that's good enough for a university project.
 
 With that said, we have to be honest that we can't provide everything. We have to draw a line between what we can and can't do. This page is about that.
 
-## The NOT guarantees
+## The NOT DO
 
-These are the things that we will not guarantee:
+These are the things that we will not do:
 
-### It will not be scalable
+### Scalability
 
-Roughly saying, a system can be defined as *scalable* if it can handle a large number of users, say, hundred thousands of visitor every day; or it's targeted for worldwide audience and visitor wouldn't worry about latency wherever they are.
+Roughly saying, a system can be defined as *scalable* if it can [be scaled horizontally](https://www.mongodb.com/basics/horizontal-vs-vertical-scaling#what-is-horizontal-scaling) during peak times.
 
-Honestly, our platform won't solve that problem, because our servers is **monolithic** by design. Monolithic means only one machine located in one place will handle your website. It will **never** can be [scaled horizontally](https://www.mongodb.com/basics/horizontal-vs-vertical-scaling#what-is-horizontal-scaling).
+Here, We don't do that, because our servers is **monolithic** by design. Monolithic means only one machine located in one place will handle your website. It will **never** can be horizontally scaled.
 
-Scaling horizontally means using some advanced techniques like load balancing, edge servers, edge functions, containerizations etc. We believe adding technical complexity will just make developers life harder. We want to keep things simple and easy to use.
+Scaling horizontally means using some advanced techniques like load balancing, edge servers, edge functions, containerizations etc. We believe adding technical complexity will just make developers life harder. We want to keep things simple and easy to use. Read [the cloud exit by DHH](https://world.hey.com/dhh/the-big-cloud-exit-faq-20274010).
 
-### It will not be always tolerable
+We still can scale vertically by our customer demands.
 
-We given users a raw access (SSH) to the server, so they can do whatever they want with it. Practically, one can use our servers train a machine learning mode here, but it's discouraged. We have to draw a line where we can't tolerate a website that takes too much CPU or RAM resources.
+### It will be not 99.9% uptime
 
-In addition of training ML models, we don't allow crypto, phising, DoS, spam, and other malicious activities. We have a [terms of service](/service) that you should read.
+We given users a raw access (SSH) to the server, so they can do whatever they want with it. Practically, one can use our servers abusively, like training a machine learning model. That won't work. We have RAM and CPU limits in place to avoid accidentally freezing our whole server.
 
-We limit RAM for any instance up to 2GB of RAM for Tier I servers and 512MB RAM for Tier II servers. While this is particularly high standard for shared hosting like us, it's done that way since we want to only allocate high memory for temporary things like compiling your apps.
+Still, things can go offline, for instance during bad root-level configuration by our admins. We strive to make our cloud platform recover from bad things autonomously. But, sometime have to "touch" our servers to keep everyone happy.
 
-Never allocate RAM/CPU usage beyond necessary. We have an alert if the CPU usage is too high continously. If it does happen, we have to kill the process forcibly so it doesn't impact other websites for too long. We could terminate an account if it comes again repeatedly.
+A bad actor can sneak up and wreak havoc despite many security protections in place. In that case they're violating [ToS](/service) like planting phising, DoS, spam, and other malicious activities to our servers. If someone legitimately needed a higher computing spec and it's not measurable by our limits (like storage and data cap) we will contact them.
 
-If your website has too much traffic, memory or CPU usage, but your website is legitimate, we may contact you so we can take an alternate agreement such that your website resource usage doesn't impact other websites.
-
-### It will not be always available
-
-By design of monolithic system, it's prune to single point of failure. Maintenance sometimes happen. We do have a [uptime status monitoring system](https://stats.uptimerobot.com/AA77Xt9Jx8) and we strive to keep the uptime as high as possible.
-
-If your website runs for a mission critical project, you might need to consider alternate cloud provider that guarantees uptime and scalability.
+Most of the time, downtime will not caused by us, could be your bad configuration. Or we do something that brokes your bad configuration. So expect some downtime here and there, but don't hesitate to contact us promptly if something is wrong!
 
 ## Guarantees
 
@@ -65,4 +59,4 @@ Our servers is literally just a Linux server and you have a full access (non-sud
 
 ## Support
 
-Currently, DOM Cloud run as a service for community. Core developer resources is minimal but we strive to make this platform autonomous and easy to use. You welcome to ask in the discussion forum or emails.
+Currently, DOM Cloud run as a service for community. Core developer resources is minimal but we strive to make this platform autonomous and easy to use. You welcome to ask in the discord or chat in telegram.

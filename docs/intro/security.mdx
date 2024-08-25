@@ -5,33 +5,13 @@ title: Security Measures
 
 This article describes the security measures that implemented in the system. 
 
-DOM Cloud is essentially a Linux VPS server that's shared for all users. While this maybe seems like a bad idea, when it done correctly it will work fine and save a lot of infra cost for most users. 
-
-DOM Cloud has six servers with different spec tier level:
-
-Tier I: 2 vCPU 4 GB RAM
-- `sga.domcloud.co` (Singapore)
-- `nyc.domcloud.co` (New York)
-
-Tier II: 1 vCPU 1 GB RAM*
-- `ams.domcloud.co` (Amsterdam)
-- `tyo.domcloud.co` (Tokyo)
-- `blr.domcloud.co` (Bangalore)
-- `sao.domcloud.co` (Sao Paolo)
-
-These hardware specs may change as the time goes with available budget.
-
-*) Amsterdam server is an exception, it has 2 GB of RAM.
-
-If you're happen to close with tier II servers, think of your website usecase. If you only want to host and simple website, go to in Tier II because ping time really matters. If your app can't run in Tier II, or it loads so long or hangs too commonly, then try moving it on Tier I server.  
+DOM Cloud is essentially a Linux VPS server that's shared for all users. While this maybe seems like a bad idea, when it done correctly it will work fine and save a lot of infra cost and simplify a lot deployment complexities. See [Compare Servers](./compare-server.mdx) To get better idea about our server specs.
 
 ## No Sudo
 
-When you create a website in DOM Cloud, you will be given a [SSH access](https://www.cloudflare.com/learning/access-management/what-is-ssh/), which then you can used it to install additional software or libraries in order to make your app working correctly.
+Unlike standard VPS, we don't give you sudo. Still, you will will be given a [SSH access](https://www.cloudflare.com/learning/access-management/what-is-ssh/), which then you can used it to install additional software or libraries in order to make your app working correctly.
 
-The only restriction is this: You can't elevate access with `sudo`. There are many tutorials out there that requires `sudo`, these will not work here as that will compromise the entire system, including other users data.
-
-Of course, there are some actions that requires sudo access, such as configuring NginX or DNS records. This is why [the deployment system](../features/deploy.mdx) exists, it facilitates some `sudo` actions in a safer way.
+To aid in installing additional binaries and tools we have plenty of [deployment scripts](../features/deploy.mdx) that install things in your `/home` folder. Some action that requires sudo such as configuring NGINX or DNS records are also handled by deployment scripts or our panel Webmin.
 
 The deployment system also has some shortcut to install language compilers, such as Node.JS, Python, Rust, Go, and many more. Refer to [its `features` section](../features/deploy.mdx#features). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with system-wide software.
 
@@ -39,35 +19,30 @@ The deployment system also has some shortcut to install language compilers, such
 
 CPU and RAM are limited resources. To make room for everyone, server processes need to be shut down when it's no longer in use. In another word, there can't be any process run 24/7, it will be terminated when there's no traffic for more than 15 minutes.
 
-This is enforced by NginX proxies (PHP-FPM and Passenger) plus many many other daemons that's running in the background.
+This is enforced by NginX proxies (PHP-FPM and Passenger) plus many many other daemons that's running in the background. There also limits enforced by linux PAM to prevent server freeze because of OOM.
 
-If your web apps requires some kind of background processes that must stays on for 24/7, then you might have designed its system architecture wrong. The most noticeable impact from this restriction is Chatbot. All chatbot must work by webhook, not by actively polling social media APIs.
-
-
-:::info
-
-We recently allowing users to bypass the *'No Background Services'* policy for `Kit` and `Pro` plan users because of our ability to [use Docker](../deployment/docker.mdx) within our service.
-
-:::
+To keep processes running all the time 24/7 we recommend you to leverage [rootless Docker or SystemD](../deployment/docker.mdx). Do note that this requires suscribing as low as Kit plan. Also the setup is more complex and requires you to get familiar with overall linux system.
 
 :::danger
 
-Do not install any third-party background services that pings all the time such as Uptime Bots. This will cause your account to be terminated as it is direct violation for Fair Use (forcing the process to always run 24/7).
+If you're not subscribing as low as Kit Plan, do not install cron or any third-parties such as Uptime Bots that pings all the time to keep your software awake! This will cause your account to be terminated as it is direct violation for Fair Use (forcing the process to always run 24/7).
 
 :::
 
-## Listing every other users
+## No Chroot Jail
 
-**Due to how linux works, we can't hide usernames and domains for all users in the server.**
+Chroot Jail are safety measurements commonly used by many web hosting providers to limit access to system. As these safety measurements is expensive and not providing critical security value compared to simply not giving sudo, we're leaving this off.
 
-Anyone with SSH access can do `ls /home` or `cat /etc/passwd` and determine what's domain other users has. We encourage everyone to not assume all URLs are private, and taken security measurements properly as if anyone public can open the website.
+This also means anyone with SSH access can do `ls /home` or `cat /etc/passwd` and determine what's domain other users has. We encourage everyone to not assume all URLs are private, and taken security measurements properly as if anyone with internet can open your website.
 
-Note that this doesn't mean anyone can read your server code. We treat security seriously.
+Note that we still treats security very serious. Only you and us (server admins) can read your code. We have Fail2Ban in place to prevent random people guessing your server password. 
 
-## SSH/Server Password 
+**Server passwords must be treaten as personal password**, exposure on public can lead to anyone see and override your website internal data! Avoid managing your website in public devices. If you have to do that, make sure you do it in private browsing/incognito mode. If you believe have leaking your server password, please change it from Webmin UI or our Portal UI.
 
-**Server passwords must be treaten as personal password**, exposure on public can lead to anyone see and override your website internal data!
+## No Participation in Bad Faith
 
-Avoid managing your website in public devices. If you have to do that, make sure you do it in private browsing/incognito mode.
+Many cloud servers offering free plans relies on actual credit card to make sure it's not evil person who tries to damage the whole system or reusing it to steal other people data by massive spam and phising.
 
-If you have leaking your server password, please change it ASAP wither from Webmin UI or our Portal UI.
+We know it's hard to get credit card access for some people or some countries and we have to get creative to keep our system secure. We explain more [additional security measures for free users here](./free-plan.mdx). 
+
+To enjoy most of our features you still have to spend some money by either have custom domain (don't have to be from us) or subscribe as low as Lite Plan. We only charge you little to gain trust, and more only by your infra usage.
