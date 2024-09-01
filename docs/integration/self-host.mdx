@@ -13,10 +13,17 @@ You can also use this page as a reference if you want to know what's running beh
 When want to update all config, use `pssh`
 ```
 pssh -t 0 -iPh ~/hosts "whoami"
-pssh -t 0 -iPh ~/hosts 'bash -c "cat <<EOF > /output/to/file
+
+pssh -t 0 -IiPh ~/hosts <<'EOF'
+whoami
+EOF
+
+pssh -t 0 -IiPh ~/hosts <<'EOC'
+cat <<'EOF' > /output/to/file
 This is line 1
 This is line 2
-EOF"'
+EOF
+EOC
 ```
 
 ## OS and Installation
@@ -123,7 +130,7 @@ dnf config-manager --enable crb
 dnf install https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 dnf install -y postgresql16-server postgresql16-contrib postgis34_16 pgrouting_16 pgvector_16 pg_uuidv7_16 timescaledb_16
 /usr/pgsql-16/bin/postgresql-16-setup initdb
-for bin in "psql" "pg_dump" "pg_dumpall" "pg_restore" "pg_isready"; do
+for bin in "psql" "pg_dump" "pg_dumpall" "pg_restore"; do
     update-alternatives --set "pgsql-$bin" "/usr/pgsql-16/bin/$bin"
 done
 for ext in "postgis" "postgis_raster" "postgis_sfcgal" "postgis_tiger_geocoders" "postgis_topology" "earthdistance" "address_standardizer" "address_standardizer_data_us" "pgrouting" "pg_uuidv7" "vector"; do
