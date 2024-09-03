@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're entering DOM Cloud User Generated Content</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@567&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #000000, #111);
+            font-family: "Open Sans", sans-serif;
+            color: white;
+            text-align: center;
+        }
+        .warning-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin: 30px;
+            max-width: 50rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            margin: 0 40px 40px;
+            font-size: 24px;
+        }
+        a, button {
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        a:hover, button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <form class="warning-container">
+        <h1>The content ahead is written by free users of DOM Cloud and might contain spam, phishing or tricking you to enter sensitive data.</h1>
+        <a href="?" onclick="location = location.pathname + location.search; return false">✅ I understand, I trust this site.</a>
+    </form>
+<a href="https://my.domcloud.co/report">⚠️ Report this site</a>
+</body>
+</html>

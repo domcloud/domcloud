@@ -73,9 +73,9 @@ To begin setup the webhook, go to Deploy tab and write the commands you want to 
 
 ![image](https://user-images.githubusercontent.com/20214420/128415871-7f7eca65-f85a-4123-9dfc-79f37d506e50.png)
 
-Put this file in `.github/workflows/domcloud.yml` (can be any filename) and before you push it to GitHub, add these  `WEBHOOK_SECRET`, `WEBHOOK_AUTH` to [Repository Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets). Note you might need to change "main" to your repo's desired main branch.
+The YAML file generated is a GitHub CI File that uses [workflow-webhook](https://github.com/distributhor/workflow-webhook) and the commands to run are in list of `data` prop in the end of file. Now, put this file to `.github/workflows/domcloud.yml` (can be any filename) and before you push it to GitHub, add these  `WEBHOOK_SECRET`, `WEBHOOK_AUTH` to [Repository Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets). Note you might need to change "main" to your repo's desired main branch.
 
-Note if your host domain URL, username, or password is changed, then you need to update these variables accordingly. Maximum webhook calls is 50 times a day for a website.
+Note if your host domain URL, username, or password is changed, then you need to update these variables accordingly. Changing the `data` prop doesn't change secrets. Maximum webhook calls is 50 times a day for a website.
 
 An example of working Webhook is [DOM Cloud's Bridge repo](https://github.com/domcloud/bridge/blob/main/.github/workflows/domcloud.yml), applying `git pull` of the software to all DOM Cloud servers once a commit has been pushed.
 
