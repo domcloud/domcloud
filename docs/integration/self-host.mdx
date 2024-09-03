@@ -66,7 +66,7 @@ WantedBy=multi-user.target
 
 ```bash
 wget -O /usr/local/bin/restart https://raw.githubusercontent.com/domcloud/bridge/main/userkill.sh && chmod 755 /usr/local/bin/restart
-mkdir -p /usr/local/share/www && wget -O /usr/local/share/www/deceptive.html https://gist.githubusercontent.com/willnode/0f0f083f01aa2f2f7d81b1f93151003e/raw/a1030639608f10955345c1f56f6ad13527e6f026/deceptive.html  && chmod 0755 -R /usr/local/share/www
+mkdir -p /usr/local/share/www && wget -O /usr/local/share/www/deceptive.html https://raw.githubusercontent.com/domcloud/domcloud/master/share/deceptive.html  && chmod 0755 -R /usr/local/share/www
 ```
 
 ```bash
@@ -381,41 +381,51 @@ mkdir -p /etc/nginx/conf.d && chmod 0750 $_
 
 ```bash
 cat <<'EOF' | while read -r line; do
-passwd_mode=0
-hard_quotas=0
 allow_subdoms=0
-quotas=1
-preload_mode=2
-virtual_skel=/etc/skel
-disable=web,mysql,postgres
-letsencrypt_retry=0
-nolink_certs=2
-combined_cert=2
-collect_noall=1
-mysql_collate=utf8mb4_unicode_ci
-php_log=1
-php_vars=
-php_sock=1
-php_noedit=0
-php_fpm=pm = ondemand	pm.max_children = 4	pm.process_idle_timeout = 300s
-webmin_ssl=0
-usermin_ssl=0
-dovecot_ssl=0
-postfix_ssl=0
-mysql_ssl=0
-proftpd_ssl=0
 auto_letsencrypt=0
-cert_type=sha1
-jail_age=
-dns_records=@
+avail_xterm=1
+aws_cmd=aws
 bind_spf=
 bind_sub=yes
-logrotate_shared=yes
-mysql_suffix=${USER}_
-mysql_db=${PREFIX}_db
+cert_type=sha1
+collect_noall=1
+collect_interval=none
+combined_cert=2
+disable=web,mysql,postgres
+dns_records=@
+dovecot_ssl=0
+hard_quotas=0
+hide_pro_tips=1
+html_perms=0750
+jail_age=
+jailkit_disabled=0
 key_tmpl=/etc/ssl/virtualmin/${ID}/ssl.key
-aws_cmd=aws
-avail_xterm=1
+letsencrypt_retry=0
+letsencrypt_wild=0
+logrotate_shared=yes
+mysql_charset=utf8mb4
+mysql_collate=utf8mb4_unicode_ci
+mysql_db=${PREFIX}_db
+mysql_hosts=%
+mysql_mkdb=0
+mysql_ssl=0
+mysql_suffix=${USER}_
+nolink_certs=2
+passwd_mode=0
+php_fpm=pm = ondemand	pm.max_children = 4	pm.process_idle_timeout = 300s
+php_log=1
+php_noedit=0
+php_sock=1
+php_suexec=3
+php_vars=
+postfix_ssl=0
+preload_mode=2
+proftpd_ssl=0
+quotas=1
+status=0
+usermin_ssl=0
+virtual_skel=/etc/skel
+webmin_ssl=0
 EOF
     # Extract the key part (before '=') to use as a pattern for sed
     key=$(echo "$line" | cut -d'=' -f1)
@@ -431,12 +441,36 @@ EOF
 done
 ```
 
+```ini title="/etc/webmin/virtual-server/plans/0"
+ipfollow=
+aliaslimit=
+migrate=0
+capabilities=domain users aliases dbs scripts ssl redirect admins phpver phpmode backup sharedips passwd spf records
+bwlimit=
+aliasdomslimit=
+uquota=
+name=Default Plan
+safeunder=1
+file=/etc/webmin/virtual-server/plans/0
+mailboxlimit=
+nodbname=0
+quota=
+forceunder=1
+featurelimits=
+norename=1
+id=0
+domslimit=
+dbslimit=
+realdomslimit=
+scripts=
+```
+
 ### NGINX
 
 ```ini title="/etc/webmin/virtualmin-nginx/config"
 php_socket=1
 nginx_cmd=/usr/sbin/nginx
-add_to=/etc/nginx/conf.d/
+add_to=/etc/nginx/conf.d
 http2=0
 listen_mode=1
 child_procs=4
@@ -447,7 +481,6 @@ stop_cmd=systemctl stop nginx
 start_cmd=systemctl start nginx
 add_link=
 nginx_config=/etc/nginx/nginx.conf
-proxy_websockets=0
 ```
 
 ```conf title="/etc/nginx/fastcgi.conf"
