@@ -5,11 +5,12 @@ sidebar_position: 5
 
 DOM Cloud has many servers and they are different spec depends on capacity. All customers enjoy equal computing power no matter their current plan.
 
-| Server Locations             | Tier | vCPU | RAM | Root Disk | Home Disk | Backend | Has Docker |
+| Server Code (City, Country)  | Tier | vCPU | RAM | Root Disk | Home Disk | Backend | Has Docker |
 |------------------------------|------|------|-----|-----------|-----------|---------|------------|
 | SGA (Singapore)              | I    | 2    | 4   | SSD       | NVME      | x64     | Yes        |
 | NYC (New York City, US)      | I    | 2    | 4   | SSD       | NVME      | x64     | Yes        |
-| AMS (Amsterdam, Netherlands) | II   | 1    | 2   | NVME      | NVME      | x64     | No         |
+| AMS (Amsterdam, Netherlands) | I    | 1    | 2   | NVME      | NVME      | x64     | No         |
+| SGP (Singapore)              | II   | 2    | 12  | NVME      | NVME      | arm64   | No         |
 | NUE (Nuremberg, Germany)     | II   | 6    | 8   | NVME      | NVME      | arm64   | No         |
 | OSK (Osaka, Japan)           | II   | 1    | 6   | NVME      | NVME      | arm64   | No         |
 | SAO (Sao Paulo, Brazil)      | II   | 1    | 6   | NVME      | NVME      | arm64   | No         |
@@ -20,22 +21,20 @@ The rule of thumb is pick closest with your targeted visitors. As more people ca
 
 Another notes we like to add:
 
+## Tiers
+
+Tier I are more stable tiers where less migration and less maintenance happens than Tier II servers. Tier I are planned to be unlocked only for subscribing users as it's more costly than Tier II servers. Tier II are lesser in cost but has higher in spec due to ARM arch efficiency. 
+
 ## vCPU
 
-We use shared, burstable virtual CPU from many cloud companies. A high CPU usage can sometimes appear. If you want consistent uptime, we recommend to choose servers with higher vCPU. We call these servers as Tier I servers. Otherwise, tier II servers can be your choice if latency much matters. 
+We use shared, burstable virtual CPU from many cloud companies. A high CPU usage can sometimes appear. If you want consistent uptime, we recommend to choose servers with higher vCPU.
 
 ## RAM
 
-Tier I servers have higher RAM, hence we only install Docker to these servers only. Tier II has lower RAM spec, but we will fix it when we use ARM servers (like Sao Paulo Server).
+RAM are commonly higher for ARM servers and hence much more stable there.
 
 ## Root and Home Disk
 
-Everything in `/home` dir is mounted to different "block" storage, hence the separation. Root disk performance is matter for database (MariaDB / PostgreSQL). Hence usually Root disk has much faster performance. The fastest disk is NVME, the slowest is HDD. Some Tier II servers that using HDD will be switched to higher version when we transitioned to ARM server.
-
-## Backend
-
-Most server uses x64 as the cloud industry has use it for decades. However there's new trend in using ARM server as it's more energy efficient, hence higher spec and smaller cost for us.
-
-You're most likely don't have to worry about using ARM server as most linux programs support ARM architecture.
+Everything in `/home` dir is mounted to different "block" storage, hence the separation. Root disk performance is matter for database (MariaDB / PostgreSQL). Hence usually Root disk has much faster performance.
 
 
