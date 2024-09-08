@@ -261,7 +261,7 @@ Tier I
 
 ```ini title="/etc/security/limits.conf"
 root             soft    nofile          65535
-@nginx           hard    as              1024000
+@nginx           hard    as              2048000
 @nginx           hard    nproc           64
 @nginx           hard    priority        5
 ```
@@ -316,7 +316,6 @@ EARLYOOM_ARGS="-r 0 -m 4 -M 409600 -g --prefer '^(node|python|ruby|java)' --avoi
 ```
 
 ```ini title="/var/spool/cron/root"
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * /etc/webmin/status/monitor.pl
 0 * * * * find '/var/spool/cron/' -not -name root -type f | xargs sed -i '/^\s*(\*|\d+,)/d'
 * * * * * pgrep PassengerAgent || systemctl restart nginx
 */5 * * * * /usr/bin/node /home/bridge/public_html/sudokill.js -i bridge,do-agent,dbus,earlyoom,mysql,named,nobody,postgres,polkitd,rpc
@@ -363,11 +362,6 @@ shared_buffers = 128MB
 
 ```ini title="/var/lib/pgsql/16/data/pg_hba.conf"
 local   all             all                                     peer
-host    all             all             127.0.0.1/32            ident
-host    all             all             ::1/128                 ident
-local   replication     all                                     peer
-host    replication     all             127.0.0.1/32            ident
-host    replication     all             ::1/128                 ident
 host    all             all             0.0.0.0/0               md5
 host    all             all             ::/0                    md5
 ```
@@ -518,7 +512,8 @@ passenger_disable_security_update_check on;
 passenger_disable_anonymous_telemetry on;
 passenger_log_file /var/log/nginx/passenger.log;
 passenger_min_instances 0;
-passenger_max_pool_size 10;
+passenger_max_pool_size 32;
+passenger_pool_idle_time 18000;
 passenger_max_instances_per_app 1;
 ```
 
