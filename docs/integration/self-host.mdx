@@ -95,8 +95,8 @@ find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dyn
 Tools, libs, services:
 ```
 curl -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
-dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail strace tar time vim wget xz \
-{libcurl,libffi,libsqlite3x,libtool-ltdl,libyaml,nettle,openldap,passenger,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
+dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail strace tar time vim wget xz zstd \
+{libcurl,libffi,libsqlite3x,libtool-ltdl,libyaml,nettle,openldap,passenger,python,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
 libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,DBD-mysql,macros,Crypt-SSLeay,Text-ASCIITable,IO-Tty} {langpacks,glibc-langpack}-en \
 earlyoom fail2ban-server iptables-services postfix mariadb-server wbm-virtual-server wbm-virtualmin-{nginx,nginx-ssl}
 ```
