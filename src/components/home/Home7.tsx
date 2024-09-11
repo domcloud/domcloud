@@ -18,6 +18,15 @@ export default function Home7() {
                     }} >
                         <FaMapMarker/>
                     </a>
+                    <a href="#sgp" style={{
+                        position: 'absolute',
+                        top: '57.2%',
+                        left: '76.0%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)'
+                    }} >
+                        <FaMapMarker/>
+                    </a>
                     <a href="#nyc" style={{
                         position: 'absolute',
                         top: '31.5%',
@@ -27,7 +36,16 @@ export default function Home7() {
                     }} >
                         <FaMapMarker />
                     </a>
-                    <a href="#fra" style={{
+                    <a href="#mnz" style={{
+                        position: 'absolute',
+                        top: '32.4%',
+                        left: '27.2%',
+                        width: '25px',
+                        transform: 'translate(-11px, -45px)',
+                    }} >
+                        <FaMapMarker />
+                    </a>
+                    <a href="#ams" style={{
                         position: 'absolute',
                         top: '25.8%',
                         left: '49.3%',
@@ -36,19 +54,19 @@ export default function Home7() {
                     }} >
                         <FaMapMarker />
                     </a>
-                    <a href="#osa" style={{
+                    <a href="#nue" style={{
                         position: 'absolute',
-                        top: '35.1%',
-                        left: '82.9%',
+                        top: '27.8%',
+                        left: '50.6%',
                         width: '25px',
                         transform: 'translate(-11px, -45px)',
                     }} >
                         <FaMapMarker />
                     </a>
-                    <a href="#blr" style={{
+                    <a href="#osk" style={{
                         position: 'absolute',
-                        top: '49.2%',
-                        left: '68.1%',
+                        top: '35.1%',
+                        left: '82.9%',
                         width: '25px',
                         transform: 'translate(-11px, -45px)',
                     }} >
@@ -64,7 +82,7 @@ export default function Home7() {
                         <FaMapMarker />
                     </a>
                 </div>
-                <p className="text--center"><a href="https://github.com/domcloud/domcloud/issues/22" target="_blank" rel="noopener noreferrer">Psst... Want more location?</a></p>
+                <p className="text--center"><a href="/docs/intro/compare-server">Read more about our server specs</a></p>
             </div>
         </div>
     </div>)

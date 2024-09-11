@@ -606,10 +606,19 @@ http {
 
 ### Fail2Ban
 
+```ini title="/etc/fail2ban/filter.d/ratelimit.conf"
+[Definition]
+failregex = ^.+ \[error\] .+limiting requests, excess: \d+.\d+ by zone "\w+", client: <HOST>, .+$
+
+ignoreregex =
+```
+
+
 ```ini title="/etc/fail2ban/filter.d/wordpress-auth.conf"
 [Definition]
-failregex = ^<HOST> .* "POST /+xmlrpc.php .*" [24]\d\d \d* ".*"$
-            ^<HOST> .* "POST /wp-login.php .*" [24]\d\d \d* ".*"$
+failregex = ^<HOST> .* "POST \/+xmlrpc.php .* [24]\d+ \d* ".*"$
+            ^<HOST> .* "POST \/+wp-login.php .* [24]\d+ \d* ".*"$
+            ^<HOST> .* "GET \/index\.php\S+\/index\.php\S+ .* [24]\d+ \d* ".*"$
 
 ignoreregex =
 ```
@@ -632,6 +641,11 @@ enabled = true
 
 [mysqld-auth]
 enabled = true
+
+[ratelimit]
+enabled = true
+port = http,https
+logpath = /var/log/virtualmin/*error_log
 
 [wordpress-auth]
 enabled = true
