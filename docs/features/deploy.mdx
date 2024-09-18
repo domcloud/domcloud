@@ -251,7 +251,6 @@ The `docker` CLI is always available regardless of this settings as this is prov
 Set PHP (FastCGI) version. Available options:
 
 + `php 7.4`
-+ `php 8.0`
 + `php 8.1`
 + `php 8.2`
 + `php 8.3`
@@ -405,7 +404,9 @@ This installation is powered by [`webi`](https://webinstall.dev/zig). Read more 
 
 ## `nginx`
 
-Configures NGINX for a given website. Common examples:
+Configures NGINX for a given website. Can be a `string` or `object`. If passed as `string`, it will be converted into YAML  `object` before config gets applied. **You are only allowed to change NGINX properties based on what YAML object can permits**.
+
+Common examples:
 
 ```yaml
 # Standard NGINX setup for PHP framework 
@@ -439,7 +440,7 @@ commands:
   - echo "from app import app as application" > passenger_wsgi.py    
 ```
 
-All configurations below are not preserved at each config update. It's recommended to use the `NGINX` tab in the dashboard to reconfigure NGINX.
+All configurations below are **not** preserved at each config update. It's recommended to use the `NGINX` tab in the dashboard to reconfigure NGINX.
 
 ### `fastcgi`
 
@@ -488,16 +489,16 @@ Available options:
 + [`app_start_command`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_start_command): [Passenger GLS](https://www.phusionpassenger.com/docs/advanced_guides/gls/) command to start the app with `$PORT` as the port where your app is listening to.
 + [`friendly_error_pages`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_friendly_error_pages): `on` (default) or `off`
 + [`base_uri`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_base_uri): base URL for the app (default is `/`).
-+ [`document_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_document_root): path to public document root (default is `root`). This value is relative to the user `$HOME` folder.
-+ [`app_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_root): path to app root (default is parent of `root`). This value is relative to the user `$HOME` folder.
++ [`document_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_document_root): path to public document root (default is `root`)  (relative to `$HOME`).
++ [`app_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_root): path to app root (default is parent of `root`) (relative to `$HOME`).
 
 For non-GLS (an alternative way if not using `app_start_command`) these options are available too:
 + [`app_type`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_type): Type of App
-+ [`startup_file`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_startup_file): Startup filename
-+ [`ruby`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_ruby): Path to Ruby executable
-+ [`nodejs`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_nodejs): Path to Node.JS executable
-+ [`python`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_python): Path to Python executable
-+ [`meteor_app_settings`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_meteor_app_settings): Path to Meteor app settings
++ [`startup_file`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_startup_file): Startup filename.
++ [`ruby`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_ruby): Path to Ruby executable (relative to `$HOME`).
++ [`nodejs`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_nodejs): Path to Node.JS executable (relative to `$HOME`).
++ [`python`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_python): Path to Python executable (relative to `$HOME`).
++ [`meteor_app_settings`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_meteor_app_settings): Path to Meteor app settings (relative to `$HOME`).
 
 :::tip
 
@@ -515,9 +516,9 @@ Array objects which one or more of:
 + `rewrite`: Rewrite URL directive
 + `try_files`: Try files URL directive
 + `return`: Return code directive
-+ `proxy_pass`: Proxy to local port or `unit`
 + `fastcgi`: (same as above)
 + `passenger`: (same as above)
++ `proxy_pass`: Proxy to `127.*.*.*:*` or `unit` or `docker:*`
 
 Please read [NGINX Location directive](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) for more information.
 
@@ -552,13 +553,29 @@ Available options:
 
 ## `commands`
 
-Type: array of `string`.
+Type: array of `string` or `object`.
 
 List of SSH commands in sequence. The starting directory is always `~/public_html`. If any exit code detected to be not zero, the execution chain stop.
 
 This is where all the terminal commands written, for example to install depedencies, compiling binaries or injecting database credential.
 
 The list of commands is always executed after the `source` and `features` and before `nginx`.
+
+If array item is object, it can be:
+- `command`: Nothing different with passing string directly
+- `feature`: One of feature need to be run at the sequence
+- `services`: One of services need to be run at the sequence
+- `filename` and `content`: Do `echo $CONTENT > $FILENAME`
+
+## `services`
+
+Type: `string` or `object`.
+
+Aids in compose file management for docker. If passed as `string`, the compose file will read from given filename. Otherwise, The `services` object is used as the YAML script for compose file.
+
+Passing `string` as the compose filename is **recommended** as you can also define `volumes` and `networks` in compose file. 
+
+The compose file is read, then modified, then saved back to given filename or `docker-compose.yml` relative to `$HOME/public_html`. See [docker deployment](../deployment/docker.mdx) to understand how it works.
 
 #### Builtin envar for commands
 
@@ -576,8 +593,7 @@ These envars also will be set:
 + `LANG=en_US.UTF-8`
 + `LC_ALL=en_US.UTF-8`
 + `PIP_PROGRESS_BAR=off`
-+ `XDG_RUNTIME_DIR=/run/user/$(id -u)`
-+ `DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus`
++ `BUILDKIT_PROGRESS=plain`
 
 These shell extras also be set:
 

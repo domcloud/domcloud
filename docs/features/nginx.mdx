@@ -5,22 +5,23 @@ sidebar_position: 2
 
 import ThemedImage from '@theme/ThemedImage';
 
-Our server serves HTTP and HTTPS traffic using NGINX, it is used to serve static files and proxy requests to your app. 
+Our server uses NGINX as Reverse Proxy for HTTP and HTTPS traffic and it is used to serve static files and proxy requests to your app. 
 
-Because it operates for all users on the server, only a limited set of features are configurable, the only way to configure it is via the [deployment system](./deploy.mdx#nginx).
+Because it operates for all users on the server, only a limited set of features are configurable, the only way to configure it is via the [deployment system](./deploy.mdx#nginx). Fornatunely, we also give you a special page to make customizing it much easier.
 
-If you don't familiar with NGINX, you can read some of good resorces here: 
+If you never heard NGINX before, you can read some of good resorces here: 
 + [Official documentation](https://nginx.org/en/docs/)
 + [The NGINX Handbook](https://www.freecodecamp.org/news/the-nginx-handbook/)
++ [Apache vs Nginx: Practical Considerations](https://www.digitalocean.com/community/tutorials/apache-vs-nginx-practical-considerations)
 
-## Check current configuration
+You can either edit NGINX config directly or via our interactive form.
 
-You can check the current configuration by going to Check -> NGINX.
+## Editing NGINX config directly
 
 <ThemedImage
     sources={{
-        dark: "/assets/ss/check-nginx-b.png",
-        light: "/assets/ss/check-nginx-w.png"
+        dark: "/assets/ss/nginx-script-b.png",
+        light: "/assets/ss/nginx-script-w.png"
     }}
     alt=""
     className="img-fluid border rounded-3 shadow--md mb-4"
@@ -29,7 +30,83 @@ You can check the current configuration by going to Check -> NGINX.
     loading="lazy"
 />
 
-The left side is the configurable options, and the right side is the current configuration applied in NGINX. The configurable option is written in YAML format, which when saved, applied as a new configuration configured via [the runner](./deploy.mdx#nginx).
+The text area contains current NGINX script and you can freely edit it. When you click **Apply** it will convert your changes to deployment script like this:
+
+```
+nginx: |
+  server {
+    ....
+  }
+```
+
+Behind the scene it will convert your input to YAML script represented in our [NGINX deployment script reference](./deploy.mdx#nginx) hence you won't be able to change certain protected values such as IP addresses, PHP proxy pass, etc.
+
+:::info
+
+You won't be able to edit root path via direct script. To change it, use YAML config. 
+
+```yaml
+nginx:
+  root: public_html/public
+```
+
+Editing the root path this way will keep the rest config untouched.
+:::
+
+## Editing NGINX config interactively
+
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/nginx-interactive-b.png",
+        light: "/assets/ss/nginx-interactive-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+The interactive NGINX config contains easy-to-read NGINX config that covers about 80% of usage for popular frameworks. When you click Apply it will convert your input to YAML script represented in our [NGINX deployment script reference](./deploy.mdx#nginx). The current setup shown represents auto-detected config of your choosing. 
+
+Beware! Changing NGINX config this way may erases your customized NGINX config not represented using the form.
+
+| Option | What is it? |
+|---|---|
+| Root Path | The directory where NGINX searches for static files before being forwarded to app |
+| Resolve Type | What is the kind of your app? |
+| - Static | No app, just HTML files |
+| - PHP-FPM | PHP [Handled by `fastcgi_pass`](#configure-nginx-for-php) |
+| - Phusion App | Special handling for Node.js/Python/Ruby apps |
+| - Generic App | [Any kind of app](#configure-nginx-for-generic-apps) (Traffic forwarded via `$PORT` arg/envar) |
+| - Forward Port | Forward to hardcoded/docker/unit port via `proxy_pass` |
+| - Deny Requests | Deny all requests (useful for subfolder config) |
+
+
+The PHP-FPM mode has some useful preset
+
+| Option | What is it? |
+|---|---|
+| - Smart | XAMPP-like webpages (hide `.php` extension) |
+| - Root Index - Safe | Route all **extension-less** pages to `/index.php` |
+| - Root Index - Standard | Route all pages to `/index.php` as `REQUEST_URI` |
+| - Root Index - Always | Route all pages to `/index.php` as `PATH_INFO`  |
+
+Please refer to [PHP deployment setup](../deployment/php.mdx) for each of security implication.
+
+The Static mode also has some useful preset below and a way to configure custom `404` page.
+
+| Option | What is it? |
+|---|---|
+| - Default | Nothing special |
+| - Smart | Allow hiding `.html` extension |
+| - Root Index | Route all pages to `/index.html` (Treats all as `200 OK`) |
+| - Auto Index | Allow listing directory **and expose all file lists** |
+
+
+## Editing NGINX Config via YAML Script
+
 
 Below is the example of the configuration:
 
@@ -41,6 +118,8 @@ nginx:
   ssl: 'on'
 ```
 
+Please see [NGINX deployment script reference](./deploy.mdx#nginx) for advanced configuration that we can offer.
+
 ## Configure NGINX for HTTPS
 
 The [`ssl`](./deploy.mdx#ssl) option has three options: `always`, `on`, `off`. The `always` option will force the server to redirect all HTTP traffic to HTTPS. The default value for `ssl` is `on`.
@@ -51,11 +130,11 @@ The [`fastcgi`](./deploy.mdx#fastcgi) option has three options: `always`, `on`, 
 
 This section is covered more in the [PHP Deployment](../deployment/php.mdx#nginx-setup) section.
 
-## Configure NGINX for General Apps
+## Configure NGINX for Generic Apps
 
 NGINX by default only forwards connection and can't invoke the desired app to run. We use [Phusion Passenger](https://www.phusionpassenger.com/) so we can tell NGINX to invoke the app and forwards HTTP requests.
 
-The minimum configuration to enable NGINX for general apps is:
+The minimum configuration to enable NGINX for Generic apps is:
 
 ```yaml
 nginx:

@@ -5,19 +5,19 @@ sidebar_position: 2
 
 # Deploy Apps with DOM Cloud
 
-This section describes configuring web apps to make it work within DOM Cloud service.
+This section let's you configure various web apps to make it work within DOM Cloud service.
 
-The configuration works by writing a YAML config that's sent to [the deployment system](../features/deploy.mdx). Please read it first if you haven't.
+Before touching any specific features and languages, please read [NGINX And App Daemon](../features/nginx.mdx) as NGINX config also dictates how you run the apps via many deployment option. We also have templates for many [CMS sites](./cms-site.mdx) so you can save time from understand all of configurations below.
 
-:::caution
+Our deployment options include:
 
-Across this documentation you'll see a statement like `source: clear` which is a dangerous operation that wipes all files including user uploaded files permanently! Be cautious when copy and pasting configuration files.
+- [Static sites](./static-site.mdx) which does not forward any requests, run entirely within NGINX.
+- [PHP sites](./php.mdx) which forward requests to global PHP runtime daemons known as PHP-FPM.
+- [Docker apps](./docker.mdx) which forward requests to rootless docker ran on each userland sysdaemons. 
+- [Passenger apps](../features/nginx.mdx#configure-nginx-for-generic-apps) which spawns and forward requests to apps (see below). 
 
-:::
+Passenger apps are the primary method for spawning many programming languages, each of them are defined here.
 
-This section is divided by range of language compilers:
-
-+ [PHP](./php.mdx)
 + [Node.js](./node.mdx)
 + [Python](./python.mdx)
 + [Ruby](./ruby.mdx)
@@ -29,7 +29,9 @@ This section is divided by range of language compilers:
 + [Rust](./rust.mdx)
 + [Zig](./zig.mdx)
 
-There are also specific guides for specific framework or build system:
 
-+ [Static sites](./static-site.mdx)
-+ [CMS sites](./cms-site.mdx)
+:::info
+
+Be mindful when copy pasting scripts from linked page! We recommend to try out and learn our deployment with new project and templates before working with real website.
+
+:::
