@@ -218,7 +218,7 @@ NGINX errors and traffic logs can be examined via Webmin or Check -> Check Proce
 
 ### `FATAL ERROR: Reached heap limit Allocation failed` during package installation
 
-We limit all processes to have either 2GB (Tier I server) or 512MB RAM (Tier II server) to avoid crashing the whole system. 
+We limit all processes to have physical 2GB memory to avoid crashing the whole system. 
 
 Most likely you're installing with `npm` which is bad at managing memory, please use `yarn` instead.
 

@@ -5,37 +5,27 @@ sidebar_position: 5
 
 DOM Cloud has many servers and they are different spec depends on capacity. All customers enjoy equal computing power no matter their current plan.
 
-| Server Code (City, Country)  | Tier | vCPU | RAM | Root Disk | Home Disk | Backend | Has Docker |
-|------------------------------|------|------|-----|-----------|-----------|---------|------------|
-| SGA (Singapore)              | I    | 2    | 4   | SSD       | NVME      | x64     | Yes        |
-| NYC (New York City, US)      | I    | 2    | 4   | SSD       | NVME      | x64     | Yes        |
-| AMS (Amsterdam, Netherlands) | I    | 1    | 2   | NVME      | NVME      | x64     | No         |
-| SGP (Singapore)              | II   | 2    | 12  | NVME      | NVME      | arm64   | No         |
-| MNZ (Manassas, Virginia, US) | II   | 10   | 16  | NVME      | NVME      | arm64   | No         |
-| NUE (Nuremberg, Germany)     | II   | 6    | 8   | NVME      | NVME      | arm64   | No         |
-| OSK (Osaka, Japan)           | II   | 1    | 6   | NVME      | NVME      | arm64   | No         |
-| SAO (Sao Paulo, Brazil)      | II   | 1    | 6   | NVME      | NVME      | arm64   | No         |
+| Server Code (City, Country)  | vCPU | RAM | Root Disk | Home Disk | Backend | Has Docker |
+|------------------------------|------|-----|-----------|-----------|---------|------------|
+| SGA (Singapore)              | 2    | 4   | SSD       | NVME      | x64     | Yes        |
+| NYC (New York City, US)      | 2    | 4   | SSD       | NVME      | x64     | Yes        |
+| AMS (Amsterdam, Netherlands) | 1    | 2   | NVME      | NVME      | x64     | No         |
+| SGP (Singapore)              | 2    | 12  | NVME      | NVME      | arm64   | Yes        |
+| MNZ (Manassas, Virginia, US) | 10   | 16  | NVME      | NVME      | arm64   | Yes        |
+| NUE (Nuremberg, Germany)     | 6    | 8   | NVME      | NVME      | arm64   | Yes        |
+| OSK (Osaka, Japan)           | 1    | 6   | NVME      | NVME      | arm64   | No         |
+| SAO (Sao Paulo, Brazil)      | 1    | 6   | NVME      | NVME      | arm64   | No         |
 
 To make sure no abuse and no slow down, we have many [security features](./security.mdx) in place.
 
-The rule of thumb is pick closest with your targeted visitors. As more people came in and use any server, the server spec will get upgraded.
+The rule of thumb is pick closest with your targeted visitors. As more people came in and use any server, the server spec will get upgraded. This is also true for storage, which will be expanded or shink depending on usage on regular basis.
 
-Another notes we like to add:
+## ARM64 vs X64
 
-## Tiers
+ARM64 is a new architecture which is more efficient in power hence larger capacity in both vCPU and RAM. As we strive for offering most optimal pricing matrix, we recommend you to use ARM64 unless you have a specific reason to use X64 arch servers. 
 
-Tier I are more stable tiers where less migration and less maintenance happens than Tier II servers. Tier I are planned to be unlocked only for subscribing users as it's more costly than Tier II servers. Tier II are lesser in cost but has higher in spec due to ARM arch efficiency. 
+The X64 servers are only offered for subscribing users to solve ARM64 compatibility issues. One of compatibility issues that you might get into such as when your apps need a linux binary or docker images which doesn't have ARM64 arch variant. The GitHub CI runner also doesn't offer ARM64 yet, which could be matter if you want to [compile your apps using GitHub CI](../integration/github.mdx).
 
-## vCPU
+## Docker Availability
 
-We use shared, burstable virtual CPU from many cloud companies. A high CPU usage can sometimes appear. If you want consistent uptime, we recommend to choose servers with higher vCPU.
-
-## RAM
-
-RAM are commonly higher for ARM servers and hence much more stable there.
-
-## Root and Home Disk
-
-Everything in `/home` dir is mounted to different "block" storage, hence the separation. Root disk performance is matter for database (MariaDB / PostgreSQL). Hence usually Root disk has much faster performance.
-
-
+Docker is not available on servers with one vCPU. 

@@ -91,19 +91,31 @@ When it finished there will be a message saying "Your website is ready!" and a b
 
 ## Managing Website
 
-Every website has its own dashboard. Below is the screenshot of that page.
+You can see these menus to manage your sites.
+
 
 <ThemedImage
     sources={{
-        dark: "/assets/ss/dash-b.png",
-        light: "/assets/ss/dash-w.png"
+        dark: "/assets/ss/menu-b.png",
+        light: "/assets/ss/menu-w.png"
     }}
     alt=""
     className="img-fluid border rounded-3 shadow--md mb-4"
-    width="700"
-    height="500"
+    style={{maxHeight: '25em', float: 'left', marginRight: '1em'}}
     loading="lazy"
 />
+
+|Menu Name|What it is?|
+|---|---|
+|Info|Site stats, such as today's storage and bandwidth|
+|Manage|Access to site data such as files, databases and SSH keys|
+|Deploy|The place to run deployment scripts and manage features|
+|Check Connection|Check DNS and connectivity issues preventing your page being displayed properly|
+|Check Firewall|Check If Firewall (Server API whitelist) enabled |
+|Check NGINX|Edit NGINX directly or via interactive options|
+|Check DNS|Edit DNS (**deprecated, edit via Webmin instead**)|
+|Check Logs|Examine NGINX error, site traffic and application logs|
+|Admin|Change username, domain name, password, delete server, etc.|
 
 The **Info** section contains information about your website, such as some general information including storage usage, bandwidth usage, and the server where your website is hosted.
 
@@ -205,6 +217,23 @@ The deploy tab is where you can configure the rest of your website. Below is the
 This feature alone is what makes DOM Cloud different from other hosting providers. It's a powerful tool that allows you to configure your website in any way you want. We have dozens of templates (called *recipes*) to setup your website with various languages and tools. You can also create your own recipes and share it with others.
 
 [**Read more about Deployments via Deploy Tab**](../deployment/)
+
+## Check Connection Tab
+
+The connection tab let's you check if [DNS configured properly](../features/dns.mdx). **Always check here first if you attach custom domain**. 
+It may give you helpful information to diagnose DNS problems and one-click button fixes if possible.
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/check-conn-b.png",
+        light: "/assets/ss/check-conn-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
 
 ## Other things to aware
 

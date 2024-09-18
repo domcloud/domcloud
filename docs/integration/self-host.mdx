@@ -95,10 +95,10 @@ find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dyn
 Tools, libs, services:
 ```sh
 curl -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
-dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail strace tar time vim wget xz zstd \
+dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail socat strace tar time vim wget xz zstd \
 {libcurl,libffi,libsqlite3x,libtool-ltdl,libyaml,nettle,openldap,passenger,python,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
-libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,DBD-mysql,macros,Crypt-SSLeay,Text-ASCIITable,IO-Tty} {langpacks,glibc-langpack}-en \
-earlyoom fail2ban-server iptables-services postfix mariadb-server wbm-virtual-server wbm-virtualmin-{nginx,nginx-ssl}
+libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,DBD-mysql,LWP-Protocol-https,macros,DateTime,Crypt-SSLeay,Text-ASCIITable,IO-Tty,XML-Simple} {langpacks,glibc-langpack}-en \
+earlyoom fail2ban-server iptables-services postfix mariadb-server wbm-virtual-server wbm-virtualmin-{nginx,nginx-ssl} systemd-container
 ln -s /usr/bin/gcc /usr/bin/$(uname -m)-linux-gnu-gcc # fix pip install
 ```
 
@@ -257,8 +257,6 @@ UUID=<uuid>       /home   xfs     relatime,seclabel,uquota,inode64,gquota,attr2,
 proc              /proc   proc    defaults,nosuid,nodev,noexec,relatime,hidepid=2,gid=adm      0       0
 /swapfile         swap    swap    defaults,nofail                                              0       0
 ```
-
-Tier I
 
 ```ini title="/etc/security/limits.conf"
 root             soft    nofile          65535

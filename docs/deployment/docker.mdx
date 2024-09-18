@@ -3,11 +3,17 @@ title: Docker
 sidebar_position: 15
 ---
 
-# Deploy Docker Apps (Kit and Pro Plan)
+# Deploy Docker Apps
+
+:::warning
+
+Using Docker requires [Kit Plan](../intro/compare-plans.mdx#kit-plan) or above.
+
+:::
 
 Docker in DOM Cloud is powered by [Docker rootless mode](https://docs.docker.com/engine/security/rootless/). Enabling docker features is implicitly allows running 24/7 (doesn't have to actually using docker). Because of how powerful and resouce consuming this is only available starting with `Kit` plan.
 
-> Docker is available only in [Tier I servers](../intro/security.mdx) as they offer the most computing resources we currently offer
+> Docker is available only in [some servers](../intro/compare-server.mdx) as they offer the most computing resources we currently offer
 
 When this feature enabled, these things applied:
 
@@ -15,57 +21,76 @@ When this feature enabled, these things applied:
 + assign `/var/lib/systemd/linger` to allow backround processes not get killed when SSH session terminates.
 + registering `dockerd` as user-scoped systemd daemon by `dockerd-rootless-setuptool.sh` and set it to run at startup.
 
-## Example
+## Getting Started
 
-The deployment script below activates `docker` capabilities and starts a "hello world" container for demo.
+The deployment script below activates `docker` capabilities and set up a `docker-compose.yml` file from `services` script.
 
 ```yaml title=https://github.com/domcloud/recipes/blob/master/docker.yml
 # Requires Kit plan or higher!
 source: clear
 features:
   - docker
-nginx:
-  passenger:
-    enabled: 'on'
-    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:$$RESERVED_IP$$:8080'
-commands:
-  - docker run -d --rm --name webserver -p $$RESERVED_IP$$:8080:80 quay.io/libpod/banner
+services:
+  hello_world:
+    # https://github.com/cernoel/docker-hello-world
+    image: cernoel/hello-world:main
+    restart: always
+    ports:
+      - 8080:8000
 ```
 
-Let's examine the reason why we use `docker run` commands as such:
+The `services` subpath is equal to `services` declared in docker compose file. In fact, you can simply copy paste any docker compose file from internet to our deployment script! The port mapping will be linked automatically to our NGINX system. After deployment, you can examine the final `docker-compose.yml` in the `~/public_html`:
 
-- Using `docker run` will create and start a new container pulled from [`quay.io/libpod/banner`](https://quay.io/libpod/banner).
-- We're forwarding to `$$RESERVED_IP$$` with a given port which is a random local IPv4 address `127.x.x.x`. 
-- `--name webserver` denotes the name of this container is `webserver` for easy debugging when inspecting via SSH later.
-- `socat` is used as port forwarder from NGINX to `$$RESERVED_IP$$:8080` which is what the docker container listen to.
+```yaml title="cat ~/public_html/docker-compose.yml"
+services:
+  hello_world:
+    image: cernoel/hello-world:main
+    restart: always
+    ports:
+      - target: 8000
+        host_ip: 127.151.60.204
+        protocol: tcp
+        published: "8080"
+```
 
-The `$$RESERVED_IP$$` is a special constant and you can see the value replaced once the script has been deployed.
+`docker compose down` and `docker compose up` will be automatically everytime a deployment script is called with `services:` prop. Note that you **cannot** declare `volumes:` and `networks:` using deployment script. See [With Existing Docker Compose](#with-existing-docker-compose) for solution. 
 
-### Example with Docker Compose
+### *What? why `host_ip` is `127.x.x.x`?* 
 
-To use `docker-compose.yml`, you can to run it via `docker compose`.
+DOM Cloud is a shared hosting environment. To avoid clashing with other users your web instance will be assigned one IP in loopback port `127.0.0.0/8` randomly. The IP will be persisted and `proxy_pass` will be configured automatically. 
 
-The example below setup [Plausible self-hosting](https://github.com/plausible/hosting) with their database depedencies.
+```yaml title="nginx.conf"
+server {
+    location / {
+        proxy_pass http://127.151.60.204:8080;
+    }
+}
+```
+
+How does it know if port `8080` is the web gateway? Because we designed it that way. **You can only put one `ports` entry in the whole compose script** and it's only for your web gateway. **Do not expose any other port even if it's for easy database access**. Only access your internal container data via `docker exec`. 
+
+### With Existing Docker Compose
+
+What if you already have `docker-compose.yml` file, perhaps from a GitHub repo?
+
+The example below setup [Plausible self-hosting](https://github.com/plausible/hosting) with their depedencies.
 
 ```yaml title=https://github.com/domcloud/recipes/blob/master/docker.yml
-# Requires Kit plan or higher!
 source: https://github.com/plausible/hosting
-features:
-  - docker
-nginx:
-  root: public_html/public
-  passenger:
-    enabled: 'on'
-    app_start_command: 'socat TCP-LISTEN:$PORT,fork TCP:$$RESERVED_IP$$:8000'
+features: docker
+services: docker-compose.yml # docker compose always ran after commands
 commands:
-  - get_hash() { openssl rand -base64 64 | tr -d '\\n'; }
-  - sed -i 's/8000:8000/$$RESERVED_IP$$:8080:8000/g' docker-compose.yml
   - echo BASE_URL=https://$DOMAIN > plausible-conf.env
-  - echo SECRET_KEY_BASE=\`get_hash\` >> plausible-conf.env
-  - docker compose up -d
+  - echo SECRET_KEY_BASE=$(openssl rand -base64 48) >> plausible-conf.env
+  - echo TOTP_VAULT_KEY=$(openssl rand -base64 32) >> plausible-conf.env
 ```
 
-We use the same technique to force docker listen to custom `$$RESERVED_IP$$`. Since many projects have variety of docker compose setup, you might have to manually edit your `docker-compose.yml` to expose the port that NGINX can listen to.
+You can configure your containers using `docker` commands in SSH. To reconfigure composer file cleanly just like running `services:` via deployment script without leaving SSH you can run:
+
+```
+docker compose -f ~/public_html/docker-compose.yml down --remove-orphans --rmi all
+docker compose -f ~/public_html/docker-compose.yml up --build --detach
+```
 
 ## Healthcheck
 
@@ -106,12 +131,6 @@ services:
 ```
 
 Then run `docker compose up -d` again.
-
-## Port Allocation Policy
-
-Many docker compose setup have port exposed to local ports such as `9000` by default. If you leave them unconfigured you'll be surprised that it doesn't work, because we block them for your safety.
-
-If you just want to expose your port for local development, you can change the port to above than 32000 (e.g. `33000` or `34567`). Be careful that anyone also see that exposed port regardless of the domain, which is why we recommend to bind your docker instance to a loopback address and bind them through NGINX.
 
 ## Managing systemd daemon
 
