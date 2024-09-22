@@ -96,8 +96,8 @@ Tools, libs, services:
 ```sh
 curl -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
 dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail socat strace tar time vim wget xz zstd \
-{libcurl,libffi,libsqlite3x,libtool-ltdl,libyaml,nettle,openldap,passenger,python,perl,readline,xmlsec1,xmlsec1-openssl}-devel \
-libmd libreport-filesystem mesa-libGL perl-{DBD-Pg,DBD-mysql,LWP-Protocol-https,macros,DateTime,Crypt-SSLeay,Text-ASCIITable,IO-Tty,XML-Simple} {langpacks,glibc-langpack}-en \
+lib{curl,ffi,sqlite3x,tool-ltdl,md,yaml}-devel {brotli,mesa-libGL,nettle,openldap,passenger,python,perl,readline,xmlsec1,xmlsec1-openssl}-devel  \
+libreport-filesystem {langpacks,glibc-langpack}-en perl-{DBD-Pg,DBD-mysql,LWP-Protocol-https,macros,DateTime,Crypt-SSLeay,Text-ASCIITable,IO-Tty,XML-Simple} \
 earlyoom fail2ban-server iptables-services postfix mariadb-server wbm-virtual-server wbm-virtualmin-{nginx,nginx-ssl} systemd-container
 ln -s /usr/bin/gcc /usr/bin/$(uname -m)-linux-gnu-gcc # fix pip install
 ```
@@ -206,7 +206,7 @@ Tools, libs, services:
 ```
 apt-get install certbot cmake git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz-utils
 apt-get install {libcurl4-openssl,libbz2,libffi,libgl,libsqlite3,nettle,libmd,libpq,passenger,libperl,libssl}-dev {libdbd-pg,libtemplate}-perl
-apt-get install earlyoom rdfind fail2ban postfix postgresql{,-contrib} bind9{,-host} mariadb-{common,server} webmin-virtualmin-nginx{,-ssl}
+apt-get install earlyoom rdfind fail2ban postfix bind9{,-host} mariadb-{common,server} webmin-virtualmin-nginx{,-ssl}
 apt-get autoremove
 ```
 
