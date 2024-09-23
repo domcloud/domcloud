@@ -41,12 +41,12 @@ pssh -t 0 -iPh ~/hosts "su bridge -c 'cd ~/public_html; git pull' && sudo bash /
 6. Disable all email related services, uninstall imap and dovecot if possible.
 7. Clone and set up [DOM Cloud Bridge](https://github.com/domcloud/bridge) with user `bridge`
 
-```bash title="/etc/sudoers.d/bridge"
+```sh title="/etc/sudoers.d/bridge"
 bridge ALL = (root) NOPASSWD: /home/bridge/public_html/sudoutil.js
 bridge ALL = (root) NOPASSWD: /bin/systemctl restart bridge
 ```
 
-```bash title="/lib/systemd/system/bridge.service"
+```sh title="/lib/systemd/system/bridge.service"
 [Unit]
 Description=DOM Cloud Bridge
 Documentation=https://domcloud.co
@@ -64,12 +64,12 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-```bash
+```sh
 wget -O /usr/local/bin/restart https://raw.githubusercontent.com/domcloud/bridge/main/userkill.sh && chmod 755 /usr/local/bin/restart
 mkdir -p /usr/local/share/www && wget -O /usr/local/share/www/deceptive.html https://raw.githubusercontent.com/domcloud/domcloud/master/share/deceptive.html  && chmod 0755 -R /usr/local/share/www
 ```
 
-```bash
+```sh
 mkdir /etc/skel/public_html
 pushd /etc/skel/public_html
 mkdir .well-known
@@ -82,7 +82,7 @@ popd
 
 PHP:
 
-```
+```sh
 dnf remove php-*
 dnf install epel-release http://rpms.remirepo.net/enterprise/remi-release-9.rpm 
 dnf install php{74,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-imagick,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
@@ -95,7 +95,7 @@ find /etc/opt/remi/ -type f -name www.conf -print0 | xargs -0 sed -i 's/pm = dyn
 Tools, libs, services:
 ```sh
 curl -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
-dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano neovim rsync sendmail socat strace tar time vim wget xz zstd \
+dnf install btop certbot clang cmake gcc-c++ git ncdu htop iftop ipset jq lsof make nano rsync sendmail socat strace tar time tmux vim wget xz zstd \
 lib{curl,ffi,sqlite3x,tool-ltdl,md,yaml}-devel {brotli,mesa-libGL,nettle,openldap,passenger,python,perl,readline,xmlsec1,xmlsec1-openssl}-devel  \
 libreport-filesystem {langpacks,glibc-langpack}-en perl-{DBD-Pg,DBD-mysql,LWP-Protocol-https,macros,DateTime,Crypt-SSLeay,Text-ASCIITable,IO-Tty,XML-Simple} \
 earlyoom fail2ban-server iptables-services postfix mariadb-server wbm-virtual-server wbm-virtualmin-{nginx,nginx-ssl} systemd-container
@@ -103,28 +103,28 @@ ln -s /usr/bin/gcc /usr/bin/$(uname -m)-linux-gnu-gcc # fix pip install
 ```
 
 NGINX (Use newer module version):
-```
+```sh
 dnf module reset nginx
 dnf module enable nginx:1.24
 yum update
 ```
 
 Node (Use newer module version):
-```
+```sh
 dnf module reset nodejs
 dnf module enable nodejs:20
 yum update
 ```
 
 MariaDB (Use newer module version):
-```
+```sh
 dnf module reset mariadb
 dnf module enable mariadb
 yum update
 ```
 
 PostgreSQL 16 (Use Dedicated Yum repo):
-```
+```sh
 dnf config-manager --enable crb
 dnf install https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-$(uname -m)/pgdg-redhat-repo-latest.noarch.rpm
 dnf install -y postgresql16-{server,contrib,devel} {postgis34,pgrouting,pgvector,pg_uuidv7,timescaledb}_16
@@ -137,73 +137,72 @@ for ext in "postgis" "postgis_raster" "postgis_sfcgal" "postgis_tiger_geocoders"
 done
 ```
 
-```
+```sh title="Install rdfind"
 wget https://rdfind.pauldreik.se/rdfind-1.6.0.tar.gz
 tar -xf rdfind-1.6.0.tar.gz ; cd rdfind-1.6.0
 ./configure --disable-debug ; make install
 cd .. ; rm -rf rdfind-1.6.0
 ```
 
-```
-wget https://github.com/therootcompany/pathman/releases/download/v0.6.0/pathman-v0.6.0-linux-amd64_v1.tar.gz
-tar -xf pathman-v0.6.0-linux-amd64_v1.tar.gz
-mv pathman-v0.6.0-linux-amd64_v1 /usr/local/bin/pathman
-rm -f pathman-v0.6.0-linux-amd64_v1.tar.gz
+```sh title="Install pathman"
+PATHMAN=pathman-v0.6.0-linux-$( [ "$(uname -m)" = "aarch64" ] && echo "arm64" || echo "amd64_v1" )
+wget -O pathman.tar.gz https://github.com/therootcompany/pathman/releases/download/v0.6.0/$PATHMAN.tar.gz
+tar -xf $PATHMAN.tar.gz && mv $PATHMAN /usr/local/bin/pathman && rm -f $PATHMAN.tar.gz
 ```
 
+```sh title="Install nvim"
+# match with nvchad required version
+git clone https://github.com/neovim/neovim -b release-0.10 --filter=blob:none
+cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+dnf copr enable atim/lazygit -y && dnf install ripgrep lazygit
 ```
+
+```sh title="Install docker"
 dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin fuse-overlayfs slirp4netns
 modprobe ip_tables && echo "ip_tables" >> /etc/modules
 ```
 
-```
+```sh title="Install yarn"
 curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo > /etc/yum.repos.d/yarn.repo
 dnf install yarn -y
 ```
 
-```
+```sh
 dnf install python3-pip
 pip3 install pipenv
 pip3 install awscli
 ```
 
 
-```
+```sh title="Install xplr"
 wget https://github.com/sayanarijit/xplr/releases/latest/download/xplr-linux.tar.gz
 tar -xzvf xplr-linux.tar.gz
 mv xplr /usr/local/bin/xplr
 ```
 
-```bash
+```sh title="Install neofetch (forked)"
 wget -O /usr/local/bin/neofetch https://github.com/hykilpikonna/hyfetch/raw/1.4.11/neofetch
 chmod +x /usr/local/bin/neofetch
 ```
-
-:::info
-
-Enable PostgreSQL service from webmin after installing it
-
-:::
-
 
 ### Package installs (Debian)
 
 This section is deprecated
 
-```
+```sh
 apt-get remove firewalld php{-cli,*cgi,-pear,-xml}
 apt-get install software-properties-common
 ```
 
-```
+```sh
 add-apt-repository ppa:ondrej/php; apt-get update
 apt-get install php{7.4,8.1,8.2,8.3}-{bcmath,cli,common,dev,fpm,gd,imap,igbinary,intl,mbstring,mysql,opcache,mongodb,readline,redis,zip,pgsql,soap,xml}
 find /etc/php/ -maxdepth 1 -mindepth 1 -exec sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 512M/g" {}/fpm/php.ini \; -exec sed -i "s/post_max_size = 8M/post_max_size = 512M/g" {}/fpm/php.ini \; 
 ```
 
 Tools, libs, services:
-```
+```sh
 apt-get install certbot cmake git ncdu htop iftop ipset jq lsof make nano rsync sendmail strace tar time vim wget xz-utils
 apt-get install {libcurl4-openssl,libbz2,libffi,libgl,libsqlite3,nettle,libmd,libpq,passenger,libperl,libssl}-dev {libdbd-pg,libtemplate}-perl
 apt-get install earlyoom rdfind fail2ban postfix bind9{,-host} mariadb-{common,server} webmin-virtualmin-nginx{,-ssl}
@@ -212,7 +211,7 @@ apt-get autoremove
 
 ### NGINX Unit
 
-```
+```sh
 npm i -g node-gyp
 git clone https://github.com/nginx/unit && cd unit
 ./configure --libdir=/usr/lib64 --prefix=/usr --statedir=/var/lib/unit --control=unix:/run/unit/control.sock --pid=/run/unit/unit.pid --runstatedir=/var/run --log=/var/log/unit/unit.log --logdir=/var/log --tmpdir=/var/tmp --user=unit --group=unit --modulesdir=/usr/lib64/unit/modules
@@ -368,11 +367,11 @@ host    all             all             ::/0                    md5
 
 ### SSL & Webmin config
 
-```bash
+```sh
 mkdir -p /etc/nginx/conf.d && chmod 0750 $_
 ```
 
-```bash
+```sh
 cat <<'EOF' | while read -r line; do
 allow_subdoms=0
 auto_letsencrypt=0
