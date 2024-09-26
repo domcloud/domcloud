@@ -124,8 +124,6 @@ export default function Home4() {
                     </div>
                 </div>
             </div>
-
-
             <div className="my-5">
                 <div
                     className="row g-0 p-4  align-items-center shadow--md flex-md-row-reverse"
@@ -144,6 +142,33 @@ export default function Home4() {
                             sources={{
                                 dark: "/assets/ss/new-progress-b.png",
                                 light: "/assets/ss/new-progress-w.png"
+                            }}
+                            alt=""
+                            className="rounded-lg-3"
+                            height="480"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="my-5">
+                <div
+                    className="row g-0 p-4  align-items-center shadow--md flex-md-row"
+                >
+                    <div className="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                        <h2 className="display-6 fw-bold h4">
+                            Self-Hosted? No Problem! <span className="badge badge--primary">New</span>
+                        </h2>
+                        <p className="lead pe-5">
+                            Worrying about data and uptime security? Just BYOC (Bring your own cloud)!.<br />
+                            Install our disk image in your own infra, attach your IP addresses here. It will work wonder! 
+                        </p>
+                    </div>
+                    <div className="col-lg-4 offset-lg-1 preview p-0 overflow-hidden shadow--md">
+                        <ThemedImage
+                            sources={{
+                                dark: "/assets/ss/selfhost.png",
+                                light: "/assets/ss/selfhost.png"
                             }}
                             alt=""
                             className="rounded-lg-3"
