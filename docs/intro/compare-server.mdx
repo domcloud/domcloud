@@ -7,8 +7,8 @@ DOM Cloud has many servers and they are different spec depends on capacity. All 
 
 | Server Code (City, Country)  | vCPU | RAM | Root Disk | Home Disk | Backend | Has Docker |
 |------------------------------|------|-----|-----------|-----------|---------|------------|
-| SGA (Singapore)              | 2    | 4   | SSD       | NVME      | x64     | Yes        |
-| NYC (New York City, US)      | 2    | 4   | SSD       | NVME      | x64     | Yes        |
+| SGA (Singapore)              | 1    | 2   | NVME      | NVME      | x64     | Yes        |
+| NYC (New York City, US)      | 1    | 2   | NVME      | NVME      | x64     | Yes        |
 | AMS (Amsterdam, Netherlands) | 1    | 2   | NVME      | NVME      | x64     | No         |
 | SGP (Singapore)              | 2    | 12  | NVME      | NVME      | arm64   | Yes        |
 | MNZ (Manassas, Virginia, US) | 10   | 16  | NVME      | NVME      | arm64   | Yes        |
@@ -28,4 +28,4 @@ The X64 servers are only offered for subscribing users to solve ARM64 compatibil
 
 ## Docker Availability
 
-Docker is not available on servers with one vCPU. 
+Docker is generally not available on servers with one vCPU. 

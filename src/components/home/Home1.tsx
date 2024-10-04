@@ -15,7 +15,7 @@ export default function Home1() {
                     Modern hosting platform but for the old school.
                 </p>
                 <div
-                    className="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center mb-5"
+                    className="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center mb-4"
                 >
                     <span>Starts for free: </span>
                     <a
@@ -31,8 +31,18 @@ export default function Home1() {
                         href="https://my.domcloud.co/login?with=github"
                         className="p-2 mx-2 button button--secondary d-flex align-items-center shadow--lw"
                     >
-                       <GitHub />
+                        <GitHub />
                         <span className="ms-2">GitHub</span>
+                    </a>
+                </div><div
+                    className="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center mb-5"
+                >
+                    <a
+                        rel="nofollow"
+                        href="/docs/intro/getting-started"
+                        className="p-2 mx-2 button button--secondary d-flex align-items-center shadow--lw"
+                    >
+                        <span>📖 Read Our Getting Started Guide</span>
                     </a>
                 </div>
             </div>
