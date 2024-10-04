@@ -34,6 +34,24 @@ You can create cron jobs by running `crontab -e` from SSH. It will open vim to e
 
 Please note, the minimum interval for cronjob is once in every hour; lesser than that and the system will delete your cron entries automatically!
 
+## Installing SSH Identity Keys
+
+Installing this will avoid asking for password. Please change `username@remote_host` with the server SSH user and host.
+
+```bash title="Unix"
+ssh-keygen -C $USER@$HOST -f ~/.ssh/id_rsa -q -N ''
+echo "IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+chmod 0600 ~/.ssh/*
+ssh-copy-id username@remote_host
+```
+
+```ps1 title="Windows"
+$sshDir = "$env:USERPROFILE\.ssh"; ssh-keygen -C "$env:USERNAME@$env:COMPUTERNAME" -f "$sshDir\id_rsa" -q -N ''
+Add-Content -Path "$sshDir\config" -Value "IdentityFile $sshDir\id_rsa"
+icacls "$sshDir\*" /inheritance:r /grant:r "$env:USERNAME:(F)"
+type "$sshDir\id_rsa.pub" | ssh username@remote_host "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+```
+
 ## Installing Shared Libraries
 
 When you in a situation in needing linking C libraries but unable to do that because of lack to `sudo` access, you might need to download and build from the source as the alternative solution.
