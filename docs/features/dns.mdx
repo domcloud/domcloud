@@ -30,7 +30,7 @@ After that, change the website's domain name in DOM Cloud's Portal (Select a web
 />
 
 
-To add custom records to your domain, you can use the DNS Manager via Webmin -> DNS Records. You can also add or delete DNS records using [the deployment script](./deploy.mdx#dns).
+To add custom records to your domain, you can use the DNS Manager via Webmin -> DNS Records. You can also add or delete DNS records using [the deployment script](../deployment/deploy.mdx#dns).
 
 :::warning
 
@@ -40,7 +40,7 @@ This method delegates your domain name server to our server. There could be some
 
 ## How it works
 
-When you create a website with custom domain (other than `*.domcloud.dev`), a `dns` service is activated from [the deployment script](./deploy.mdx#dns), it's activated automatically by our Portal UI.
+When you create a website with custom domain (other than `*.domcloud.dev`), a `dns` service is activated from [the deployment script](../deployment/deploy.mdx#dns), it's activated automatically by our Portal UI.
 
 Any website where you buy a domain is called a registrar. We also sell domain, but you don't have to buy a domain from us, you just have to buy it from somewhere and set the nameserver to `nsp.domcloud.co` and `nss.domcloud.co`, which means that your domain DNS will be handled to us.
 
@@ -134,7 +134,7 @@ Address:	68.183.191.223#53
 ** server can't find nonexistantdomain.com: REFUSED
 ```
 
-If that's the case then you need to enable DNS [via the deployment script](./deploy.mdx#dns).
+If that's the case then you need to enable DNS [via the deployment script](../deployment/deploy.mdx#dns).
 
 ### Checking if DNS is working at your end
 
