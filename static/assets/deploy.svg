@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" fill="none">
+  <rect width="240" height="50" rx="10" fill="rgb(255, 174, 0)"/>
+  <text x="60%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-size="16" font-family="Tahoma, Open Sans, sans-serif">
+    Deploy with DOM Cloud
+  </text>
+  <g transform="translate(10, 10)">
+    <circle cx="15" cy="15" r="15" fill="#fff"/>
+    <path fill="rgb(255, 174, 0)" d="M15 10l5 5h-3v5h-4v-5h-3l5-5z"/>
+  </g>
+</svg>

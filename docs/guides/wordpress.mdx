@@ -1,0 +1,30 @@
+
+# WordPress
+
+[![](/assets/deploy.svg)](https://my.domcloud.co/start?from=https://raw.githubusercontent.com/domcloud/dom-templates/master/boot/wordpress.yml)
+
+## Recipe Features
+
+```
+source: https://wordpress.org/latest.zip#wordpress
+features:
+  - mysql
+nginx:
+  root: public_html
+  fastcgi: "on"
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.php$is_args$args
+    - match: ~ /xmlrpc\.php$
+      deny: all
+commands:
+  - cp wp-config-sample.php wp-config.php
+  - sed -i "s/database_name_here/${DATABASE}/g" wp-config.php
+  - sed -i "s/username_here/${USERNAME}/g" wp-config.php
+  - sed -i "s/password_here/${PASSWORD}/g" wp-config.php
+  - sed -i "s/utf8/utf8mb4/g" wp-config.php
+  - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  - mkdir -p ~/.local/bin && mv wp-cli.phar ~/.local/bin/wp && chmod +x $_
+```
+
+###

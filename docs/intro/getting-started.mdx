@@ -24,11 +24,7 @@ Go to [create a website](https://my.domcloud.co/user/host/create) page. If you h
     loading="lazy"
 />
 
-The left side is the template you want to start with, while the right side sets the domain name and the server where you want to host your website. 
-
-### Left side
-
-It's a template selector. It has three sections: **Start From Template**, **Upload or Clone**, **Custom Template**.
+You can either choose to start from a template (left side) or Upload / Clone from the Internet (right side).
 
 #### Start From Template
 
@@ -49,25 +45,57 @@ It's easy as dropping your project directory, or copy-pasting your repository UR
 
 :::info
 
-If your GitHub repo is private, it will ask you to install a new SSH public key (so it can be cloned from this server). Read more about [GitHub Integration](../integration/github.mdx), this includes set-up a webhook to keep the website in sync with latest commits in repo.
+If your GitHub repo is private, it will ask you to install a new SSH public key (so it can be cloned from this server). Read more about [GitHub Integration](../features/github.mdx), this includes set-up a webhook to keep the website in sync with latest commits in repo.
 
 :::
 
-### Right side
+#### Custom Template
 
-It has three fields: Username, Region, and Domain. 
+You can skip templates by clicking `Custom Template` in the right bottom side of the page.
+
+### After Choosing Template
+
+After choosing starting template or existing project. The next dialog appears:
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/new-template-b.png",
+        light: "/assets/ss/new-template-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+On the left side, it contains the YAML template of a template you've selected. The right side contains options to choose where to deploy.
+
+#### Hostname
+
+This is the server location in which your site will deploy. It shows location, the server spec, the latency from your location, and IP Addresses which will be useful later. 
+
+#### Domain
+
+This is the domain name you want to use for your website. You can enter a custom domain that you own or switch to `*.domcloud.dev` if you have a paid plan. Read more about [integrating custom domain here](../features/dns.mdx) or [default domains here](./free-plan.mdx#default-domain-availability).
+
+If you plan to use a custom domain, The green checkbox will check if your DNS is already configured correctly (by checking if A/AAAA/CNAME record match with IP addresses mentioned). If the check doesn't pass, it will be shown as a warning. 
+
+#### Merge to Parent Domain?
+
+This is a check box that's available if you use an existing website as the parent domain **at the same server**. If this checked, you'll create a subserver inside that parent, instead of creating from stratch.
+
+Merging to parent domain has the benefit of sharing code with parent domain, also doesn't increasing your instance count. However, managing it may be a little more complex.
+
+#### Activate DNS Service?
+
+If you've set your domain's `Name Server` to us, check this box. The validation will be automatically checked as green as we can't check reliably if you've set Name Server correctly.
+
 
 #### Username
 
 This is the username you want to use to identify logins to your website. You can leave it random or use any username you want, but it must be unique. This username is invisible to the public.
 
-#### Region
-
-This is the server where you want to host your website. You can choose any server you want that is available, preferably close with you or your target visitors.
-
-#### Domain
-
-This is the domain name you want to use for your website. You can enter a custom domain that you own or switch to `*.domcloud.dev` if you have a paid plan. Read more about [integrating custom domain here](../features/dns.mdx) or [default domains here](./free-plan.mdx#default-domain-availability).
 
 ### Click "Add a Website"
 
@@ -214,7 +242,7 @@ The deploy tab is where you can configure the rest of your website. Below is the
 + Install additional languages and tools
 + Run custom scripts to automate your deployment
 
-This feature alone is what makes DOM Cloud different from other hosting providers. It's a powerful tool that allows you to configure your website in any way you want. We have dozens of templates (called *recipes*) to setup your website with various languages and tools. You can also create your own recipes and share it with others.
+This feature alone is what makes DOM Cloud different from other hosting providers. It's a powerful tool that allows you to configure your website in any way you want. We have [dozens of templates](https://github.com/domcloud/recipes) (called *recipes*) to setup your website with various languages and tools. You can also create your own recipes and share it with others.
 
 [**Read more about Deployments via Deploy Tab**](../deployment/)
 
@@ -240,10 +268,10 @@ It may give you helpful information to diagnose DNS problems and one-click butto
 This section covers advanced concepts that you need to know to use DOM Cloud. There are many more to cover:
 
 - [Firewall Daemon](../features/security.mdx)
-- [Proxy and App Daemon](../features/nginx.mdx)
+- [Proxy and App Daemon](../deployment/nginx.mdx)
 - [Database Daemon](../features/database.mdx)
 - [DNS Daemon](../features/dns.mdx)
-- [System Runner](../features/deploy.mdx)
+- [System Runner](../deployment/deploy.mdx)
 - [Editor Tools](../features/editor.mdx)
 
-There's also [a dedicated page](../deployment/) for configuring a website for specific code language such as [PHP](../deployment/php), [Node.JS](../deployment/node), [Python](../deployment/python) or with [many CMS platforms](../deployment/cms-site) or with [many static page generator](../deployment/static-site) and so on. And also [a dedicated page](../integration/) for integration with [GitHub](../integration/github), [VS Code](../features/editor), [third-party custom domain](../features/dns), and soon.
+There's also [a dedicated page](../deployment/) for configuring a website for specific code language such as [PHP](../deployment/php), [Node.JS](../deployment/node), [Python](../deployment/python) or with [many CMS platforms](../deployment/cms-site) or with [many static page generator](../deployment/static-site) and so on. And also [a dedicated page](../features/) for integration with [GitHub](../features/github), [VS Code](../features/editor), [third-party custom domain](../features/dns), and soon.
