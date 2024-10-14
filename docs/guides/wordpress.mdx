@@ -3,7 +3,12 @@
 
 [![](/assets/deploy.svg)](https://my.domcloud.co/start?from=https://raw.githubusercontent.com/domcloud/dom-templates/master/boot/wordpress.yml)
 
-## Recipe Features
+## Recipe Features Explained
+
+Let's breakdown the recipe to deploy a new WordPress site.
+
+<details>
+<summary> See Full Deployment Script </summary>
 
 ```
 source: https://wordpress.org/latest.zip#wordpress
@@ -27,4 +32,57 @@ commands:
   - mkdir -p ~/.local/bin && mv wp-cli.phar ~/.local/bin/wp && chmod +x $_
 ```
 
-###
+</details>
+
+
+```yaml
+source: https://wordpress.org/latest.zip#wordpress
+features:
+  - mysql
+```
+
+This script extracts WordPress to `~/public_html` and sets up a new database.
+
+
+```yaml
+nginx:
+  root: public_html
+  fastcgi: "on"
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.php$is_args$args
+    - match: ~ /xmlrpc\.php$
+      deny: all
+```
+
+This script declare NGINX Configuration. It means three thing:
+
+1. `fastcgi: "on"` means PHP processing is turned on.
+
+2. `match: /` means for all requests, do `try_files: $uri $uri/ /index.php$is_args$args`. It means try static files first then process root `/index.php` if nothing found.
+
+3. `match: ~ /xmlrpc\.php$` means for requests to `xmlrpc.php`, do `deny: all`. This blocks the most common vector from DoS attack.
+
+```yaml
+commands:
+  - cp wp-config-sample.php wp-config.php
+  - sed -i "s/database_name_here/${DATABASE}/g" wp-config.php
+  - sed -i "s/username_here/${USERNAME}/g" wp-config.php
+  - sed -i "s/password_here/${PASSWORD}/g" wp-config.php
+  - sed -i "s/utf8/utf8mb4/g" wp-config.php
+```
+
+This script auto configure the database connection for WordPress so you don't have to tell them during installation.
+
+```yaml
+commands:
+  - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  - mkdir -p ~/.local/bin && mv wp-cli.phar ~/.local/bin/wp && chmod +x $_
+```
+
+This installs [WP CLI](https://wp-cli.org/). WP CLI is a utility to perform maintenance tasks for WordPress using SSH commands.
+
+
+## Using WP CLI
+
+TODO
