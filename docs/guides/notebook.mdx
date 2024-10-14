@@ -1,1 +1,107 @@
-# Jupyter
+
+# WordPress
+
+[![](/assets/deploy.svg)](https://my.domcloud.co/start?from=https://raw.githubusercontent.com/domcloud/dom-templates/master/boot/jupyter.yml)
+
+## Recipe Features Explained
+
+Let's breakdown the recipe to deploy a new Jupyter Notebook site.
+
+<details>
+<summary> See Full Deployment Script </summary>
+
+```
+source: clear
+features:
+  - python stable
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: jupyter notebook --port $PORT
+commands:
+  - pip install jupyter
+  - mkdir -p ~/.jupyter ; cd $_ ; rm -f jupyter_notebook_config.py ; jupyter notebook --generate-config
+  - hash=`python -c "from jupyter_server.auth import passwd;print(passwd('${PASSWORD}'),end='')"`
+  - sed -i "s@# c.ServerApp.password = ''@c.ServerApp.password = u'${hash}'@g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.password_required = False/c.ServerApp.password_required = True/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.quit_button = True/c.ServerApp.quit_button = False/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.open_browser = True/c.ServerApp.open_browser = False/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.allow_origin = ''/c.ServerApp.allow_origin = '*'/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.allow_remote_access = False/c.ServerApp.allow_remote_access = True/g" jupyter_notebook_config.py
+  - pip install pandas numpy scipy matplotlib scikit-learn seaborn
+```
+
+</details>
+
+
+```yaml
+source: clear
+features:
+  - python stable
+```
+
+This script clears `~/public_html` and installs a new Python via Pyenv.
+
+
+```yaml
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_start_command: jupyter notebook --port $PORT
+```
+
+This script declare NGINX Configuration. It means two thing:
+
+1. `root: public_html/public` means all static files are put to `public` folder. This means nothing but important so your python files don't accidentally exposed.
+
+2. `app_start_command: jupyter notebook --port $PORT` means when you visit the site, it run `jupyter notebook --port $PORT`. The `$PORT` assignment is important to know which port that NGINX forward requests to.
+
+```yaml
+commands:
+  - pip install jupyter
+```
+
+This script installs jupyter notebook via pip.
+
+```yaml
+commands:
+  - mkdir -p ~/.jupyter ; cd $_ ; rm -f jupyter_notebook_config.py ; jupyter notebook --generate-config
+  - hash=`python -c "from jupyter_server.auth import passwd;print(passwd('${PASSWORD}'),end='')"`
+  - sed -i "s@# c.ServerApp.password = ''@c.ServerApp.password = u'${hash}'@g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.password_required = False/c.ServerApp.password_required = True/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.quit_button = True/c.ServerApp.quit_button = False/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.open_browser = True/c.ServerApp.open_browser = False/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.allow_origin = ''/c.ServerApp.allow_origin = '*'/g" jupyter_notebook_config.py
+  - sed -i "s/# c.ServerApp.allow_remote_access = False/c.ServerApp.allow_remote_access = True/g" jupyter_notebook_config.py
+```
+
+This script:
+
+1. run `jupyter notebook --generate-config` to generate config to `~/.jupyter`
+2. Installs jupyter password as `$PASSWORD`. This variable is a server password found from Manage tab.
+3. Set jupyter config:
+  - `c.ServerApp.password_required = True`
+  - `c.ServerApp.quit_button = False`
+  - `c.ServerApp.open_browser = False`
+  - `c.ServerApp.allow_origin = '*'`
+  - `c.ServerApp.allow_remote_access = True`
+
+```yaml
+commands:
+  - pip install pandas numpy scipy matplotlib scikit-learn seaborn
+```
+
+Installs popular depedencies to run jupyter notebook:
+
+- pandas
+- numpy
+- scipy
+- matplotlib
+- scikit-learn
+- sciborn
+
+## TO DO
+
+TODO

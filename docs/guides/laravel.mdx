@@ -1,3 +1,125 @@
 
 # Laravel
 
+[![](/assets/deploy.svg)](https://my.domcloud.co/start?from=https://raw.githubusercontent.com/domcloud/dom-templates/master/boot/laravel.yml)
+
+## Recipe Features Explained
+
+Let's breakdown the recipe to deploy a new Laravel site.
+
+<details>
+<summary> See Full Deployment Script </summary>
+
+```
+source: clear
+root: public_html/public
+features:
+  - php latest
+  - mysql
+nginx:
+  fastcgi: "on"
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.php$is_args$args
+    - match: ~ \.[^\/]+(?<!\.php)$
+      try_files: $uri =404
+commands:
+  - composer create-project laravel/laravel .
+  - cp .env.example .env
+  - sed -ri "s/(# )?DB_CONNECTION=.*/DB_CONNECTION=mysql/g" .env
+  - sed -ri "s/(# )?DB_HOST=.*/DB_HOST=localhost/g" .env
+  - sed -ri "s/(# )?DB_PORT=.*/DB_PORT=3306/g" .env
+  - sed -ri "s/(# )?DB_DATABASE=.*/DB_DATABASE=${DATABASE}/g" .env
+  - sed -ri "s/(# )?DB_USERNAME=.*/DB_USERNAME=${USERNAME}/g" .env
+  - sed -ri "s/(# )?DB_PASSWORD=.*/DB_PASSWORD=${PASSWORD}/g" .env
+  - sed -ri "s/APP_URL=.*/APP_URL=https:\/\/${DOMAIN}/g" .env
+  - php artisan migrate:fresh
+  - php artisan key:generate
+  - php artisan storage:link
+  - npm install
+  - npm run build
+  - rm -f public/hot
+  - chmod 0750 -R storage || true 
+```
+
+</details>
+
+
+```yaml
+source: clear
+features:
+  - php latest
+  - mysql
+commands:
+  - composer create-project laravel/laravel .
+```
+
+This script clears `~/public_html` and changing active PHP version to latest installed and create default mysql database and creates a new blank laravel project via `composer create-project`.
+
+When you upload an existing laravel project, the `composer create-project` part is omitted.
+
+
+```yaml
+root: public_html/public
+nginx:
+  fastcgi: "on"
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.php$is_args$args
+    - match: ~ \.[^\/]+(?<!\.php)$
+      try_files: $uri =404
+```
+
+This script declare NGINX Configuration. It means two thing:
+
+1. `root: public_html/public` means all static files are put to `public` folder. This is the recommended way to serve Laravel for reverse proxy like NGINX.
+
+1. `fastcgi: "on"` means PHP processing is turned on.
+
+2. `match: /` means for all requests, do `try_files: $uri $uri/ /index.php$is_args$args`. It means try static files first then process root `/index.php` if nothing found.
+
+3. `match: ~ \.[^\/]+(?<!\.php)$` means for requests only to URLs ending with `.php`, do `try_files: $uri =404`. This disables PHP processing for non PHP URLs, known as FastCGI - Safe Config.
+
+
+```yaml
+commands:
+  - cp .env.example .env
+  - sed -ri "s/(# )?DB_CONNECTION=.*/DB_CONNECTION=mysql/g" .env
+  - sed -ri "s/(# )?DB_HOST=.*/DB_HOST=localhost/g" .env
+  - sed -ri "s/(# )?DB_PORT=.*/DB_PORT=3306/g" .env
+  - sed -ri "s/(# )?DB_DATABASE=.*/DB_DATABASE=${DATABASE}/g" .env
+  - sed -ri "s/(# )?DB_USERNAME=.*/DB_USERNAME=${USERNAME}/g" .env
+  - sed -ri "s/(# )?DB_PASSWORD=.*/DB_PASSWORD=${PASSWORD}/g" .env
+  - sed -ri "s/APP_URL=.*/APP_URL=https:\/\/${DOMAIN}/g" .env
+```
+
+This script copies the sample `.env.example` to `.env` and changing the database connection to MySQL and sets `APP_URL` to `https://$DOMAIN`.
+
+```yaml
+commands:
+  - php artisan migrate:fresh || true
+  - php artisan key:generate
+  - php artisan storage:link
+  - npm install
+  - npm run build
+  - rm -f public/hot
+  - chmod 0750 -R storage || true 
+```
+
+This script executes good practices when initializing a laravel project.
+
+1. `php artisan migrate:fresh` Migrates your laravel project. It's fine if it fail (hence ` || true`), you can rerun migration again in SSH if it fails.
+
+2. `php artisan key:generate` sets APP_SECRET to `.env`
+
+3. `php artisan storage:link` put `storage` folder link to `public/storage`.
+
+4. `npm install` & `npm run build` install and compile frontend tooling, if any.
+
+5. `rm -f public/hot` removes `hot` file that confuses laravel thinking if it still in development mode.
+
+6. `chmod 0750 -R storage || true` set 0750 to `storage` folder, making sure that NGINX can really reads them.
+
+## TO DO
+
+TODO

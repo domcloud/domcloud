@@ -3,3 +3,74 @@
 
 # Next.JS
 
+[![](/assets/deploy.svg)](https://my.domcloud.co/start?from=https://raw.githubusercontent.com/domcloud/dom-templates/master/boot/nextjs.yml)
+
+## Recipe Features Explained
+
+Let's breakdown the recipe to deploy a new Next.js site.
+
+<details>
+<summary> See Full Deployment Script </summary>
+
+```
+source: clear
+features:
+- node lts
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: 'on'
+    app_start_command: env PORT=$PORT yarn start
+  locations:
+    - match: /_next/static/
+      alias: public_html/.next/static/
+commands:
+  - yes "" | yarn create next-app .
+  - yarn build
+```
+
+</details>
+
+
+```yaml
+source: clear
+features:
+- node lts
+commands:
+  - yes "" | yarn create next-app .
+```
+
+This script clears `~/public_html` and installing the latest Node LTS version and creates a new blank nexjs project via `yarn create`.
+
+When you upload an existing next.js project, the `yarn create` part is omitted.
+
+
+```yaml
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: 'on'
+    app_start_command: env PORT=$PORT yarn start
+  locations:
+    - match: /_next/static/
+      alias: public_html/.next/static/
+```
+
+This script declare NGINX Configuration. It means two thing:
+
+1. `root: public_html/public` means all static files are put to `public` folder. This is the recommended way to serve Nextjs for reverse proxy like NGINX.
+
+1. `env PORT=$PORT yarn start` means run `yarn start` for all requests that doesn't found in `public_html/public`.
+
+3. `alias: public_html/.next/static/` for `match: /_next/static/` means to speedup static files so they get proper cache and etag headers.
+
+```yaml
+commands:
+  - yarn build
+```
+
+This script compiles the frontend required before serving with production settings.
+
+## TO DO
+
+TODO
