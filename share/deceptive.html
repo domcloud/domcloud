@@ -22,6 +22,7 @@
             font-family: "Open Sans", sans-serif;
             color: white;
             text-align: center;
+            min-width: 400px;
         }
         .warning-container {
             background: rgba(0, 0, 0, 0.7);
@@ -35,7 +36,7 @@
             margin: 0 40px 40px;
             font-size: 24px;
         }
-        a, button {
+        .btn {
             color: #fff;
             text-decoration: none;
             background: rgba(255, 255, 255, 0.3);
@@ -43,16 +44,37 @@
             border-radius: 5px;
             transition: background 0.3s ease;
         }
-        a:hover, button:hover {
-            background: rgba(255, 255, 255, 0.5);
+        .btn:hover, .btn:focus {
+            background: rgba(150, 255, 150, 0.5);
+        }
+        .danger:hover, .danger:focus {
+            background: rgba(255, 9, 9, 0.5);
+        }
+        blockquote {
+            margin-top: 5em;
+            max-width: 800px;
+            color: gray;
+        }
+        blockquote a {
+            color: gray;
         }
     </style>
 </head>
 <body>
     <form class="warning-container">
-        <h1>The content ahead is written by free users of DOM Cloud and might contain spam, phishing or tricking you to enter sensitive data.</h1>
-        <a href="?" onclick="location = location.pathname + location.search; return false">✅ I understand, I trust this site.</a>
+        <h1>The content ahead is written by free users of DOM Cloud and may attempt to steal your sensitive data.</h1>
+        <a class="btn" href="?" onclick="return visit()">✅ I understand, I trust this site.</a>        
     </form>
-<a href="https://my.domcloud.co/report">⚠️ Report this site</a>
+    <a class="btn danger" id="report" href="mailto:support@domcloud.co?subject=I%20think%20this%20site%20is%20deceptive&body=Hello%2C%20I%20want%20to%20report%20X%20because%20%5Bfill%20in%20your%20reason%5D">⚠️ Report this site</a>
+    <blockquote>This warning appears since this site is using *.dom.my.id, a free domain offered by <a href="https://domcloud.co/">DOM Cloud.</a><br /> DOM Cloud isn't responsible for the content ahead.</blockquote>
+    <script>
+        function visit() {
+            location = location.pathname + location.search; return false
+        }
+        function fixLink(el) {
+            el.href = el.href.replace('X', location.hostname || 'X');
+        }
+        fixLink(document.getElementById('report'));
+    </script>
 </body>
 </html>
