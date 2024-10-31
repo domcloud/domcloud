@@ -163,9 +163,9 @@ nginx:
 
 ### PORT environment variable
 
-The `$PORT` environment variable is set by Phusion Passenger. It is a random port that's chosen as a HTTP proxy between your app and the internet. 
+The `PORT` environment variable is set by Phusion Passenger. It is a random port that's chosen as a HTTP proxy between your app and the internet. 
 
-**Your app must listen to `$PORT`** to be able receiving HTTP requests from NGINX.
+**Your app must listen to `PORT`** to be able receiving HTTP requests from NGINX.
 
 You can tell the app to listen to this port with another envar name using `env` like this:
 
@@ -183,11 +183,21 @@ nginx:
     app_start_command: node app.js --port $PORT
 ```
 
-:::caution
+If you have designed your app to listen to `PORT` envar, leave it all alone:
 
-Your app must listen to the port that's set dynamically in the `app_start_command` option. 
-If you don't see a way to pass custom **`$PORT`** either via environment variables or app's argument,
-then you might want to ask your app's or its framework's developer to make it possible.
+
+```yaml
+nginx:
+  passenger:
+    app_start_command: node app.js
+```
+
+
+:::warning
+
+All examples here assume your app listen to `127.0.0.1`, not `localhost` or `::1`.
+
+For example in rust, you might have to specify it like `env TARGET=127.0.0.1:$PORT cargo run`.
 
 :::
 
@@ -225,7 +235,7 @@ The [`env_var_list`](./deploy.mdx#passenger) option is used to set environment v
 nginx:
   passenger:
     enabled: on
-    app_start_command: env PORT=$PORT node app.js
+    app_start_command: node app.js
     env_var_list:
       - APP_SECRET=SECRET_VALUE
       - APP_CONFIG={"key":"value"}

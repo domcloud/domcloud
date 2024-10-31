@@ -8,15 +8,16 @@ import TabItem from '@theme/TabItem';
 
 # Deploy Node Apps
 
-[Node](https://nodejs.org) is a back-end JavaScript runtime environment, executes JavaScript code outside a web browser. Although Node is served as an compiled language, it doesn't emit binaries, so you don't need to compile your code before running it. 
+[Node](https://nodejs.org) installation is powered by NVM. To install LTS version with [deployment script](./deploy.mdx):
 
-There's a default Node interpreter from system but we recommend you to install it as your own through deployment scripts.
+```yarn
+features:
+- node
+```
 
-:::warning
+Without this, you're using OS-dependent `node`, `npm` and `yarn` which the version can't be customized, and you can't install global packages with it.
 
-Serving Node apps can be run using CJS-only binding or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via CJS-only binding, please note the default app name (that's `app.js`) and the path of node interpreter to run with.
-
-:::
+Corepack is always enabled when using installation via deployment script.
 
 ## Example
 
@@ -30,9 +31,8 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_type: node
-    startup_file: app.js
-    node: .local/opt/node/bin/node
+    app_start_command: node app.js
+    app_env: development
 commands:
   - filename: app.js
     content: |
@@ -60,8 +60,6 @@ commands:
       });
       server.listen(process.env.PORT || 8080);
 ```
-
-With CJS-only bindings, it doesn't matter what port number `server.listen` is being assigned, it will be [corrected automagically](https://www.phusionpassenger.com/docs/advanced_guides/in_depth/node/reverse_port_binding.html). However with CJS-only bindings, you can't use [ESM-style imports](https://konstantin.digital/blog/es-modules-all-you-need-to-know), you have to use GLS as the only option if your project uses that.
 
 ## Existing Node projects
 
@@ -131,8 +129,8 @@ nginx:
     enabled: "on"
     app_start_command: env PORT=$PORT yarn start
   locations:
-    - match: /_next/
-      alias: public_html/.next/
+    - match: /_next/static/
+      alias: public_html/.next/static/
 commands:
   - yarn install
   - yarn build
@@ -194,7 +192,20 @@ Node install scripts is powered by [nvm](https://github.com/nvm-sh/nvm).
 
 Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
 
+
 Environment variables can be set either using NGINX's `env_var_list` or `~/.bashrc`. Usually your language framework also reads `.env` files.
+
+```yaml
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: node app.js
+    app_env: development # Set NODE_ENV
+    env_var_list:
+      - APP_SECRET=SECRET_VALUE
+      - APP_CONFIG={"key":"value"}
+```
+
 
 See [NGINX and App Daemon](./nginx.mdx) for more information about NGINX and App managements including restarting, environment variables, and other global limitations.
 
@@ -228,10 +239,6 @@ You're using Create-React-App but having version that uses old OpenSSL.
 
 Please update your depedencies to latest version with `npx npm-upgrade`. For `Create-React-App`, please try `yarn create react-app my-app` locally and copy all of their depedencies to your project.
 
-### Server is disabled due to storage violation
-
-Please clear all yarn/npm caches. If you're not sure, use `ncdu` on SSH.
-
 ### `You should not run the Vite HMR server in CI environments. You should build your assets for production instead`
 
 Please do not run `npm run dev` or `npm start` in deployments. That's not how it works. Most likely what you want to do `npm run build`.
@@ -242,9 +249,17 @@ If you want to run `npm run dev` for live-in-production edits, use PORT > 32000 
 
 You have uncommitted changes in your server. To resolve it please do `git stash` then `git pull`. Take your stashed changes back with `git stash pop`.
 
+### `Error: Cannot send secure cookie over unencrypted connection`
+
+You have to set `proxy: true` and `secure: true` [somewhere in your cookie settings](https://stackoverflow.com/a/60104026/3908409) so it trust `X-Forwarded-Proto` set from NGINX.
+
 ### `pnpm: command not found`
 
 You need to add `node` feature in your deployment script. Which enables `corepack` and `pnpm`.
+
+### `502 Bad Gateway`
+
+This is NGINX freshly restart and it seems too expensive to start your process in time. Please use [Proxfix NOHUP](./nginx.mdx#proxfix-nohup) to solve this issue.
 
 ### Any other error
 
