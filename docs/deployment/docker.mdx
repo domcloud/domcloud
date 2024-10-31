@@ -1,6 +1,6 @@
 ---
 title: Docker
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Deploy Docker Apps
@@ -88,46 +88,16 @@ commands:
 You can configure your containers using `docker` commands in SSH. To reconfigure composer file cleanly just like running `services:` via deployment script without leaving SSH you can run:
 
 ```
-docker compose -f ~/public_html/docker-compose.yml down --remove-orphans --rmi all
+docker compose -f ~/public_html/docker-compose.yml down --remove-orphans
 docker compose -f ~/public_html/docker-compose.yml up --build --detach
 ```
 
 ## Healthcheck
 
-While your app and it services runs 24/7, sometimes your app can crash on itself. Make sure your docker containers can heal itself by adding health checks and run an additional [autoheal container](https://github.com/willfarrell/docker-autoheal). Please make sure the container autoheal binds docker.sock with your own rootless docker sock path by running `echo $DOCKER_HOST` from terminal.
+While your app and it services runs 24/7, sometimes your app can crash on itself. Use `proxfix` NOHUP mode to watch docker on every request. 
 
-```diff
-services:
-+ autoheal:
-+   restart: always
-+   image: willfarrell/autoheal
-+   environment:
-+     - AUTOHEAL_CONTAINER_LABEL=all
-+   volumes:
-+     - /run/user/1234/docker.sock:/var/run/docker.sock
-  plausible_db:
-    image: postgres:16-alpine
-    restart: always
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=postgres
-+   healthcheck:
-+     test: pg_isready
+```yarn
 
-  plausible:
-    image: ghcr.io/plausible/community-edition:v2.1.1
-    restart: always
-    command: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
-+   healthcheck:
-+     test: wget --no-verbose --tries=1 --spider http://127.0.0.1:8000 || exit 1
-    depends_on:
-      plausible_db:
-+       condition: service_healthy
-    ports:
-      - 127.0.0.1:8000:8000
-    env_file:
-      - plausible-conf.env
 ```
 
 Then run `docker compose up -d` again.
@@ -140,45 +110,3 @@ Your docker instance is registered as user-scoped systemd service. You can call 
 + `systemctl start docker --user`
 
 ## Custom systemd daemon
-
-You can also create your own System daemon in userspace for your own background service. For instance, you might want to install your own PHP with additional extensions we don't cover.
-
-```bash
-mkdir -p $HOME/.local/share/systemd/user
-cat << EOF > $HOME/.local/share/systemd/user/custom-php.service
-[Unit]
-Description=FPM
-Documentation=Custom PHP FPM
-After=network.target
-
-[Service]
-Type=simple
-WorkingDirectory=$HOME
-ExecStart=/opt/remi/php74/root/usr/sbin/php-fpm -c $HOME/etc/php7.4 -y $HOME/etc/php-fpm.conf -F
-TimeoutStopSec=5
-Restart=always
-
-[Install]
-WantedBy=default.target
-EOF
-cat << EOF > $HOME/etc/php-fpm.conf
-error_log = $HOME/logs/php-fpm.log 
-[wordpress_site]
-listen = $HOME/etc/php.sock
-listen.owner = $USER
-listen.group = $USER
-pm = ondemand 
-pm.max_children = 10 
-pm.process_idle_timeout = 10s
-EOF
-
-systemctl enable custom-php --user
-systemctl start custom-php --user
-```
-
-Then bind like this:
-
-```yaml
-features:
-- php etc/php.sock
-```

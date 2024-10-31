@@ -120,6 +120,24 @@ This script executes good practices when initializing a laravel project.
 
 6. `chmod 0750 -R storage || true` set 0750 to `storage` folder, making sure that NGINX can really reads them.
 
-## TO DO
+### Enable Laravel UI
 
-TODO
+```yaml
+commands:
+- composer require laravel/ui
+- php artisan ui bootstrap --auth
+- npm install
+- npm run build
+```
+
+This enables Laravel UI with Bootstrap and authentication.
+
+### Vite Development Mode In Server
+
+If you wish to enable development mode with Laravel UI, specify the host IP address and random ephemeral ports. Run this in CLI/SSH:
+
+```yaml
+npm run dev -- --host 0.0.0.0 --port $(shuf -n 1 -i 49152-65535)
+```
+
+Note: this doesn't work with HTTPS, only run it in development mode. You might need to set the `APP_URL` to `http://...` in `.env`.

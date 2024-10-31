@@ -1,5 +1,5 @@
 ---
-title: PHP
+title: PHP Daemon
 sidebar_position: 3
 ---
 
@@ -8,147 +8,111 @@ import TabItem from '@theme/TabItem';
 
 # Deploy PHP Apps
 
-[PHP](https://php.net) is a popular programming language for web development. PHP is served in production server using PHP-FPM.
+[PHP](https://php.net) is a popular programming language for web development. PHP is served in production server using PHP-FPM daemon run globally for whole server.
 
-Popular PHP recipes is [CodeIgniter](https://codeigniter.com/) and [Laravel](https://laravel.com/). Please read our [Runner's Guide](../deployment/deploy.mdx) first if you haven't.
 
-## Recipes
+## PHP environment setup
 
-<Tabs>
-  <TabItem value="simple" label="General PHP" default>
+The default PHP version is `8.3`, which is the default provided from the OS.
 
-### Development Mode
+To change PHP version used in PHP-FPM to the latest one, put this in runner:
 
 ```yaml
-source: clear
-nginx:
-  fastcgi: on
-commands:
-- echo "<h1>Hello, World!</h1>" > index.php
-- echo "<?php phpinfo(15);" > phpinfo.php
-- echo "display_errors = On" > .user.ini
-- echo "display_startup_errors = On" >> .user.ini
-```
-
-This creates a simple PHP that outputs "Hello, World!" and load some useful development features.
-
-  </TabItem>
-  <TabItem value="codeigniter" label="CodeIgniter">
-
-### Init in Development Mode
-
-```yaml
-source: clear
-features:
-- mysql
-nginx:
-  root: public_html/public
-  fastcgi: on
-  locations:
-  - match: /
-    try_files: $uri $uri/ /index.php$is_args$args
-commands:
-- composer create-project codeigniter4/appstarter .
-- cp env .env
-- sed -ri "s/.*database.default.database.*/database.default.database = ${DATABASE}/g" .env
-- sed -ri "s/.*database.default.username.*/database.default.username = ${USERNAME}/g" .env
-- sed -ri "s/.*database.default.password.*/database.default.password = ${PASSWORD}/g" .env
-- sed -ri "s/.*app.baseURL.*/app.baseURL = https:\/\/${DOMAIN}/g" .env
-- composer install
-```
-
-This set up a fresh CodeIgniter project in development mode with a database initialized.
-
-### Switch to Production Mode
-
-```yaml
-commands:
-- 'sed -ri "s/# CI_ENVIRONMENT = production/CI_ENVIRONMENT = production/g" .env'
-- composer install --no-dev --optimize-autoloader
-```
-
-This sets up CodeIgniter in production mode.
-
-
-  </TabItem>
-  <TabItem value="laravel" label="Laravel">
-
-### Init in Development Mode
-
-```yaml
-source: clear
 features:
 - php latest
-- mysql
-nginx:
-  root: public_html/public
-  fastcgi: on
-  locations:
-  - match: /
-    try_files: $uri $uri/ /index.php$is_args$args
-commands:
-- composer create-project laravel/laravel .
-- cp .env.example .env
-- sed -i "s/DB_HOST=127.0.0.1/DB_HOST=localhost/g" .env
-- sed -ri "s/DB_DATABASE=.*/DB_DATABASE=${DATABASE}/g" .env
-- sed -ri "s/DB_USERNAME=.*/DB_USERNAME=${USERNAME}/g" .env
-- sed -ri "s/DB_PASSWORD=.*/DB_PASSWORD=${PASSWORD}/g" .env
-- sed -ri "s/APP_URL=.*/APP_URL=http:\/\/${DOMAIN}/g" .env
-- composer install
-- php artisan migrate:fresh
-- php artisan key:generate
-- php artisan storage:link
-- npm install
-- npm run build
 ```
 
-This set up a fresh Laravel project in development mode with a database initialized.
+You can also use a fixed PHP version: `php 7.4`, `php 8.1`, `php 8.2`, `php 8.3`.
 
-### Enable Laravel UI
+Unfortunately you can't use custom PHP version other than provided because it's tied to system daemon.
+We always update the list to the latest supported version or latest major version starting from PHP 7.4.
 
-```yaml
-commands:
-- composer require laravel/ui
-- php artisan ui bootstrap --auth
-- npm install
-- npm run build
+Support for PHP extensions is varies but you can request a ticket to be included, provided the extension is provided officially by PHP.
+
+When PHP version is changed, it's also changing the `php` and `composer` version it used.
+
+Alternatively, you can call the alternative `php` version using `php81`, `php80`, `php56`, etc.
+
+
+## Composer install
+
+Composer is already installed globally and follows what PHP version you've activated.
+
+To call composer with other PHP version, run `php81 $(which composer) install`.
+
+### Installed PHP Extensions
+
+PHP are installed as system wide. It's installed as in these commands:
+
+```
+yum install php-{74,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
 ```
 
-This enables Laravel UI with Bootstrap and authentication.
+Here's the list of extensions available:
 
-:::info
+|             |             |        |               |         |             |
+| :---------: | :---------: | :----: | :-----------: | :-----: | :---------: |
+|   bcmath    |     bz2     | calendar |    Core     |   ctype |     curl    |
+|  calendar   |    date     |  dom   |    exif       | fileinfo|     filter  |
+|      gd     |  gettext    |  hash  |    iconv      | igbinary|    imap     |
+|    intl     |    json     | libxml |   mbstring    | mongodb |   msgpack   |
+|   mysqli    |  mysqlnd    | openssl|     pcntl     |   pcre  |     PDO     |
+| pdo_mysql   | pdo_pgsql   |  Phar  |  pdo_sqlite   |   pgsql |   posix     |
+|   random    |  readline   | redis  |  Reflection   |  session|    shmop    |
+| SimpleXML   |    soap     |sockets |    sodium     |   SPL   |  sqlite3    |
+|  standard   |  sysvmsg    |sysvsem |   sysvshm     |tokenizer|    xml      |
+| xmlreader   | xmlwriter   |   xsl  | Zend OPcache  |   zip   |    zlib     |
 
-If you wish to enable development mode with Laravel UI, specify the host IP address and random ephemeral ports. Run this in CLI/SSH:
+Custom extensions can be added using separate sysdaemon mentioned below.
 
-```yaml
-npm run dev -- --host `hostname -I | cut -d " " -f1` --port `shuf -n 1 -i 49152-65535`
+## PHP INI configuration
+
+The PHP INI configuration is useful to tweak the PHP behavior such at upload size limits.
+While you can't directly change the PHP INI located in system files, you can create `.user.ini`
+into PHP root folder (check `root` in NGINX e.g. `~/public_html/.user.ini` or `~/public_html/public/.user.ini`) 
+and tweak the config there.
+
+An example of PHP INI configuration is:
+
+```ini title="~/public_html/.user.ini"
+upload_max_filesize = 32M
+post_max_size = 32M
 ```
 
-Note: this doesn't work with HTTPS, only run it in development mode. You might need to set the `APP_URL` to `http://...` in `.env`.
+See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php).
+To see default values or if your change has been in effect, use `phpinfo()`.
+
+:::caution
+
+PHP INI refresh on 5 minutes. You have to wait for changes to pick up.
+
+You should place in document root, like `public_html/public` if your system is CI4 / Laravel.
+
+Also, you can't change configs with `PHP_INI_SYSTEM` level unless you're using method below.
 
 :::
 
+## PHP Error Logging
 
-### Switch to Production Mode
+The error logs can be seen in `PHP Error Logs` in Check -> Check Logs.
 
-```yaml
-features:
-- ssl
-commands:
-- sed -ri "s/APP_DEBUG=true/APP_DEBUG=false/g" .env
-- sed -ri "s/http:\/\//https:\/\//g" .env
-- composer install --optimize-autoloader
-- npm run build
+You won't see error details in your website because we use production default settings.
+
+If you want to see the error details directly in website, change this setting in `.user.ini`:
+
+```ini title="~/public_html/.user.ini"
+display_errors = On
+display_startup_errors = On
 ```
 
-This switches Laravel to production mode.
+If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` to enable debug mode.  
 
-  </TabItem>
-</Tabs>
+## Restarting PHP
 
----
+PHP doesn't need restart. Changing PHP files instantly changes the running server code.
 
-Let's extract those recipes meaning individually.
+The PHP-FPM instance itself is running as `ondemand` and goes inactive after 15 minutes of no traffic.
+
 
 ## NGINX Setup
 
@@ -316,99 +280,6 @@ The example above puts the whole laravel app inside `/app/` subfolder. Let's see
 
 You can read more about putting Laravel in subfolder using NGINX in this [StackOverflow answer](https://stackoverflow.com/a/62965174/3908409).
 
-## PHP environment setup
-
-The default PHP version is `7.4`, which is the default provided from the OS.
-
-To change PHP version used in PHP-FPM to the latest one, put this in runner:
-
-```yaml
-features:
-- php latest
-```
-
-You can also use a fixed PHP version: `php 7.4`, `php 8.1`, `php 8.2`, `php 8.3`.
-
-Unfortunately you can't use custom PHP version other than provided because it's tied to system daemon.
-We always update the list to the latest supported version or latest major version starting from PHP 7.4.
-
-Support for PHP extensions is varies but you can request a ticket to be included, provided the extension is provided officially by PHP.
-
-When PHP version is changed, it's also changing the `php` and `composer` version it used.
-
-Alternatively, you can call the alternative `php` version using `php81`, `php80`, `php56`, etc.
-
-You can also do this for composer, e.g. ``php81 `which composer` install``.
-
-## Composer install
-
-Composer is installed automatically. The good recommendation to install packages is with:
-
-```sh
-composer install --no-dev --no-progress --optimize-autoloader
-```
-
-+ `--no-dev` to skip development packages (things like PHPUnit), to save space.
-+ `--no-progress` to skip the progress bar, because it's problematic when used inside runner.
-+ `--optimize-autoloader` to speed up the package resolution in production.
-
-### Clearing composer cache
-
-If your development is stable enough, you can clear the cache to save space by calling:
-
-```sh
-composer clear-cache
-```
-
-The composer cache locates in `~/.composer/cache/`.
-
-## PHP INI configuration
-
-The PHP INI configuration is useful to tweak the PHP behavior such at upload size limits.
-While you can't directly change the PHP INI located in system files, you can create `.user.ini`
-into PHP root folder (check `root` in NGINX e.g. `~/public_html/.user.ini` or `~/public_html/public/.user.ini`) 
-and tweak the config there.
-
-An example of PHP INI configuration is:
-
-```ini title="~/public_html/.user.ini"
-upload_max_filesize = 32M
-post_max_size = 32M
-```
-
-See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php).
-To see default values or if your change has been in effect, use `phpinfo()`.
-
-PHP ini are loaded within 5 minutes of cache.
-
-:::caution
-
-PHP INI doesn't work? You may need to wait until the PHP process is restarted, which typically about 5 minutes without traffic or after about 500 requests.
-Note that you can't change configs with `PHP_INI_SYSTEM` level because it's only changeable in the main system INI files.
-
-:::
-
-## PHP Error Logging
-
-The error logs can be seen in `NGINX Error Logs` in Virtualmin web UI.
-
-You won't see error details in your website because we use production default settings.
-
-If you want to see the error details directly in website, change this setting in `.user.ini`:
-
-```ini title="~/public_html/.user.ini"
-display_errors = On
-display_startup_errors = On
-```
-
-If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` to enable debug mode.  
-
-## Restarting PHP
-
-PHP doesn't need restart. Changing PHP files instantly changes the running server code.
-
-The PHP-FPM instance itself is running as `ondemand` and goes inactive after 5 minutes of no traffic.
-
 ## Troubleshooting
 
 Some error codes you might be encounter when developing PHP apps.
@@ -436,3 +307,50 @@ features:
 - php 7.4
 - php 8.2
 ```
+
+## Custom PHP Daemon
+
+You can also create your own System daemon in userspace for your own background service. For instance, you might want to install your own PHP with additional extensions we don't cover.
+
+This requires to enable [Docker Feature](./docker.mdx). A feature only available to Kit Plan and Later. The script below init the systemctl daemon:
+
+```sh
+mkdir -p $HOME/.local/share/systemd/user
+cat << EOF > $HOME/.local/share/systemd/user/custom-php.service
+[Unit]
+Description=FPM
+Documentation=Custom PHP FPM
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=$HOME
+ExecStart=/opt/remi/php74/root/usr/sbin/php-fpm -c $HOME/etc/php7.4 -y $HOME/etc/php-fpm.conf -F
+TimeoutStopSec=5
+Restart=always
+
+[Install]
+WantedBy=default.target
+EOF
+cat << EOF > $HOME/etc/php-fpm.conf
+error_log = $HOME/logs/php-fpm.log 
+[wordpress_site]
+listen = $HOME/etc/php.sock
+listen.owner = $USER
+listen.group = $USER
+pm = ondemand 
+pm.max_children = 10 
+pm.process_idle_timeout = 10s
+EOF
+
+systemctl enable custom-php --user
+systemctl start custom-php --user
+```
+
+Then bind like this:
+
+```yaml
+features:
+- php etc/php.sock
+```
+

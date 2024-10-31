@@ -11,9 +11,11 @@ DOM Cloud is essentially a Linux VPS server that's shared for all users. While t
 
 Unlike standard VPS, we don't give you sudo. Still, you will will be given a [SSH access](https://www.cloudflare.com/learning/access-management/what-is-ssh/), which then you can used it to install additional software or libraries in order to make your app working correctly.
 
-To aid in installing additional binaries and tools we have plenty of [deployment scripts](../deployment/deploy.mdx) that install things in your `/home` folder. Some action that requires sudo such as configuring NGINX or DNS records are also handled by deployment scripts or our panel Webmin.
+To aid in installing additional binaries and tools we have plenty of [deployment scripts](../deployment/deploy.mdx) that install things in your `$HOME` folder. Some action that requires sudo such as configuring NGINX or DNS records are also handled by deployment scripts or our panel Webmin.
 
 The deployment system also has some shortcut to install language compilers, such as Node.JS, Python, Rust, Go, and many more. Refer to [its `features` section](../deployment/deploy.mdx#features). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with system-wide software.
+
+No matter your requirement is, we are not giving you sudo access to cloud servers because the shared hosting nature. If you still insist, please put your system inside [Docker](../deployment/docker.mdx), or set up a [self-hosted server](./self-hosting.mdx).
 
 ## No Background Services
 
