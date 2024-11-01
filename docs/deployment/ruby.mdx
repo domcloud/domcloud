@@ -5,15 +5,16 @@ sidebar_position: 6
 
 # Deploy Ruby Apps
 
-[Ruby](https://ruby-lang.org) is an advanced programming language popularly used for web development thanks to Ruby on Rails. Ruby is served as an interpreted language, which means you don't need to compile your code before running it. 
+[Ruby](https://ruby-lang.org) installation is powered by [rvm](https://github.com/rvm/rvm). To install stable (latest - 1) version with [deployment script](./deploy.mdx):
 
-There's a default ruby interpreter from system but we recommend you to install it as your own through deployment scripts.
+```yarn
+features:
+- ruby
+```
 
-:::warning
+Without this, you're using OS-dependent `ruby` and `gem` which the version can't be customized.
 
-Serving Ruby apps can be run using Config.ru or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via Config.ru binding, please note the default app name (that's `config.ru`) and the path of ruby interpreter to run with.
-
-:::
+Install other version using `ruby latest`, `ruby stable`, `ruby 3.1`, `node 3.1.1`, etc. To uninstall use `ruby off` or `ruby system` (the latter leaves rvm installed).
 
 ## Example
 
@@ -93,16 +94,6 @@ commands:
   - rake assets:precompile
 ```
 
-## Use other Ruby versions
-
-To switch ruby version use feature syntax like `ruby stable`, `ruby latest`, `ruby 3.1.1`, etc. Check your current ruby version using `ruby --version` in SSH.
-
-```yaml
-features:
-  - ruby 3.1.1
-```
-
-Ruby install scripts is powered by [rvm](https://github.com/rvm/rvm). 
 
 ## App Management
 
@@ -116,6 +107,6 @@ See [NGINX and App Daemon](./nginx.mdx) for more information about NGINX and App
 
 You can see app log from Check -> Check Process Logs tab. Only startup problems displayed in the browser.
 
-Please use a proper logging mechanism such as [the standard logging library](https://ruby-doc.org/stdlib-2.4.0/libdoc/logger/rdoc/Logger.html) then write it to a log file, or any other solution that suits you.
+You might want to use a proper logging mechanism such as [the standard logging library](https://ruby-doc.org/stdlib-2.4.0/libdoc/logger/rdoc/Logger.html) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.

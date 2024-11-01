@@ -8,15 +8,16 @@ import TabItem from '@theme/TabItem';
 
 # Deploy Python Apps
 
-[Python](https://python.org) is a beginner-friendly programming language popularly used for machine learning and other scientific projects. Python is served as an interpreted language, which means you don't need to compile your code before running it. 
+[Python](https://python.org) installation is powered by [pyenv](https://github.com/pyenv/pyenv). To install stable (latest - 1) version with [deployment script](./deploy.mdx):
 
-There's a default python interpreter from system but we recommend you to install it as your own through deployment scripts.
+```yarn
+features:
+- python
+```
 
-:::warning
+Without this, you're using OS-dependent `python` and `pip` which the version can't be customized.
 
-Serving Python apps can be run using WSGI or via GLS. If you choose to run via GLS, you have to listen from given `PORT` env/args. If you choose to run it via WSGI, please note the default app name (that's `passenger_wsgi.py`) and the path of python interpreter to run with.
-
-:::
+Install other version using `python latest`, `python stable`, `python 3.10`, `node 3.10.1`, etc. To uninstall use `python off` or `python system` (the latter leaves pyenv installed).
 
 ## Example
 
@@ -109,7 +110,7 @@ nginx:
   root: public_html/public
   passenger:
     enabled: "on"
-    app_start_command: env PORT=$PORT python app.py
+    app_start_command: python app.py
 commands:
   - test -f requirements.txt && pip install -r $_
 ```
@@ -176,26 +177,6 @@ commands:
   </TabItem>
 </Tabs>
 
-
-## Use other Python versions
-
-To switch python version use feature syntax like `python stable`, `python latest`, `python 3.8.1`, `python 3.8`, etc. Check your current python version using `python --version` in SSH.
-
-```yaml
-features:
-  - python 3.8.1
-```
-
-Python install scripts is powered by [pyenv](https://github.com/pyenv/pyenv). Python binaries is provided by [indygreg/python-build-standalone](https://github.com/indygreg/python-build-standalone/). When just mentioning `python` it's equivalent with `python system` which installing pyenv but still using system-wide python.
-
-:::warning
-
-The python binaries currently have issues that they [don't have shared libraries](https://github.com/indygreg/python-build-standalone/issues/227) which make `venv` or some legacy pip install broken. We advise to stick into `python system` until this is resolved. 
-
-However if you have to upgrade simply refer to version which there's no binary version (e.g. `3.11.0`) to make pyenv compile the python binary, which is always works.
-
-:::
-
 ### Installing depedencies
 
 Installing python depedencies can be tricky and easily overlooked. We have system-wide installation of `pip` and `pipenv`. When `python` feature is installed, `pyenv` will be available to shim `python` and `pip` to your terminal profile. When changing python version using pyenv, the python interpreter will be installed to `.pyenv/shims/python`.
@@ -214,7 +195,49 @@ See [NGINX and App Daemon](./nginx.mdx) for more information about NGINX and App
 
 You can see app log from Check -> Check Process Logs tab. Only startup problems displayed in the browser.
 
-Please use a proper logging mechanism such as [the standard logging library](https://docs.python.org/3/library/logging.html) then write it to a log file, or any other solution that suits you.
+You might want to use a proper logging mechanism such as [the standard logging library](https://docs.python.org/3/library/logging.html) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.
 
+## Troubleshooting
+
+### `ldpython: -lpython3.x not found` during installing Pip Packages
+
+We use [prebuilt python binaries](https://github.com/indygreg/python-build-standalone) where it doesn't have `libpython3.x.a`, which is a library for statically linking python. This is known for some packages like `uwsgi`.
+
+The solution is try reinstalling python, but with exact version down to three digits:
+
+```yaml
+features:
+- python 3.12.1
+```
+
+This way your python will be compiled from source by pyenv and `libpython3.x.a` will be available.
+
+### Code won't update unless `__pycache__` files gone
+
+We recommend setting `PYTHONDONTWRITEBYTECODE=1` to avoid this problem.
+
+```yaml
+nginx:
+  root: public_html/app/static
+  passenger:
+    enabled: "on"
+    app_env: development
+    app_root: public_html
+    app_type: python
+    startup_file: server.py
+    python: .pyenv/shims/python
+    env_var_list:
+    - PYTHONDONTWRITEBYTECODE=1
+```
+
+Delete all `__pycache__` folders with this command and do `restart`.
+
+```bash
+find ~/public_html -name "__pycache__" -type d -exec rm -r {} +
+```
+
+### `502 Bad Gateway`
+
+This is NGINX freshly restart and it seems too expensive to start your process in time. Please use [Proxfix NOHUP](./nginx.mdx#proxfix-nohup) to solve this issue.
