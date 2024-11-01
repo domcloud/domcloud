@@ -123,4 +123,17 @@ Your docker instance is registered as user-scoped systemd service. You can call 
 + `systemctl status docker --user`
 + `systemctl start docker --user`
 
-## Custom systemd daemon
+## Troubleshooting
+
+### 502 Bad Gateway
+
+This could means your docker container is unable to run. Please check `docker ps` and `docker logs`.
+
+If it running normally, please check if NGINX and docker compose running the same proxy_pass. Try deploying `service: docker-compose.yml` again. 
+
+### `exec format error` in docker logs
+
+This means the container is not available in system architecture. Remember, our servers is `arm64` (ARM) not `amd64` (Intel), not every image containers have this platform arch. Check it with Docker Hub.
+
+If you confirm that the image containers is `amd64` only, please move the server to x64 variant, that's SGA/NYC/AMS server.
+
