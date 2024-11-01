@@ -5,19 +5,20 @@ sidebar_position: 7
 
 # Deploy Deno Apps
 
-[Deno](https://deno.com) is a popular Node alternative for back-end Javascript runtime environment known for its modern approach. Like Node, you don't need to compile your code beforehand.
+[Deno](https://deno.com) installation is powered by [webi](https://webinstall.dev/deno/). To install latest version with [deployment script](./deploy.mdx):
 
-There is no default `deno` compiler at system level. You have to install it first through deployment scripts.
+```yaml
+features:
+- deno
+```
 
-:::warning
+Without this, `deno` won't be available since no globally installed Deno runtime available.
 
-Serving Deno apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args. You also have to give network and any other relevant system permissions to the script.
-
-:::
+Install other version using `deno latest`, `deno 1.13`, etc. To uninstall use `deno off`.  Check the current version using `deno --version` from SSH.
 
 ## Example
 
-The deployment script below installs the latest `deno` compiler and writes `app.ts` and serves that with `--allow-net` permissions. 
+The deployment script below installs the latest `deno` compiler, writes `app.ts` and run `deno run --allow-net app.ts` serving HTTP from `PORT` envar.. 
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/deno.yml"
 source: clear
@@ -87,17 +88,6 @@ nginx:
     enabled: "on"
     app_start_command: deno run --allow-net app.ts --port=$PORT
 ```
-
-## Use other Deno versions
-
-To switch Deno version use feature syntax like `deno stable`, `deno beta`, `deno v1.13`, etc. Check your current Deno version using `deno --version` in SSH.
-
-```yaml
-features:
-  - deno v1.13
-```
-
-Deno install scripts is powered by [webi](https://webinstall.dev/deno/). 
 
 ## App Management
 

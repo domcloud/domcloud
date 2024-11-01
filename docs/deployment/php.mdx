@@ -82,7 +82,7 @@ post_max_size = 32M
 See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php).
 To see default values or if your change has been in effect, use `phpinfo()`.
 
-:::caution
+:::info
 
 PHP INI refresh on 5 minutes. You have to wait for changes to pick up.
 
@@ -283,6 +283,14 @@ You can read more about putting Laravel in subfolder using NGINX in this [StackO
 ## Troubleshooting
 
 Some error codes you might be encounter when developing PHP apps.
+
+### 403 (Forbidden)
+
+A 403 error from NGINX means NGINX is unable to see if there's any file at given path.
+
+If you're accessing a folder (the url ends with `/`) it means there's no `index.html` or `index.php` in the folder.
+
+If you sure if the file exists, please check it's permission. NGINX needs to read from group perspective. So try `chmod -R 0750 ~/public_html`. Common cause is [Laravel Storage is set Private](https://laravel.com/docs/11.x/filesystem#local-files-and-visibility). A private laravel storage is set as `600` which NGINX won't be able to read.
 
 ### 404 (Not Found)
 

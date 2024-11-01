@@ -5,21 +5,22 @@ sidebar_position: 13
 
 # Deploy Rust Apps
 
-[Rust](https://rust-lang.org) is an advanced programming language popularly used for speed thanks to manual memory management. Rust is served as an compile language, which means you need to compile your code before running it. 
+[Rust](https://rust-lang.org) installation is powered by [rustup](https://rustup.rs). To install latest version with [deployment script](./deploy.mdx):
 
-There is no default `rust` compiler at system level. You have to install it first through deployment scripts.
+```yaml
+features:
+- rust
+```
+
+Without this, `rustc` won't be available since no globally installed Rust compiler available.
+
+Install other version using `rust latest`, `rust 1.73`, etc. To uninstall use `rust off`. Check the current version using `rustc --version` from SSH.
 
 
-:::warning
-
-Serving Rust apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
-
-:::
 
 ## Example
 
-The deployment script below installs the latest `rust` compiler and compiles `main.rs` and serves that `main` binary. 
-
+The deployment script below installs the latest `rust` compiler, compiles `main.rs` and runs the `main` binary serving HTTP from `PORT` envar. 
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/rust.yml"
 source: clear
@@ -121,17 +122,6 @@ commands:
   - cargo build
 ```
 
-## Use other Rust versions
-
-To switch rust version use feature syntax like `rust latest`, `rust 1.73.0`, etc. Check your current rust version using `rustc --version` in SSH.
-
-```yaml
-features:
-  - rust 1.73.0
-```
-
-Rust install scripts is powered by [rustup](https://rustup.rs). 
-
 ## App Management
 
 Your app do not restarted automatically after file changes. To restart, run `restart` via SSH.
@@ -152,5 +142,4 @@ NGINX errors and traffic logs can be examined via Webmin or Check -> Check Proce
 
 ### `Execution took more than 600s, exiting gracefully`
 
-Please run `cargo build --release` via SSH instead.
-
+Please run `cargo build --release` via SSH instead. Usually it will be very long for first time compilation.

@@ -5,22 +5,20 @@ sidebar_position: 14
 
 # Deploy Zig Apps
 
+[Zig](https://ziglang.org) installation is powered by [webi](https://webinstall.dev/zig/). To install latest version with [deployment script](./deploy.mdx):
 
-[Zig](https://ziglang.org) is an new low-level programming language popularly used for speed similar to Zig and C++. Zig is served as an compile language, which means you need to compile your code before running it. 
+```yaml
+features:
+- zig
+```
 
-There is no default `zig` compiler at system level. You have to install it first through deployment scripts.
+Without this, `zig` won't be available since no globally installed Zig compiler available.
 
-
-:::warning
-
-Serving Zig apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
-
-:::
+Install other version using `zig latest`, `zig 0.13.0`, etc. To uninstall use `zig off`. Check the current version using `zig version` from SSH.
 
 ## Example
 
-The deployment script below installs the latest `zig` compiler and compiles `main.zig` and serves that `main` binary. 
-
+The deployment script below installs the latest `zig` compiler, compiles `main.zig` and runs the `main` binary serving HTTP from `PORT` envar.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/zig.yml"
 source: clear
@@ -130,16 +128,6 @@ commands:
   - zig build
 ```
 
-## Use other Zig versions
-
-To switch zig version use feature syntax like `zig latest`, `zig 0.11.0`, etc. Check your current zig version using `zig version` in SSH.
-
-```yaml
-features:
-  - zig 0.11.0
-```
-
-Zig install scripts is powered by [webi](https://webinstall.dev/zig/). 
 
 ## App Management
 

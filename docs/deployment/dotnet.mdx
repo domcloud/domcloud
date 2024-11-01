@@ -1,24 +1,24 @@
 ---
 title: .NET
-sidebar_position: 12
+sidebar_position: 10
 ---
 
 # Deploy .NET Apps
 
-[.NET](https://dotnet.microsoft.com/) is a programming language family popularly used within Microsoft ecosystem, which includes C#, VB and F# languages. .NET is served as an compile language, which means you need to compile your code before running it. 
+[.NET](https://dotnet.microsoft.com/) installation is powered by [dotnet-install script](https://dot.net/v1/dotnet-install.sh). To install latest version with [deployment script](./deploy.mdx):
 
-There is no default `dotnet` compiler at system level. You have to install it first through deployment scripts.
+```yaml
+features:
+- dotnet
+```
 
-:::warning
+Without this, `dotnet` won't be available since no globally installed .NET runtime available.
 
-Serving .NET apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
-
-:::
+Install other version using `dotnet latest`, `dotnet 0.9.0`, etc. To uninstall use `dotnet off`.  Check the current version using `dotnet --version` from SSH.
 
 ## Example
 
-
-The deployment script below installs the latest `dotnet` compiler and writes `Program.cs` and run it directly. 
+The deployment script below installs the latest `dotnet` compiler, writes `Program.cs` and run `dotnet run` serving HTTP from `PORT` envar. 
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/dotnet.yml"
 source: clear
@@ -109,17 +109,6 @@ nginx:
     enabled: "on"
     app_start_command: env PORT=$PORT dotnet run
 ```
-
-## Use other .NET versions
-
-To switch dotnet version use feature syntax like `dotnet latest`, `dotnet 0.9.0`, etc. Check your current dotnet version using `dotnet --version` in SSH.
-
-```yaml
-features:
-  - dotnet 0.9.0
-```
-
-.NET install scripts is powered by [dotnet-install script](https://dot.net/v1/dotnet-install.sh). 
 
 ## App Management
 

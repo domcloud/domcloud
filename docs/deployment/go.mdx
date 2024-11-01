@@ -1,23 +1,24 @@
 ---
 title: Go
-sidebar_position: 10
+sidebar_position: 12
 ---
 
 # Deploy Go Apps
 
-[Go](https://go.dev) is a popular programming language for backend development. Go is served as a compiled language, which means you need to compile your code before running it. 
+[Go](https://go.dev) installation is powered by [webi](https://webinstall.dev/golang/). To install latest version with [deployment script](./deploy.mdx):
 
-There is no default `go` compiler at system level. You have to install it first through deployment scripts.
+```yaml
+features:
+- go
+```
 
-:::warning
+Without this, `go` won't be available since no globally installed Go compiler available.
 
-Serving Go apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
-
-:::
+Install other version using `go latest`, `go 1.22`, etc. To uninstall use `go off`. Check the current version using `go version` from SSH.
 
 ## Example
 
-The deployment script below installs the latest `go` compiler and compiles `main.go` and serves that `main` binary. 
+The deployment script below installs the latest `go` compiler, compiles `main.go` and runs the `main` binary serving HTTP from `PORT` envar.
 
 ```yaml title="https://github.com/domcloud/recipes/blob/master/go.yml"
 source: clear
@@ -105,17 +106,6 @@ nginx:
 commands:
   - go mod download
 ```
-
-## Use other Go versions
-
-To switch golang version use feature syntax like `go stable`, `go beta`, `go 1.19`, etc. Check your current go version using `go version` in SSH.
-
-```yaml
-features:
-  - go 1.19
-```
-
-Go install scripts is powered by [webi](https://webinstall.dev/golang/). 
 
 ## App Management
 

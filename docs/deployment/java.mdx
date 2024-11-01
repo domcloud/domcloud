@@ -5,16 +5,16 @@ sidebar_position: 9
 
 # Deploy Java Apps
 
-[Java](https://openjdk.org) is a programming language popularly used globally. Java is served as a compiled language, which means you need to compile your code before running it. 
+[Java](https://openjdk.org) installation is powered by [Adoptium Project](https://adoptium.net/). To install latest version with [deployment script](./deploy.mdx):
 
-There is no default `java` compiler at system level. You have to install it first through deployment scripts.
+```yaml
+features:
+- java
+```
 
+Without this, `java` won't be available since no globally installed Java runtime available.
 
-:::warning
-
-Serving Java apps requires to be run via GLS, that's mean you have to listen from given `PORT` env/args.
-
-:::
+Install other version using `java latest`, `java lts`, `java 18`, etc. To uninstall use `java off`.  Check the current version using `java --version` from SSH.
 
 ## Example
 
@@ -95,18 +95,6 @@ nginx:
     enabled: "on"
     app_start_command: env PORT=$PORT java Main.java
 ```
-
-## Use other Java versions
-
-To switch Java version use feature syntax like `java latest`, `java 18`, etc. Check your current Java version using `java --version` in SSH.
-
-```yaml
-features:
-  - java 18
-```
-
-Java installation binaries is used from [Adoptium Project](https://adoptium.net/). Only latest build from them in each major version (as low as `jdk 8`) is available to download using this feature.
-
 
 
 ## App Management
