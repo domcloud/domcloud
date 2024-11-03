@@ -1,11 +1,11 @@
 ---
-title: Our Guarantees
+title: Our Mission
 sidebar_position: 3
 ---
 
 We want everyone make use of our cloud platorm for a better experience with putting things online. Personally, the reason I (the founder) created this platform because I once struggled to find a web hosting service that's good enough for a university project.
 
-Our mission is to democratize computing. What we mean by that is we want to make web deployment easy for everyone no matter their background, and as realistically done as possible using shared hosting design.
+Our mission is to democratize web development. What we mean by that is we want to make web deployment easy for everyone no matter their background and capabilities, and we want to done it as efficient as possible using shared hosting design.
 
 With that said, we have to be honest that we can't provide everything due to shared hosting nature.
 
@@ -17,7 +17,7 @@ These are the things that we won't or can't do:
 
 We [can't scale horizontally](https://www.mongodb.com/basics/horizontal-vs-vertical-scaling#what-is-horizontal-scaling) because our servers is **monolithic** by design. Monolithic means only one machine located in one place for all services that your website needs.
 
-Scaling horizontally means using some advanced techniques like load balancing, edge servers, edge functions, containerizations etc. We believe adding technical complexity will just make developers life harder. We want to keep things simple and easy to use. Read [the cloud exit by DHH](https://world.hey.com/dhh/the-big-cloud-exit-faq-20274010).
+Scaling horizontally means using some advanced techniques like load balancing, edge servers, edge functions, containerizations etc. We believe adding technical complexity will just make developers life harder. We want to keep things simple, cheaper and easy to use. Read [the cloud exit by DHH](https://world.hey.com/dhh/the-big-cloud-exit-faq-20274010) and [serverless horrors by HeyAndras](https://serverlesshorrors.com/).
 
 We still can scale vertically by our customer demands.
 
@@ -30,6 +30,10 @@ Still, things can go offline, for instance during bad root-level configuration b
 A bad actor can sneak up and wreak havoc despite many security protections in place. In that case they're violating [ToS](/service) like planting phising, DoS, spam, and other malicious activities to our servers. If someone legitimately needed a higher computing spec and it's not measurable by our limits (like storage and data cap) we will contact them.
 
 Most of the time, downtime will not caused by us, could be your bad configuration. Or we do something that brokes your bad configuration. So expect some downtime here and there, but don't hesitate to contact us promptly if something is wrong!
+
+### Sudo Access
+
+A shared hosting system is one OS shared for many user. Giving a sudo access mean exposing everyone data under the same OS, which is a disaster. We elaborate more about this limitation in [Security Measures](./security.mdx).
 
 ## What we can do
 
