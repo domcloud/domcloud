@@ -1,1 +1,141 @@
+
 # Strapi
+
+[![](/assets/deploy.svg)](https://my.domcloud.co/start?from=https://raw.githubusercontent.com/domcloud/dom-templates/master/boot/strapi.yml)
+
+## Recipe Features Explained
+
+Let's breakdown the recipe to deploy a new Strapi site. All examples here uses yarn.
+
+<details>
+<summary> See Full Deployment Script </summary>
+
+```yaml
+source: clear
+features:
+  - node lts
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_env: development
+    app_start_command: env PORT=$PORT yarn start
+  locations:
+    - match: /admin/
+      alias: public_html/build/
+commands:
+  - yarn create strapi-app . --quickstart --no-run --skip-cloud
+  - echo JWT_SECRET=$(openssl rand -base64 24) > .env
+  - echo APP_KEYS=$(openssl rand -base64 24) >> .env
+  - echo ADMIN_JWT_SECRET=$(openssl rand -base64 24) >> .env
+  - echo API_TOKEN_SALT=$(openssl rand -base64 24) >> .env
+  - echo STRAPI_ADMIN_BACKEND_URL=https://${DOMAIN} >> .env
+  - STRAPI_ADMIN_BACKEND_URL=https://${DOMAIN} yarn build
+```
+
+</details>
+
+
+```yaml
+source: clear
+features:
+  - node lts
+```
+
+This script clears `~/public_html` and install node LTS version.
+
+
+```yaml
+nginx:
+  root: public_html/public
+  passenger:
+    enabled: "on"
+    app_env: development
+    app_start_command: env PORT=$PORT yarn start
+  locations:
+    - match: /admin/
+      alias: public_html/build/
+```
+
+This script declare NGINX Configuration. It means three thing:
+
+1. `app_start_command: env PORT=$PORT yarn start` means start using `yarn start`.
+
+2. `app_env: development` this set `NODE_ENV` to `development`. Ideally we start from development env, then upgrade to `production` when it's ready.
+
+3. `match: /admin/` means for `/admin` pages, do `alias: public_html/build/`. This bypass proxy for built client admin pages. 
+
+```yaml
+commands:
+  - yarn create strapi-app . --quickstart --no-run --skip-cloud
+```
+
+This script bootstrap a new strapi via [create-strapi-app](https://www.npmjs.com/package/create-strapi-app) cli.
+
+```yaml
+commands:
+  - echo JWT_SECRET=$(openssl rand -base64 24) > .env
+  - echo APP_KEYS=$(openssl rand -base64 24) >> .env
+  - echo ADMIN_JWT_SECRET=$(openssl rand -base64 24) >> .env
+  - echo API_TOKEN_SALT=$(openssl rand -base64 24) >> .env
+  - echo STRAPI_ADMIN_BACKEND_URL=https://${DOMAIN} >> .env
+```
+
+This sets up default envar with secrets and the backend URL.
+
+```yaml
+commands:
+  - STRAPI_ADMIN_BACKEND_URL=https://${DOMAIN} yarn build
+```
+
+This build the admin interface. Unfortunately we don't know why we have to put `STRAPI_ADMIN_BACKEND_URL` there. 
+
+
+## Using Databases
+
+With default configuration, the database is saved to `.tmp/data.db`. Not good since it can be deleted. Try moving it out to home dir.
+
+```yaml
+commands:
+  - echo DATABASE_FILENAME=$HOME/data.db >> env
+```
+
+To use PostgreSQL instead, use this:
+
+```yaml
+features:
+- postgresql
+commands:
+ - echo DATABASE_CLIENT=postgres >> .env
+ - echo DATABASE_URL=postgresql://$USERNAME:$PASSWORD@localhost/$DATABASE >> .env
+ - yarn install pg
+```
+
+Or to use MySQL instead, use this:
+
+```yaml
+features:
+- mysql
+commands:
+ - echo DATABASE_CLIENT=mysql2 >> .env
+ - echo DATABASE_HOST=localhost >> .env
+ - echo DATABASE_NAME=$DATABASE >> .env
+ - echo DATABASE_USERNAME=$USERNAME >> .env
+ - echo DATABASE_PASSWORD=$PASSWORD >> .env
+ - yarn install mysql2
+```
+
+
+## Settings Need to be Changed
+
+Go to `config/server.js` and set `proxy: true`.
+
+```js title="config/server.js"
+module.exports = ({ env }) => ({
+  // ...rest config...
+  proxy: true,
+});
+```
+
+This is because NGINX proxies your request to HTTP channel so strapi won't know if visitor visits HTTPS unless you tell Strapi to read `X-Forwarded-Proto` via this settings. If you don't enable this, you'll get `Cannot send secure cookie over unencrypted connection` when you set `NODE_ENV` to production.
+

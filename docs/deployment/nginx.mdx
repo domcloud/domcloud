@@ -292,10 +292,31 @@ nginx:
 
 This has a downside that when you change proxfix parameters, it will not be restarted. you must call `restart` to really restart it.
 
+### `X-Forwarded-For` and `X-Forwarded-Proto`
+
+Passenger will always add `X-Forwarded-For` and `X-Forwarded-Proto` to give the app client IP addresses and HTTP scheme. 
+
+To determine client IP address or HTTP scheme reliably, you have to know how many layers of proxy needed to reach your site.
+
+For example, this is the example of response headers from user IP `123.45.67.89` when there's no proxy via HTTPS.
+
+```conf 
+x-forwarded-for: 123.45.67.89
+x-forwarded-proto: https
+```
+
+If the user is same but you're under a webproxy such as CloudFlare (assume IP 32:231::1), then it would be like this
+
+```conf 
+x-forwarded-for: 123.45.67.89, 32:231::1
+x-forwarded-proto: https, http
+```
+
+The `X-Forwarded-Proto` is equally important to determine whether you should send a secure or plain cookies. This mean your app must be configured to trust proxy headers. Some framework may already do it, some other need be set explicitly.
+
 ## Language-Specific Configuration
 
 More information about configuring NGINX for specific languages can be found in the [Deployment](../deployment) section.
-
 
 ## Advanced Configuration
 

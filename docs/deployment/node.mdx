@@ -227,6 +227,10 @@ You have uncommitted changes in your server. To resolve it please do `git stash`
 
 You have to set `proxy: true` and `secure: true` [somewhere in your cookie settings](https://stackoverflow.com/a/60104026/3908409) so it trust `X-Forwarded-Proto` set from NGINX.
 
+### `UntrustedHost: Host must be trusted.`
+
+You're using next-auth so you must set [`trustHost: true`](https://authjs.dev/getting-started/deployment#auth_trust_host). See [relevant blog](https://gause.dev/blog/fix-for-next-auth-error-behind-nginx-proxy).
+
 ### `pnpm: command not found`
 
 You need to add `node` feature in your deployment script. Which enables `corepack` and `pnpm`.

@@ -71,6 +71,12 @@ commands:
 
 This script compiles the frontend required before serving with production settings.
 
-## TO DO
+## Using Next-Auth
 
-TODO
+Add these envar to your .env
+
+```yaml
+commands:
+- echo AUTH_SECRET=$(openssl rand -base64 33) >> .env
+- echo AUTH_TRUST_HOST=true >> .env
+```
