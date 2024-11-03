@@ -11,21 +11,21 @@ DOM Cloud is essentially a Linux VPS server that's shared for all users. While t
 
 Unlike standard cloud company, we don't give you sudo (aka. root access). Still, you will will be given a [SSH access](https://www.cloudflare.com/learning/access-management/what-is-ssh/), which then you can used it to install additional software or libraries in order to make your app working correctly.
 
-To aid in installing additional binaries and tools we have plenty of [deployment scripts](../deployment/deploy.mdx) that install things in your `$HOME` folder. Some action that requires sudo such as configuring NGINX or DNS records are also handled by deployment scripts or our panel Webmin.
+To aid in installing additional binaries and tools we have plenty of [deployment scripts](../deployment/deploy.mdx) that install things in your `$HOME` folder. Some action that requires sudo such as configuring NGINX or DNS records are also handled by deployment scripts or Webmin panel.
 
-The deployment system also has some shortcut to install language compilers, such as Node.JS, Python, Rust, Go, and many more. Refer to [deployment section](../deployment/index.mdx). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with system-wide software.
+The deployment system can helps you install language compilers such as Node, Python, Rust, Go, Java and many more. Refer to [deployment section](../deployment/index.mdx). These will be installed to the user's home dir (usually `~/.local/bin`) so it's isolated with OS-wide software.
 
-No matter your system requirement is, try to find a way to do it without sudo. Again, we are not giving you sudo access to cloud servers because the shared hosting nature. Our system also designed to follow shared hosting best practices and it's protected behind sudo. You almost can't broke our system whatever you're trying to do. 
+No matter your system requirement is, try to find a way to do it without sudo. Again, we are not giving you sudo access to cloud servers because the shared hosting nature. Our system also has been designed to follow shared hosting best practices and it's protected behind sudo. You almost can't broke our system whatever you're trying to do.
 
 If you still insist wanting sudo, please put your system inside [Docker](../deployment/docker.mdx), or set up a [self-hosted server](./self-hosting.mdx) instead.
 
 ## No Background Services
 
-CPU and RAM are limited resources. To make room for everyone, server processes need to be shut down when it's no longer in use. In another word, there can't be any process run 24/7, it will be terminated when there's no traffic for more than 15 minutes.
+CPU and RAM are limited resources. To make room for everyone, server processes need to be shut down when it's no longer in use. For any websites that doesn't enable Docker services, the maximum runtime for any executables is 3 hours (also true for cronjobs). Don't worry though, as processes from NGINX is always respawn when such process has exited before.
 
-This is enforced by NginX proxies (PHP-FPM and Passenger) plus many many other daemons that's running in the background. There also limits enforced by linux PAM to prevent server freeze because of OOM.
+We also has many security features such as [address space limit](https://www.man7.org/linux/man-pages/man5/limits.conf.5.html#:~:text=address%20space%20limit%20(KB)) set to 2GB, EarlyOOM background service, *a cron to remove cron* that's set to run more than once a hour and a weekly cron to clear caches.
 
-To keep processes running all the time 24/7 we recommend you to leverage [rootless Docker or SystemD](../deployment/docker.mdx). Do note that this requires suscribing as low as Kit plan. Also the setup is more complex and requires you to get familiar with overall linux system.
+To keep processes running all the time 24/7 we recommend you to leverage [rootless Docker or SystemD](../deployment/docker.mdx). Do note that this requires subscribing as low as Kit plan. Also a kind of more complex setup and prone to memory leaks.
 
 :::danger
 

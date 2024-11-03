@@ -7,23 +7,21 @@ We want everyone make use of our cloud platorm for a better experience with putt
 
 Our mission is to democratize computing. What we mean by that is we want to make web deployment easy for everyone no matter their background, and as realistically done as possible using shared hosting design.
 
-With that said, we have to be honest that we can't provide everything. We have to draw a line between what we can and can't do. This page is about that.
+With that said, we have to be honest that we can't provide everything due to shared hosting nature.
 
-## The NOT DO
+## What we can't do
 
-These are the things that we will not do:
+These are the things that we won't or can't do:
 
-### Scalability
+### Horizontal Scaling
 
-Roughly saying, a system can be defined as *scalable* if it can [be scaled horizontally](https://www.mongodb.com/basics/horizontal-vs-vertical-scaling#what-is-horizontal-scaling) during peak times.
-
-Here, We don't do that, because our servers is **monolithic** by design. Monolithic means only one machine located in one place will handle your website. It will **never** can be horizontally scaled.
+We [can't scale horizontally](https://www.mongodb.com/basics/horizontal-vs-vertical-scaling#what-is-horizontal-scaling) because our servers is **monolithic** by design. Monolithic means only one machine located in one place for all services that your website needs.
 
 Scaling horizontally means using some advanced techniques like load balancing, edge servers, edge functions, containerizations etc. We believe adding technical complexity will just make developers life harder. We want to keep things simple and easy to use. Read [the cloud exit by DHH](https://world.hey.com/dhh/the-big-cloud-exit-faq-20274010).
 
 We still can scale vertically by our customer demands.
 
-### It will be not 99.9% uptime
+### No Failover
 
 We given users a raw access (SSH) to the server, so they can do whatever they want with it. Practically, one can use our servers abusively, like training a machine learning model. That won't work. We have RAM and CPU limits in place to avoid accidentally freezing our whole server.
 
@@ -33,7 +31,7 @@ A bad actor can sneak up and wreak havoc despite many security protections in pl
 
 Most of the time, downtime will not caused by us, could be your bad configuration. Or we do something that brokes your bad configuration. So expect some downtime here and there, but don't hesitate to contact us promptly if something is wrong!
 
-## Guarantees
+## What we can do
 
 Don't mind with all the drawbacks above? Great! Here are the things that we think you'll love:
 
@@ -41,9 +39,11 @@ Don't mind with all the drawbacks above? Great! Here are the things that we thin
 
 File access is often underrated in today's cloud computing world. The reason you wouldn't see people running PHP web-apps inside containers often is because this language is heavily depends with local file operations (e.g. for sessions and file uploads). 
 
-Having file access is the simplest way to avoid cache and store data problem. If you're not choosing a monolithic service then you would have take alternative solutions like Redis or Memcached for cache and S3 storages for file uploads. Most people gave up using horizontally scalable system because it's either too complex or too costly to manage.
+Having file access is the simplest solution to cache and store data problem. If you're not choosing a monolithic service then you would have take alternative solutions like Redis or Memcached for cache and S3 storages for file uploads. Still, most people gave up using horizontally scalable system because it's either too complex or too costly to manage. 
 
-Files in DOM Cloud can be accessed and edited using our Deployment System, Webmin, SSH or VSCode Editor.
+Don't follow bad advices that told you need for maximum scalability without market or business validation. Unless you're scaling for international market or put people money or life behind your services, a single monolithic server will be enough for you.
+
+Files in DOM Cloud can be accessed and edited using our Deployment System, Webmin, Filestash, SSH or VSCode Editor.
 
 ### Incremental Build
 
