@@ -108,7 +108,7 @@ nginx:
   root: public_html/public
   passenger:
     enabled: on
-    app_start_command: proxfix docker compose up
+    app_start_command: proxfix docker compose up --no-recreate -d
     env_var_list:
     - NOHUP=1
     - TARGET=127.X.X.X:8080
