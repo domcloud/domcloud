@@ -8,7 +8,7 @@ import ThemedImage from '@theme/ThemedImage';
 
 The deployment system is the main feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also can be used as a CI (Continous Integration) tool that perform some tasks inside your website.
 
-The deployment system is accessible through `Deploy` tab in the website menu. 
+The deployment system is accessible through `Setup` -> `Deploy` tab in the navigation once inside a website. 
 
 <ThemedImage
     sources={{
@@ -22,6 +22,11 @@ The deployment system is accessible through `Deploy` tab in the website menu.
     loading="lazy"
 />
 
+The buttons explained:
+
++ **Add a deployment task**: Add a new deployment task as we will describe through this page.
++ **Debug Manually**: This opens [the editor menu](../features/editor.mdx) to let you open SSH/Filestash and do tasks manually.
++ **Start Over**: Open a dialog to let you create a new template or upload new apps here [like in the create tab](../intro/getting-started.mdx#create-a-website).
 
 For common script deployments, there's existing recipes from [the deployment page](../deployment/index.mdx) or [recipe repository](https://github.com/domcloud/recipes).
 
@@ -30,8 +35,8 @@ We try to make it as simple as possible to understand. We also make our backend 
 The script runner is in YAML format. Here's a simple overview:
 
 ```yaml
-source: # Source URL from internet to replace all files in "public_html"
-features: # List of features to be enabled or configured or disabled
+source: # Source URL to replace all files in "public_html"
+features: # List of features to be enabled or configured
 nginx:  # NGINX configuration to be set for current website
 commands: # List of terminal commands that will be executed inside "public_html"
 ```
@@ -183,7 +188,7 @@ DNS records is also configurable via [Webmin DNS](../features/editor.mdx).
 
 ### `firewall`
 
-Configure outgoing firewall in your domain. Only configurable for users with `Lite`, `Kit` and `Pro` plan.
+Configure outgoing firewall in your domain. Only configurable for users with `Lite` plan or above.
 
 + `firewall on` or `firewall` Enable firewall (default for free users).
 + `firewall off` Disable firewall (default for subscribing users).
@@ -244,7 +249,15 @@ With this enabled it doing three things:
 + `loginctl enable-linger $USERNAME` to allow processes not get killed when SSH session terminates.
 + `dockerd-rootless-setuptool.sh install` to install docker daemon in user-scope.
 
-The `docker` CLI is always available regardless of this settings as this is provided from a system-wide install packages.
+The `docker` CLI is always available regardless of this settings as this is provided from a system-wide install packages. Read more on how to [deploy with docker](./deploy.mdx).
+
+### `neovim`
+
+Installs Neovim NvChad. This simply run `git clone https://github.com/NvChad/starter ~/.config/nvim`. After this installed, run `nvim` in terminal and type `:MasonInstallAll` to install missing neovim packages. Read more about [Neovim with NvChad](../features/editor.mdx#neovim-with-nvchad).
+
+### `dnf`
+
+Installs additional packages similar to OS-wide `dnf install`
 
 ### `php`
 
@@ -272,9 +285,9 @@ Install specific NodeJS version. Available options:
 + `node x.y.z`
 + `node off`
 
-By default it's Node 18.x provided from RHEL system packages. Note that the default system doesn't provide Corepack and supplemental package managers like yarn (berry version) or pnpm.
+By default it's Node 20.x provided from RHEL system packages. Note that the default system doesn't provide Corepack and supplemental package managers like yarn (berry version) or pnpm.
 
-This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH and corepack will enabled. This installation is powered by [`webi`](https://webinstall.dev/node). All given node version is downloaded in binary/compiled version from [the official registry](https://nodejs.org/download/release) to keep switching version fast. Read more on [how to deploy Node apps](../deployment/node.mdx).
+This also sets the `node` (and `npm`, `yarn`, etc.) to the right version in CLI/SSH and corepack will enabled. This installation is powered by [`nvm`](https://github.com/nvm-sh/nvm). All given node version is downloaded in binary/compiled version from [the official registry](https://nodejs.org/download/release) to keep switching version fast. Read more on [how to deploy Node apps](../deployment/node.mdx).
 
 
 ### `python`
@@ -290,7 +303,7 @@ Install specific Python version. Available options:
 
 By default it's Python 3.9 provided from RHEL system packages, equivalent with `python system`.
 
-This also sets the `python` (and `pip`) to the right version in CLI/SSH. This installation is powered by [pyenv](https://github.com/pyenv/pyenv).
+This also sets the `python` (and `pip`) to the right version in CLI/SSH. This installation is powered by [pyenv](https://github.com/pyenv/pyenv). If binary version is available then it will use it to make switching fast.
 
 If you have problem creating virtual envs please using `pyenv virtualenv` or just use version `python system` which also works and always isolated for current user.
 

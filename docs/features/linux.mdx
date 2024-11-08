@@ -4,33 +4,72 @@ title: Linux Utilities
 
 # Services
 
-This page is discussing about tools and services that we provide and some tips you can leverage.
+This page is discussing about the OS, tools and services that we provide inside SSH and some tips that you can leverage.
+
+This page assumes you already know on how to open SSH to access these commands. To learn about opening SSH, see our [SSH web editor](./editor.mdx#webssh).
+
+## Operating System
+
+The operating system is [Rocky Linux](https://rockylinux.org/), a derivation of RHEL.
+
+We choose Rocky Linux because the repos are active and more frequently updated (twice a year), unlike Ubuntu. To view current system information, run `neofetch`.
 
 ## Linux tools
 
 These popular system-wide linux tools are available out of the box:
 
-| | | | | |
-| :-- | :-- | :-- | :-- | :-- |
-| btop | cmake | composer | convert | curl |
-| dig | docker | gcc | g++ | git |
-| gpg2 | gzip | htop | iftop | jq |
-| lsof | make | mysql | nano | ncdu |
-| node | nslookup | nvim | openssl | perl |
-| phar | php | pipenv | psql | python |
-| rsync | ruby | sed | sendmail | ssh | 
-| ssh-keygen | sqlite3 | tar | vi | vim |
-| wget | whois | xz | yarn | zip |
+| | | | | | |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| aws | btop | bzip2 | clang | cmake | composer | 
+| curl | dig | docker | gcc | g++ | gem |
+| git | gpg2 | gzip | htop | iftop | jq |
+| lsof | make | mysql | nano | ncdu | neofetch |
+| npm | node | nslookup | nvim | openssl | perl |
+| phar | php | pip | pipenv | psql | python |
+| rsync | ruby | screen | sed | sendmail | ssh | 
+| ssh-keygen | sqlite3 | tar | tmux | vi | vim |
+| wget | whois | xz | yarn | zip | zstd |
 
 :::info
 
-Don't rely on their version as it's OS wide and can be changed anytime though system updates.
+Don't rely on their version as it's OS wide and changing anytime though system updates.
 
 :::
 
+## Install DNF Packages
+
+DNF is official RHEL-based package managers like Ubuntu APT. Even though you can't install packages via `dnf install`, you can install it to your home dir, which is in `~/usr`.
+
+To install additional packages, run via `dnf` feature in [the deployment system](../deployment/deploy.mdx). For example, here's a way to install ImageMagick:
+
+```yaml
+features:
+- dnf GraphicsMagick
+```
+
+This install `gm` to `~/usr/bin`. Check [lists of all `dnf` packages here](https://rockylinux.pkgs.org/). To only init the environment and install directly in SSH, just use `dnf` feature (to init bash environments), and then install it in SSH like this:
+
+```bash
+# See https://www.baeldung.com/linux/install-packages-no-root-privileges#2dnf
+pushd ~/tmp
+dnf download GraphicsMagick --resolve
+rpm2cpio *.rpm | cpio -idmD ~
+popd
+```
+
+Be aware that since this doesn't install to OS-wide `/usr`, so don't expect installing daemon services will work here. This command only suitable to install additional CLI tools.
+
+Run the same command to update the software later in time.
+
 ## Cron Job
 
-You can create cron jobs by running `crontab -e` from SSH. It will open vim to edit cronjob for your server.
+You can create cron jobs by running `crontab -e` from SSH. It will open *vim* to edit cronjob for your server. If you unfamiliar with vim try use nano `EDITOR=vi crontab -e`.
+
+The cronjob syntax is like this:
+
+```
+
+```
 
 Please note, the minimum interval for cronjob is once in every hour; lesser than that and the system will delete your cron entries automatically!
 
