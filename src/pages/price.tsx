@@ -38,7 +38,7 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>3 GiB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>4 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
                                         <FaGlobe /> <span><b>20 GiB</b> Data Network / month</span>

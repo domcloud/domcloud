@@ -10,7 +10,7 @@ export default function Home6() {
     return (
         <div className="container px-4 py-5 text-center">
             <h2 className="pb-2 border-bottom text--center">
-                Speed? We got you covered ⚡ 
+                Speed? We got you covered ⚡
             </h2>
             <div className="row g-4 pt-5 row-cols-1 row-cols-lg-2">
                 <div className="feature performance col">
@@ -31,7 +31,7 @@ export default function Home6() {
                     <div className="feature-icon badge">
                         <FaTime />
                     </div>
-                    <h2>HTTP 2.0 Multiplexing</h2>
+                    <h2>HTTP 3.0 + QUIC (Opt In)</h2>
                     <p>Reduces many TCP round trips compared to HTTP 1.1</p>
                 </div>
                 <div className="feature performance col">
@@ -39,7 +39,7 @@ export default function Home6() {
                         <FaStopwatch />
                     </div>
                     <h2>TLS 1.3 with 1-RTT Handshake</h2>
-                    <p>More secure and faster TLS version compared to 1.2</p>
+                    <p>Faster and Stronger compared to TLS 1.2</p>
                 </div>
                 <div className="feature performance col">
                     <div className="feature-icon badge">
@@ -55,7 +55,7 @@ export default function Home6() {
                         <FaAtlas />
                     </div>
                     <h2>Automatic GZip Compression Setup</h2>
-                    <p>Automatically compress large CSS, JS and SVG files.</p>
+                    <p>On-the-fly Gzip Compression for many static text files.</p>
                 </div>
             </div>
         </div>

@@ -314,6 +314,21 @@ x-forwarded-proto: https, http
 
 The `X-Forwarded-Proto` is equally important to determine whether you should send a secure or plain cookies. This mean your app must be configured to trust proxy headers. Some framework may already do it, some other need be set explicitly.
 
+## HTTP-3 and QUIC
+
+To enable HTTP/3, turn the HTTP version to 3 in deployment system
+
+```yaml
+features:
+- http 3
+```
+
+This enables many enhacements related to [HTTP 3](https://www.cloudflare.com/learning/performance/what-is-http3/) such as Multiplexing and QUIC protocol, resulting in much faster page performance especially on smartphones.
+
+You tipically won't see HTTP 3 used after changing this since browser caches `Alt-Svc` for about 24 hours. To see the change, you need to open Incognito mode. After few refreshes, you'll see it will use `h3`. You can also check if HTTP3 working by using third party tools like https://http3check.net/.
+
+What about HTTP/2? We do not support it due to how NGINX handles it ALPN algorithm. We can't individually either toggle it on or off at each site. Anyway, HTTP/2 suffers some major drawback that HTTP/1.1 can be seen faster in some cases.
+
 ## Language-Specific Configuration
 
 More information about configuring NGINX for specific languages can be found in the [Deployment](../deployment) section.
@@ -327,8 +342,7 @@ All other available options are specified in [Deployment System](./deploy.mdx) s
 Global configuration of NGINX cannot be changed. However, some of the configuration are set as optimally as possible. You can see more about the global configuration in [this file](../features/self-host.mdx#nginx). Some of the interesting configuration are:
 
 + Static files are cached with `7d` expiration time.
-+ Gzip are enabled for `css`, `js`, `svg` static files.
++ Gzip are enabled for many static files for size with >1000 bytes.
 + Maximum file upload size is set to 512MB.
-+ There's [rate limit](https://www.nginx.com/blog/rate-limiting-nginx/) of 2 requests per second with 500 burst request per IP address to mitigate DoS attack.
++ There's [rate limit](https://www.nginx.com/blog/rate-limiting-nginx/) of 100 requests per second with 6000 burst request per server name to mitigate DoS attack.
 + [TLSv1.2](https://en.wikipedia.org/wiki/Transport_Layer_Security#History_and_development) is the minimum HTTPS version to support, which works for browsers as old as Windows 7 era (with IE 11), older browsers such as in Windows XP era will not be able to open your website.
-
