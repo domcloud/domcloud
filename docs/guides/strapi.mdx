@@ -93,11 +93,12 @@ This build the admin interface. Unfortunately we don't know why we have to put `
 
 ## Using Databases
 
-With default configuration, the database is saved to `.tmp/data.db`. Not good since it can be deleted. Try moving it out to home dir.
+With default configuration, the database is saved to `.tmp/data.db`. Not good since it can be accidentally deleted. Try moving it out to home dir.
 
 ```yaml
 commands:
   - echo DATABASE_FILENAME=$HOME/data.db >> env
+  - restart
 ```
 
 To use PostgreSQL instead, use this:
@@ -109,6 +110,7 @@ commands:
  - echo DATABASE_CLIENT=postgres >> .env
  - echo DATABASE_URL=postgresql://$USERNAME:$PASSWORD@localhost/$DATABASE >> .env
  - yarn install pg
+  - restart
 ```
 
 Or to use MySQL instead, use this:
@@ -123,10 +125,11 @@ commands:
  - echo DATABASE_USERNAME=$USERNAME >> .env
  - echo DATABASE_PASSWORD=$PASSWORD >> .env
  - yarn install mysql2
+  - restart
 ```
 
 
-## Settings Need to be Changed
+## Fix Session Issues
 
 Go to `config/server.js` and set `proxy: true`.
 
@@ -138,4 +141,21 @@ module.exports = ({ env }) => ({
 ```
 
 This is because NGINX proxies your request to HTTP channel so strapi won't know if visitor visits HTTPS unless you tell Strapi to read `X-Forwarded-Proto` via this settings. If you don't enable this, you'll get `Cannot send secure cookie over unencrypted connection` when you set `NODE_ENV` to production.
+
+## Fix Infinite Redirection when Logging in to Panel
+
+You need to set `STRAPI_ADMIN_BACKEND_URL` then rebuild the frontend.
+
+```yaml
+commands:
+  - echo STRAPI_ADMIN_BACKEND_URL=https://${DOMAIN} >> .env
+  - yarn build
+```
+
+
+## Accessing Content Builder in the Server
+
+You need to [open VS Code](../features/editor.mdx#visual-studio-code-remote-link) and run `yarn dev`. 
+Before that, make sure to unset `STRAPI_ADMIN_BACKEND_URL` from `.env`. VS Code will set up a local port forwarding so `localhost:1337` can be opened directly in your browser. 
+
 

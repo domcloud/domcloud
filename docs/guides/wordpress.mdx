@@ -85,9 +85,12 @@ This installs [WP CLI](https://wp-cli.org/). WP CLI is a utility to perform main
 
 ## Using WP CLI
 
-[WP-CLI Documentation](https://developer.wordpress.org/cli/commands/).
+[WP-CLI Documentation](https://developer.wordpress.org/cli/commands/). 
+WP CLI is a convenient tool to manage WordPress without using the site. This can be accessed via SSH.
 
 ### Reinstall WordPress
+
+If you believe your WordPress core files is altered you need to reinstall it.
 
 ```bash
 wp core download --skip-content --force
@@ -97,7 +100,9 @@ Reference: https://developer.wordpress.org/cli/commands/core/download/
 
 ### Reset User Password
 
+If you forget your admin password you can reset it. First, find your username with `wp user list` then reset it with `wp user reset-password`.
 
 ```bash
-wp user reset-password admin --skip-email --show-password
+wp user list
+wp user reset-password '<username>' --skip-email --show-password
 ```
