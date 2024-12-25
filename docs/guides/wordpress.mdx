@@ -89,6 +89,15 @@ This installs [WP CLI](https://wp-cli.org/). WP CLI is a utility to perform main
 
 ### Reinstall WordPress
 
+```bash
+wp core download --skip-content --force
 ```
-wp core install --skip-content --force
+
+Reference: https://developer.wordpress.org/cli/commands/core/download/
+
+### Reset User Password
+
+
+```bash
+wp user reset-password admin --skip-email --show-password
 ```
