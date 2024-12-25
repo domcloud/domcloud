@@ -132,6 +132,35 @@ commands:
 
 This enables Laravel UI with Bootstrap and authentication.
 
+### Fix 404 NGINX Page when opening page other than index
+
+You may have default NGINX settings applied. You need to fix it to suit laravel need.
+
+```yaml
+root: public_html/public
+nginx:
+  fastcgi: "on"
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.php$is_args$args
+    - match: ~ \.[^\/]+(?<!\.php)$
+      try_files: $uri =404
+```
+
+
+### Fix 404 NGINX Page when opening dynamic media
+
+By default the laravel template uses [FastCGI Safe routing](../deployment/nginx.mdx#editing-nginx-config-interactively), which refuses PHP processing for any URLs with dot. To allow it, use FastCGI normal routing.
+
+```yaml
+root: public_html/public
+nginx:
+  fastcgi: "on"
+  locations:
+    - match: /
+      try_files: $uri $uri/ /index.php$is_args$args
+```
+
 ### Run Development Mode In Server
 
 You need to [open VS Code](../features/editor.mdx#visual-studio-code-remote-link) and run `php artisan serve` and `yarn dev`. 

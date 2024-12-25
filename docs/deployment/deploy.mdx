@@ -8,6 +8,8 @@ import ThemedImage from '@theme/ThemedImage';
 
 The deployment system is the main feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also can be used as a CI (Continous Integration) tool that perform some tasks inside your website.
 
+This page is meant for average technical user which already understand how SSH and linux commands works in a basic way. If not, please start from [Getting Started](../intro/getting-started.mdx) and [General NGINX Guide](./nginx.mdx) as we have a plenty of existing deployment templates. If you need to customize it, learn how SSH works first from other resources or ask someone to help you.
+
 The deployment system is accessible through `Setup` -> `Deploy` tab in the navigation once inside a website. 
 
 <ThemedImage
@@ -38,7 +40,7 @@ The script runner is in YAML format. Here's a simple overview:
 source: # Source URL to replace all files in "public_html"
 features: # List of features to be enabled or configured
 nginx:  # NGINX configuration to be set for current website
-commands: # List of terminal commands that will be executed inside "public_html"
+commands: # List of SSH commands that will be executed inside "public_html"
 ```
 
 Each of these keys are explained in details below.

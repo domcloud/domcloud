@@ -5,9 +5,9 @@ sidebar_position: 1
 
 import ThemedImage from '@theme/ThemedImage';
 
-Our server uses NGINX as Reverse Proxy for HTTP and HTTPS traffic and it is used to serve static files and proxy requests to your app. 
+Our server uses NGINX as Reverse Proxy for HTTP and HTTPS traffic and it is used to serve static files and proxy requests to your app. You need to configure NGINX to tell us how to run your website.
 
-Because it operates for all users on the server, only a limited set of features are configurable, the only way to configure it is via the [deployment system](./deploy.mdx#nginx). Fornatunely, we also give you a special page to make customizing it much easier.
+Because it operates in OS-wide config, only a limited set of NGINX features are configurable. The only way to configure it is via the [deployment system](./deploy.mdx#nginx). Fornatunely, we also give you a special page to make customizing it much easier.
 
 If you never heard NGINX before, you can read some of good resorces here: 
 + [Official documentation](https://nginx.org/en/docs/)
@@ -51,6 +51,7 @@ nginx:
 ```
 
 Editing the root path this way will keep the rest config untouched.
+
 :::
 
 ## Editing NGINX config interactively
