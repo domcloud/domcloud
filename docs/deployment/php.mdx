@@ -340,6 +340,7 @@ Restart=always
 [Install]
 WantedBy=default.target
 EOF
+
 cat << EOF > $HOME/etc/php-fpm.conf
 error_log = $HOME/logs/php-fpm.log 
 [wordpress_site]
