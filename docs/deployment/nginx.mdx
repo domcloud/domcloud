@@ -166,7 +166,7 @@ nginx:
 
 The `PORT` environment variable is set by Phusion Passenger. It is a random port that's chosen as a HTTP proxy between your app and the internet. 
 
-**Your app must listen to `PORT`** to be able receiving HTTP requests from NGINX.
+**Your app must listen to `PORT`** to be able receiving HTTP requests from NGINX. If your app PORT is hardcoded / only can be configured via file envar, refer to ...........
 
 You can tell the app to listen to this port with another envar name using `env` like this:
 
@@ -291,7 +291,22 @@ nginx:
 
 `proxfix` will call `node app.js` outside from NGINX tree. So, when NGINX restarts, your app will not killed, it retains it's memory. NGINX simply calls `proxfix` who then proxies NGINX requests to your already-running app.
 
-This has a downside that when you change proxfix parameters, it will not be restarted. you must call `restart` to really restart it.
+This has a downside that if you change NGINX properties, it will not be restarted -- You must call `restart` to really restart it.
+
+### Proxfix TARGET
+
+`proxfix` can help to overcome phusion limitation where if your app `PORT` can't be customized.
+
+```yaml
+nginx:
+  passenger:
+    enabled: on
+    app_start_command: proxfix node app.js
+    env_var_list:
+      - TARGET=127.x.x.x:2345
+```
+
+This will forward traffic to your backend at configured `TARGET`. 
 
 ### `X-Forwarded-For` and `X-Forwarded-Proto`
 

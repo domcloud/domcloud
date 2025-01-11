@@ -94,7 +94,7 @@ commands:
 
 You can configure your containers using `docker` commands in SSH. To reconfigure composer file cleanly just like running `services:` via deployment script without leaving SSH you can run:
 
-```
+```sh
 docker compose -f ~/public_html/docker-compose.yml down --remove-orphans
 docker compose -f ~/public_html/docker-compose.yml up --build --detach
 ```
@@ -108,13 +108,13 @@ nginx:
   root: public_html/public
   passenger:
     enabled: on
-    app_start_command: proxfix docker compose up --no-recreate -d
+    app_start_command: proxfix docker compose up --force-recreate -d
     env_var_list:
     - NOHUP=1
     - TARGET=127.X.X.X:8080
 ```
 
-Note `TARGET` envar value is where docker binds IP and port to. To know what is this value, refer to `proxy_pass` value before NGINX set.
+The proxfix process spawns and check if `TARGET=127.X.X.X:8080` still running. If it not, it will spawn `docker compose up --force-recreate -d` and forwarding requests to `TARGET` address, which is should be where docker listening to. To know the correct `TARGET` value, check to your `docker-compose.yml` file.
 
 ## Managing systemd daemon
 

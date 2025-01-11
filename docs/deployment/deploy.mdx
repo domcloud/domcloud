@@ -596,9 +596,11 @@ The compose file is read, then modified, then saved back to given filename or `d
 
 Aside with the usual SSH commands, it does have an additional envar to help with scripting:
 
-+ `$USERNAME`: The username.
++ `$USERNAME`: The server username.
 + `$DATABASE`: The database name (usually `${USERNAME}_db` but can be changed if new database name is supplied before).
-+ `$PASSWORD`: The user login password.
++ `$PASSWORD`: The user SSH login password.
++ `$MYPASSWD`: The user MySQL login password.
++ `$PGPASSWD`: The user PostgreSQL login password.
 + `$DOMAIN`: The domain name.
 
 These envars also will be set:
@@ -623,6 +625,22 @@ The time limit for overall script in single run is 15 minutes. If it's exceeded,
 
 ## `subdomains` and `subdomain`
 
-`subdomains` is used to run specific commands for a given `subdomain` name. It's an array of objects with `subdomain`, some of the `features` and `commands` keys.
+`subdomains` is used to run specific commands for a given `subdomain` name. It's an array of objects with `subdomain`, some of the `features` and `commands` keys. Here's specific example to do it:
 
-When `subdomains` are used, some definitions such as `source`, `nginx`, `features` and `commands` is adjusted to apply for a given subdomain name, including changing the root exection to `~/domains/<subdomain_name>/public_html` instead of `~/public_html`.
+```yaml
+subdomain: mysubapp
+features:
+- mysql # creates mysql db for mysubapp.<domain>
+```
+
+```yaml
+subdomains: 
+- subdomain: mysubapp
+  features:
+  - mysql # creates mysql db for mysubapp.<domain>
+- subdomain: mysubweb
+  features:
+  - mysql  # creates mysql db for mysubweb.<domain>
+```
+
+When `subdomains` are used, some definitions such as `source`, `nginx`, `features` and `commands` is adjusted to apply for a given subdomain name, including changing the root execution to `~/domains/<subdomain_name>/public_html` instead of `~/public_html`.
