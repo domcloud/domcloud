@@ -223,6 +223,10 @@ If you want to run `npm run dev` for live-in-production edits, use PORT > 32000 
 
 You have uncommitted changes in your server. To resolve it please do `git stash` then `git pull`. Take your stashed changes back with `git stash pop`.
 
+### `Error: Cannot find module '/home/****.js`
+
+Either you need to `npm install` if the missing module is in `node_modules` or `npm run build` otherwise.
+
 ### `Error: Cannot send secure cookie over unencrypted connection`
 
 You have to set `proxy: true` and `secure: true` [somewhere in your cookie settings](https://stackoverflow.com/a/60104026/3908409) so it trust `X-Forwarded-Proto` set from NGINX.
