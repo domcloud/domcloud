@@ -60,6 +60,7 @@ commands:
     content: |
       require './app'
       run App.new
+  - gem install rack # needed for config.ru
 ```
 
 ## Existing Ruby projects
@@ -110,3 +111,10 @@ You can see app log from Check -> Check Process Logs tab. Only startup problems 
 You might want to use a proper logging mechanism such as [the standard logging library](https://ruby-doc.org/stdlib-2.4.0/libdoc/logger/rdoc/Logger.html) then write it to a log file, or any other solution that suits you.
 
 NGINX errors and traffic logs can be examined via Webmin or Check -> Check Process Logs tab.
+
+## Troubleshooting
+
+### `cannot load such file -- rack (LoadError)`
+
+Please run `gem install rack`. It's absolutely needed if you want to run via `config.ru`.
+
