@@ -174,7 +174,7 @@ The **Info** section contains information about your website, such as some gener
 />
 </p>
 
-One particular useful tab that you'll use often is the **Manage** section. It contains links to edit your website and also credentials to access your website. Below is the screenshot of that page.
+One particular useful section that you'll use often is the **Manage** section. It contains links to edit your website and also credentials to access your website. Below is the screenshot of that page.
 
 
 <p className='text-center'>
@@ -191,7 +191,7 @@ One particular useful tab that you'll use often is the **Manage** section. It co
 />
 </p>
 
-Tools that you can use to manage your website are detailed in [Editor Documentation](../features/editor.mdx).
+Tools that you can use to manage your website here is explained more in [Editor Documentation](../features/editor.mdx).
 
 ## Deploy Tab
 
@@ -222,11 +222,11 @@ This feature alone is what makes DOM Cloud different from other hosting provider
 
 The top side buttons has a menu labeled **Add a deployment task** to submit a new deployment task. A new deployment task **is incremental &mdash; it won't rebuild your site from stratch**. To recreate again like a brand new site use the menu labeled **Start Over**.
 
-[**Read more about Deployments via Deploy Tab**](../deployment/)
+[**Read more about Deployments via Deploy Section**](../deployment/)
 
-## Check Connection Tab
+## Check Connection
 
-The connection tab let's you check if [DNS configured properly](../features/dns.mdx). **Always check here first if you attach custom domain**. 
+The connection section let's you check if [DNS configured properly](../features/dns.mdx). **Always check here if you use custom domain**. 
 It may give you helpful information to diagnose DNS problems and one-click button fixes if possible.
 
 <p className='text-center'>
@@ -242,6 +242,36 @@ It may give you helpful information to diagnose DNS problems and one-click butto
     loading="lazy"
 />
 </p>
+
+## Edit NGINX
+
+The NGINX section tells you how is your app is supposed to run. It comes with an interactive UI to help you configure it without
+extensive knowledge of how NGINX works.
+
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/nginx-interactive-b.png",
+        light: "/assets/ss/nginx-interactive-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
+
+Because you are [not given a sudo access](./security.mdx#no-sudo), you can only setup HTTP traffic via this section. You also 
+don't need to setup your own daemon &mdash; your app can be spawned via [`app_start_command`](../deployment/nginx.mdx#configure-nginx-for-generic-apps) for all websites powered by other than PHP. Once your app is started by NGINX, site traffic from port `80` and `443` will be forwarded to your app via FastCGI if site is PHP or `$PORT` envar if ran with `app_start_command`.
+
+[**Read more about how to configure it via NGINX Section**](../deployment/nginx.mdx#editing-nginx-config-interactively)
+
+:::tip
+
+For remote development like running `php artisan serve` or `yarn dev`, we recommend you to leverage [Visual Studio Code Remote Editing](../features/editor.mdx#visual-studio-code-remote-link) via SSH &mdash; or if you wish to open TCP port without going through NGINX, you can set your app [to listen at port >32000](../features/security.mdx#inbound-connection).
+
+:::
+
+
 
 ## More Reading
 
