@@ -267,7 +267,7 @@ don't need to setup your own daemon &mdash; your app can be spawned via [`app_st
 
 :::tip
 
-For remote development like running `php artisan serve` or `yarn dev`, we recommend you to leverage [Visual Studio Code Remote Editing](../features/editor.mdx#visual-studio-code-remote-link) via SSH &mdash; or if you wish to open TCP port without going through NGINX, you can set your app [to listen at port >32000](../features/security.mdx#inbound-connection).
+Remote development like running `php artisan serve` or `npm run dev` directly in the server won't work. You can use [Visual Studio Code Remote Editing](../features/editor.mdx#visual-studio-code-remote-link) via SSH to forward ports to your device &mdash; or if you wish to open TCP port anyway, you can set it [to listen at port >32000](../features/security.mdx#inbound-connection).
 
 :::
 

@@ -13,7 +13,7 @@ Using Docker requires [Kit Plan](../intro/compare-plans.mdx#kit-plan) or above.
 
 Docker in DOM Cloud is powered by [Docker rootless mode](https://docs.docker.com/engine/security/rootless/). Enabling docker features is implicitly allows running 24/7 (doesn't have to actually using docker). Because of how powerful and resouce consuming this is only available starting with `Kit` plan.
 
-> Docker is available only in [some servers](../intro/compare-server.mdx) as they offer the most computing resources we currently offer
+> Docker is available only in [some servers](../intro/compare-server.mdx) as they offer the most computing resources we currently offer.
 
 When this feature enabled, these things applied:
 
@@ -21,7 +21,9 @@ When this feature enabled, these things applied:
 + assign `/var/lib/systemd/linger` to allow backround processes not get killed when SSH session terminates.
 + registering `dockerd` as user-scoped systemd daemon by `dockerd-rootless-setuptool.sh` and set it to run at startup.
 
-Enable docker with putting this to [deployment script](./deploy.mdx):
+Because Docker run as daemon, the feature also allows any app under the site have a long running processes i.e. the [3 hour process limit](../features/security.mdx#dom-cloud-bridges-sudokill) is automatically appealed no matter if it actually uses Docker or not.
+
+Enable docker with writing this to the [deployment script](./deploy.mdx):
 
 ```yaml
 features:

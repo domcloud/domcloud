@@ -133,7 +133,7 @@ This section is covered more in the [PHP Deployment](../deployment/php.mdx#nginx
 
 ## Configure NGINX for Generic Apps
 
-NGINX by default only forwards connection and can't invoke the desired app to run. We use [Phusion Passenger](https://www.phusionpassenger.com/) so we can tell NGINX to invoke the app and forwards HTTP requests.
+NGINX by its own only forwards connection and can't invoke the desired app to run. That's why we use [Phusion Passenger](https://www.phusionpassenger.com/) so it can tell NGINX to invoke the app and forwards HTTP requests.
 
 The minimum configuration to enable NGINX for Generic apps is:
 
@@ -145,13 +145,13 @@ nginx:
     app_start_command: npm start
 ```
 
-Which is equivalent to running `npm start` in the `public_html` (parent of `root`) directory, with the `PORT` environment variable set to the port that NGINX is listening to.
+... which is equivalent of running `npm start` before HTTP traffic gets forwarded. The app started in the parent of root
+(`public_html/public`) by default to prevent leaking unintended files. The app started with `$PORT` envar set and this app is
+[expected to serve HTTP requests at `PORT`](#port-environment-variable).
 
-Passenger's `enabled: on` config is required to indicate that Passenger's module is activated for given host.
+Passenger's `enabled: on` config is required to indicate that Passenger's module is activated for given host. It's required.
 
-It is important that  `root` is set to the directory that contains the `public` directory. This is because NGINX will serve the `public` directory as the root directory for serving static files as you don't want to expose the entire app scripts to the public.
-
-If the app must be called from a subdirectory, you can use the `app_root` option to specify the directory that contains the app. For example, if the main app file is in `public_html/server/app.js`, you can set the `app_root` to `public_html/server`:
+If the app must be called from another directory, you can use the `app_root` option to specify the directory that contains the app. For example, if the main app file is in `public_html/server/app.js`, you can set the `app_root` to `public_html/server`:
 
 ```yaml
 nginx:
@@ -165,8 +165,6 @@ nginx:
 ### PORT environment variable
 
 The `PORT` environment variable is set by Phusion Passenger. It is a random port that's chosen as a HTTP proxy between your app and the internet. 
-
-**Your app must listen to `PORT`** to be able receiving HTTP requests from NGINX. If your app PORT is hardcoded / only can be configured via file envar, refer to ...........
 
 You can tell the app to listen to this port with another envar name using `env` like this:
 
@@ -196,21 +194,13 @@ nginx:
 
 :::warning
 
-All examples here assume your app listen to `127.0.0.1`, not `localhost` or `::1`.
+All examples here assume your app listen to IPv4 loopback (i.e. `127.0.0.1`), 
+not IPv6 loopback such as `localhost` or `::1`. Passenger expects your app listening to IPv4 loopback port.
 
-For example in rust, you might have to specify it like `env TARGET=127.0.0.1:$PORT cargo run`.
-
-:::
-
-
-:::info
-
-If you make a social media app bot, you'll realize that the only way to make it work is **via a webhook**.
-It's a limitation by design, as we're not allowing [any software running 24/7](../intro/security.mdx#no-background-services) and running a background polling. 
-
-Read it more for: [Telegram](https://core.telegram.org/bots/webhooks), [Discord](https://birdie0.github.io/discord-webhooks-guide/), [WhatsApp](https://developers.facebook.com/docs/whatsapp/webhooks/).
+For example in Rust, you might have to specify it like `env TARGET=127.0.0.1:$PORT cargo run`.
 
 :::
+
 
 ### Set Environment Variables
 
@@ -274,7 +264,7 @@ For some connection using Node CJS, Python WSGI or Ruby config.ru, you may need 
 
 ### Websocket
 
-Websocket should works out of the box since only one app is spawned per website configuration. However, **The websocket disconnects if NGINX reloads**. To retain websocket data after NGINX reload, use [Proxfix NOHUP](#proxfix-nohup)
+Websocket should works out of the box since only one app is spawned per website configuration. However, **The websocket disconnects if NGINX reloads** as of websocket sessions data lost in memory. To retain memory data after NGINX reload, use [Proxfix NOHUP](#proxfix-nohup)
 
 ### Proxfix NOHUP
 
@@ -291,7 +281,7 @@ nginx:
 
 `proxfix` will call `node app.js` outside from NGINX tree. So, when NGINX restarts, your app will not killed, it retains it's memory. NGINX simply calls `proxfix` who then proxies NGINX requests to your already-running app.
 
-This has a downside that if you change NGINX properties, it will not be restarted -- You must call `restart` to really restart it.
+This has a downside that if you change NGINX properties, it will not be restarted -- You must call `restart` to really restart it. You also still need to consider if your app to recover even if it has restarted abruptly.
 
 ### Proxfix TARGET
 
