@@ -159,7 +159,7 @@ location ~ \.php(/|$) {
 }
 ```
 
-This detects all URLs that ends with `.php` or contains `.php` in the path and forwards it to the PHP-FPM server. The path after `.php` is sent as additional path in [$_SERVER\['PATH_INFO'\]](https://www.php.net/manual/en/reserved.variables.server.php#:~:text=the%20authentication%20type.-,%27PATH_INFO%27,-Contains%20any%20client).
+This detects all URLs that ends with `.php` or contains `.php/` in the path and forwards it to the PHP-FPM server. The path after `.php` is sent as additional path in [$_SERVER\['PATH_INFO'\]](https://www.php.net/manual/en/reserved.variables.server.php#:~:text=the%20authentication%20type.-,%27PATH_INFO%27,-Contains%20any%20client).
 
 ### Multiple Directory Setup
 
