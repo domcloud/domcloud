@@ -1,5 +1,67 @@
+---
+sidebar_position: 8
+---
+
 # Self Hosting
 
-Besides cloud servers, We offer you a way to self-host a server. This means the data is to be put to your machine to host a website online. Self hosted feature is completely free.
+Besides cloud servers, We offer you a way to self-host a server. This means the data is to be put to your machine to host a website online. Self hosted feature is completely free and it's a great option for:
 
-This documentation is WIP. You can go to https://github.com/domcloud/container for getting started.
+- Devops, who behind a corporate rule that mandates all data is self hosted to an on-premise server
+- Developers, who finds our cloud services is not speedy enough or like to rent VPS elsewhere
+- Hobbyst, who like a taste being sysadmins on their own gearbox or even raspis.
+
+**Go to https://github.com/domcloud/container for getting started**. But if you still don't get the idea, read on.
+
+First, self-hosted mean you rent some VPS elsewhere. We don't sell VPS, heck we don't even own one &mdash; we just rent VPS from mix of multiple cloud provides.
+
+"If I rent my own VPS, why even I still need DOM Cloud?" Great Question.
+
+## DOM Cloud vs Coolify
+
+You must already know [Coolify](https://coolify.io/) &mdash; it's everywhere. It's a cool piece of software to boot up any 5$ VPS to any kind of site with a single click. 
+
+If you think of it, Using DOM Cloud with self hosted does exactly the same thing as running Coolify. And both is offered free. However in the technical side it's very different.
+
+First, DOM Cloud Portal (https://my.domcloud.co) is still online even if your server down. If your sysadmin doing something wrong, you always gonna notice it in deployments log &mdash; because the other ways to access it like using SSH and databases are never given in "root" mode.
+
+Second, DOM Cloud servers is controlled using [DOM Cloud Bridge](https://github.com/domcloud/bridge) which is a headless REST API. The REST API is used by DOM Cloud Portal to perform deployments. Unlike Coolify, we do not use Docker, and do not run your software 24/7. This means our system requirement is waaay lower &mdash; even DOM Cloud Portal (https://my.domcloud.co) runs fine with 1GB RAM of VPS right now.
+
+Third, you get so many admin features working out of the box, things like virtualmin, database, online tools, etc.
+
+Some exception is this:
+- **Backup**. Backup requires S3 key, and we don't give our S3 keys to self hosted servers for security reason. You can add your own S3 key as Backup account in virtualmin backups with `domcloud-backups` as the bucket name.
+- **DNS**. DNS that propagates to *nsp.domcloud.co* / *nss.domcloud.co** only works inside our cloud servers for security reason. You must setup your own DNS servers. This also can be configured using Webmin.
+- **Free domains**. Free domain like `.dom.my.id` and `.domcloud.dev` only allowed with cloud servers for security reason. You must use your own domains.
+
+## DOM Cloud Server
+
+DOM Cloud server is described in our GitHub repo: https://github.com/domcloud/container. You can run use disk images (QCOW2 or VMDK) if you intend to run in inside VPS / Virtualization.
+
+To install from ISO, use [Rocky Linux Minimal ISO](https://rockylinux.org/download). And run this:
+
+```
+curl -sSL https://github.com/domcloud/container/raw/refs/heads/master/install.sh | bash
+curl -sSL https://github.com/domcloud/container/raw/refs/heads/master/preset.sh | bash
+```
+
+If you can't wait for installation to complete, use `tmux` and rerun the scripts above. The script installs:
+
+- [Virtualmin 7](https://www.virtualmin.com/)
+- DOM Cloud's [Bridge](https://github.com/domcloud/bridge) and [Proxfix](https://github.com/domcloud/proxy-fix)
+- [NGINX](https://nginx.org/) and [Passenger](https://www.phusionpassenger.com/) &mdash; Building from source described in [NGINX Builder](https://github.com/domcloud/nginx-builder)
+- [MariaDB](https://mariadb.org/) installing from Rocky repo
+- [PostgreSQL](https://www.postgresql.org/) installing from [its YUM repo](https://yum.postgresql.org/)
+- [Valkey](https://valkey.io/) installing from EPEL
+- Multiple PHP versions installing from [REMI repo](https://blog.remirepo.net/) and Composer
+- NodeJS, Ruby, Python installing from Rocky repo including NPM, Yarn, Pip and Pipenv
+- [Pathman](https://github.com/therootcompany/pathman), Neofetch and Docker for rootless mode
+- Monitoring services and tools like Htop, Iftop, Btop, Ncdu, etc.
+- Networking tools like Aws, Curl, Wget, Iptables, Ipset, Ncurses, Socat, Whois, etc.
+- File Editors like Git, Vim, Nano, Neovim, Lazygit, Ripgrep, Diff, Patch
+- Many other common unix tools, C compilers, and devel libraries
+
+Occasionally you need to update the OS every 6 months.
+
+## What If I don't know how to set it up
+
+You can [ask me](https://t.me/WIIIN0DE) to set it up for you with **upfront fee of 100 USD per server**. This does not include future updates and the VPS itself. That maybe **another fee of 50 USD per server**  anytime you want me to update your OS (it should be easy to do it yourself though).
