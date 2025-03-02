@@ -68,7 +68,7 @@ services:
 
 DOM Cloud is a shared hosting environment. To avoid clashing with other users your web instance will be assigned one IP in loopback port `127.0.0.0/8` randomly. The IP will be persisted and `proxy_pass` will be configured automatically. 
 
-```yaml title="nginx.conf"
+```conf title="nginx.conf"
 server {
     location / {
         proxy_pass http://127.151.60.204:8080;
@@ -118,12 +118,21 @@ nginx:
 
 The proxfix process spawns and check if `TARGET=127.X.X.X:8080` still running. If it not, it will spawn `docker compose up --force-recreate -d` and forwarding requests to `TARGET` address, which is should be where docker listening to. To know the correct `TARGET` value, check to your `docker-compose.yml` file.
 
+## Playing Docker with SSH
+
+You can also play with Docker directly using SSH with `docker run -ti --rm ubuntu /bin/bash`. It will create a root Ubuntu shell that you can play with. To make your changes persistent, please consider writing a `Dockerfile` or explore existing container images with Docker Hub.
+
 ## Managing systemd daemon
 
 Your docker instance is registered as user-scoped systemd service. You can call these systemd commands to diagnose docker problems
 
 + `systemctl status docker --user`
 + `systemctl start docker --user`
+
+You can also install or uninstall docker engine via SSH by running below.
+
++ `dockerd-rootless-setuptool.sh install`
++ `dockerd-rootless-setuptool.sh uninstall`
 
 ## Troubleshooting
 
@@ -135,7 +144,10 @@ If it running normally, please check if NGINX and docker compose running the sam
 
 ### `exec format error` in docker logs
 
-This means the container is not available in system architecture. Remember, our servers is `arm64` (ARM) not `amd64` (Intel), not every image containers have this platform arch. Check it with Docker Hub.
+This means the container is not available in system architecture. Our servers can be an `arm64` (ARM) not `amd64` (Intel), not every image containers have this platform arch. Check it with Docker Hub.
 
 If you confirm that the image containers is `amd64` only, please move the server to x64 variant, that's SGA/WDC server -- or build your own image.
 
+### Network Not Work
+
+Diagnose network by running `dockerd-rootless-setuptool.sh nsenter`. This will put you into a shell environment inside RootlessKit namespace.
