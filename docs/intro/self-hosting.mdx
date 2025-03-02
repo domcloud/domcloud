@@ -14,7 +14,7 @@ Besides cloud servers, We offer you a way to self-host a server. This means the 
 
 First, self-hosted mean you rent some VPS elsewhere. We don't sell VPS, heck we don't even own one &mdash; we just rent VPS from mix of multiple cloud provides.
 
-"If I rent my own VPS, why even I still need DOM Cloud?" Great Question.
+"If I rent my own VPS, why even I still need DOM Cloud?" Great question.
 
 ## DOM Cloud vs Coolify
 
@@ -35,33 +35,73 @@ Some exception is this:
 
 ## DOM Cloud Server
 
-DOM Cloud server is described in our GitHub repo: https://github.com/domcloud/container. You can run use disk images (QCOW2 or VMDK) if you intend to run in inside VPS / Virtualization.
+DOM Cloud server installation is described in our GitHub repo: https://github.com/domcloud/container. We support installation either from latest [Rocky Linux 9](https://rockylinux.org/download) or [Ubuntu 24 LTS Server](https://ubuntu.com/download/server). The server requirement is pretty small, you may run it on systems as low as 2GB RAM and 30 GB storage.
 
-To install from ISO, use [Rocky Linux Minimal ISO](https://rockylinux.org/download). And run this:
+After your VPS or Server running, run this as root (`sudo -i`):
 
-```
-curl -sSL https://github.com/domcloud/container/raw/refs/heads/master/install.sh | bash
+```bash
+if [ -f /etc/lsb-release ]; then OS=ubuntu; elif [ -f /etc/redhat-release ]; then OS=rocky; else OS=unknown; fi
+curl -sSL https://github.com/domcloud/container/raw/refs/heads/master/install-$OS.sh | bash
 curl -sSL https://github.com/domcloud/container/raw/refs/heads/master/preset.sh | bash
 ```
 
-If you can't wait for installation to complete, use `tmux` and rerun the scripts above. The script installs:
+If you can't wait for installation to complete, use `tmux` and rerun the scripts above. 
+
+After it success, `reboot` and run this to reset passwords:
+
+```bash
+curl -sSL https://github.com/domcloud/container/raw/refs/heads/master/genpass.sh | bash
+# Take note webmin password generated from this script
+```
+
+The script installs:
 
 - [Virtualmin 7](https://www.virtualmin.com/)
 - DOM Cloud's [Bridge](https://github.com/domcloud/bridge) and [Proxfix](https://github.com/domcloud/proxy-fix)
-- [NGINX](https://nginx.org/) and [Passenger](https://www.phusionpassenger.com/) &mdash; Building from source described in [NGINX Builder](https://github.com/domcloud/nginx-builder)
-- [MariaDB](https://mariadb.org/) installing from Rocky repo
-- [PostgreSQL](https://www.postgresql.org/) installing from [its YUM repo](https://yum.postgresql.org/)
-- [Valkey](https://valkey.io/) installing from EPEL
-- Multiple PHP versions installing from [REMI repo](https://blog.remirepo.net/) and Composer
+- [NGINX](https://nginx.org/) and [Passenger](https://www.phusionpassenger.com/) &mdash; Custom built described in [NGINX Builder](https://github.com/domcloud/nginx-builder)
+- [MariaDB](https://mariadb.org/), [PostgreSQL](https://www.postgresql.org/) and [Valkey](https://valkey.io/)
+- Multiple PHP versions installing from [REMI repo](https://blog.remirepo.net/) or and Composer
 - NodeJS, Ruby, Python installing from Rocky repo including NPM, Yarn, Pip and Pipenv
 - [Pathman](https://github.com/therootcompany/pathman), Neofetch and Docker for rootless mode
 - Monitoring services and tools like Htop, Iftop, Btop, Ncdu, etc.
-- Networking tools like Aws, Curl, Wget, Iptables, Ipset, Ncurses, Socat, Whois, etc.
+- Networking tools like Aws, Curl, Wget, Nftables, Ncurses, Socat, Whois, etc.
 - File Editors like Git, Vim, Nano, Neovim, Lazygit, Ripgrep, Diff, Patch
 - Many other common unix tools, C compilers, and devel libraries
 
-Occasionally you need to update the OS every 6 months.
+## Assign to a domain
 
-## What If I don't know how to set it up
+You need to assign the bridge API to a domain before it can be connected. Please assign A/AAAA of your domain to IP address of your server. If you use Cloudflare, please turn off the proxy. 
 
-You can [ask me](https://t.me/WIIIN0DE) to set it up for you with **upfront fee of 100 USD per server**. This does not include future updates and the VPS itself. That maybe **another fee of 50 USD per server**  anytime you want me to update your OS (it should be easy to do it yourself though).
+Let's say you've brough a `mysite.com`, we'll assign bridge API to `bridge.mysite.com` by first opening the Virtualmin API at `https://bridge.mysite.com:2443` (note the HTTPS part!). Ignore the certificate warning for now.
+
+If you forget the webmin root password, please run this in root SSH:
+
++ `/usr/share/webmin/changepass.pl /etc/webmin root YourNewPassword` for Ubuntu (change YourNewPassword)
++ `/usr/libexec/webmin/changepass.pl /etc/webmin root YourNewPassword` for Rocky (change YourNewPassword)
+
+Then go to the site > Manage Virtual Server > Change Domain Name.
+
+![](/assets/ss/self-rename-domain.png)
+
+After that, go to Setup SSL Certificate to get SSL Valid
+
+![](/assets/ss/self-sign-ssl.png)
+
+:::tip
+
+If you get error saying `The ACME server believes bridge@ubuntu.local is an invalid email address. Please ensure it is a valid email and attempt registration again`, please fix your hostname and restart webmin in SSH and retry.
+
+```sh
+hostnamectl set-hostname bridge.mysite.com
+systemctl restart webmin
+```
+
+:::
+
+To apply the SSL to webmin, go to Tab Current Certificate and click `Copy SSL Certificate to Services` and `Set as Default Services Certificate`.
+
+## What If I need to ask?
+
+You can [ask me](https://t.me/WIIIN0DE) if you found problems within installation scripts.
+
+If you want to ask me to set it up for you, that will comes with **upfront fee of 100 USD per server**. It includes any software that you want to install.
