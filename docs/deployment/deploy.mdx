@@ -109,10 +109,11 @@ Do Recursive clone of submodules? Default to `false`.
 Enable, configure or disable one or more features in the website. Common examples:
 
 ```yaml
-# Enable MariaDB and PostgreSQL
+# Enable MariaDB and PostgreSQL and Valkey
 features:
 - mysql
 - postgresql
+- valkey
 ```
 
 ```yaml
@@ -135,7 +136,7 @@ This configures all features available for the host in DOM Cloud.
 
 ### `mysql`
 
-Configure MariaDB (MySQL) Database Server.
+Configure MariaDB (MySQL-like) Database Server.
 
 + `mysql` or `mysql on` Enable MariaDB and create default DB.
 + `mysql create <dbname>` Create a new database with `<username>_<dbname>`.
@@ -150,6 +151,15 @@ Configure PostgreSQL Database Server.
 + `postgresql create <dbname>` Create a new database with `<username>_<dbname>`.
 + `postgresql drop <dbname>` Drop a database with `<username>_<dbname>`.
 + `postgresql off`. Disables `postgresql` feature. **Caution: Also drop all DB permanently**.
+
+### `redis`
+
+Configure Valkey (Redis-like) Database Server.
+
++ `redis` or `redis on` Enable Valkey and create default DB.
++ `redis create <dbname>` Create a new database with `<username>_<dbname>`.
++ `redis drop <dbname>` Drop a database with `<username>_<dbname>`.
++ `redis off`. Disables `redis` feature. **Caution: Also drop all DB permanently**.
 
 ### `dns`
 

@@ -18,26 +18,41 @@ features:
 - postgresql
 ```
 
-See the section in [MariaDB](../deployment/deploy.mdx#mysql) or [PostgreSQL](../deployment/deploy.mdx#postgresql) for more information.
+```yml
+features:
+- redis
+```
 
-To view and edit the database using online tools, use *PhpMyAdmin* or *PhpPgAdmin*. Both available from manage tab.
+See the section in [MariaDB](../deployment/deploy.mdx#mysql) or [PostgreSQL](../deployment/deploy.mdx#postgresql)  or [Valkey](../deployment/deploy.mdx#valkey) for more information.
+
+To view and edit the database using online tools, use *PhpMyAdmin*, *PhpPgAdmin* or *PhpRdAdmin*. All of them are available from [the manage tab](./editor.mdx).
 
 :::info
 
 You can't create or drop database from PhpMyAdmin, PhpPgAdmin or any external database client. You have to do that from Webmin UI or [deployment script](../deployment/deploy.mdx#features).
 
+Our valkey instance is shared across the server with ACL and managed outside webmin interface. Read more below.
+
 :::
 
 ### Using the Database
 
-After activating the database, you can provide the database credentials to your app:
+After activating the database, you can provide the database credentials to your app. This is one for RDBMS (MariaDB/PostgreSQL):
 
 + Hostname: `localhost` (because the database always live in the same server)
++ Port: `3306` for MariaDB, `5432` for PostgreSQL
 + Username: Same username with server (see from [manage tab](../intro/getting-started#managing-website))
 + Password: Same password with server (see from [manage tab](../intro/getting-started#managing-website))
 + Database name: Usually username with suffix + `_db` unless you've created another DB
   - For example with username `hello-world` then database name will be `hello_world_db`
   - Check the correct database name from PhpMyAdmin or PhpPgAdmin
+
+While this one is for connecting to Valkey:
+
++ Hostname: `localhost` (because the database always live in the same server)
++ Port: `6379` for Valkey or `6479` for the [ACL Proxy](#acl-proxy-for-valkey)
++ Username: The ACL username coming from the database tab.
++ Password: The ACL password coming from the database tab.
 
 :::caution
 
@@ -49,15 +64,38 @@ Username and password is always different from the default. Don't assume `root` 
 
 Remote Access is used to manage databases using your local software -- such as DBeaver, HeidiSQL or TablePlus.
 
-PostgreSQL permits remote access by default.
-
-MySQL is more grained and doesn't allow remote access by default. You need to change it by go to the Webmin -> Databases -> Remote access then add `%.%.%.%` and `%:%:%` (next line above `localhost`) to allowed hosts list.
+PostgreSQL and MariaDB permits remote access by default, while Valkey don't.
 
 :::info
 
 When connecting with Remote Access, the hostname is your website domain or the server's IP address, not `localhost`.
 
 :::
+
+### Valkey ACL Rules
+
+The Valkey instance set up at port `6379` is shared across the server. To protect user data, we set up an ACL authentication to each "database" instance. Given a "database" name is `user_db`, the [ACL rules](https://valkey.io/topics/acl/#acl-rules) applied are:
+
+```
+user_db on >${password} ~user_db:* &user_db:* sanitize-payload
+  -@all +@connection +@read +@write +@scripting +@keyspace -KEYS
+  +@transaction +@geo +@hash +@set +@sortedset +@bitmap +@pubsub
+  +config|get +info +acl|whoami +acl|cat +acl|genpass
+```
+
+Most software or framework should work with this ACL rules, however not application would support key prefixing as implied in `~user_db:* &user_db:*`. To avoid code changes we recommend you to use port `6479` which is another daemon that can aid with automatic key prefixing to the master valkey instance.
+
+### ACL Proxy for Valkey
+
+DOM Cloud set up an [ACL proxy for valkey](https://github.com/domcloud/rdproxy) that listening on port `6479`. It's mirrorring connections to `6379` with these enhancements:
+
++ Automatically prefixes keys or read/write operations such as `SCAN`, `GET`, `SET` and so much more, to allow access any keys without having to prefix it with `user_db:` (where `user_db` is the ACL username).
++ Automatically removes prefix of `user_db:` with results from `SCAN` so the clients doesn't need to adjust with automatic key prefixing.
++ Support old `requirepass` login model with `username:::password` syntax in the password. This is meant for frameworks that doesn't handle Redis 6.0 ACL yet. 
+
+Note that the proxy is experimental. Some features (like `HELLO 3`) won't work. See [the repository](https://github.com/domcloud/rdproxy) for details.
+
+To connect to this proxy with `redis-cli`, use `redis-cli -u username_db:::password -p 6479`. PhpRdAdmin is also configured to work on `6479` rather than directly with the master valkey instance at `6379`.
 
 ### Timestamp
 
@@ -109,8 +147,8 @@ These optional PostgreSQL extensions can be activated using `CREATE EXTENSION` c
 
 ### Other Database System
 
-Only three database system is supported: `MariaDB`, `PostgreSQL`, `SQLite`. For caching we recommend you to leverage filesystem.
+Only four database system is supported: `MariaDB`, `PostgreSQL`, `Valkey`, `SQLite`. For caching we recommend you to leverage Valkey or the filesystem.
 
-You can also use third party databases that's also cheap (or even free) such as [Redis Labs](https://redis.com/try-free/), [Firebase Firestore](https://firebase.google.com/products/firestore) or [MongoDB Atlas](https://www.mongodb.com/products/platform/cloud), just make sure the cluster is close enough within our server. 
+You can also use third party databases that's also cheap (or even free) such as [Firebase Firestore](https://firebase.google.com/products/firestore) or [MongoDB Atlas](https://www.mongodb.com/products/platform/cloud), just make sure the cluster is close enough within our server. 
 
 If you wish to spin up a custom database server, you might be better deploy your website [using docker](../deployment/docker.mdx).
