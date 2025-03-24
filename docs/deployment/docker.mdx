@@ -56,27 +56,15 @@ services:
     image: cernoel/hello-world:main
     restart: always
     ports:
-      - target: 8000
-        host_ip: 127.151.60.204
-        protocol: tcp
-        published: "8080"
+      - 12345:8000/tcp
 ```
 
-`docker compose down` and `docker compose up` will be automatically everytime a deployment script is called with `services:` prop. Note that you **cannot** declare `volumes:` and `networks:` using deployment script. See [With Existing Docker Compose](#with-existing-docker-compose) for solution. 
+The host port has been changed to ensure it's only assigned to your website. The port range chosen is between `10000` to `30000`, which is a port range that blocked from outside. If you already set the port range `>32000` the port chosen will be left unchanged to allow you expose that to the greater internet.
 
-### *What? why `host_ip` is `127.x.x.x`?* 
+When calling `services` in deployment system, `docker compose down` and `docker compose up` will be automatically everytime a deployment script is called with `services:` prop. Note that you **cannot** declare `volumes:` and `networks:` using deployment script. See [With Existing Docker Compose](#with-existing-docker-compose) for solution. 
 
-DOM Cloud is a shared hosting environment. To avoid clashing with other users your web instance will be assigned one IP in loopback port `127.0.0.0/8` randomly. The IP will be persisted and `proxy_pass` will be configured automatically. 
 
-```conf title="nginx.conf"
-server {
-    location / {
-        proxy_pass http://127.151.60.204:8080;
-    }
-}
-```
-
-How does it know if port `8080` is the web gateway? Because we designed it that way. **You can only put one `ports` entry in the whole compose script** and it's only for your web gateway. **Do not expose any other port even if it's for easy database access**. Only access your internal container data via `docker exec`. 
+How does it know if port `8080` is the web gateway? Because we're guessing. To enforce which port forwarded by NGINX, use 
 
 ### With Existing Docker Compose
 
@@ -113,10 +101,10 @@ nginx:
     app_start_command: proxfix docker compose up --force-recreate -d
     env_var_list:
     - NOHUP=1
-    - TARGET=127.X.X.X:8080
+    - TARGET=127.0.0.0:8080
 ```
 
-The proxfix process spawns and check if `TARGET=127.X.X.X:8080` still running. If it not, it will spawn `docker compose up --force-recreate -d` and forwarding requests to `TARGET` address, which is should be where docker listening to. To know the correct `TARGET` value, check to your `docker-compose.yml` file.
+The proxfix process spawns and check if `TARGET=127.0.0.0:8080` still running. If it not, it will spawn `docker compose up --force-recreate -d` and forwarding requests to `TARGET` address, which is should be where docker listening to. To know the correct `TARGET` value, check to your `docker-compose.yml` file.
 
 ## Playing Docker with SSH
 
@@ -148,6 +136,22 @@ This means the container is not available in system architecture. Our servers ca
 
 If you confirm that the image containers is `amd64` only, please move the server to x64 variant, that's SGA/WDC server -- or build your own image.
 
-### Network Not Work
+### Network Slow / Not Working
+
+We use [`pasta` driver](https://passt.top) for rootless networking which is fast for incoming connections to the container but not for outgoing networks. If you experience frequent network errors during docker build please add `--network=host` to the docker build args or below for compose file:
+
+```yml
+services:
+  app:
+    build:
+      context: .
+      network: host
+```
 
 Diagnose network by running `dockerd-rootless-setuptool.sh nsenter`. This will put you into a shell environment inside RootlessKit namespace.
+
+### Can't Choose Host IP to forward
+
+If you set port forwarding such as `127.1.2.3:8080:80` it won't work since the `pasta` driver listens to `0.0.0.0:<port>` on the host system. It listen to all addresses so it doesn't require NAT / packet translation. Basically that request would go from `127.1.2.3:8080` in the host then `127.1.2.3:80` in the container.
+
+If you have a burning desire to do IP forwarding, you can switch to docker's default `slirp4netns` by removing envars in `systemctl edit docker --user`. Please consult to [Official docker documentation](https://docs.docker.com/engine/security/rootless/#network-is-slow) for more information
