@@ -110,6 +110,12 @@ The proxfix process spawns and check if `TARGET=127.0.0.0:8080` still running. I
 
 You can also play with Docker directly using SSH with `docker run -ti --rm ubuntu /bin/bash`. It will create a root Ubuntu shell that you can play with. To make your changes persistent, please consider writing a `Dockerfile` or explore existing container images with Docker Hub.
 
+## Managing containers
+
+All docker commands is available as usual. To make managing a bit easier, DOM Cloud also installed [lazydocker](https://github.com/jesseduffield/lazydocker), a TUI for managing docker available via SSH.
+
+![lazydocker](https://www.howtogeek.com/wp-content/uploads/2022/09/2-5.png?trim=1,1&bg-color=000&pad=1,1)
+
 ## Managing systemd daemon
 
 Your docker instance is registered as user-scoped systemd service. You can call these systemd commands to diagnose docker problems
