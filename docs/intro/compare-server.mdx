@@ -7,7 +7,7 @@ DOM Cloud has many servers and they are different spec depends on capacity. All 
 
 | Server Code (City, Country)  | vCPU | RAM | Disk | Backend | Has Docker |
 |------------------------------|------|-----|------|---------|------------|
-| SGA (Singapore)              | 1    | 2   | NVME | x64     | No         |
+| SGA (Singapore)              | 2    | 2   | NVME | x64     | Yes        |
 | WDC (Washington DC, US)      | 4    | 8   | NVME | x64     | Yes        |
 | SGP (Singapore)              | 3    | 16  | NVME | arm64   | Yes        |
 | MNZ (Manassas, Virginia, US) | 10   | 16  | NVME | arm64   | Yes        |
@@ -30,4 +30,8 @@ and depedencies since binaries would be different.
 
 ## Docker Availability
 
-Docker is generally not available on servers with one vCPU. 
+Docker is generally not available on servers with one vCPU.
+
+## Database and Cache Availability
+
+All servers support MariaDB, PostgreSQL, Valkey and Opcache. The valkey `maxmemory` and opcache `opcache.memory_consumption` is capped at 256MB or 15% of memory, whichever is higher.

@@ -335,6 +335,19 @@ You tipically won't see HTTP 3 used after changing this since browser caches `Al
 
 What about HTTP/2? We do not support it due to how NGINX handles it ALPN algorithm. We can't individually either toggle it on or off at each site. Anyway, HTTP/2 suffers some major drawback that HTTP/1.1 can be seen faster in some cases.
 
+## Static File Caching
+
+Static file caching is enabled by default for media files and CSS + JS files.  This is done by sending `Expires` header to the browser.
+
+The default settings is 7 days. To disable it, set `expires` to `off`:
+
+```yaml
+nginx:
+  expires: off
+```
+
+Note that this don't disables E-Tag header -- so when files unchanged, it still send `304 Not Modified`. 
+
 ## Language-Specific Configuration
 
 More information about configuring NGINX for specific languages can be found in the [Deployment](../deployment) section.
@@ -345,10 +358,10 @@ All other available options are specified in [Deployment System](./deploy.mdx) s
 
 ## Global Configuration
 
-Global configuration of NGINX cannot be changed. However, some of the configuration are set as optimally as possible. You can see more about the global configuration in [this file](../features/self-host.mdx#nginx). Some of the interesting configuration are:
+Global configuration of NGINX cannot be changed. However, some of the configuration are set as optimally as possible. You can see more about the global configuration in [the file](https://github.com/domcloud/container/blob/master/preset.sh#L603-L612). Some of the interesting configuration are:
 
-+ Static files are cached with `7d` expiration time.
++ Static files are cached with `7d` expiration time [by default](#static-file-caching).
 + Gzip are enabled for many static files for size with >1000 bytes.
-+ Maximum file upload size is set to 512MB.
++ Maximum file upload size is set to 4GB.
 + There's [rate limit](https://www.nginx.com/blog/rate-limiting-nginx/) of 100 requests per second with 6000 burst request per server name to mitigate DoS attack.
 + [TLSv1.2](https://en.wikipedia.org/wiki/Transport_Layer_Security#History_and_development) is the minimum HTTPS version to support, which works for browsers as old as Windows 7 era (with IE 11), older browsers such as in Windows XP era will not be able to open your website.

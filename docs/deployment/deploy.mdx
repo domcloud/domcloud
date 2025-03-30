@@ -330,11 +330,12 @@ Install specific Ruby version. Available options:
 + `ruby` or `ruby latest`
 + `ruby lts` or `ruby stable`
 + `ruby x.y.z`
++ `ruby trufferuby`
 + `ruby off`
 
 By default it's Ruby 3.0 provided from RHEL system packages. All instalations with ruby gems has `--no-document` implied from global settings to keep installation minimal and fast. 
 
-This installation is powered by [rvm](https://rvm.io). It will try to download compiled version from [RVM builds](https://rvm_io.global.ssl.fastly.net/binaries/centos/9/x86_64/) if available to keep switching version fast. Read more on [how to deploy Ruby apps](../deployment/ruby.mdx).
+This installation is powered by [rvm](https://rvm.io). It will try to download compiled version from [custom RVM builds](https://github.com/ruby/ruby-builder) if available to keep switching version fast. Read more on [how to deploy Ruby apps](../deployment/ruby.mdx).
 
 ### `deno`
 

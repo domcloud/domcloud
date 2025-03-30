@@ -105,7 +105,17 @@ display_errors = On
 display_startup_errors = On
 ```
 
-If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` to enable debug mode.  
+If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` to enable debug mode.
+
+## PHP Opcache Settings
+
+The default opcache settings is set to 60 seconds. So if you've changed your PHP file, it won't be updated immediately until next 60 seconds. To disable PHP change, set `opcache.validate_freq` to 0 in user INI, like this:
+
+```ini title="~/public_html/.user.ini"
+opcache.validate_freq = 0
+```
+
+Note that this settings is different with static file caching.
 
 ## Restarting PHP
 
@@ -304,6 +314,8 @@ A 500 error with empty body means your PHP apps has a critical error but won't e
 
 You need to identify the exact reason by reading [PHP Error Logs](#php-error-logging).
 
+If you want to show errors in the browser, [read here](#php-error-logging).
+
 ### 502 (Bad Gateway)
 
 A 502 error from NGINX means PHP configuration is corrupted and need to renitialized.
@@ -312,9 +324,16 @@ You can fix it by switching its PHP version. The configuration should can reheal
 
 ```
 features:
-- php 7.4
+- php off
 - php 8.2
 ```
+
+### Files do not change
+
+What file?
+
++ If this PHP, please refer to [Opcache settings](#php-opcache-settings)
++ If this is files, please refer to [Static file caching](./nginx.mdx#)
 
 ## Custom PHP Daemon
 
