@@ -2,7 +2,7 @@
 title: Database Providers
 ---
 
-Database is an integral part of any application. DOM Cloud provides a free, opt-in OS-Wide **MariaDB 10.11** and **PostgreSQL 16.4** database instance for every website in every tier. 
+Database is an integral part of any application. DOM Cloud provides a free, opt-in OS-Wide **MariaDB 10.11**, **PostgreSQL 17.4** and **Valkey 8.0** databases available for every website in every tier. 
 
 ### Initializing the Database
 
@@ -93,9 +93,9 @@ DOM Cloud set up an [ACL proxy for valkey](https://github.com/domcloud/rdproxy) 
 + Automatically removes prefix of `user_db:` with results from `SCAN` so the clients doesn't need to adjust with automatic key prefixing.
 + Support old `requirepass` login model with `username:::password` syntax in the password. This is meant for frameworks that doesn't handle Redis 6.0 ACL yet. 
 
-Note that the proxy is experimental. Some features (like `HELLO 3`) won't work. See [the repository](https://github.com/domcloud/rdproxy) for details.
+Note that the proxy is experimental. Some modern features (like `HELLO 3`) won't work and some Lua scripting may not work if it written badly. See [the repository](https://github.com/domcloud/rdproxy) for details.
 
-To connect to this proxy with `redis-cli`, use `redis-cli -u username_db:::password -p 6479`. PhpRdAdmin is also configured to work on `6479` rather than directly with the master valkey instance at `6379`.
+To connect to this proxy with `redis-cli`, use `redis-cli -u username_db:::password -p 6479`. PhpRedisAdmin is also configured to work on `6479` rather than directly with the master valkey instance at `6379`. Note that the `redis-cli` is a symlink to `valkey-cli`.
 
 ### Timestamp
 
