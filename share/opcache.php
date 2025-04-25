@@ -99,6 +99,8 @@ class OpCacheDataModel
 
     public function getScriptStatusRows()
     {
+        $dirs = [];
+        
         foreach (($this->_status['scripts'] ?? []) as $key => $data) {
             $dirs[dirname($key)][basename($key)] = $data;
             $this->_arrayPset($this->_d3Scripts, $key, array(
@@ -151,7 +153,7 @@ class OpCacheDataModel
 
     public function getScriptStatusCount()
     {
-        return count($this->_status["scripts"] ?? []);
+        return isset($this->_status["scripts"]) ? count($this->_status["scripts"]) : '-';
     }
 
     public function getGraphDataSetJson()
