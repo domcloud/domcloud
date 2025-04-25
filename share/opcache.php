@@ -151,7 +151,7 @@ class OpCacheDataModel
 
     public function getScriptStatusCount()
     {
-        return count($this->_status["scripts"]);
+        return count($this->_status["scripts"] ?? []);
     }
 
     public function getGraphDataSetJson()
