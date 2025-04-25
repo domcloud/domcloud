@@ -17,7 +17,7 @@ class OpCacheDataModel
     public function __construct()
     {
         $this->_configuration = opcache_get_configuration();
-        $this->_status = opcache_get_status();
+        $this->_status = opcache_get_status((($_GET['scripts'] ?? '') == '1'));
     }
 
     public function getPageTitle()
@@ -99,7 +99,7 @@ class OpCacheDataModel
 
     public function getScriptStatusRows()
     {
-        foreach ($this->_status['scripts'] as $key => $data) {
+        foreach (($this->_status['scripts'] ?? []) as $key => $data) {
             $dirs[dirname($key)][basename($key)] = $data;
             $this->_arrayPset($this->_d3Scripts, $key, array(
                 'name' => basename($key),

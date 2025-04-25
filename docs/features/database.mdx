@@ -25,11 +25,11 @@ features:
 
 See the section in [MariaDB](../deployment/deploy.mdx#mysql) or [PostgreSQL](../deployment/deploy.mdx#postgresql)  or [Valkey](../deployment/deploy.mdx#valkey) for more information.
 
-To view and edit the database using online tools, use *PhpMyAdmin*, *PhpPgAdmin* or *PhpRdAdmin*. All of them are available from [the manage tab](./editor.mdx).
+To view and edit the database using online tools, use *PhpMyAdmin*, *PhpPgAdmin* or *PhpRedisAdmin*. All of them are available from [the manage tab](./editor.mdx).
 
 :::info
 
-You can't create or drop database from PhpMyAdmin, PhpPgAdmin or any external database client. You have to do that from Webmin UI or [deployment script](../deployment/deploy.mdx#features).
+You can't create or drop database with PhpMyAdmin, PhpPgAdmin, phpRedisAdmin or with any external database client. You have to do that from Webmin UI or [deployment script](../deployment/deploy.mdx#features).
 
 Our valkey instance is shared across the server with ACL and managed outside webmin interface. Read more below.
 
@@ -64,7 +64,7 @@ Username and password is always different from the default. Don't assume `root` 
 
 Remote Access is used to manage databases using your local software -- such as DBeaver, HeidiSQL or TablePlus.
 
-PostgreSQL and MariaDB permits remote access by default, while Valkey don't.
+PostgreSQL and MariaDB permits remote access by default, while Valkey don't. We do not recommend you to manage valkey directly, though you still can use PhpRedisAdmin.
 
 :::info
 
