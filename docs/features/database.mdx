@@ -6,7 +6,7 @@ Database is an integral part of any application. DOM Cloud provides a free, opt-
 
 ### Initializing the Database
 
-Databases is opt-in, disabled by default. To enable it, go to [deploy tab](../intro/getting-started#deploy-tab) and execute one of these:
+Databases are opt-in, disabled by default. To enable it, go to [deploy tab](../intro/getting-started#deploy-tab) and execute one of these:
 
 ```yml
 features:
@@ -31,7 +31,7 @@ To view and edit the database using online tools, use *PhpMyAdmin*, *PhpPgAdmin*
 
 You can't create or drop database with PhpMyAdmin, PhpPgAdmin, phpRedisAdmin or with any external database client. You have to do that from Webmin UI or [deployment script](../deployment/deploy.mdx#features).
 
-Our valkey instance is shared across the server with ACL and managed outside webmin interface. Read more below.
+Our valkey instance is [shared across the server with ACL](#valkey-acl-rules) and managed outside webmin interface.
 
 :::
 

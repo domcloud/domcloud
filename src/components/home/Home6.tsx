@@ -17,38 +17,39 @@ export default function Home6() {
                     <div className="feature-icon badge">
                         <FaHdd />
                     </div>
-                    <h2>Multiple Server Region To Choose</h2>
+                    <h2><a href="/docs/intro/compare-server">Multiple Server Regions</a></h2>
                     <p>All the globe should have ping time &lt;100ms with our closest server</p>
                 </div>
                 <div className="feature performance col">
                     <div className="feature-icon badge">
                         <FaSignal />
                     </div>
-                    <h2>Powered by NGINX</h2>
-                    <p>Faster, event-driven HTTP gateway compared to Apache</p>
+                    <h2><a href="/docs/deployment/php#php-opcache-settings">Opcache</a> + 
+                    <a href="/docs/deployment/php#php-opcache-settings">Valkey</a> 
+                    Valkey Cache
+                    </h2>
+                    <p>B</p>
                 </div>
                 <div className="feature performance col">
                     <div className="feature-icon badge">
                         <FaTime />
                     </div>
                     <h2>HTTP 3.0 + QUIC (Opt In)</h2>
-                    <p>Reduces many TCP round trips compared to HTTP 1.1</p>
+                    <p>Optional extra </p>
                 </div>
                 <div className="feature performance col">
                     <div className="feature-icon badge">
                         <FaStopwatch />
                     </div>
                     <h2>TLS 1.3 with 1-RTT Handshake</h2>
-                    <p>Faster and Stronger compared to TLS 1.2</p>
+                    <p>Faster and Stronger HTTPS encryption compared to TLS 1.2</p>
                 </div>
                 <div className="feature performance col">
                     <div className="feature-icon badge">
                         <FaLock />
                     </div>
-                    <h2>Automatic Media Caching with E-Tag</h2>
-                    <p>
-                        CSS, JSS, SVG and all media files have maximum caching duration.
-                    </p>
+                    <h2>Automatic Media Caching and Gzip Delivery</h2>
+                    <p>Optimized caching deliveries by default for static files.</p>
                 </div>
                 <div className="feature performance col">
                     <div className="feature-icon badge">

@@ -45,7 +45,7 @@ To call composer with other PHP version, run `php81 $(which composer) install`.
 PHP are installed as system wide. It's installed as in these commands:
 
 ```
-yum install php-{74,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,opcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
+yum install php-{74,81,82,83}-php-{bcmath,cli,common,devel,fpm,gd,imap,intl,mbstring,mysqlnd,OPcache,pdo,pecl-mongodb,pecl-redis,pecl-zip,pgsql,process,sodium,soap,xml}
 ```
 
 Here's the list of extensions available:
@@ -82,19 +82,17 @@ post_max_size = 32M
 See the list of available PHP INI configuration [in official PHP documentation](https://www.php.net/manual/en/ini.list.php).
 To see default values or if your change has been in effect, use `phpinfo()`.
 
-:::info
+### PHP INI doesn't updated?
 
-PHP INI refresh on 5 minutes. You have to wait for changes to pick up.
+If you see your `.user.ini` doesn't updated, please note:
 
-You should place in document root, like `public_html/public` if your system is CI4 / Laravel.
++ PHP INI refresh on 5 minutes. You have to wait for changes to pick up.
++ You should place the `.user.ini` in [the document root](./nginx.mdx#editing-nginx-config-interactively), like `public_html/public` if your system is CI4 / Laravel.
++ You can't change configs with `PHP_INI_SYSTEM` level unless you've installed [custom PHP daemon](#custom-php-daemon).
 
-Also, you can't change configs with `PHP_INI_SYSTEM` level unless you're using method below.
+### PHP Error Logging
 
-:::
-
-## PHP Error Logging
-
-The error logs can be seen in `PHP Error Logs` in Check -> Check Logs.
+The error logs can be seen in `PHP Error Logs` in [Check -> Check Logs](../intro/getting-started.mdx#managing-website).
 
 You won't see error details in your website because we use production default settings.
 
@@ -105,23 +103,25 @@ display_errors = On
 display_startup_errors = On
 ```
 
-If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` to enable debug mode.
+If you made changes to these parameters but not see any errors in the website yet, then it's maybe overrided in frameworks settings. For example, Laravel uses `APP_DEBUG=true` in `.env` to enable debug mode.
 
-## PHP Opcache Settings
+### PHP OPcache Settings
 
-The default opcache settings is set to 60 seconds. So if you've changed your PHP file, it won't be updated immediately until next 60 seconds. To disable PHP change, set `opcache.validate_freq` to 0 in user INI, like this:
+OPcache is a PHP feature to skip recompilation by saving the compiled PHP file in the memory. OPcache is enabled by default and finetuned for optimal performance.
+
+The default OPcache settings is set to 60 seconds. So if you've changed your PHP file, it won't be updated immediately until next 60 seconds. To disable PHP change, set `opcache.validate_freq` to 0 in user INI, like this:
 
 ```ini title="~/public_html/.user.ini"
 opcache.validate_freq = 0
 ```
 
-Note that this settings is different with static file caching.
+Note that this settings is different with static file caching. Static files is handled by [NGINX expires settings](./nginx.mdx#static-file-caching).
 
 ## Restarting PHP
 
-PHP doesn't need restart. Changing PHP files instantly changes the running server code.
+PHP doesn't need restart. Changing PHP files instantly changes the running server code. If you see code doesn't change please see what if [files do not change](#files-do-not-change).
 
-The PHP-FPM instance itself is running as `ondemand` and goes inactive after 15 minutes of no traffic.
+Under the hood, the PHP-FPM instance is running in `ondemand` mode and goes inactive after 15 minutes of no traffic.
 
 
 ## NGINX Setup
@@ -330,10 +330,11 @@ features:
 
 ### Files do not change
 
-What file?
+What files?
 
-+ If this PHP, please refer to [Opcache settings](#php-opcache-settings)
-+ If this is files, please refer to [Static file caching](./nginx.mdx#)
++ If this is `.user.ini`, please refer to [PHP ini settings](#)
++ If this is `.php` files, please refer to [OPcache settings](#php-opcache-settings)
++ If this is any other files, please refer to [Static file caching](./nginx.mdx#)
 
 ## Custom PHP Daemon
 

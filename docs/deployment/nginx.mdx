@@ -322,7 +322,7 @@ The `X-Forwarded-Proto` is equally important to determine whether you should sen
 
 ## HTTP-3 and QUIC
 
-To enable HTTP/3, turn the HTTP version to 3 in deployment system
+To enable HTTP/3, turn the HTTP version to 3 in [the deployment system](./deploy.mdx)
 
 ```yaml
 features:
@@ -335,9 +335,15 @@ You tipically won't see HTTP 3 used after changing this since browser caches `Al
 
 What about HTTP/2? We do not support it due to how NGINX handles it ALPN algorithm. We can't individually either toggle it on or off at each site. Anyway, HTTP/2 suffers some major drawback that HTTP/1.1 can be seen faster in some cases.
 
+## TLSv1.3
+
+Our NGINX is configured to accept TLSv1.3 only, for stronger HTTPS security and lower TTFB (Time for first byte). TLS v1.3 is introduced in 2018, a 10 years gap from TLSv1.2 which introduced in 2008. TLSv1.3 sets minimum browser requirement to be fairly new, but we believe [95% browser coverage as of 2025](https://caniuse.com/tls1-3) should be no problem.
+
+If you need to enable TLSv1.2 because of IE11 support or your webhook providers requires it, please use alternative proxy such as Cloudflare since we don't support TLSv1.2 at this moment.
+
 ## Static File Caching
 
-Static file caching is enabled by default for media files and CSS + JS files.  This is done by sending `Expires` header to the browser.
+Static file caching is enabled by default for media files and CSS + JS files. This is done by sending `Expires` header to the browser, so browser will cache your static files without checking it with our server until the specified time.
 
 The default settings is 7 days. To disable it, set `expires` to `off`:
 
