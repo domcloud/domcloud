@@ -35,7 +35,9 @@ Some exception is this:
 
 ## DOM Cloud Server
 
-DOM Cloud server installation is described in our GitHub repo: https://github.com/domcloud/container. We support installation either from latest [Rocky Linux 9](https://rockylinux.org/download) or [Ubuntu 24 LTS Server](https://ubuntu.com/download/server). The server requirement is pretty small, you may run it on systems as low as 2GB RAM and 30 GB storage.
+DOM Cloud servers are just a Linux server with some preinstalled software. This section is the guide for installing DOM Cloud software from a freshly installed VPS. We hosted our installation steps in GitHub: https://github.com/domcloud/container. 
+
+The DOM Cloud server can be installed either from latest [Rocky Linux 9](https://rockylinux.org/download) or [Ubuntu 24 LTS Server](https://ubuntu.com/download/server). The server requirement is pretty small, you may run it on systems with capacity as low as 2GB of RAM and 30 GB of SSD.
 
 After your VPS or Server running, run this as root (`sudo -i`):
 
@@ -72,7 +74,9 @@ The script installs:
 
 You need to assign the bridge API to a domain before it can be connected. Please assign A/AAAA of your domain to IP address of your server. If you use Cloudflare, please turn off the proxy. 
 
-Let's say you've brough a `mysite.com`, we'll assign bridge API to `bridge.mysite.com` by first opening the Virtualmin API at `https://bridge.mysite.com:2443` (note the HTTPS part!). Ignore the certificate warning for now.
+Let's say you have a `mysite.com` domain, we'll assign bridge API to `bridge.mysite.com` by setting A+AAAA/CNAME record to your VPS. The `bridge.` subdomain is important since you can want to host an actual website to `mysite.com` not the internal bridge API.
+
+After setting the DNS records correctly, open the Virtualmin UI at `https://bridge.mysite.com:2443` (note the HTTPS part!). Ignore the certificate warning for now.
 
 If you forget the webmin root password, please run this in root SSH:
 

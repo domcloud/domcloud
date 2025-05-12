@@ -76,6 +76,7 @@ Beware! Changing NGINX config this way may erases your customized NGINX config n
 | Option | What is it? |
 |---|---|
 | Root Path | The directory where NGINX searches for static files before being forwarded to app |
+| Cache Expiration | The static files [cache expiration settings](#static-file-caching) |
 | Resolve Type | What is the kind of your app? |
 | - Static | No app, just HTML files |
 | - PHP-FPM | PHP [Handled by `fastcgi_pass`](#configure-nginx-for-php) |
@@ -343,16 +344,21 @@ If you need to enable TLSv1.2 because of IE11 support or your webhook providers 
 
 ## Static File Caching
 
-Static file caching is enabled by default for media files and CSS + JS files. This is done by sending `Expires` header to the browser, so browser will cache your static files without checking it with our server until the specified time.
+Static file caching is enabled by default for media, CSS and JS files. This is done by sending [`Expires` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Expires) to the browser, so browser will cache your static files without checking it with any HTTP calls until the specified time.
 
-The default settings is 7 days. To disable it, set `expires` to `off`:
+The default the `Expires` header is set to 7 days. To disable it, set `expires` to `off`, like this:
 
 ```yaml
 nginx:
-  expires: off
+  # .... the rest of nginx setting ....
+  expires: off # default is '7d'
 ```
 
-Note that this don't disables E-Tag header -- so when files unchanged, it still send `304 Not Modified`. 
+Note that this doesn't stop E-Tag header -- so when files unchanged, NGINX will send `304 Not Modified`. Also, you still need to force browser refreshing the CSS / JS files if that browser has visited your site with old `expires` setting.
+
+To force browser refreshing the CSS / JS files, perform [a hard reload](https://superuser.com/a/512833). 
+
+If a hard reload doesn't work for you and you're using a proxy service such as Cloudflare CDN Proxy, you have to [purge their cache](https://developers.cloudflare.com/cache/how-to/purge-cache/purge-everything/). Please purge only after setting the `expires` value to `off` so you don't have to repeat it later.
 
 ## Language-Specific Configuration
 

@@ -4,16 +4,22 @@ title: Domain Name Server
 
 import ThemedImage from '@theme/ThemedImage';
 
-DNS is a service that translates domain names to IP addresses. 
+DNS is a service that translates domain names to IP addresses. DOM Cloud has DNS services available to all websites in all tiers when necessary.
 
 ## Switching to our DNS
 
-If you host a website with a custom domain, you need to point the name server (in any registrar where you buy the domain) to these below:
+If you host a website with a custom domain, you need to buy a domain somewhere. You can either buy the domain from us or from anywhere else, it doesn't matter.
+
+Once you have owned the domain, you need to point the name server (in any registrar where you buy the domain) to these below:
 
 ```
 nsp.domcloud.co
 nss.domcloud.co
 ```
+
+These are DOM Cloud servers (slaves) dedicated for resolving DNS values set from all (masters) of DNS records installed at our own servers. If you found any existing nameserver values before, please delete it and replace it with our sameservers above.
+
+The nameserver change can take place between one hour to 24 hours depending on how soon you can flush DNS caches of your home routers or in your cable company. You can check if nameserver change has been 
 
 After that, change the website's domain name in DOM Cloud's Portal (Select a website -> Admin -> Change Domain). Then, check your website connectivity in menu Check -> Check Connection. If it shown like an image below, then your set up is done correctly.
 
@@ -52,7 +58,7 @@ If you don't want giving a whole DNS to us, for example because you only host a 
 
 Firstly, [go to Manage tab](../intro/getting-started.mdx#managing-website) at your website portal. At top left you'll find these information:
 
-+ Hostname: **sga.domcloud.id**
++ Hostname: **sga.domcloud.co**
 + IPv4: **68.183.191.223**
 + IPv6: **2400:6180:0:d1::770:4001**
 
@@ -116,12 +122,12 @@ DNS can be verified by using `nslookup` from your local terminal.
 
 First, make sure that DNS is enabled, to do that enter `nslookup <your-domain> <name-server>`, for example:
 
-```txt title="$> nslookup sga.domcloud.id nsp.domcloud.co"
+```txt title="$> nslookup sga.domcloud.co nsp.domcloud.co"
 Server:		nsp.domcloud.co
 Address:	68.183.191.223#53
 
 Non-authoritative answer:
-Name:	sga.domcloud.id
+Name:	sga.domcloud.co
 Address: 68.183.191.223
 ```
 
@@ -140,16 +146,16 @@ If that's the case then you need to enable DNS [via the deployment script](../de
 
 Just type `nslookup <your-domain>` at your terminal and it will use your local DNS. For example:
 
-```txt title="$> nslookup sga.domcloud.id"
+```txt title="$> nslookup sga.domcloud.co"
 Server:		1.1.1.1
 Address:	1.1.1.1#53
 
 Non-authoritative answer:
-Name:	sga.domcloud.id
+Name:	sga.domcloud.co
 Address: 68.183.191.223
 ```
 
-In that case my device talks to [1.1.1.1](https://1.1.1.1) to find that `sga.domcloud.id` points to `68.183.191.223`, which is a correct answer.
+In that case my device talks to [1.1.1.1](https://1.1.1.1) to find that `sga.domcloud.co` points to `68.183.191.223`, which is a correct answer.
 
 A non existing DNS server may simply refuse to answer, or if not, gives incorrect IP address.
 

@@ -66,9 +66,9 @@ source:
 source: clear
 ```
 
-Type: `string` or `object`. If it a string, it will be the `url`.
+Type: `string` or `object`. If it a string, it will be the `source.url`.
 
-If this value is set, it will download contents inside the host. The content can be either a ZIP file or a Git repository (to perform clone), or `clear` to simply clears the content.
+If this value is set, it will download contents inside the directory. The content can be either a ZIP file or a Git repository (to perform clone), or `clear` to simply clears the content.
 
 :::tip
 
@@ -78,20 +78,19 @@ This option is useful if your files is already in a public repository such as Gi
 
 :::danger
 
-This option will always **overwrite** all contents inside the host. Use with caution!
+This option will always **overwrite** all contents inside the website. Use with caution!
 
 :::
 
 ### `url`
-The zip (or clone) URL to download. Required.
+
+The zip or git URL to download or clone. Required.
 
 ### `type`
 To `extract` a ZIP file or `clone` a repo. If omitted, it autodetects whether it is a `github.com` or `gitlab.com` URL and perform `clone` instead of `extract`.
 
 ### `directory` (`type: extract` only)
 Specify the folder name to move out of ZIP file after extraction. This also can be specified from `url`'s hash. If omitted, no move operation performed.
-
-> For legacy reason, a `directory` in root config will works too, it will be converted as `source.directory`.
 
 ### `branch` (`type: clone` only)
 Specify the clone branch to get checked out. This also can be specified from directory or `url`'s hash. If omitted, the default branch is checked out.
@@ -141,7 +140,10 @@ Configure MariaDB (MySQL-like) Database Server.
 + `mysql` or `mysql on` Enable MariaDB and create default DB.
 + `mysql create <dbname>` Create a new database with `<username>_<dbname>`.
 + `mysql drop <dbname>` Drop a database with `<username>_<dbname>`.
++ `mysql modify-pass <newpass>` Set account password of `<username>` with `<newpass>`.
 + `mysql off`. Disables `mysql` feature. **Caution: Also drop all DB permanently**.
+
+When `mysql` is enabled, `MYPASSWD` will be available in the envar as the MariaDB password.
 
 ### `postgresql`
 
@@ -150,7 +152,10 @@ Configure PostgreSQL Database Server.
 + `postgresql` or `postgresql on` Enable PostgreSQL and create default DB.
 + `postgresql create <dbname>` Create a new database with `<username>_<dbname>`.
 + `postgresql drop <dbname>` Drop a database with `<username>_<dbname>`.
++ `postgresql modify-pass <newpass>` Set account password of `<username>` with `<newpass>`.
 + `postgresql off`. Disables `postgresql` feature. **Caution: Also drop all DB permanently**.
+
+When `postgresql` is enabled, `PGPASSWD` will be available in the envar as the PostgreSQL password.
 
 ### `redis`
 
@@ -161,6 +166,8 @@ Configure Valkey (Redis-like) Database Server.
 + `redis drop <dbname>` Drop a database with `<username>_<dbname>`.
 + `redis off`. Disables `redis` feature. **Caution: Also drop all DB permanently**.
 
+When `redis` feature is set, `RDPASSWD` will be available in the envar as the Valkey ACL password. Note that this "database" is refering to [ACL-Prefixed keys](../features/database.mdx#valkey-acl-rules), not the number-indexed databased.
+
 ### `dns`
 
 Configure BIND DNS Server.
@@ -168,7 +175,7 @@ Configure BIND DNS Server.
 + `dns` or `dns on` Enable DNS server.
 + `dns add <type> <value>` Add a record.
 + `dns rem <type> <value>` Deletes a record.
-+ `dns off`. Disables `dns` feature. **Caution: Also clears all DNS records**.
++ `dns off`. Disables `dns` feature. **Caution: Also drop all DNS records**.
 
 You can add multiple records with lists. For example:
 
@@ -185,7 +192,7 @@ DNS records for child server is handled automatically.
 
 :::info
 
-When applying CNAME, looks out for the trailing dot (`.`) at the end of CNAME values. 
+When adding CNAME values, looks out for the trailing dot (`.`) at the end of CNAME values. 
 
 It is required to specify the root domain, otherwise it will be appended with the parent domain.
 
@@ -216,18 +223,29 @@ Configure SSL or Attempt to renew SSL certificate with Let's Encrypt.
 + `ssl`, renew SSL certificate with shared domain (if available) or using Let's Encrypt if it not exists yet or starts to expire.
 + `ssl letsencrypt`, renew SSL certificate with Let's Encrypt forcibly.
 + `ssl selfsign`, renew SSL certificate with Self-signed certificate forcibly.
+
+To configure SSL redirect option:
+
 + `ssl always` Always redirect HTTP to HTTPS
-+ `ssl on` Enable both HTTP to HTTPS
++ `ssl on` (default) Enable both HTTP to HTTPS
 + `ssl off` Disable HTTPS access (not recommended)
 
 ### `http`
 
-Configure HTTP version for HTTPS.
+Configure preferred HTTP version for HTTPS.
 
-+ `http 1` use HTTP version 1
-+ `http 3` use HTTP version 3
++ `http 1` (default) use HTTP version 1 only
++ `http 3` use HTTP version 3 if browser supports it
 
-Using HTTP version 3 can be much faster.
+Using HTTP version 3 can be [much faster](./deploy.mdx#http-3-and-quic).
+
+### `www`
+
+Configure how to handle `www` subdomain prefix. When `www` subdomain prefix is handled and that `www` subdomain is configured with correct IP to the server, it will show the website as the non-`www` (apex) domain.
+
++ `off` Do not handle www subdomain prefix
++ `on` (default) Handle both www subdomain and the apex domain
++ `enforce` (not recommended) Always only handle www subdomain prefix
 
 ### `root`
 
@@ -269,7 +287,47 @@ Installs Neovim NvChad. This simply run `git clone https://github.com/NvChad/sta
 
 ### `dnf`
 
-Installs additional packages similar to OS-wide `dnf install`
+[Installs additional packages](../features/linux.mdx#install-dnf-packages) similar to OS-wide `dnf install` to `~/usr`, for example:
+
++ `dnf ImageMagick`
++ `dnf ffmpeg`
+
+### `ssh`
+
+Whether to enable or disable SSH login. This also has an impact related to Filestash, Webmin and VS Code remote tooling. Turning off `ssh` can be necessary to increase security.
+
++ `ssh on` enable login
++ `ssh off` disable login
+
+It's still possible to run the terminal with `ssh off` via webmin terminal or deployment commands.
+
+### `fix`
+
+Fix file permission by running `chmod 0750` to all directories in the website except `~/homes`.
+
+### `lock`
+
+Lock files modification by changing the specified folder owner to `nobody`. 
+
+Specify the folder to lock using `lock <dirpath>`. If `<dirpath>` is not set, it will lock `~/public_html`.
+
+Note that there's no `chmod` beforehand, so if you lock directories with `0700` file mode, you and NGINX will also can't read the file.
+
+Locking files modification is beneficial if you think someone messed up code or to prevent tampering with website content if your site has been hacked.
+
+### `unlock`
+
+Unlock files modification by changing the specified folder owner back to the home user. This is the reverse of `lock` feature.
+
+Specify the folder to unlock using `unlock <dirpath>`. If `<dirpath>` is not set, it will unlock `~/public_html`.
+
+You can combine both `lock` and `unlock` to finetune what to lock and unlock.
+
+```yaml
+features:
+- lock public_html
+- unlock public_html/.cache
+```
 
 ### `php`
 

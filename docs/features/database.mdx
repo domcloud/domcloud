@@ -2,9 +2,11 @@
 title: Database Providers
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+
 Database is an integral part of any application. DOM Cloud provides a free, opt-in OS-Wide **MariaDB 10.11**, **PostgreSQL 17.4** and **Valkey 8.0** databases available for every website in every tier. 
 
-### Initializing the Database
+## Initializing Databases
 
 Databases are opt-in, disabled by default. To enable it, go to [deploy tab](../intro/getting-started#deploy-tab) and execute one of these:
 
@@ -23,36 +25,43 @@ features:
 - redis
 ```
 
-See the section in [MariaDB](../deployment/deploy.mdx#mysql) or [PostgreSQL](../deployment/deploy.mdx#postgresql)  or [Valkey](../deployment/deploy.mdx#valkey) for more information.
+See the section in [MariaDB](#mysql) or [PostgreSQL](#postgresql)  or [Valkey](#valkey) for more information.
 
 To view and edit the database using online tools, use *PhpMyAdmin*, *PhpPgAdmin* or *PhpRedisAdmin*. All of them are available from [the manage tab](./editor.mdx).
 
-:::info
+## Managing Databases
 
-You can't create or drop database with PhpMyAdmin, PhpPgAdmin, phpRedisAdmin or with any external database client. You have to do that from Webmin UI or [deployment script](../deployment/deploy.mdx#features).
+You can manage databases in Setup -> Database. The entries below is the list of databases name that has been created.
 
-Our valkey instance is [shared across the server with ACL](#valkey-acl-rules) and managed outside webmin interface.
+<ThemedImage
+    sources={{
+        dark: "/assets/ss/database-b.png",
+        light: "/assets/ss/database-w.png"
+    }}
+    alt=""
+    className="img-fluid border rounded-3 shadow--md mb-4"
+    width="700"
+    height="500"
+    loading="lazy"
+/>
 
-:::
+Note that you cannot create or drop database with PhpMyAdmin, PhpPgAdmin, phpRedisAdmin or with any external database client. You can only to do it either from here, the Webmin UI or in the [deployment script](../deployment/deploy.mdx#features).
 
-### Using the Database
+## MariaDB
 
-After activating the database, you can provide the database credentials to your app. This is one for RDBMS (MariaDB/PostgreSQL):
+MariaDB is the fork of MySQL database. Here's how you connect it from the application in the server:
 
-+ Hostname: `localhost` (because the database always live in the same server)
-+ Port: `3306` for MariaDB, `5432` for PostgreSQL
-+ Username: Same username with server (see from [manage tab](../intro/getting-started#managing-website))
-+ Password: Same password with server (see from [manage tab](../intro/getting-started#managing-website))
-+ Database name: Usually username with suffix + `_db` unless you've created another DB
-  - For example with username `hello-world` then database name will be `hello_world_db`
-  - Check the correct database name from PhpMyAdmin or PhpPgAdmin
+```ini
+MARIADB_HOST=localhost
+MARIADB_PORT=3306
+MARIADB_NAME=<database name>
+MARIADB_USER=<username login>
+MARIADB_PASS=<password login>
+```
 
-While this one is for connecting to Valkey:
+The username and password login can be seen from [manage tab](../intro/getting-started#managing-website). The database name is tipically username + `_db` but you check the database name from [managing database](#managing-databases).
 
-+ Hostname: `localhost` (because the database always live in the same server)
-+ Port: `6379` for Valkey or `6479` for the [ACL Proxy](#acl-proxy-for-valkey)
-+ Username: The ACL username coming from the database tab.
-+ Password: The ACL password coming from the database tab.
+To connect the database with remote client, set the `MARIADB_HOST` as the server name, which also can be seen from manage tab. You can also use PhpMyAdmin or `mariadb` CLI from SSH to manage it.
 
 :::caution
 
@@ -60,50 +69,28 @@ Username and password is always different from the default. Don't assume `root` 
 
 :::
 
-### Remote Access
+### Notable Differences of MariaDB and MySQL
 
-Remote Access is used to manage databases using your local software -- such as DBeaver, HeidiSQL or TablePlus.
+Here's non exhaustive list of the differences:
 
-PostgreSQL and MariaDB permits remote access by default, while Valkey don't. We do not recommend you to manage valkey directly, though you still can use PhpRedisAdmin.
+- MariaDB have UUID while MySQL not. In Laravel 11, setting the database engine to `mariadb` will pick up the `UUID` as the native type for UUID.
+- MariaDB doesn't support lateral join at this moment.
 
-:::info
+## PostgreSQL
 
-When connecting with Remote Access, the hostname is your website domain or the server's IP address, not `localhost`.
+PostgreSQL is the most complete RDBMS. Here's how you connect it from the application in the server:
 
-:::
-
-### Valkey ACL Rules
-
-The Valkey instance set up at port `6379` is shared across the server. To protect user data, we set up an ACL authentication to each "database" instance. Given a "database" name is `user_db`, the [ACL rules](https://valkey.io/topics/acl/#acl-rules) applied are:
-
-```
-user_db on >${password} ~user_db:* &user_db:* sanitize-payload
-  -@all +@connection +@read +@write +@scripting +@keyspace -KEYS
-  +@transaction +@geo +@hash +@set +@sortedset +@bitmap +@pubsub
-  +config|get +info +acl|whoami +acl|cat +acl|genpass
+```ini
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_NAME=<database name>
+POSTGRES_USER=<username login>
+POSTGRES_PASS=<password login>
 ```
 
-Most software or framework should work with this ACL rules, however not application would support key prefixing as implied in `~user_db:* &user_db:*`. To avoid code changes we recommend you to use port `6479` which is another daemon that can aid with automatic key prefixing to the master valkey instance.
+The username and password login can be seen from [manage tab](../intro/getting-started#managing-website). The database name is tipically username + `_db` but you check the database name from [managing database](#managing-databases).
 
-### ACL Proxy for Valkey
-
-DOM Cloud set up an [ACL proxy for valkey](https://github.com/domcloud/rdproxy) that listening on port `6479`. It's mirrorring connections to `6379` with these enhancements:
-
-+ Automatically prefixes keys or read/write operations such as `SCAN`, `GET`, `SET` and so much more, to allow access any keys without having to prefix it with `user_db:` (where `user_db` is the ACL username).
-+ Automatically removes prefix of `user_db:` with results from `SCAN` so the clients doesn't need to adjust with automatic key prefixing.
-+ Support old `requirepass` login model with `username:::password` syntax in the password. This is meant for frameworks that doesn't handle Redis 6.0 ACL yet. 
-
-Note that the proxy is experimental. Some modern features (like `HELLO 3`) won't work and some Lua scripting may not work if it written badly. See [the repository](https://github.com/domcloud/rdproxy) for details.
-
-To connect to this proxy with `redis-cli`, use `redis-cli -u username_db:::password -p 6479`. PhpRedisAdmin is also configured to work on `6479` rather than directly with the master valkey instance at `6379`. Note that the `redis-cli` is a symlink to `valkey-cli`.
-
-### Timestamp
-
-Our server always sets the clock in `UTC`.
-
-A good idea to handle timezone is done by client processing (Javascript), both after getting the data from database/AJAX and before sending data/Posts to server.
-
-If you don't care about timezone and you think it's safe to assume that your website is only accessed in one timezone, you can set the timezone in the backend using [date_default_timezone_set](https://www.php.net/manual/en/function.date-default-timezone-set.php) for PHP or [`TZ` env](https://medium.com/developer-rants/time-zones-in-node-js-fc5a5b51906a) for non-PHP (set it to passenger's `env_var_list`). 
+To connect the database with remote client, set the `POSTGRES_HOST` as the server name, which also can be seen from manage tab. You can also use PhpPgAdmin or `psql` CLI from SSH to manage it.
 
 ### Supported PostgreSQL Extensions
 
@@ -145,7 +132,66 @@ These optional PostgreSQL extensions can be activated using `CREATE EXTENSION` c
 | `timescaledb`                 | An extension that provides scalable time-series data management built on PostgreSQL.                                                  | [Documentation](https://docs.timescale.com/)                                     |
 | `vector`                      | A vector data type extension, useful for implementing machine learning models and similar functionalities.                            | [Documentation](https://github.com/pgvector/pgvector)                   |
 
-### Other Database System
+## Valkey
+
+Valkey is a fork of Redis. Here's how you connect it from the application in the server:
+
+```ini
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_KEY_PREFIX=<database name>:
+REDIS_USER=<database name>
+REDIS_PASS=<database password>
+```
+
+The `REDIS_KEY_PREFIX` and `REDIS_USER` is the ACL rules that your application must follow, as the Redis server is shared for whole server. Get the `<database name>` and `<database password>` from [manage databases](#managing-databases).
+
+Here's how to connect to Valkey for applications who do not support Redis ACL username and prefixed keys:
+
+```ini
+REDIS_HOST=localhost
+REDIS_PORT=6479
+REDIS_PASS=<database name>:::<database password>
+```
+
+The port 6479 signifies that you're connecting to [ACL Proxy for Valkey](#acl-proxy-for-valkey).
+
+We do not support remote connection to Redis at this moment. Please use PhpRedisAdmin or `valkey-cli` to manage it.
+
+### Valkey ACL Rules
+
+The Valkey instance set up at port `6379` is shared across the server. To protect user data, we set up an ACL authentication to each "database" instance. Given a "database" name is `user_db`, the [ACL rules](https://valkey.io/topics/acl/#acl-rules) applied are:
+
+```
+user_db on >${password} ~user_db:* &user_db:* sanitize-payload
+  -@all +@connection +@read +@write +@scripting +@keyspace -KEYS
+  +@transaction +@geo +@hash +@set +@sortedset +@bitmap +@pubsub
+  +config|get +info +acl|whoami +acl|cat +acl|genpass
+```
+
+Most software or framework should work with this ACL rules, however not application would support key prefixing as implied in `~user_db:* &user_db:*`. To avoid code changes we recommend you to use port `6479` which is another daemon that can aid with automatic key prefixing to the master valkey instance.
+
+### ACL Proxy for Valkey
+
+DOM Cloud set up an [ACL proxy for valkey](https://github.com/domcloud/rdproxy) that listening on port `6479`. It's mirrorring connections to `6379` with these enhancements:
+
++ Automatically prefixes keys or read/write operations such as `SCAN`, `GET`, `SET` and so much more, to allow access any keys without having to prefix it with `user_db:` (where `user_db` is the ACL username).
++ Automatically removes prefix of `user_db:` with results from `SCAN` so the clients doesn't need to adjust with automatic key prefixing.
++ Support old `requirepass` login model with `username:::password` syntax in the password. This is meant for frameworks that doesn't handle Redis 6.0 ACL yet. 
+
+Note that the proxy is experimental. Some modern features (like `HELLO 3`) won't work and some Lua scripting may not work if it written badly. See [the repository](https://github.com/domcloud/rdproxy) for details.
+
+To connect to this proxy with `redis-cli`, use `redis-cli -u username_db:::password -p 6479`. PhpRedisAdmin is also configured to work on `6479` rather than directly with the master valkey instance at `6379`. Note that the `redis-cli` is a symlink to `valkey-cli`.
+
+## Timestamp
+
+Our server always sets the clock in `UTC`.
+
+A good idea to handle timezone is done by client processing (Javascript), both after getting the data from database/AJAX and before sending data/Posts to server.
+
+If you don't care about timezone and you think it's safe to assume that your website is only accessed in one timezone, you can set the timezone in the backend using [date_default_timezone_set](https://www.php.net/manual/en/function.date-default-timezone-set.php) for PHP or [`TZ` env](https://medium.com/developer-rants/time-zones-in-node-js-fc5a5b51906a) for non-PHP (set it to passenger's `env_var_list`). 
+
+## Other Database System
 
 Only four database system is supported: `MariaDB`, `PostgreSQL`, `Valkey`, `SQLite`. For caching we recommend you to leverage Valkey or the filesystem.
 
