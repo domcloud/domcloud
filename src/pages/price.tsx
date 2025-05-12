@@ -6,7 +6,6 @@ import FaGlobe from '@fortawesome/fontawesome-free/svgs/solid/globe.svg';
 import FaBrief from '@fortawesome/fontawesome-free/svgs/solid/briefcase.svg';
 import FaUsers from '@fortawesome/fontawesome-free/svgs/solid/users.svg';
 import FaArchive from '@fortawesome/fontawesome-free/svgs/solid/box-archive.svg';
-import FaCartPlus from '@fortawesome/fontawesome-free/svgs/solid/cart-plus.svg';
 import FaQuestion from '@fortawesome/fontawesome-free/svgs/solid/question.svg';
 import FaChartPie from '@fortawesome/fontawesome-free/svgs/solid/chart-pie.svg';
 import FaBolt from '@fortawesome/fontawesome-free/svgs/solid/network-wired.svg';
@@ -47,7 +46,7 @@ export default function Pricing() {
                                         <FaBrief /> <span>Maximum of <b>6 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> <span>Team of <b>2 users</b></span>
+                                        <FaUsers /> <span>Team of <b>3 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +73,7 @@ export default function Pricing() {
                                         <FaBrief />  <span>Maximum of <b>10 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers />  <span>Team of <b>3 users</b></span>
+                                        <FaUsers />  <span>Team of <b>6 users</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +100,7 @@ export default function Pricing() {
                                         <FaBrief /> <span>Maximum of <b>25 instances</b></span>
                                     </div>
                                     <div className="item">
-                                        <FaUsers /> <span>Team of <b>5 users</b></span>
+                                        <FaUsers /> <span>Team of <b>10 users</b></span>
                                     </div>
                                 </div>
                             </div>

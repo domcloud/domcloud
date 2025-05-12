@@ -3,7 +3,7 @@ sidebar_position: 6
 title: Compare Plans
 ---
 
-This documentation provides details on the various pricing plans available, their features, and the differences between each plan. 
+This documentation provides details on the various pricing plans available, their features, and the differences between each plan we're offering. 
 
 All account starts in Free Plan. [Click here if you wish to upgrade or change plan](https://my.domcloud.co/user/upgrade).
 
@@ -15,11 +15,13 @@ All account starts in Free Plan. [Click here if you wish to upgrade or change pl
 - **Max Web Instances**: 3
 - **Max Users in Team**: 1
 - **Features Level**: 
-  - Firewall is permanently enabled
-  - Custom domain enabled
-  - Free domain with banner
+  - [Firewall is permanently enabled](./free-plan.mdx#third-party-api-access)
+  - [Free domain with banner](./free-plan.mdx#banner-in-free-domain)
+  - [Use custom domain](../features/dns.mdx)
 
 This plan is suitable for trying out the service. We explain more in the [Free plan documentation](./free-plan.mdx).
+
+Although free plan is *free*, we require users with free plan to log in each month to [avoid getting their website removed](./free-plan.mdx#expiration-date) due to inactivity.
 
 ## Lite Plan
 
@@ -27,10 +29,10 @@ This plan is suitable for trying out the service. We explain more in the [Free p
 - **Storage Limit**: 4 GB (4096 MB)
 - **Network Limit**: 20 GB (20480 MB)
 - **Max Web Instances**: 6
-- **Max Users in Team**: 2
+- **Max Users in Team**: 3
 - **Features Level**:
   - Free domain without banner
-  - Can use X64 arch servers
+  - [X64 (non ARM) servers available](./compare-server.mdx#arm64-vs-x64)
   - Firewall can be disabled
   - Backups are available
 
@@ -38,9 +40,9 @@ This plan is ideal for development or internal tools. This is our cheapest plan 
 
 ### Free vs. Lite
 
-- You can disable the firewall for enabling 3rd-party API access
+- You can disable the firewall for [enabling 3rd-party API access](../features/security.mdx#outbound-connection)
 - You can create, download and restore backups
-- You can use our customizable free domain (*.domcloud.dev)
+- You can use our banner-free domain (\*.domcloud.dev)
 - You have a significantly increased Network limit for moderate traffic (~20k monthly views for 1 MB pages)
 - You can prepaid the plan to a year or more to avoid your data being deleted because of not logging-in for months
 - You can add one of your engineering team to manage hosts in your account
@@ -56,7 +58,7 @@ This plan is ideal for development or internal tools. This is our cheapest plan 
 - **Storage Limit**: 10 GB (10240 MB)
 - **Network Limit**: 100 GB (102400 MB)
 - **Max Web Instances**: 10
-- **Max Users in Team**: 3
+- **Max Users in Team**: 6
 - **Features Level**:
   - All in Lite plan
   - Docker and long-running services
@@ -81,7 +83,7 @@ This plan is ideal for production sites. This is the plan where your subscriptio
 - **Storage Limit**: 20 GB (20480 MB)
 - **Network Limit**: 500 GB (512000 MB)
 - **Max Web Instances**: 25
-- **Max Users in Team**: 5
+- **Max Users in Team**: 10
 - **Features Level**:
   - All in Kit plan
   - Significantly high network cap
@@ -103,7 +105,7 @@ This plan is suitable for websites with high demand in traffic. This is for webs
 - **Storage Limit**: 50 GB (51200 MB)
 - **Network Limit**: 1 TB (1024000 MB)
 - **Max Web Instances**: 100
-- **Max Users in Team**: 20
+- **Max Users in Team**: 25
 - **Features Level**:
   - All in Pro plan
   - Significantly high storage cap
