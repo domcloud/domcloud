@@ -2,9 +2,11 @@
 
 For subscribing users, you can share your account to your team so they can manage your platform.
 
-For each user (you!), there's only one team available. You can invite team by adding their email. This email must be exist and an account in DOM Cloud.
+For each user (you!), there's only one team available. You can invite team by adding their email. This email user must be exist in DOM Cloud before you can give them access.
 
-The role access are explained here:
+When you give someone access to your account, they can access your account using the Teams menu di top-right navbar. Note that it is **your** account that is shared, not them. So you can not see the invited account contents.
+
+The role access can be either **owner**, **admin** or **member**.
 
 ## Owner
 
@@ -16,10 +18,12 @@ The owner role is exclusively can do:
 - View billing history
 - Buy or transfer new domains
 - Rename or delete account
+- Change personal password
+- Delete their own account
 
 ## Admin
 
-This is the role to manage everything except financial features. If you give them this role, then you also trust them to do destructive operations.
+This is the role to manage everything except financial features. If you give them this role, then you also trust them to do destructive operations with your account.
 
 Admin and owner roles can do:
 
@@ -29,17 +33,47 @@ Admin and owner roles can do:
 - Changing name server or protection settings in domain
 - Accessing webmin panel
 - Perform destructive operation in deployment systems like
-  - Using `source:` to overwrite all the files
+  - Change, overwrite or tamper all files contents
   - Changing Firewall, DNS and NGINX config
-  - Creating or deleting databases
+  - Managing or deleting databases
+  - Viweing primary SSH dan database password
+  - Viewing NGINX process and restaring it
 
 ## Member
 
 This is the role we recommend for non-key developers as they only able to do everything that essentially a non sudoers can do.
 
+The member role cannot view primary SSH password, only database passwords. Members can be given a subaccount SSH user which by default is given as group level access, which is read-only. You can give them write access if you do `chmod -R 770` from admin SSH accounts to some folders you wish they can write to, or restore it back with `chmod -R 750`.
+
+If you don't give them subaccount SSH user, they won't either do deployments nor be able to access SSH. However, they still can read logs and get read & write access to databases.
+
 The member role can do:
 
 - Login to Database either remotely or via web
-- Login to SSH features like VSCode and Filemin
+- Login to SSH features like VSCode and Filemin (as group level access)
 - Running deployment systems and creating webhooks
 - Create or download backups
+
+### Accessing processes with member level access
+
+Member level teams cannot see the processes nor `restart`-ing the process from NGINX. They also can't see processes under docker nor seeing admin cronjobs, because they're lives in different SSH account from member.
+
+## Passwords
+
+If you just removed someone from your team, you need to do make sure:
+
+### Change admin SSH password (only if revoked from 'admin' access)
+
+This is because admin level SSH password is shared and they could take notes before you revoke them.
+
+You generally don't need to do this if you remove someone from 'member' access since the SSH password they can access is different with admin password, unless you've leak it either from deployment logs or `.env` files.
+
+### Remove sub user SSH accounts (only if revoked from 'member' access)
+
+When you revoke members from team access, the sub user still exists with password unchanged. You need to revoke them individually.
+
+### Change database passwords
+
+This is because database passwords is shared for teams either in `admin` or `member` role.
+
+The rationale of this design is because everyone with SSH access can read them via `.env` file, so you also need to change them.
