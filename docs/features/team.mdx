@@ -4,9 +4,9 @@ For subscribing users, you can share your account to your team so they can manag
 
 For each user (you!), there's only one team available. You can invite team by adding their email. This email user must be exist in DOM Cloud before you can give them access.
 
-When you give someone access to your account, they can access your account using the Teams menu di top-right navbar. Note that it is **your** account that is shared, not them. So you can not see the invited account contents.
+When you give someone access to your account, they can access your account using the Teams menu di top-right navbar. Note that it is **your** account that is shared, not them. You also can not see the invitee account contents.
 
-The role access can be either **owner**, **admin** or **member**.
+The role access can be either **owner**, **admin**, **member** or **client**.
 
 ## Owner
 
@@ -14,7 +14,6 @@ This is **you**. Basically only you can gain control to everything. You can't gi
 
 The owner role is exclusively can do:
 
-- Upgrade or extend plan
 - View billing history
 - Buy or transfer new domains
 - Rename or delete account
@@ -23,40 +22,50 @@ The owner role is exclusively can do:
 
 ## Admin
 
-This is the role to manage everything except financial features. If you give them this role, then you also trust them to do destructive operations with your account.
+This is the role to manage everything except account or financial features. If you give them this role, then you also trust them to do destructive operations with your account.
 
 Admin and owner roles can do:
 
 - Manage, restore or delete backup
 - Create, transfer or delete websites
-- Changing a website domain, username or password
+- Changing a website domain, server region, username or password
 - Changing name server or protection settings in domain
-- Accessing webmin panel
+- Accessing webmin panel and creating webhooks
 - Perform destructive operation in deployment systems like
   - Change, overwrite or tamper all files contents
   - Changing Firewall, DNS and NGINX config
-  - Managing or deleting databases
-  - Viweing primary SSH dan database password
+  - Managing or deleting databases and subaccount
+  - Viewing primary SSH dan database password
   - Viewing NGINX process and restaring it
 
 ## Member
 
 This is the role we recommend for non-key developers as they only able to do everything that essentially a non sudoers can do.
 
-The member role cannot view primary SSH password, only database passwords. Members can be given a subaccount SSH user which by default is given as group level access, which is read-only. You can give them write access if you do `chmod -R 770` from admin SSH accounts to some folders you wish they can write to, or restore it back with `chmod -R 750`.
+The member role cannot view admin SSH password, only database passwords. Members can be given a subaccount SSH user which by default is given as group level access, which is read-only. You can give them write access if you do `chmod -R 770` from admin SSH accounts to some folders you wish they can write to, or restore it back with `chmod -R 750`.
 
 If you don't give them subaccount SSH user, they won't either do deployments nor be able to access SSH. However, they still can read logs and get read & write access to databases.
 
-The member role can do:
+The rationale for members role to be designed that way is to enforce good deployment pipeline. It can be used for developers to gain information about logs and performing datafix but cannot tamper/hotfix the service currently running &mdash; enforces them to submit PR in GitHub repository in order to fix it by deployment webhooks or CI/CD.
+
+The member role as well as admin and owner can do:
 
 - Login to Database either remotely or via web
 - Login to SSH features like VSCode and Filemin (as group level access)
-- Running deployment systems and creating webhooks
+- Running deployment systems using different subaccount
 - Create or download backups
+- Manage registered domains
+- Upgrade the team account
 
 ### Accessing processes with member level access
 
 Member level teams cannot see the processes nor `restart`-ing the process from NGINX. They also can't see processes under docker nor seeing admin cronjobs, because they're lives in different SSH account from member.
+
+## Client
+
+This is the role for your project clients if they wish to get access for a website but not wanting to expose all websites that they didn't granted with.
+
+To give them access you need to give them subaccount SSH user. Currently, clients cannot access registered domains and backups, they also cannot upgrade the team account. Otherwise, the host privilenge is the same as `member` role once they granted a SSH access to the host.
 
 ## Passwords
 
@@ -68,7 +77,7 @@ This is because admin level SSH password is shared and they could take notes bef
 
 You generally don't need to do this if you remove someone from 'member' access since the SSH password they can access is different with admin password, unless you've leak it either from deployment logs or `.env` files.
 
-### Remove sub user SSH accounts (only if revoked from 'member' access)
+### Remove sub user SSH accounts (only if revoked from 'member' or 'client' access)
 
 When you revoke members from team access, the sub user still exists with password unchanged. You need to revoke them individually.
 

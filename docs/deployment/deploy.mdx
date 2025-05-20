@@ -82,26 +82,56 @@ This option will always **overwrite** all contents inside the website. Use with 
 
 :::
 
-### `url`
+### `source.url`
 
-The zip or git URL to download or clone. Required.
+A required `string` contains a compressed file or GIT URL to download or clone, or `clear` to just clear all files without it. 
 
-### `type`
-To `extract` a ZIP file or `clone` a repo. If omitted, it autodetects whether it is a `github.com` or `gitlab.com` URL and perform `clone` instead of `extract`.
+Supports `http://`, `https://`, `ftp://` or `ssh://`.
 
-### `directory` (`type: extract` only)
+### `source.type`
+
+Either of `extract` (default) or `clone`. If omitted, it autodetects to `clone` if either:
+
++ The host is `github.com`, `gitlab.com` or `bitbucket.com` and not ending with `.tar.gz` or `.zip`.
++ The URL scheme is `ssh://`
+
+### When `source.type` is `extract`
+
+This will peform extraction from a compressed file. The URL must ending with `.tar.gz`, `.tar.xz`, `.tar.bz2` to be extracted with `tar` command or otherwise it be assumed to be a `.zip` file. A `chmod -R 0750` is performed after extraction to normalize file permissions to avoid inconsistency.
+
+Additional options for this `source.type` include
+
+#### `source.directory`
+
 Specify the folder name to move out of ZIP file after extraction. This also can be specified from `url`'s hash. If omitted, no move operation performed.
 
-### `branch` (`type: clone` only)
-Specify the clone branch to get checked out. This also can be specified from directory or `url`'s hash. If omitted, the default branch is checked out.
+### When `source.type` is `clone`
 
-### `shallow` (`type: clone` only)
-Do shallow clone? Default to `true`. It is recommended to leave it that way to keep `.git` internal size low.
+This will perform `git clone`. Additional options for this `source.type` include
 
-### `submodules` (`type: clone` only)
-Do Recursive clone of submodules? Default to `false`.
+#### `source.branch`
 
----
+Specify the clone branch to get checked out. This also can be specified from directory or `url`'s hash. If omitted, the default (`master`/`main`) branch will be checked out.
+
+#### `source.depth`
+
+Either `blobless` (default), `treeless` or `shallow`. In order, they will add `--filter=blob:none`, `--filter=tree:0` or `--depth 1`. Blobless is the default to ensure fast cloning and minimal `.git` size.
+
+#### `source.submodules`
+
+Either `false` (default) or `true`. If `true`, it will add `--recurse-submodules` which will clone all submodules too.
+
+#### `source.credentials.github.ssh` and `source.credentials.github.sshPub`
+
+Facilitates cloning of private repo using `ssh://` protocol scheme. It's a string of file contents of private and public key.
+
+Only private key `ssh` is mandatory, the public key `sshPub` is only for reference. The `ssh` will be written to `$HOME/.ssh/id_github_com` while the public key will be written to `$HOME/.ssh/id_github_com.pub`. It will also write this to SSH config file `$HOME/.ssh/config`:
+
+```bash
+Host github.com
+  StrictHostKeyChecking no
+  IdentityFile ~/.ssh/id_github_com
+```
 
 ## `features`
 
@@ -554,13 +584,16 @@ To enable non-PHP apps, at minimum you need these configuration:
 root: public_html/public
 nginx:
   passenger:
+    # required
     enabled: on
     app_start_command: node server.js --port=$PORT
+    # optional envar setup
+    app_env: production # NODE_ENV
+    env_var_list:
+    - TZ=UTC
 ```
 
 The configuration above will execute `node server.js --port=$PORT` in the parent of root folder (in this case, `~/public_html`). Note that you always need to pass the `$PORT` and use that as the port where your app is listening to. If your app accept port from environment instead you can use env like `env PORT=$PORT node server.js`.
-
-For custom environment values you can leverage `app_env` and `env_var_list`.
 
 To restart a non-PHP apps you can execute `restart` in CLI/SSH. You can also make it [always restart](https://www.phusionpassenger.com/library/admin/apache/restart_app.html#restart-txt) if you have to.
 
@@ -570,7 +603,7 @@ Available options:
 + [`app_env`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_env): environment setup. Either `production` (default) or `development`.
 + [`env_var_list`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_env_var): array of environment values in the format of `KEY=VALUE`.
 + [`set_header_list`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_set_header): array of header values in the format of `KEY=VALUE`.
-+ [`app_start_command`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_start_command): [Passenger GLS](https://www.phusionpassenger.com/docs/advanced_guides/gls/) command to start the app with `$PORT` as the port where your app is listening to.
++ [`app_start_command`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_app_start_command): [Passenger GLS](https://www.phusionpassenger.com/docs/advanced_guides/gls/) (shell) command to start the app with `$PORT` as the port where your app is listening to.
 + [`friendly_error_pages`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_friendly_error_pages): `on` (default) or `off`
 + [`base_uri`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_base_uri): base URL for the app (default is `/`).
 + [`document_root`](https://www.phusionpassenger.com/docs/references/config_reference/nginx/#passenger_document_root): path to public document root (default is `root`)  (relative to `$HOME`).
@@ -600,40 +633,18 @@ Array objects which one or more of:
 + `rewrite`: Rewrite URL directive
 + `try_files`: Try files URL directive
 + `return`: Return code directive
++ `index`: Index files (defaults to `index.html` unless fastcgi is on, then it's `index.html index.php`)
++ `expires`: Cache expiration header duration (default is `7d`) can be set to `1d`, `off`, `max`
++ `allow` : IP to allow
++ `deny` : IP to deny
++ `autoindex`: `on` or `off` (default) to enable listing directory files
++ `default_type`: default MIME type
++ `proxy_pass`: Proxy to `127.*.*.*:*`
 + `fastcgi`: (same as above)
 + `passenger`: (same as above)
-+ `proxy_pass`: Proxy to `127.*.*.*:*` or `unit` or `docker:*`
++ `limit_except`, `limit_rate`, `limit_rate_after` configure limits
 
 Please read [NGINX Location directive](http://nginx.org/en/docs/http/ngx_http_core_module.html#location) for more information.
-
----
-
-## `unit`
-
-Type: `object`
-
-NGINX Unit is a newer polyglot alternative to `passenger` features much simpler deployment system, logging and persistent instance across NGINX reload. The use of `unit` is much recommended albeit experimental.
-
-NGINX Unit can bind to NGINX via `proxy_pass: unit` directive, then the app must listen to IPv4 localhost (127.0.0.1) and `$PORT` env much like how Passenger GLS works. This is the minimal settings to make it works:
-
-```yaml
-nginx:
-  root: public_html/public
-  proxy_pass: unit
-unit:
-  # Bun.serve() always listen to $PORT
-  app_start_command: bun .  
-```
-
-Available options:
-
-+ `app_start_command` (required) a string command equivalent with how would you run the app in SSH/bash
-+ `app_root` (optional) a string path of app working directory (defaults to `public_html`)
-+ `env_var_list` (optional) array of header values in the format of `KEY=VALUE`
-
-
----
-
 
 ## `commands`
 
@@ -672,7 +683,7 @@ Aside with the usual SSH commands, it does have an additional envar to help with
 + `$PGPASSWD`: The user PostgreSQL login password.
 + `$DOMAIN`: The domain name.
 
-These envars also will be set:
+These envars also will be set and exported:
 
 + `CI=true`
 + `CONTINUOUS_INTEGRATION=true`
