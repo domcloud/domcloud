@@ -1,0 +1,23 @@
+---
+title: Backups
+---
+
+DOM Cloud provides both manual and automated backup.
+
+## Manual Backup
+
+DOM Cloud provides a manual backup feature provided from webmin backup. Your backup is stored at our S3-like storage. Backups [require `Lite` plan or above](../intro/compare-plans.mdx). You can download the backup in `.tar.gz` format.
+
+Currently, there's no limit and no expiration date of total webmin backup produced.
+
+You can restore a manual backup to existing hosting. The existing hosting must have an equal domain with what domain is currently backed up.
+
+## Automated Backup
+
+DOM Cloud provides daily snapshots of MariaDB and PostgreSQL for all databases for all websites even free ones too. The daily snapshot is taken for each table in the database in the `.sql` format. Any table beyond 500MB is ignored from this backup. The snapshot is usually performed in midnight UTC time.
+
+The automated backup is here to protect your website data from bad deployments, bad admins and hackers resulting in database corruption, if any of such case exists in the future. 
+
+To obtain the daily snapshot, please ask us.
+
+The automated backup script is [open sourced on GitHub](https://github.com/domcloud/db-dumper).
