@@ -4,36 +4,41 @@ sidebar_position: 8
 
 # Self Hosting
 
-Besides cloud servers, We offer you a way to self-host a server. This means the data is to be put to your machine to host a website online. Self hosted feature is completely free and it's a great option for:
+Besides cloud servers, We offer you a way to self-host the server. This means the server data is to be put to your machine (or another VPS providers) to host a website online. Self hosted feature is completely free and it's a great option for:
 
 - Devops, who behind a corporate rule that mandates all data is self hosted to an on-premise server
 - Developers, who finds our cloud services is not speedy enough or like to rent VPS elsewhere
-- Hobbyst, who like a taste being sysadmins on their own gearbox or even raspis.
+- Hobbyst, who like a taste being sysadmins on their own gearbox
 
-**Go to https://github.com/domcloud/container for getting started**. But if you still don't get the idea, read on.
+## Comparisons
 
-First, self-hosted mean you rent some VPS elsewhere. We don't sell VPS, heck we don't even own one &mdash; we just rent VPS from mix of multiple cloud provides.
+### DOM Cloud vs Other VPS Providers
 
-"If I rent my own VPS, why even I still need DOM Cloud?" Great question.
+We don't sell VPS because actually we rent VPS from mixes of cloud provides. DOM Cloud main selling point is the price-to-performance and great developer budget.
 
-## DOM Cloud vs Coolify
+Logically, it's much cheaper if you rent VPS elsewhere and just run our free installation script. But DOM Cloud offers much more than the software inside the VPS. We could imagine this better by comparing our self-hosted installations script to the one that most people adore: Coolify.
 
-You must already know [Coolify](https://coolify.io/) &mdash; it's everywhere. It's a cool piece of software to boot up any 5$ VPS to any kind of site with a single click. 
+### DOM Cloud vs Coolify
 
-If you think of it, Using DOM Cloud with self hosted does exactly the same thing as running Coolify. And both is offered free. However in the technical side it's very different.
+[Coolify](https://coolify.io/) is (quoted) *an open-source & self-hostable Heroku / Netlify / Vercel alternative*. It's a cool piece of software to boot up any VPS to any kind of site with a single click. 
+
+If you think of it, Using DOM Cloud with self hosted does exactly the same thing as running Coolify. And both script is offered free. However in the technical side it's very different.
 
 First, DOM Cloud Portal (https://my.domcloud.co) is still online even if your server down. If your sysadmin doing something wrong, you always gonna notice it in deployments log &mdash; because the other ways to access it like using SSH and databases are never given in "root" mode.
 
-Second, DOM Cloud servers is controlled using [DOM Cloud Bridge](https://github.com/domcloud/bridge) which is a headless REST API. The REST API is used by DOM Cloud Portal to perform deployments. Unlike Coolify, we do not use Docker, and do not run your software 24/7. This means our system requirement is waaay lower &mdash; even DOM Cloud Portal (https://my.domcloud.co) runs fine with 1GB RAM of VPS right now.
+Second, DOM Cloud servers is controlled using [DOM Cloud Bridge](https://github.com/domcloud/bridge) which is a headless REST API. The REST API is used by DOM Cloud Portal to perform deployments. Unlike Coolify, DOM Cloud servers do not use Docker and [efficiently repurpose idle traffic](../intro/security.mdx#no-background-services). This means our system requirement is waaay lower &mdash; even DOM Cloud Portal (https://my.domcloud.co) runs fine with 1GB RAM of VPS right now.
 
 Third, you get so many admin features working out of the box, things like virtualmin, database, online tools, etc.
 
-Some exception is this:
+## Self-Hosted vs Our Cloud Offering
+
+All software exists in the cloud should be the same as we offer in the self-hosted version. But some exception exists:
+
 - **Backup**. Backup requires S3 key, and we don't give our S3 keys to self hosted servers for security reason. You can add your own S3 key as Backup account in virtualmin backups with `domcloud-backups` as the bucket name.
 - **DNS**. DNS that propagates to *nsp.domcloud.co* / *nss.domcloud.co** only works inside our cloud servers for security reason. You must setup your own DNS servers. This also can be configured using Webmin.
 - **Free domains**. Free domain like `.dom.my.id` and `.domcloud.dev` only allowed with cloud servers for security reason. You must use your own domains.
 
-## DOM Cloud Server
+## Installation
 
 DOM Cloud servers are just a Linux server with some preinstalled software. This section is the guide for installing DOM Cloud software from a freshly installed VPS. We hosted our installation steps in GitHub: https://github.com/domcloud/container. 
 
@@ -70,18 +75,40 @@ The script installs:
 - File Editors like Git, Vim, Nano, Neovim, Lazygit, Ripgrep, Diff, Patch
 - Many other common unix tools, C compilers, and devel libraries
 
-## Assign to a domain
+## Post-Installation
 
-You need to assign the bridge API to a domain before it can be connected. Please assign A/AAAA of your domain to IP address of your server. If you use Cloudflare, please turn off the proxy. 
+Here's what you need to do after installing the software:
 
-Let's say you have a `mysite.com` domain, we'll assign bridge API to `bridge.mysite.com` by setting A+AAAA/CNAME record to your VPS. The `bridge.` subdomain is important since you can want to host an actual website to `mysite.com` not the internal bridge API.
+### Have a domain and a public IP
 
-After setting the DNS records correctly, open the Virtualmin UI at `https://bridge.mysite.com:2443` (note the HTTPS part!). Ignore the certificate warning for now.
+Please assign atleast an IPv4 public IP address. Having IPv6 is recommended as our software all supports IPv6.
+
+Then, please have a domain that will be set as the `bridge` API, then add A + AAAA records of your server. This domain should not be in the root/apex, because it's for your internal access, like `sgp.domcloud.co` not `domcloud.co`.
+
+If you don't have a public IP address or you're just running the whole VM behind NAT on your PC, please **have a domain** and install [Cloudfare Zero Trust HTTP Tunnel](https://medium.com/@tomer.klein/cloudflare-zero-trust-setting-up-my-first-tunnel-1276ae4b61a4) to port `80` inside the VM. 
+
+### Check Virtualmin Configuration
+
+Go to `https://<your bridge api domain>:2443` and log in with user `root`. Please make sure you're visiting it as `https` and not `http`. Ignore the certificate warning.
+
+1. Finish the post installation wizard
+2. Go to `Virtualmin` -> `System Settings` -> `Re-Check Configuration`
+
+Re-Checking configuration is important for Virtualmin adjusts to your new server, like saving records of actual IP addresses of it.
 
 If you forget the webmin root password, please run this in root SSH:
 
 + `/usr/share/webmin/changepass.pl /etc/webmin root YourNewPassword` for Ubuntu (change YourNewPassword)
 + `/usr/libexec/webmin/changepass.pl /etc/webmin root YourNewPassword` for Rocky (change YourNewPassword)
+
+
+### Assign the `bridge` API website to a domain
+
+You need to assign the bridge API to a domain before it can be connected. Please assign A/AAAA of your domain to IP address of your server. If you use Cloudflare, please turn off the proxy. The bridge API website by default is `localhost`, you need to change that.
+
+Let's say you have a `mysite.com` domain, we'll assign bridge API to `bridge.mysite.com` by setting A+AAAA record to your VPS. The `bridge.` subdomain is important since you can want to host an actual website to `mysite.com` not the internal bridge API.
+
+After setting the DNS records correctly, open the Virtualmin UI at `https://bridge.mysite.com:2443` (note the HTTPS part!). Ignore the certificate warning for now.
 
 Then go to the site > Manage Virtual Server > Change Domain Name.
 
@@ -103,6 +130,31 @@ systemctl restart webmin
 :::
 
 To apply the SSL to webmin, go to Tab Current Certificate and click `Copy SSL Certificate to Services` and `Set as Default Services Certificate`.
+
+### Working with Disk Quotas
+
+Linux disk quotas is essential to make storage size calculation works. We recommend you to use XFS for all disks and have a separate disk in `/home` for easier disk management.
+
+If you're already in XFS and using Rocky Linux, add `usrquota,grpquota` on the `/etc/fstab` to apply quotas for secondary disks. For root disk, use the following command and restart:
+
+```sh
+grubby --update-kernel=ALL --args="rootflags=usrquota,grpquota"
+```
+
+Other than that, we posted some solutions to common problem about disks here:
+
++ [How to Change root partition from EXT4 to XFS without changing boot disk](https://blog.wellosoft.net/how-to-change-root-partition-from-ext4-to-xfs-without-changing-boot-disk)
++ [How to Extend LVM Boot Partition on Oracle Cloud](https://blog.wellosoft.net/how-to-extend-lvm-boot-partition-on-oracle-cloud)
+
+### Add your server to DOM Cloud Portal
+
+Add your server [to our portal here](https://my.domcloud.co/user/server/), it's free. After that, you can create servers with your own self hosted server.
+
+## Is there any info about the `bridge` API?
+
+The Bridge API is [an open source](https://github.com/domcloud/bridge) headless API mainly for communication with DOM Cloud Portal. If you need a frontend to manage your server like a cPanel, it is already installed and it's called Virtualmin &mdash; the one you're accessing with at port 2443.
+
+The Bridge API recently has a Swagger documentation and you can check it online via [one of our cloud servers](https://sgp.domcloud.co/swagger/). The Bridge API mainly protected using `SECRET` .env as a `Bearer` token.
 
 ## What If I need to ask?
 
