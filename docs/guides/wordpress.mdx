@@ -88,6 +88,14 @@ This installs [WP CLI](https://wp-cli.org/). WP CLI is a utility to perform main
 [WP-CLI Documentation](https://developer.wordpress.org/cli/commands/). 
 WP CLI is a convenient tool to manage WordPress without using the site. This can be accessed via SSH.
 
+### Move Domain
+
+If you want to change the domain of WordPress, you need to alter the links.
+
+```bash
+wp search-replace 'https://olddomain.net' 'https://newdomain.com'
+```
+
 ### Reinstall WordPress
 
 If you believe your WordPress core files is altered you need to reinstall it.
