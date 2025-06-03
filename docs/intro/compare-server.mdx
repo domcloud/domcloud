@@ -5,15 +5,16 @@ sidebar_position: 5
 
 DOM Cloud has many servers and they are different spec depends on capacity. All customers enjoy equal computing power no matter their current plan.
 
-| Server Code (City, Country)  | vCPU | RAM | Disk | Backend | Has Docker |
-|------------------------------|------|-----|------|---------|------------|
-| SGA (Singapore)              | 2    | 2   | NVME | x64     | Yes        |
-| WDC (Washington DC, US)      | 4    | 8   | NVME | x64     | Yes        |
-| SGP (Singapore)              | 3    | 16  | NVME | arm64   | Yes        |
-| MNZ (Manassas, Virginia, US) | 10   | 16  | NVME | arm64   | Yes        |
-| NUE (Nuremberg, Germany)     | 6    | 8   | NVME | arm64   | Yes        |
-| OSK (Osaka, Japan)           | 1    | 6   | NVME | arm64   | No         |
-| SAO (Sao Paulo, Brazil)      | 1    | 6   | NVME | arm64   | No         |
+| Server Code (City, Country)  | vCPU | RAM | Disk | Backend | Has Docker | Minimum TLS |
+|------------------------------|------|-----|------|---------|------------|------------|
+| SGA (Singapore)              | 2    | 2   | NVME | x64     | Yes        | TLSv1.2    |
+| SGN (Singapore)              | 2    | 4   | NVME | x64     | Yes        | TLSv1.2    |
+| WDC (Washington DC, US)      | 4    | 8   | NVME | x64     | Yes        | TLSv1.2    |
+| SGP (Singapore)              | 3    | 16  | NVME | arm64   | Yes        | TLSv1.3    |
+| MNZ (Manassas, Virginia, US) | 10   | 16  | NVME | arm64   | Yes        | TLSv1.3    |
+| NUE (Nuremberg, Germany)     | 6    | 8   | NVME | arm64   | Yes        | TLSv1.3    |
+| OSK (Osaka, Japan)           | 1    | 6   | NVME | arm64   | No         | TLSv1.3    |
+| SAO (Sao Paulo, Brazil)      | 1    | 6   | NVME | arm64   | No         | TLSv1.3    |
 
 To make sure no abuse and no slow down, we have many [security features](./security.mdx) in place.
 
@@ -27,6 +28,12 @@ The X64 servers are only offered for subscribing users to solve ARM64 compatibil
 
 Beware when moving servers with different architecture -- like from MNZ to WDC, you need to reinstall all software
 and depedencies since binaries would be different. 
+
+## Minimum TLS Version
+
+The minimum TLS version for x64 servers is set to TLSv1.2 for wider TLS compatibility for subscribing users. If your system is tied with older systems that doesn't support TLSv1.3 you may need to move to server supporting TLSv1.2.
+
+Regular servers has TLSv1.3 as minimum TLS version for lesser handshake operation. This applies server wide and can't be customized per website.
 
 ## Docker Availability
 
