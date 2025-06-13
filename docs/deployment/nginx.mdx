@@ -5,9 +5,9 @@ sidebar_position: 1
 
 import ThemedImage from '@theme/ThemedImage';
 
-Our server uses NGINX as Reverse Proxy for HTTP and HTTPS traffic and it is used to serve static files and proxy requests to your app. You need to configure NGINX to tell us how to run your website.
+Our server uses [NGINX](https://nginx.org/en/) as the reverse proxy for HTTP and HTTPS and it is used to serve static files and proxy requests to your app. Configuring NGINX is a must so we know how to handle your website.
 
-Because it operates in OS-wide config, only a limited set of NGINX features are configurable. The only way to configure it is via the [deployment system](./deploy.mdx#nginx). Fornatunely, we also give you a special page to make customizing it much easier.
+Our NGINX is ran as a system-level daemon. To improve security, all of your content is run as a non-sudo user. Also, we only allow a limited set of NGINX features available to customize. The only way to customize it is via [the deployment system](./deploy.mdx#nginx).
 
 If you never heard NGINX before, you can read some of good resorces here: 
 + [Official documentation](https://nginx.org/en/docs/)
@@ -17,6 +17,8 @@ If you never heard NGINX before, you can read some of good resorces here:
 You can either edit NGINX config directly or via our interactive form.
 
 ## Editing NGINX config directly
+
+Editing NGINX config can be performed via Check -> Check NGINX.
 
 <ThemedImage
     sources={{
@@ -41,21 +43,7 @@ nginx: |
 
 Behind the scene it will convert your input to YAML script represented in our [NGINX deployment script reference](./deploy.mdx#nginx) hence you won't be able to change certain protected values such as IP addresses, PHP proxy pass, etc.
 
-:::info
-
-You won't be able to edit root path via direct script. To change it, use YAML config. 
-
-```yaml
-nginx:
-  root: public_html/public
-```
-
-Editing the root path this way will keep the rest config untouched.
-
-:::
-
 ## Editing NGINX config interactively
-
 
 <ThemedImage
     sources={{
@@ -69,9 +57,9 @@ Editing the root path this way will keep the rest config untouched.
     loading="lazy"
 />
 
-The interactive NGINX config contains easy-to-read NGINX config that covers about 80% of usage for popular frameworks. When you click Apply it will convert your input to YAML script represented in our [NGINX deployment script reference](./deploy.mdx#nginx). The current setup shown represents auto-detected config of your choosing. 
+The interactive NGINX config contains easy-to-read NGINX config that covers about 80% of usage for popular frameworks. When you use it will convert your form to a YAML script represented in our [deployment script](./deploy.mdx#nginx). The prefilled form shown represents the current config of your website. 
 
-Beware! Changing NGINX config this way may erases your customized NGINX config not represented using the form.
+Beware! Changing NGINX config this way may **erases** your customized NGINX config that cannot be represented using the form.
 
 | Option | What is it? |
 |---|---|
@@ -338,9 +326,9 @@ What about HTTP/2? We do not support it due to how NGINX handles it ALPN algorit
 
 ## TLSv1.3
 
-Our NGINX is configured to accept TLSv1.3 only, for stronger HTTPS security and lower TTFB (Time for first byte). TLS v1.3 is introduced in 2018, a 10 years gap from TLSv1.2 which introduced in 2008. TLSv1.3 sets minimum browser requirement to be fairly new, but we believe [95% browser coverage as of 2025](https://caniuse.com/tls1-3) should be no problem.
+Our NGINX is configured to accept TLSv1.3 only by default, for stronger HTTPS security and lower TTFB (Time for first byte). TLS v1.3 is introduced in 2018, a 10 years gap from TLSv1.2 which introduced in 2008. TLSv1.3 sets minimum browser requirement to be fairly new, but we believe [95% browser coverage as of 2025](https://caniuse.com/tls1-3) should be no problem.
 
-If you need to enable TLSv1.2 because of IE11 support or your webhook providers requires it, please use alternative proxy such as Cloudflare since we don't support TLSv1.2 at this moment.
+If you need to enable TLSv1.2 because of IE11 support or your webhook providers requires it, please move to [x64 servers](../intro/compare-server.mdx) or use Cloudflare Proxy.
 
 ## Static File Caching
 
