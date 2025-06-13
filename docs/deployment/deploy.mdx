@@ -6,9 +6,9 @@ sidebar_position: 2
 
 import ThemedImage from '@theme/ThemedImage';
 
-The deployment system is the main feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also can be used as a CI (Continous Integration) tool that perform some tasks inside your website.
+The deployment system is the main feature in DOM Cloud. It let's you to perform automatic configuration all by convenience of a single script. It's also can be used as a CI (Continous Integration) tool that perform some tasks inside your website. The deployment system is incremental &mdash; it's nothing more than a helper script than invokes SSH commands to the linux server.
 
-This page is meant for average technical user which already understand how SSH and linux commands works in a basic way. If not, please start from [Getting Started](../intro/getting-started.mdx) and [General NGINX Guide](./nginx.mdx) as we have a plenty of existing deployment templates. If you need to customize it, learn how SSH works first from other resources or ask someone to help you.
+This page is meant for technical users who already understand how SSH works. If not, please start from [Getting Started](../intro/getting-started.mdx) and [General NGINX Guide](./nginx.mdx) for a less technical background.
 
 The deployment system is accessible through `Setup` -> `Deploy` tab in the navigation once inside a website. 
 
@@ -30,9 +30,7 @@ The buttons explained:
 + **Debug Manually**: This opens [the editor menu](../features/editor.mdx) to let you open SSH/Filestash and do tasks manually.
 + **Start Over**: Open a dialog to let you create a new template or upload new apps here [like in the create tab](../intro/getting-started.mdx#create-a-website).
 
-For common script deployments, there's existing recipes from [the deployment page](../deployment/index.mdx) or [recipe repository](https://github.com/domcloud/recipes).
-
-We try to make it as simple as possible to understand. We also make our backend processing [open sourced](https://github.com/domcloud/bridge) so you take a better view of how it works if you want that.
+For common script deployments, there's existing recipes from [the deployment page](../deployment/index.mdx) or [recipe repository](https://github.com/domcloud/recipes). We've make our backend processing [open sourced](https://github.com/domcloud/bridge) so you take a better view of how it works if you want that.
 
 The script runner is in YAML format. Here's a simple overview:
 
@@ -47,7 +45,9 @@ Each of these keys are explained in details below.
 
 ## `source`
 
-Source URL from internet to replace all files in **~/public_html**. Common examples:
+A url to replace all files in **~/public_html**. This option will **overwrite** all contents inside the website. Use with caution!
+
+Common examples:
 
 ```yaml
 # Clones octocat.github.io to  "~/public_html"
@@ -72,13 +72,7 @@ If this value is set, it will download contents inside the directory. The conten
 
 :::tip
 
-This option is useful if your files is already in a public repository such as GitHub. If you need to upload the files from your local device use [Webmin File Manager](../features/editor.mdx).
-
-:::
-
-:::danger
-
-This option will always **overwrite** all contents inside the website. Use with caution!
+This option is useful if your files is already in a public repository such as GitHub. If you need to upload the files from your local device use the **Start Over** option or use Filestash or Webmin for manual uploads.
 
 :::
 
