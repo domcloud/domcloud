@@ -106,6 +106,12 @@ nginx:
 
 The proxfix process spawns and check if `TARGET=127.0.0.0:8080` still running. If it not, it will spawn `docker compose up --force-recreate -d` and forwarding requests to `TARGET` address, which is should be where docker listening to. To know the correct `TARGET` value, check to your `docker-compose.yml` file.
 
+## Connecting with Host Services
+
+If you want to use host services such as our MariaDB / PostgreSQL / Valkey database, you can use `10.0.2.2` as the IP for connecting host inside container. Do not use `host.docker.internal` as [it's not working](https://github.com/moby/moby/issues/47684) for rootless Docker.
+
+Using our shared database has a benefit of faster disk speed and be included to our daily backup.
+
 ## Playing Docker with SSH
 
 You can also play with Docker directly using SSH with `docker run -ti --rm ubuntu /bin/bash`. It will create a root Ubuntu shell that you can play with. To make your changes persistent, please consider writing a `Dockerfile` or explore existing container images with Docker Hub.
