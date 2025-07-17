@@ -131,16 +131,18 @@ Your docker instance is registered as user-scoped systemd service. You can call 
 
 You can also install or uninstall docker engine via SSH by running below.
 
-+ `dockerd-rootless-setuptool.sh install`
-+ `dockerd-rootless-setuptool.sh uninstall`
++ `dockerd-rootless-setuptool.sh install --skip-iptables`
++ `dockerd-rootless-setuptool.sh uninstall --skip-iptables`
 
 ## Troubleshooting
 
 ### 502 Bad Gateway
 
-This could means your docker container is unable to run. Please check `docker ps` and `docker logs`.
+This could means your docker container is unable to run. Please check `docker ps`, `docker logs`, `systemctl status docker --user`.
 
 If it running normally, please check if NGINX and docker compose running the same proxy_pass. Try deploying `service: docker-compose.yml` again. 
+
+If the docker stopped in SystemD, try enable it `systemctl start docker --user`, or try run `dockerd-rootless.sh` in SSH to see if any problem related to the daemon.
 
 ### `exec format error` in docker logs
 
