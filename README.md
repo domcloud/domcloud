@@ -4,13 +4,14 @@ This is the repository for [DOM Cloud website](https://domcloud.co/). It's built
 
 Other active repositories:
 
-- [domcloud/recipes](https://github.com/domcloud/recipes) - Templates for the runner
-- [domcloud/bridge](https://github.com/domcloud/bridge) - The runner service that manage servers
+- [domcloud/recipes](https://github.com/domcloud/recipes) - Templates for the deployment system
+- [domcloud/bridge](https://github.com/domcloud/bridge) - The daemon service that manage servers
+- [domcloud/container](https://github.com/domcloud/container) - Scripts for creating self-hosted servers
 
 Other important links:
 
-- [Portal](https://my.domcloud.co/) - The portal for accessing DOM Cloud service
+- [Portal](https://my.domcloud.co/) - The website for accessing DOM Cloud service
 - [Documentation](https://domcloud.co/docs/intro/) - Our online documentation 
-- [Discussions](https://github.com/domcloud/domcloud/discussions/) - Public discussion forum
+- [Discord](https://discord.gg/ee6xre2q8W) - Our public forum
 - [Status](https://stats.uptimerobot.com/AA77Xt9Jx8) - Our service uptime status
 
