@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Monitoring Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .server-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            overflow: hidden; /* Ensure content doesn't overflow rounded corners */
+        }
+        .server-card .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .server-card .card-body {
+            padding: 15px;
+        }
+        .status-badge {
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .status-ok {
+            background-color: #28a745; /* Green */
+            color: white;
+        }
+        .status-error {
+            background-color: #dc3545; /* Red */
+            color: white;
+        }
+        .status-warning {
+            background-color: #ffc107; /* Yellow */
+            color: #343a40;
+        }
+        .metric-item {
+            margin-bottom: 5px;
+        }
+        .metric-item strong {
+            display: inline-block;
+            width: 80px; /* Adjust as needed for alignment */
+        }
+        .progress {
+            height: 15px;
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #007bff;
+            background-color: #e7f1ff;
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+        }
+        .accordion-body pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap; /* Wrap long lines */
+            word-wrap: break-word; /* Break long words */
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-4">
+        <h1 class="text-center mb-4">Server Monitoring Dashboard</h1>
+        <div class="row" id="server-dashboard">
+            </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlcoVSarzXLjzlTZwWngSgBeFGRMPDUg6fP9ngBUD-ILCg" crossorigin="anonymous"></script>
+
+    <script>
+        const servers = [
+            { name: "sga.domcloud.co", endpoint: "https://sga.domcloud.co/status/test" },
+            { name: "sgx.domcloud.co", endpoint: "https://sgx.domcloud.co/status/test" },
+            { name: "wdc.domcloud.co", endpoint: "https://wdc.domcloud.co/status/test" },
+            { name: "nue.domcloud.co", endpoint: "https://nue.domcloud.co/status/test" },
+            { name: "sgp.domcloud.co", endpoint: "https://sgp.domcloud.co/status/test" },
+            { name: "mnz.domcloud.co", endpoint: "https://mnz.domcloud.co/status/test" },
+            { name: "osk.domcloud.co", endpoint: "https://osk.domcloud.co/status/test" },
+            { name: "sao.domcloud.co", endpoint: "https://sao.domcloud.co/status/test" }
+        ];
+
+        const dashboardContainer = document.getElementById('server-dashboard');
+
+        async function fetchServerStatus(server) {
+            try {
+                const response = await fetch(server.endpoint);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                renderServerCard(server, data);
+            } catch (error) {
+                console.error(`Error fetching data for ${server.name}:`, error);
+                renderServerCard(server, null, error.message); // Pass error to renderer
+            }
+        }
+
+        function renderServerCard(server, data, errorMessage = null) {
+            const colSize = servers.length > 4 ? 'col-lg-3 col-md-4 col-sm-6' : 'col-lg-4 col-md-6 col-sm-12';
+            const cardHtml = `
+                <div class="${colSize}">
+                    <div class="card server-card h-100">
+                        <div class="card-header">
+                            <span>${server.name}</span>
+                            <span id="status-${server.name.replace(/\./g, '-')}" class="status-badge"></span>
+                        </div>
+                        <div class="card-body">
+                            ${data ? `
+                                <div class="metric-item"><strong>Load Avg:</strong> <span id="loadavg-${server.name.replace(/\./g, '-')}"></span></div>
+                                <div class="metric-item"><strong>Memory:</strong> <div class="progress" role="progressbar" aria-label="Memory usage" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <div id="mem-progress-${server.name.replace(/\./g, '-')}" class="progress-bar" style="width: 0%"></div>
+                                </div></div>
+                                <div class="metric-item"><strong>Storage:</strong> <div class="progress" role="progressbar" aria-label="Storage usage" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <div id="storage-progress-${server.name.replace(/\./g, '-')}" class="progress-bar" style="width: 0%"></div>
+                                </div></div>
+                                <div class="accordion accordion-flush mt-3" id="accordionFlush-${server.name.replace(/\./g, '-')}">
+                                    ${Object.keys(data.logs).map((logKey, index) => `
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-${server.name.replace(/\./g, '-')}-${logKey}" aria-expanded="false" aria-controls="flush-collapse-${server.name.replace(/\./g, '-')}-${logKey}">
+                                                    ${logKey.charAt(0).toUpperCase() + logKey.slice(1)} Logs
+                                                </button>
+                                            </h2>
+                                            <div id="flush-collapse-${server.name.replace(/\./g, '-')}-${logKey}" class="accordion-collapse collapse" data-bs-parent="#accordionFlush-${server.name.replace(/\./g, '-')}">
+                                                <div class="accordion-body">
+                                                    <pre>${JSON.stringify(data.logs[logKey], null, 2)}</pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="timestamp mt-3 text-end" id="timestamp-${server.name.replace(/\./g, '-')}"></div>
+                            ` : `
+                                <div class="alert alert-danger" role="alert">
+                                    Failed to fetch data: ${errorMessage || 'Unknown error'}
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+            dashboardContainer.insertAdjacentHTML('beforeend', cardHtml);
+
+            if (data) {
+                updateServerCardMetrics(server, data);
+            } else {
+                // If there's an error, the status badge is already handled by the error message.
+                // We can explicitly set it to ERROR for consistency.
+                const statusBadge = document.getElementById(`status-${server.name.replace(/\./g, '-')}`);
+                statusBadge.textContent = 'ERROR';
+                statusBadge.classList.add('status-error');
+            }
+        }
+
+        function updateServerCardMetrics(server, data) {
+            const serverNameId = server.name.replace(/\./g, '-');
+
+            // Update Status Badge
+            const statusBadge = document.getElementById(`status-${serverNameId}`);
+            statusBadge.textContent = data.status;
+            if (data.status === "OK") {
+                statusBadge.classList.add('status-ok');
+            } else if (data.status === "ERROR") {
+                statusBadge.classList.add('status-error');
+            } else {
+                statusBadge.classList.add('status-warning'); // For other statuses like WARNING
+            }
+
+            // Update Load Average
+            const loadAvgElement = document.getElementById(`loadavg-${serverNameId}`);
+            if (data.logs && data.logs.cpuinfo && data.logs.cpuinfo.length > 0) {
+                const cpuInfoLine = data.logs.cpuinfo[0];
+                const loadAvgMatch = cpuInfoLine.match(/load average: ([\d.]+), ([\d.]+), ([\d.]+)/);
+                if (loadAvgMatch) {
+                    loadAvgElement.textContent = loadAvgMatch[0];
+                } else {
+                    loadAvgElement.textContent = 'N/A';
+                }
+            } else {
+                loadAvgElement.textContent = 'N/A';
+            }
+
+            // Update Memory Usage
+            const memProgress = document.getElementById(`mem-progress-${serverNameId}`);
+            if (data.logs && data.logs.meminfo && data.logs.meminfo.length > 1) {
+                const memLine = data.logs.meminfo[1]; // "Mem: total used free shared buff/cache available"
+                const memValues = memLine.split(/\s+/).filter(Boolean);
+                if (memValues.length >= 5) {
+                    const totalMem = parseFloat(memValues[1].replace('Gi', '')) || 0; // Assuming GiB
+                    const usedMem = parseFloat(memValues[2].replace('Gi', '')) || 0;
+                    if (totalMem > 0) {
+                        const usagePercent = ((usedMem / totalMem) * 100).toFixed(2);
+                        memProgress.style.width = `${usagePercent}%`;
+                        memProgress.setAttribute('aria-valuenow', usagePercent);
+                        memProgress.textContent = `${usagePercent}% (${usedMem}Gi / ${totalMem}Gi)`;
+                        if (usagePercent > 80) { // High usage
+                            memProgress.classList.add('bg-danger');
+                        } else if (usagePercent > 60) { // Medium usage
+                            memProgress.classList.add('bg-warning');
+                        } else {
+                            memProgress.classList.add('bg-success');
+                        }
+                    } else {
+                        memProgress.textContent = 'N/A';
+                        memProgress.classList.add('bg-secondary');
+                    }
+                } else {
+                    memProgress.textContent = 'N/A';
+                    memProgress.classList.add('bg-secondary');
+                }
+            } else {
+                memProgress.textContent = 'N/A';
+                memProgress.classList.add('bg-secondary');
+            }
+
+            // Update Storage Usage
+            const storageProgress = document.getElementById(`storage-progress-${serverNameId}`);
+            if (data.logs && data.logs.storage && data.logs.storage.length > 0) {
+                const rootStorageLine = data.logs.storage.find(line => line.includes(' / ')); // Find root partition
+                if (rootStorageLine) {
+                    const storageValues = rootStorageLine.split(/\s+/).filter(Boolean);
+                    if (storageValues.length >= 5) {
+                        const usagePercent = parseFloat(storageValues[4].replace('%', ''));
+                        storageProgress.style.width = `${usagePercent}%`;
+                        storageProgress.setAttribute('aria-valuenow', usagePercent);
+                        storageProgress.textContent = `${usagePercent}% (${storageValues[1]} / ${storageValues[3]})`;
+                        if (usagePercent > 80) { // High usage
+                            storageProgress.classList.add('bg-danger');
+                        } else if (usagePercent > 60) { // Medium usage
+                            storageProgress.classList.add('bg-warning');
+                        } else {
+                            storageProgress.classList.add('bg-success');
+                        }
+                    } else {
+                        storageProgress.textContent = 'N/A';
+                        storageProgress.classList.add('bg-secondary');
+                    }
+                } else {
+                    storageProgress.textContent = 'N/A';
+                    storageProgress.classList.add('bg-secondary');
+                }
+            } else {
+                storageProgress.textContent = 'N/A';
+                storageProgress.classList.add('bg-secondary');
+            }
+
+            // Update Timestamp
+            const timestampElement = document.getElementById(`timestamp-${serverNameId}`);
+            if (data.timestamp) {
+                const date = new Date(data.timestamp);
+                timestampElement.textContent = `Last updated: ${date.toLocaleString()}`;
+            }
+        }
+
+        // Initial fetch and render for all servers
+        function initializeDashboard() {
+            dashboardContainer.innerHTML = ''; // Clear existing cards
+            servers.forEach(server => {
+                fetchServerStatus(server);
+            });
+        }
+
+        // Periodically refresh the data (e.g., every 30 seconds)
+        setInterval(initializeDashboard, 30000); // 30 seconds
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+    </script>
+</body>
+</html>
