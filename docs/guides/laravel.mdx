@@ -132,7 +132,27 @@ php artisan view:clear
 + Frontend changes that requires frontend tooling, which you need to rebuild by `npm run build`
 + Other stuff [related to PHP/NGINX configuration](../deployment/php.mdx#files-do-not-change)
 
+### Enabling Laravel Queue
 
+To enable  Laravel Queue via cronjob, open SSH and run `EDITOR=nano crontab -e`:
+
+```sh
+@hourly cd public_html && php artisan queue:work --once &>> ./logs/cron.log
+```
+
+Note that this `php` refers to `/bin/php`, which always uses latest version. If you need other version, try use such as `php83`.
+
+To make it always standby, consider implementing timeout:
+
+```sh
+@hourly cd public_html && timeout 1h php artisan queue:work &>> ./logs/cron.log
+```
+
+:::danger
+
+Do not omit `--once` or `timeout`! In doing so you're risking the whole server to get OOM.
+
+:::
 
 ### Enable Laravel UI
 
