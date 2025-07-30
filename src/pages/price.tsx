@@ -37,7 +37,7 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>4 GiB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>5 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
                                         <FaGlobe /> <span><b>20 GiB</b> Data Network / month</span>
@@ -64,7 +64,7 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>10 GiB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>12 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
                                         <FaGlobe /> <span><b>100 GiB</b> Data Network / month</span>
@@ -91,7 +91,7 @@ export default function Pricing() {
                                         <p><small>A month</small></p>
                                     </div>
                                     <div className="item">
-                                        <FaHdd /> <span><b>20 GiB</b> Total Storage</span>
+                                        <FaHdd /> <span><b>25 GiB</b> Total Storage</span>
                                     </div>
                                     <div className="item">
                                         <FaGlobe /> <span><b>500 GiB</b> Data Network / month</span>
