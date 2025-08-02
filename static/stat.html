@@ -45,7 +45,6 @@
         }
         .status-error {
             background-color: #dc3545; /* Red */
-            color: white;
         }
         .status-warning {
             background-color: #ffc107; /* Yellow */
@@ -162,7 +161,7 @@
             }
 
             const cardHtml = `
-                <div class="col-12" id="card-container-${serverNameId}"> <div class="card server-card h-100">
+                <div class="col-12 my-3" id="card-container-${serverNameId}"> <div class="card server-card h-100">
                         <div class="card-header">
                             <span>${server.name}</span>
                             <span id="status-badge-${serverNameId}" class="status-badge"></span>
