@@ -13,10 +13,6 @@
     src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
   <style>
-    body {
-      background-color: #f8f9fa;
-    }
-
     #app {
       transition: opacity 0.5s;
     }
@@ -142,7 +138,7 @@
 
 <body>
 
-  <div id="app" :class="{ 'loaded': initialLoadComplete }" class="container-fluid my-2">
+  <div id="app" :class="{ 'loaded': initialLoadComplete }" class="container-fluid my-4">
     <div class="d-flex align-items-center mb-4">
       <button v-if="selectedServer" @click="selectServer(null)" class="btn btn-outline-secondary me-3">
         <i class="fa-solid fa-arrow-left"></i> Back
@@ -150,6 +146,9 @@
       <h1 class="text-center flex-grow-1 m-0">
         {{ selectedServer ? selectedServer.name : 'Server Monitoring Dashboard' }}
       </h1>
+      <button @click="toggleTheme" class="btn btn-outline-secondary ms-3">
+        <i class="fa-solid" :class="theme === 'light' ? 'fa-moon' : 'fa-sun'"></i>
+      </button>
     </div>
 
     <div v-if="!selectedServer" class="row">
@@ -330,7 +329,35 @@
           Promise.allSettled(fetchPromises).then(() => initialLoadComplete.value = true);
         };
 
-        onMounted(initializeDashboard);
+        // 1. STATE: Create reactive state for the theme
+        const theme = ref('light');
+
+        // 2. TOGGLE FUNCTION: Create a function to switch the theme
+        const toggleTheme = () => {
+          theme.value = theme.value === 'light' ? 'dark' : 'light';
+        };
+
+        // 3. WATCHER: Watch for theme changes and apply them
+        watch(theme, (newTheme) => {
+          // Set the data-bs-theme attribute on the <html> element
+          document.documentElement.setAttribute('data-bs-theme', newTheme);
+          // Save the user's preference to localStorage
+          localStorage.setItem('theme', newTheme);
+        }, { immediate: true }); // 'immediate' runs the watcher right away on load
+
+        onMounted(() => {
+          const savedTheme = localStorage.getItem('theme');
+          const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+          if (savedTheme) {
+            theme.value = savedTheme;
+          } else if (userPrefersDark) {
+            theme.value = 'dark';
+          }
+
+          // This line is from your existing code, keep it.
+          initializeDashboard();
+        });
 
         // --- Chart Management ---
         const destroyCharts = () => {
@@ -404,8 +431,8 @@
 
             const getYAxisUnit = (chartKey) => {
               const lowerKey = chartKey.toLowerCase();
-              if (lowerKey === 'cpu' || lowerKey === 'mem') return '%';
-              if (lowerKey === 'disk' || lowerKey === 'net' || lowerKey === 'virt') return 'B/s';
+              if (lowerKey === 'cpu' || lowerKey === 'mem' || lowerKey === 'virt') return '%';
+              if (lowerKey === 'disk' || lowerKey === 'net') return 'B/s';
               return '';
             };
 
@@ -525,6 +552,7 @@
           servers,
           initialLoadComplete,
           selectedServer,
+          theme,
           selectServer,
           getStatusText,
           getStatusClass,
@@ -535,6 +563,7 @@
           formatLog,
           formatTimestamp,
           getFpmStatusClass,
+          toggleTheme
         };
       }
     }).mount('#app');
