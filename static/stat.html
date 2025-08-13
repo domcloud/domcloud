@@ -8,6 +8,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
   <style>
     body {
       background-color: #f8f9fa;
@@ -135,11 +139,12 @@
   </style>
 </head>
 
+
 <body>
 
-  <div id="app" class="container-fluid my-2">
+  <div id="app" :class="{ 'loaded': initialLoadComplete }" class="container-fluid my-2">
     <div class="d-flex align-items-center mb-4">
-      <button v-if="selectedServer" @click="selectedServer = null" class="btn btn-outline-secondary me-3">
+      <button v-if="selectedServer" @click="selectServer(null)" class="btn btn-outline-secondary me-3">
         <i class="fa-solid fa-arrow-left"></i> Back
       </button>
       <h1 class="text-center flex-grow-1 m-0">
@@ -171,8 +176,8 @@
                 </div>
               </div>
               <div class="metric-item"><strong>Disk:</strong>
-                <div v-for="disk in getStorageList(server.data)" :key="disk.mountPoint" class="metric-item">
-                  <div v-if="!disk.mountPoint.startsWith('/boot')" class="progress" role="progressbar"
+                <div v-for="disk in getStorageList(server.data)" :key="disk.mountPoint">
+                  <div v-if="!disk.mountPoint.startsWith('/boot')" class="progress mt-1" role="progressbar"
                     :title="`${disk.mountPoint}: ${disk.used} of ${disk.total}`">
                     <div class="progress-bar" :class="getProgressBarClass(disk.percent)"
                       :style="{ width: disk.percent + '%' }">
@@ -182,8 +187,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-sm btn-outline-primary w-100 mt-auto" @click="selectServer(server)"
-              :disabled="!server.data">
+            <button class="btn btn-sm btn-outline-primary w-100 mt-auto" @click="selectServer(server)">
               View Full Info
             </button>
           </div>
@@ -195,8 +199,8 @@
       <div class="card server-card">
         <div class="card-body">
           <div v-if="selectedServer.data" class="row">
-            <div class="col-md-4 metric-column">
-              <h4>System Metrics</h4>
+            <div class="col-lg-4 metric-column">
+              <h4>System Logs & Status</h4>
               <div class="metric-item"><strong>Load Avg:</strong> <span>{{ getLoadAvg(selectedServer.data) }}</span>
               </div>
               <div class="metric-item"><strong>Memory:</strong>
@@ -208,39 +212,60 @@
                   </div>
                 </div>
               </div>
-              <h4>Storage</h4>
-              <div v-for="disk in getStorageList(selectedServer.data)" :key="disk.mountPoint" class="metric-item d-flex">
-                <strong>{{ disk.mountPoint }}</strong>
-                <div class="progress flex-grow-1" role="progressbar" :title="`Used: ${disk.used}, Total: ${disk.total}`">
+              <strong>Storage</strong>
+              <div v-for="disk in getStorageList(selectedServer.data)" :key="disk.mountPoint"
+                class="metric-item d-flex align-items-center mt-2">
+                <span class="me-2" style="min-width: 50px;">{{ disk.mountPoint }}</span>
+                <div class="progress flex-grow-1" role="progressbar"
+                  :title="`Used: ${disk.used}, Total: ${disk.total}`">
                   <div class="progress-bar" :class="getProgressBarClass(disk.percent)"
                     :style="{ width: disk.percent + '%' }">
                     {{ disk.percent }}%
                   </div>
                 </div>
               </div>
-              <div class="metric-item"><strong>Quota:</strong>
+              <div class="mt-3">
+                <h4>CPU & Mem Info</h4>
+                <pre class="log-pre">{{ formatLog(selectedServer.data.logs.cpuinfo) }}</pre>
+                <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.meminfo) }}</pre>
+                <h4>Quota</h4>
                 <pre class="log-pre">{{ formatLog(selectedServer.data.logs.quota) }}</pre>
-              </div>
-              <h4>CPU & Mem Info</h4>
-              <pre class="log-pre">{{ formatLog(selectedServer.data.logs.cpuinfo) }}</pre>
-              <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.meminfo) }}</pre>
-              <h4>Nginx</h4>
-              <pre class="log-pre">{{ formatLog(selectedServer.data.logs.nginx) }}</pre>
-              <h4>Named</h4>
-              <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.named) }}</pre>
-              <h4>FPM Status</h4>
-              <div v-if="selectedServer.data.logs.fpms && Object.keys(selectedServer.data.logs.fpms).length > 0">
-                <div v-for="(status, service) in selectedServer.data.logs.fpms" :key="service"
-                  class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="me-2 text-truncate" :title="service">{{ service }}</span>
-                  <span class="badge" :class="getFpmStatusClass(status)">{{ status }}</span>
+                <h4>Nginx</h4>
+                <pre class="log-pre">{{ formatLog(selectedServer.data.logs.nginx) }}</pre>
+                <h4>Named</h4>
+                <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.named) }}</pre>
+                <strong class="mt-2 d-block">FPM Status</strong>
+                <div v-if="selectedServer.data.logs.fpms && Object.keys(selectedServer.data.logs.fpms).length > 0">
+                  <div v-for="(status, service) in selectedServer.data.logs.fpms" :key="service"
+                    class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="me-2 text-truncate" :title="service">{{ service }}</span>
+                    <span class="badge" :class="getFpmStatusClass(status)">{{ status }}</span>
+                  </div>
                 </div>
               </div>
-              <div v-else>
-                <span class="text-muted">N/A</span>
+            </div>
+
+            <div class="col-lg-8 metric-column">
+              <h4>Performance Stats</h4>
+              <div v-if="selectedServer.statsLoading" class="loading-placeholder">
+                <div class="spinner-border" role="status"></div>
+                <span class="mt-2">Loading performance data...</span>
+              </div>
+              <div v-else-if="selectedServer.statsError" class="alert alert-warning">
+                Could not load performance stats: {{ selectedServer.statsError }}
+              </div>
+              <div v-else-if="selectedServer.stats" class="row">
+                <div v-for="key in Object.keys(selectedServer.stats)" :key="key" class="col-xl-6">
+                  <h5>{{ key.charAt(0).toUpperCase() + key.slice(1) }}</h5>
+                  <div class="chart-container">
+                    <canvas :id="`${key}-chart`"></canvas>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-12 timestamp mt-3 text-end">{{ formatTimestamp(selectedServer.data.timestamp) }}</div>
+
+            <div class="col-12 timestamp mt-3 text-end">Last log update: {{
+              formatTimestamp(selectedServer.data.timestamp) }}</div>
           </div>
         </div>
       </div>
@@ -248,29 +273,29 @@
   </div>
 
   <script>
-    const { createApp, ref, onMounted } = Vue;
+    const { createApp, ref, onMounted, watch, nextTick } = Vue;
 
     createApp({
       setup() {
-        // --- Reactive State ---
         const servers = ref([
-          { name: "sgx.domcloud.co", endpoint: "https://sgx.domcloud.co/status/test", data: null, error: null, isLoading: true },
-          { name: "wdc.domcloud.co", endpoint: "https://wdc.domcloud.co/status/test", data: null, error: null, isLoading: true },
-          { name: "nue.domcloud.co", endpoint: "https://nue.domcloud.co/status/test", data: null, error: null, isLoading: true },
-          { name: "sgp.domcloud.co", endpoint: "https://sgp.domcloud.co/status/test", data: null, error: null, isLoading: true },
-          { name: "mnz.domcloud.co", endpoint: "https://mnz.domcloud.co/status/test", data: null, error: null, isLoading: true },
-          { name: "osk.domcloud.co", endpoint: "https://osk.domcloud.co/status/test", data: null, error: null, isLoading: true },
-          { name: "sao.domcloud.co", endpoint: "https://sao.domcloud.co/status/test", data: null, error: null, isLoading: true }
+          { name: "sgx.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true },
+          { name: "wdc.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true },
+          { name: "nue.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true },
+          { name: "sgp.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true },
+          { name: "mnz.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true },
+          { name: "osk.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true },
+          { name: "sao.domcloud.co", data: null, stats: null, statsLoading: false, statsError: null, error: null, isLoading: true }
         ]);
         const initialLoadComplete = ref(false);
-        const selectedServer = ref(null); // Holds the server object for the detail view
+        const selectedServer = ref(null);
+        let chartInstances = {};
 
-        // --- Methods ---
+        // --- Data Fetching ---
         const fetchServerStatus = async (server) => {
           server.isLoading = true;
           server.error = null;
           try {
-            const response = await fetch(server.endpoint);
+            const response = await fetch(`https://${server.name}/status/test`);
             if (!response.ok) {
               server.error = true;
             }
@@ -283,16 +308,157 @@
           }
         };
 
+        const fetchServerStats = async (server) => {
+          if (!server) return;
+          server.statsLoading = true;
+          server.statsError = null;
+          try {
+            const response = await fetch(`https://${server.name}/status/stats`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            server.stats = await response.json();
+            delete server.stats.temp;
+          } catch (err) {
+            server.statsError = err.message;
+            server.stats = null;
+          } finally {
+            server.statsLoading = false;
+          }
+        };
+
         const initializeDashboard = () => {
           const fetchPromises = servers.value.map(s => fetchServerStatus(s));
           Promise.allSettled(fetchPromises).then(() => initialLoadComplete.value = true);
         };
 
+        onMounted(initializeDashboard);
+
+        // --- Chart Management ---
+        const destroyCharts = () => {
+          Object.values(chartInstances).forEach(chart => chart.destroy());
+          chartInstances = {};
+        };
+
+        const renderCharts = (statsData) => {
+          destroyCharts();
+          if (!statsData) return;
+
+          const colors = {
+            read: '#0d6efd',
+            write: '#198754',
+            sent: '#0d6efd',
+            received: '#198754',
+          };
+
+          const chartKeys = Object.keys(statsData);
+          chartKeys.forEach(key => {
+            const canvas = document.getElementById(`${key}-chart`);
+            if (!canvas) return;
+
+            let datasets;
+            const metricData = statsData[key];
+
+            // NEW: Special handling for 'disk' and 'net' with the y: [val1, val2] structure
+            if ((key === 'disk' || key === 'net') && Array.isArray(metricData)) {
+              const labels = (key === 'disk') ? ['read', 'write'] : ['sent', 'received'];
+              const lineColors = (key === 'disk') ? [colors.read, colors.write] : [colors.sent, colors.received];
+
+              datasets = labels.map((label, index) => {
+                return {
+                  label: label.toUpperCase(),
+                  // Transform the data: create a new point using the y value from the correct index
+                  data: metricData.map(point => ({
+                    x: point.x * 1000,
+                    y: point.y[index]
+                  })),
+                  borderColor: lineColors[index],
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  tension: 0.1,
+                  fill: false,
+                };
+              });
+
+            } else if (metricData && typeof metricData === 'object' && !Array.isArray(metricData)) {
+              // Previous logic for other types of nested objects (fallback)
+              datasets = Object.keys(metricData).map(subKey => ({
+                label: subKey.toUpperCase(),
+                data: metricData[subKey].map(point => ({ ...point, x: point.x * 1000 })),
+                borderColor: colors[subKey] || '#6c757d',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.1,
+                fill: false,
+              }));
+            } else {
+              // Previous logic for simple arrays (e.g., cpu, mem)
+              datasets = [{
+                label: key.toUpperCase(),
+                data: metricData.map(point => ({ ...point, x: point.x * 1000 })),
+                borderColor: '#007bff',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.1,
+                fill: false,
+              }];
+            }
+
+            const getYAxisUnit = (chartKey) => {
+              const lowerKey = chartKey.toLowerCase();
+              if (lowerKey === 'cpu' || lowerKey === 'mem') return '%';
+              if (lowerKey === 'disk' || lowerKey === 'net' || lowerKey === 'virt') return 'B/s';
+              return '';
+            };
+
+            const chartOptions = {
+              responsive: true,
+              maintainAspectRatio: false,
+              interaction: { mode: 'index', intersect: false },
+              parsing: { xAxisKey: 'x', yAxisKey: 'y' },
+              scales: {
+                x: {
+                  type: 'time',
+                  time: { unit: 'hour', tooltipFormat: 'PP pp', displayFormats: { hour: 'ha' } },
+                  ticks: { maxRotation: 0, major: { enabled: true } },
+                },
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    callback: (value) => value + ' ' + getYAxisUnit(key)
+                  }
+                }
+              },
+              plugins: {
+                legend: { display: datasets.length > 1 }
+              }
+            };
+
+            chartInstances[key] = new Chart(canvas, { type: 'line', data: { datasets }, options: chartOptions });
+          });
+        };
+        // Watch for server selection changes to fetch stats and render/destroy charts
+        watch(selectedServer, (newServer, oldServer) => {
+          destroyCharts();
+          if (newServer) {
+            if (!newServer.stats) { // Fetch only if not already loaded
+              fetchServerStats(newServer);
+            }
+          }
+        });
+
+        // Watch for the stats data itself to render charts
+        watch(() => selectedServer.value?.stats, (newStats) => {
+          if (newStats) {
+            nextTick(() => { // Wait for the DOM to be updated with the canvases
+              renderCharts(newStats);
+            });
+          }
+        }, { deep: true });
+
+        // --- UI Methods & Helpers ---
         const selectServer = (server) => {
           selectedServer.value = server;
         };
 
-        // --- Helpers for Template ---
         const getStatusText = (server) => {
           if (server.isLoading) return 'LOADING';
           if (server.error) return 'ERROR';
@@ -303,7 +469,7 @@
           const status = getStatusText(server);
           return {
             'status-ok': status === 'OK',
-            'status-error': status === 'ERROR',
+            'status-error': Boolean(server.error),
             'status-warning': !['OK', 'ERROR', 'LOADING'].includes(status),
             'status-loading': status === 'LOADING'
           };
@@ -315,45 +481,27 @@
           return match ? match[1] : 'N/A';
         };
 
-        const parseSizeToGB = (str) => {
-          if (!str) return 0;
-          const val = parseFloat(str.replace(/[^0-9.]/g, ''));
-          if (str.toLowerCase().includes('ki')) return val / 1048576;
-          if (str.toLowerCase().includes('mi')) return val / 1024;
-          if (str.toLowerCase().includes('gi')) return val;
-          return val / 1073741824; // Bytes
-        };
-
         const getMemoryInfo = (data) => {
           const line = data?.logs?.meminfo?.[1] || '';
           const vals = line.split(/\s+/).filter(Boolean);
           if (vals.length < 3) return { percent: 0, used: 'N/A', total: 'N/A' };
           const [totalStr, usedStr] = [vals[1], vals[2]];
-          const percent = parseSizeToGB(totalStr) > 0 ? ((parseSizeToGB(usedStr) / parseSizeToGB(totalStr)) * 100).toFixed(0) : 0;
+          const totalGb = parseFloat(totalStr.replace(/[^\d.]/g, '')) / (totalStr.includes('Mi') ? 1024 : 1);
+          const usedGb = parseFloat(usedStr.replace(/[^\d.]/g, '')) / (usedStr.includes('Mi') ? 1024 : 1);
+          const percent = totalGb > 0 ? ((usedGb / totalGb) * 100).toFixed(0) : 0;
           return { percent, used: usedStr, total: totalStr };
         };
 
         const getStorageList = (data) => {
           const storageLogs = data?.logs?.storage;
-          if (!Array.isArray(storageLogs) || storageLogs.length === 0) {
-            return []; // Return empty array if no data
-          }
-
-          return storageLogs
-            .map(line => {
-              const parts = line.split(/\s+/).filter(Boolean);
-              if (parts.length < 6) return null; // Ignore invalid or header lines
-
-              // Assumes format: Filesystem Size Used Avail Use% Mounted on
-              const mountPoint = parts[parts.length - 1];
-              const percent = parseFloat(parts[parts.length - 2]) || 0;
-              const used = parts[parts.length - 4];
-              const total = parts[parts.length - 5];
-
-              return { mountPoint, percent, used, total };
-            })
-            .filter(Boolean); // Filter out any null entries from invalid lines
+          if (!Array.isArray(storageLogs)) return [];
+          return storageLogs.map(line => {
+            const parts = line.split(/\s+/).filter(Boolean);
+            if (parts.length < 6) return null;
+            return { mountPoint: parts[5], percent: parseFloat(parts[4]) || 0, used: parts[2], total: parts[1] };
+          }).filter(Boolean);
         };
+
         const getProgressBarClass = (percent) => {
           if (percent > 80) return 'bg-danger';
           if (percent > 60) return 'bg-warning';
@@ -367,15 +515,12 @@
         };
 
         const getFpmStatusClass = (status) => {
-          return status.length == 0 ? 'bg-success' : 'bg-danger';
+          if (typeof status !== 'string') return 'bg-secondary';
+          return status.toLowerCase().includes('active') ? 'bg-success' : 'bg-danger';
         };
 
-        const formatTimestamp = (ts) => ts ? `Last updated: ${new Date(ts).toLocaleString()}` : '';
+        const formatTimestamp = (ts) => ts ? new Date(ts).toLocaleString('id-ID') : '';
 
-        // --- Lifecycle Hook ---
-        onMounted(initializeDashboard);
-
-        // --- Expose to Template ---
         return {
           servers,
           initialLoadComplete,
