@@ -120,8 +120,6 @@
       padding: 8px;
       border-radius: 5px;
       overflow: auto;
-      white-space: pre-wrap;
-      word-wrap: break-word;
       font-size: 0.8em;
       max-height: 150px;
       min-height: 50px;
@@ -139,7 +137,7 @@
 
 <body>
 
-  <div id="app" class="container-fluid">
+  <div id="app" class="container-fluid my-2">
     <div class="d-flex align-items-center mb-4">
       <button v-if="selectedServer" @click="selectedServer = null" class="btn btn-outline-secondary me-3">
         <i class="fa-solid fa-arrow-left"></i> Back
@@ -197,7 +195,7 @@
       <div class="card server-card">
         <div class="card-body">
           <div v-if="selectedServer.data" class="row">
-            <div class="col-md-3 metric-column">
+            <div class="col-md-4 metric-column">
               <h4>System Metrics</h4>
               <div class="metric-item"><strong>Load Avg:</strong> <span>{{ getLoadAvg(selectedServer.data) }}</span>
               </div>
@@ -211,9 +209,9 @@
                 </div>
               </div>
               <h4>Storage</h4>
-              <div v-for="disk in getStorageList(selectedServer.data)" :key="disk.mountPoint" class="metric-item">
+              <div v-for="disk in getStorageList(selectedServer.data)" :key="disk.mountPoint" class="metric-item d-flex">
                 <strong>{{ disk.mountPoint }}</strong>
-                <div class="progress" role="progressbar" :title="`Used: ${disk.used}, Total: ${disk.total}`">
+                <div class="progress flex-grow-1" role="progressbar" :title="`Used: ${disk.used}, Total: ${disk.total}`">
                   <div class="progress-bar" :class="getProgressBarClass(disk.percent)"
                     :style="{ width: disk.percent + '%' }">
                     {{ disk.percent }}%
@@ -223,20 +221,24 @@
               <div class="metric-item"><strong>Quota:</strong>
                 <pre class="log-pre">{{ formatLog(selectedServer.data.logs.quota) }}</pre>
               </div>
-            </div>
-            <div class="col-md-3 metric-column">
               <h4>CPU & Mem Info</h4>
               <pre class="log-pre">{{ formatLog(selectedServer.data.logs.cpuinfo) }}</pre>
               <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.meminfo) }}</pre>
-            </div>
-            <div class="col-md-3 metric-column">
-              <h4>Nginx & Named</h4>
+              <h4>Nginx</h4>
               <pre class="log-pre">{{ formatLog(selectedServer.data.logs.nginx) }}</pre>
+              <h4>Named</h4>
               <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.named) }}</pre>
-            </div>
-            <div class="col-md-3 metric-column">
               <h4>FPM Status</h4>
-              <pre class="log-pre">{{ formatLog(selectedServer.data.logs.fpms) }}</pre>
+              <div v-if="selectedServer.data.logs.fpms && Object.keys(selectedServer.data.logs.fpms).length > 0">
+                <div v-for="(status, service) in selectedServer.data.logs.fpms" :key="service"
+                  class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="me-2 text-truncate" :title="service">{{ service }}</span>
+                  <span class="badge" :class="getFpmStatusClass(status)">{{ status }}</span>
+                </div>
+              </div>
+              <div v-else>
+                <span class="text-muted">N/A</span>
+              </div>
             </div>
             <div class="col-12 timestamp mt-3 text-end">{{ formatTimestamp(selectedServer.data.timestamp) }}</div>
           </div>
@@ -364,6 +366,10 @@
           return logData.toString();
         };
 
+        const getFpmStatusClass = (status) => {
+          return status.length == 0 ? 'bg-success' : 'bg-danger';
+        };
+
         const formatTimestamp = (ts) => ts ? `Last updated: ${new Date(ts).toLocaleString()}` : '';
 
         // --- Lifecycle Hook ---
@@ -382,7 +388,8 @@
           getStorageList,
           getProgressBarClass,
           formatLog,
-          formatTimestamp
+          formatTimestamp,
+          getFpmStatusClass,
         };
       }
     }).mount('#app');
