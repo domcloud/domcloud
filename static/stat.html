@@ -1,411 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Monitoring Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .server-card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px; /* Space between server rows */
-            background-color: #ffffff;
-            overflow: hidden;
-        }
-        .server-card .card-header {
-            background-color: #007bff; /* Default blue for header */
-            color: white;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            font-size: 1.25rem;
-        }
-        /* Style for red header when status is ERROR */
-        .server-card.status-error .card-header {
-            background-color: #dc3545; /* Red for error */
-        }
-        .server-card .card-body {
-            padding: 15px;
-        }
-        .status-badge {
-            font-size: 1.1em;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .status-ok {
-            background-color: #28a745; /* Green */
-            color: white;
-        }
-        .status-error {
-            background-color: #dc3545; /* Red */
-        }
-        .status-warning {
-            background-color: #ffc107; /* Yellow */
-            color: #343a40;
-        }
-        .metric-item {
-            margin-bottom: 8px; /* Slightly more space for individual metrics */
-        }
-        .metric-item strong {
-            display: inline-block;
-            width: 80px; /* Adjust as needed for alignment */
-            font-weight: 600;
-        }
-        .progress {
-            height: 15px;
-            font-size: 0.75rem;
-            margin-top: 5px;
-        }
-        .timestamp {
-            font-size: 0.8em;
-            color: #6c757d;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            margin-top: 15px;
-        }
-        .metric-column {
-            border-left: 1px solid #eee;
-            padding-left: 15px;
-        }
-        .metric-column:first-child {
-            border-left: none; /* No border for the first column */
-        }
-        .metric-column h4 {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            color: #495057;
-        }
-        .log-pre {
-            background-color: #e9ecef;
-            padding: 8px;
-            border-radius: 5px;
-            overflow: auto; /* Use auto for scrollbars only when needed */
-            white-space: pre-wrap; /* Wrap long lines */
-            word-wrap: break-word; /* Break long words */
-            font-size: 0.8em;
-            max-height: 150px; /* Limit height of log pre-blocks */
-            min-height: 50px; /* Minimum height even if content is small */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Monitoring Dashboard - Vue.js</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    #app {
+      transition: opacity 0.5s;
+    }
+
+    .server-card {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .server-card .card-header {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      font-size: 1.25rem;
+    }
+
+    .server-card.status-error .card-header {
+      background-color: #dc3545;
+    }
+
+    .server-card .card-body {
+      padding: 15px;
+      flex-grow: 1;
+      background-color: #ffffffee;
+      color: black;
+    }
+
+    .status-badge {
+      font-size: 1.1em;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .status-ok {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .status-error {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .status-warning {
+      background-color: #ffc107;
+      color: #343a40;
+    }
+
+    .status-loading {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .metric-item {
+      margin-bottom: 8px;
+    }
+
+    .metric-item strong {
+      display: inline-block;
+      width: 80px;
+      font-weight: 600;
+    }
+
+    .progress {
+      height: 15px;
+      font-size: 0.75rem;
+      margin-top: 5px;
+    }
+
+    .timestamp {
+      font-size: 0.8em;
+      color: #6c757d;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+      margin-top: 15px;
+    }
+
+    .metric-column {
+      border-left: 1px solid #eee;
+      padding-left: 15px;
+    }
+
+    .metric-column:first-child {
+      border-left: none;
+    }
+
+    .metric-column h4 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #495057;
+    }
+
+    .log-pre {
+      background-color: #e9ecef;
+      padding: 8px;
+      border-radius: 5px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 0.8em;
+      max-height: 150px;
+      min-height: 50px;
+    }
+
+    .loading-placeholder {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      color: #6c757d;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container-fluid mt-4">
-        <h1 class="text-center mb-4">Server Monitoring Dashboard</h1>
-        <div class="row" id="server-dashboard">
-            </div>
+
+  <div id="app" class="container-fluid">
+    <div class="d-flex align-items-center mb-4">
+      <button v-if="selectedServer" @click="selectedServer = null" class="btn btn-outline-secondary me-3">
+        <i class="fa-solid fa-arrow-left"></i> Back
+      </button>
+      <h1 class="text-center flex-grow-1 m-0">
+        {{ selectedServer ? selectedServer.name : 'Server Monitoring Dashboard' }}
+      </h1>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-
-    <script>
-        const servers = [
-            { name: "sga.domcloud.co", endpoint: "https://sga.domcloud.co/status/test" },
-            { name: "sgx.domcloud.co", endpoint: "https://sgx.domcloud.co/status/test" },
-            { name: "wdc.domcloud.co", endpoint: "https://wdc.domcloud.co/status/test" },
-            { name: "nue.domcloud.co", endpoint: "https://nue.domcloud.co/status/test" },
-            { name: "sgp.domcloud.co", endpoint: "https://sgp.domcloud.co/status/test" },
-            { name: "mnz.domcloud.co", endpoint: "https://mnz.domcloud.co/status/test" },
-            { name: "osk.domcloud.co", endpoint: "https://osk.domcloud.co/status/test" },
-            { name: "sao.domcloud.co", endpoint: "https://sao.domcloud.co/status/test" }
-        ];
-
-        const dashboardContainer = document.getElementById('server-dashboard');
-
-        async function fetchServerStatus(server) {
-            let data = null;
-            let errorMessage = null;
-            let httpStatusError = false;
-
-            try {
-                const response = await fetch(server.endpoint);
-
-                // Check for HTTP errors, but still attempt to parse JSON for 5xx codes
-                if (!response.ok && !(response.status >= 500 && response.status < 600)) {
-                    httpStatusError = true;
-                    errorMessage = `HTTP error! status: ${response.status} ${response.statusText}`;
-                }
-
-                // Attempt to parse JSON even if HTTP status is not OK (e.g., for 5xx errors)
-                try {
-                    data = await response.json();
-                } catch (jsonError) {
-                    // If JSON parsing fails, this is a more severe error
-                    httpStatusError = true; // Treat as a hard error for display purposes
-                    errorMessage = `Failed to parse JSON: ${jsonError.message}`;
-                }
-
-            } catch (networkError) {
-                console.error(`Network or fetch error for ${server.name}:`, networkError);
-                httpStatusError = true;
-                errorMessage = `Network error: ${networkError.message}`;
-            }
-
-            renderServerCard(server, data, errorMessage, httpStatusError);
-        }
-
-        function renderServerCard(server, data, errorMessage = null, httpStatusError = false) {
-            const serverNameId = server.name.replace(/\./g, '-');
-
-            // Find if a card for this server already exists and remove it to redraw
-            let existingCard = document.getElementById(`card-container-${serverNameId}`);
-            if (existingCard) {
-                existingCard.remove();
-            }
-
-            const cardHtml = `
-                <div class="col-12 my-3" id="card-container-${serverNameId}"> <div class="card server-card h-100">
-                        <div class="card-header">
-                            <span>${server.name}</span>
-                            <span id="status-badge-${serverNameId}" class="status-badge"></span>
-                        </div>
-                        <div class="card-body">
-                            ${data ? `
-                                <div class="row">
-                                    <div class="col-md-3 metric-column">
-                                        <h4>System Metrics</h4>
-                                        <div class="metric-item"><strong>Load Avg:</strong> <span id="loadavg-${serverNameId}"></span></div>
-                                        <div class="metric-item"><strong>Memory:</strong> <div class="progress" role="progressbar">
-                                            <div id="mem-progress-${serverNameId}" class="progress-bar" style="width: 0%"></div>
-                                        </div></div>
-                                        <div class="metric-item"><strong>Storage:</strong> <div class="progress" role="progressbar">
-                                            <div id="storage-progress-${serverNameId}" class="progress-bar" style="width: 0%"></div>
-                                        </div></div>
-                                        <div class="metric-item"><strong>Quota:</strong> <pre id="quota-log-${serverNameId}" class="log-pre"></pre></div>
-                                    </div>
-                                    <div class="col-md-3 metric-column">
-                                        <h4>CPU & Mem Info</h4>
-                                        <pre id="cpuinfo-log-${serverNameId}" class="log-pre"></pre>
-                                        <pre id="meminfo-full-log-${serverNameId}" class="log-pre mt-2"></pre>
-                                    </div>
-                                    <div class="col-md-3 metric-column">
-                                        <h4>Nginx & Named</h4>
-                                        <pre id="nginx-log-${serverNameId}" class="log-pre"></pre>
-                                        <pre id="named-log-${serverNameId}" class="log-pre mt-2"></pre>
-                                    </div>
-                                    <div class="col-md-3 metric-column">
-                                        <h4>FPM Status</h4>
-                                        <pre id="fpms-log-${serverNameId}" class="log-pre"></pre>
-                                    </div>
-                                </div>
-                                <div class="timestamp mt-3 text-end" id="timestamp-${serverNameId}"></div>
-                            ` : `
-                                <div class="alert alert-danger" role="alert">
-                                    Failed to fetch data or parse for ${server.name}: ${errorMessage || 'Unknown error'}
-                                </div>
-                            `}
-                        </div>
-                    </div>
+    <div v-if="!selectedServer" class="row">
+      <div v-for="server in servers" :key="server.name" class="col-sm-6 col-md-3 my-2">
+        <div class="card server-card" :class="{ 'status-error': server.data && server.data.status === 'ERROR' }">
+          <div class="card-header">
+            <span>{{ server.name }}</span>
+            <span class="status-badge" :class="getStatusClass(server)">
+              {{ getStatusText(server) }}
+            </span>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <div v-if="server.isLoading" class="loading-placeholder">
+              <div class="spinner-border spinner-border-sm" role="status"></div>
+            </div>
+            <div v-else class="flex-grow-1">
+              <div class="metric-item"><strong>Load Avg:</strong> <span>{{ getLoadAvg(server.data) }}</span></div>
+              <div class="metric-item"><strong>Memory:</strong>
+                <div class="progress" role="progressbar" :title="`Used: ${getMemoryInfo(server.data).used}`">
+                  <div class="progress-bar" :class="getProgressBarClass(getMemoryInfo(server.data).percent)"
+                    :style="{ width: getMemoryInfo(server.data).percent + '%' }">
+                    {{ getMemoryInfo(server.data).percent }}%
+                  </div>
                 </div>
-            `;
-            dashboardContainer.insertAdjacentHTML('beforeend', cardHtml);
+              </div>
+              <div class="metric-item"><strong>Disk:</strong>
+                <div v-for="disk in getStorageList(server.data)" :key="disk.mountPoint" class="metric-item">
+                  <div v-if="!disk.mountPoint.startsWith('/boot')" class="progress" role="progressbar"
+                    :title="`${disk.mountPoint}: ${disk.used} of ${disk.total}`">
+                    <div class="progress-bar" :class="getProgressBarClass(disk.percent)"
+                      :style="{ width: disk.percent + '%' }">
+                      {{ disk.percent }}%
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-outline-primary w-100 mt-auto" @click="selectServer(server)"
+              :disabled="!server.data">
+              View Full Info
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            // Now get the newly added card element to apply classes and update metrics
-            const currentCardElementContainer = document.getElementById(`card-container-${serverNameId}`);
-            const serverCard = currentCardElementContainer.querySelector('.server-card');
+    <div v-else>
+      <div class="card server-card">
+        <div class="card-body">
+          <div v-if="selectedServer.data" class="row">
+            <div class="col-md-3 metric-column">
+              <h4>System Metrics</h4>
+              <div class="metric-item"><strong>Load Avg:</strong> <span>{{ getLoadAvg(selectedServer.data) }}</span>
+              </div>
+              <div class="metric-item"><strong>Memory:</strong>
+                <div class="progress" role="progressbar"
+                  :title="`Used: ${getMemoryInfo(selectedServer.data).used}, Total: ${getMemoryInfo(selectedServer.data).total}`">
+                  <div class="progress-bar" :class="getProgressBarClass(getMemoryInfo(selectedServer.data).percent)"
+                    :style="{ width: getMemoryInfo(selectedServer.data).percent + '%' }">
+                    {{ getMemoryInfo(selectedServer.data).percent }}%
+                  </div>
+                </div>
+              </div>
+              <h4>Storage</h4>
+              <div v-for="disk in getStorageList(selectedServer.data)" :key="disk.mountPoint" class="metric-item">
+                <strong>{{ disk.mountPoint }}</strong>
+                <div class="progress" role="progressbar" :title="`Used: ${disk.used}, Total: ${disk.total}`">
+                  <div class="progress-bar" :class="getProgressBarClass(disk.percent)"
+                    :style="{ width: disk.percent + '%' }">
+                    {{ disk.percent }}%
+                  </div>
+                </div>
+              </div>
+              <div class="metric-item"><strong>Quota:</strong>
+                <pre class="log-pre">{{ formatLog(selectedServer.data.logs.quota) }}</pre>
+              </div>
+            </div>
+            <div class="col-md-3 metric-column">
+              <h4>CPU & Mem Info</h4>
+              <pre class="log-pre">{{ formatLog(selectedServer.data.logs.cpuinfo) }}</pre>
+              <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.meminfo) }}</pre>
+            </div>
+            <div class="col-md-3 metric-column">
+              <h4>Nginx & Named</h4>
+              <pre class="log-pre">{{ formatLog(selectedServer.data.logs.nginx) }}</pre>
+              <pre class="log-pre mt-2">{{ formatLog(selectedServer.data.logs.named) }}</pre>
+            </div>
+            <div class="col-md-3 metric-column">
+              <h4>FPM Status</h4>
+              <pre class="log-pre">{{ formatLog(selectedServer.data.logs.fpms) }}</pre>
+            </div>
+            <div class="col-12 timestamp mt-3 text-end">{{ formatTimestamp(selectedServer.data.timestamp) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            if (data) {
-                updateServerCardMetrics(server, data, serverCard);
-            } else if (httpStatusError) {
-                // If no data and there was an HTTP/network error, mark card and badge as error
-                const statusBadge = document.getElementById(`status-badge-${serverNameId}`);
-                if(statusBadge) {
-                    statusBadge.textContent = 'ERROR';
-                    statusBadge.classList.add('status-error');
-                }
-                if(serverCard) {
-                    serverCard.classList.add('status-error'); // Apply red background to card header
-                }
+  <script>
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        // --- Reactive State ---
+        const servers = ref([
+          { name: "sgx.domcloud.co", endpoint: "https://sgx.domcloud.co/status/test", data: null, error: null, isLoading: true },
+          { name: "wdc.domcloud.co", endpoint: "https://wdc.domcloud.co/status/test", data: null, error: null, isLoading: true },
+          { name: "nue.domcloud.co", endpoint: "https://nue.domcloud.co/status/test", data: null, error: null, isLoading: true },
+          { name: "sgp.domcloud.co", endpoint: "https://sgp.domcloud.co/status/test", data: null, error: null, isLoading: true },
+          { name: "mnz.domcloud.co", endpoint: "https://mnz.domcloud.co/status/test", data: null, error: null, isLoading: true },
+          { name: "osk.domcloud.co", endpoint: "https://osk.domcloud.co/status/test", data: null, error: null, isLoading: true },
+          { name: "sao.domcloud.co", endpoint: "https://sao.domcloud.co/status/test", data: null, error: null, isLoading: true }
+        ]);
+        const initialLoadComplete = ref(false);
+        const selectedServer = ref(null); // Holds the server object for the detail view
+
+        // --- Methods ---
+        const fetchServerStatus = async (server) => {
+          server.isLoading = true;
+          server.error = null;
+          try {
+            const response = await fetch(server.endpoint);
+            if (!response.ok) {
+              server.error = true;
             }
-        }
+            server.data = await response.json();
+          } catch (err) {
+            server.error = err.message;
+            server.data = null;
+          } finally {
+            server.isLoading = false;
+          }
+        };
 
-        function updateServerCardMetrics(server, data, serverCard) {
-            const serverNameId = server.name.replace(/\./g, '-');
-            const statusBadge = document.getElementById(`status-badge-${serverNameId}`);
+        const initializeDashboard = () => {
+          const fetchPromises = servers.value.map(s => fetchServerStatus(s));
+          Promise.allSettled(fetchPromises).then(() => initialLoadComplete.value = true);
+        };
 
-            // Reset status classes on card and badge
-            serverCard.classList.remove('status-ok', 'status-error', 'status-warning');
-            statusBadge.classList.remove('status-ok', 'status-error', 'status-warning');
+        const selectServer = (server) => {
+          selectedServer.value = server;
+        };
 
-            // Update Status Badge and Card Header Color
-            statusBadge.textContent = data.status;
-            if (data.status === "OK") {
-                statusBadge.classList.add('status-ok');
-            } else if (data.status === "ERROR") {
-                statusBadge.classList.add('status-error');
-                serverCard.classList.add('status-error'); // Apply red background to card header
-            } else {
-                statusBadge.classList.add('status-warning');
-            }
+        // --- Helpers for Template ---
+        const getStatusText = (server) => {
+          if (server.isLoading) return 'LOADING';
+          if (server.error) return 'ERROR';
+          return server.data?.status || 'UNKNOWN';
+        };
 
-            // Update Load Average
-            const loadAvgElement = document.getElementById(`loadavg-${serverNameId}`);
-            if (data.logs && data.logs.cpuinfo && data.logs.cpuinfo.length > 0) {
-                const cpuInfoLine = data.logs.cpuinfo[0];
-                const loadAvgMatch = cpuInfoLine.match(/load average: ([\d.]+), ([\d.]+), ([\d.]+)/);
-                if (loadAvgMatch) {
-                    loadAvgElement.textContent = loadAvgMatch[0];
-                } else {
-                    loadAvgElement.textContent = 'N/A';
-                }
-            } else {
-                loadAvgElement.textContent = 'N/A';
-            }
+        const getStatusClass = (server) => {
+          const status = getStatusText(server);
+          return {
+            'status-ok': status === 'OK',
+            'status-error': status === 'ERROR',
+            'status-warning': !['OK', 'ERROR', 'LOADING'].includes(status),
+            'status-loading': status === 'LOADING'
+          };
+        };
 
-            // Update Memory Usage
-            const memProgress = document.getElementById(`mem-progress-${serverNameId}`);
-            if (data.logs && data.logs.meminfo && data.logs.meminfo.length > 1) {
-                const memLine = data.logs.meminfo[1];
-                const memValues = memLine.split(/\s+/).filter(Boolean);
-                if (memValues.length >= 5) {
-                    const totalMemStr = memValues[1];
-                    const usedMemStr = memValues[2];
+        const getLoadAvg = (data) => {
+          const line = data?.logs?.cpuinfo?.[0] || '';
+          const match = line.match(/load average: ([\d. ,]+)/);
+          return match ? match[1] : 'N/A';
+        };
 
-                    let totalMem = parseFloat(totalMemStr.replace(/[^0-9.]/g, ''));
-                    let usedMem = parseFloat(usedMemStr.replace(/[^0-9.]/g, ''));
+        const parseSizeToGB = (str) => {
+          if (!str) return 0;
+          const val = parseFloat(str.replace(/[^0-9.]/g, ''));
+          if (str.toLowerCase().includes('ki')) return val / 1048576;
+          if (str.toLowerCase().includes('mi')) return val / 1024;
+          if (str.toLowerCase().includes('gi')) return val;
+          return val / 1073741824; // Bytes
+        };
 
-                    // Convert to GB for consistency if different units are present
-                    const parseSize = (str) => {
-                        let val = parseFloat(str.replace(/[^0-9.]/g, ''));
-                        if (str.includes('Ki')) return val / (1024 * 1024);
-                        if (str.includes('Mi')) return val / 1024;
-                        if (str.includes('Gi')) return val;
-                        return val; // Assume bytes or unknown if no unit
-                    };
+        const getMemoryInfo = (data) => {
+          const line = data?.logs?.meminfo?.[1] || '';
+          const vals = line.split(/\s+/).filter(Boolean);
+          if (vals.length < 3) return { percent: 0, used: 'N/A', total: 'N/A' };
+          const [totalStr, usedStr] = [vals[1], vals[2]];
+          const percent = parseSizeToGB(totalStr) > 0 ? ((parseSizeToGB(usedStr) / parseSizeToGB(totalStr)) * 100).toFixed(0) : 0;
+          return { percent, used: usedStr, total: totalStr };
+        };
 
-                    totalMem = parseSize(totalMemStr);
-                    usedMem = parseSize(usedMemStr);
+        const getStorageList = (data) => {
+          const storageLogs = data?.logs?.storage;
+          if (!Array.isArray(storageLogs) || storageLogs.length === 0) {
+            return []; // Return empty array if no data
+          }
 
-                    if (totalMem > 0) {
-                        const usagePercent = ((usedMem / totalMem) * 100).toFixed(2);
-                        memProgress.style.width = `${usagePercent}%`;
-                        memProgress.setAttribute('aria-valuenow', usagePercent);
-                        memProgress.textContent = `${usagePercent}%`;
-                        memProgress.setAttribute('title', `Used: ${usedMemStr}, Total: ${totalMemStr}`);
+          return storageLogs
+            .map(line => {
+              const parts = line.split(/\s+/).filter(Boolean);
+              if (parts.length < 6) return null; // Ignore invalid or header lines
 
-                        memProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                        if (usagePercent > 80) {
-                            memProgress.classList.add('bg-danger');
-                        } else if (usagePercent > 60) {
-                            memProgress.classList.add('bg-warning');
-                        } else {
-                            memProgress.classList.add('bg-success');
-                        }
-                    } else {
-                        memProgress.textContent = 'N/A';
-                        memProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                        memProgress.classList.add('bg-secondary');
-                    }
-                } else {
-                    memProgress.textContent = 'N/A';
-                    memProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                    memProgress.classList.add('bg-secondary');
-                }
-            } else {
-                memProgress.textContent = 'N/A';
-                memProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                memProgress.classList.add('bg-secondary');
-            }
+              // Assumes format: Filesystem Size Used Avail Use% Mounted on
+              const mountPoint = parts[parts.length - 1];
+              const percent = parseFloat(parts[parts.length - 2]) || 0;
+              const used = parts[parts.length - 4];
+              const total = parts[parts.length - 5];
 
-            // Update Storage Usage
-            const storageProgress = document.getElementById(`storage-progress-${serverNameId}`);
-            if (data.logs && data.logs.storage && data.logs.storage.length > 0) {
-                const rootStorageLine = data.logs.storage.find(line => line.endsWith(' /'));
-                if (rootStorageLine) {
-                    const storageValues = rootStorageLine.split(/\s+/).filter(Boolean);
-                    if (storageValues.length >= 5) {
-                        const usagePercent = parseFloat(storageValues[4].replace('%', ''));
-                        const usedStorage = storageValues[1];
-                        const totalStorage = storageValues[3];
+              return { mountPoint, percent, used, total };
+            })
+            .filter(Boolean); // Filter out any null entries from invalid lines
+        };
+        const getProgressBarClass = (percent) => {
+          if (percent > 80) return 'bg-danger';
+          if (percent > 60) return 'bg-warning';
+          return 'bg-success';
+        };
 
-                        storageProgress.style.width = `${usagePercent}%`;
-                        storageProgress.setAttribute('aria-valuenow', usagePercent);
-                        storageProgress.textContent = `${usagePercent}%`;
-                        storageProgress.setAttribute('title', `Used: ${usedStorage}, Total: ${totalStorage}`);
+        const formatLog = (logData) => {
+          if (!logData) return 'N/A';
+          if (Array.isArray(logData)) return logData.join('\n');
+          return logData.toString();
+        };
 
-                        storageProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                        if (usagePercent > 80) {
-                            storageProgress.classList.add('bg-danger');
-                        } else if (usagePercent > 60) {
-                            storageProgress.classList.add('bg-warning');
-                        } else {
-                            storageProgress.classList.add('bg-success');
-                        }
-                    } else {
-                        storageProgress.textContent = 'N/A';
-                        storageProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                        storageProgress.classList.add('bg-secondary');
-                    }
-                } else {
-                    storageProgress.textContent = 'N/A (Root not found)';
-                    storageProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                    storageProgress.classList.add('bg-secondary');
-                }
-            } else {
-                storageProgress.textContent = 'N/A';
-                storageProgress.classList.remove('bg-danger', 'bg-warning', 'bg-success', 'bg-secondary');
-                storageProgress.classList.add('bg-secondary');
-            }
+        const formatTimestamp = (ts) => ts ? `Last updated: ${new Date(ts).toLocaleString()}` : '';
 
-            // Populate Log Pre-tags
-            const logPreIds = {
-                'cpuinfo': 'cpuinfo-log',
-                'meminfo-full': 'meminfo-full-log', // Use a new ID for the full meminfo log
-                'quota': 'quota-log',
-                'nginx': 'nginx-log',
-                'named': 'named-log',
-                'fpms': 'fpms-log'
-            };
+        // --- Lifecycle Hook ---
+        onMounted(initializeDashboard);
 
-            for (const logKey in logPreIds) {
-                const element = document.getElementById(`${logPreIds[logKey]}-${serverNameId}`);
-                if (element && data.logs) {
-                    let logContent = 'N/A';
-                    if (logKey === 'meminfo-full') {
-                        logContent = data.logs.meminfo ? data.logs.meminfo.join('\n') : 'N/A';
-                    } else if (data.logs[logKey]) {
-                        // Check if it's an array or object, stringify if necessary
-                        if (Array.isArray(data.logs[logKey])) {
-                            logContent = data.logs[logKey].join('\n');
-                        } else if (typeof data.logs[logKey] === 'object' && data.logs[logKey] !== null) {
-                            logContent = JSON.stringify(data.logs[logKey], null, 2);
-                        } else {
-                            logContent = data.logs[logKey].toString();
-                        }
-                    }
-                    element.textContent = logContent;
-                }
-            }
+        // --- Expose to Template ---
+        return {
+          servers,
+          initialLoadComplete,
+          selectedServer,
+          selectServer,
+          getStatusText,
+          getStatusClass,
+          getLoadAvg,
+          getMemoryInfo,
+          getStorageList,
+          getProgressBarClass,
+          formatLog,
+          formatTimestamp
+        };
+      }
+    }).mount('#app');
+  </script>
 
-            // Update Timestamp
-            const timestampElement = document.getElementById(`timestamp-${serverNameId}`);
-            if (data.timestamp) {
-                const date = new Date(data.timestamp);
-                timestampElement.textContent = `Last updated: ${date.toLocaleString()}`;
-            }
-        }
-
-        // Initial fetch and render for all servers
-        function initializeDashboard() {
-            // Clear existing cards (re-rendering entire rows for simplicity)
-            dashboardContainer.innerHTML = '';
-            servers.forEach(server => {
-                fetchServerStatus(server);
-            });
-        }
-
-        // Periodically refresh the data (e.g., every 30 seconds)
-        // setInterval(initializeDashboard, 300000); // 30 seconds
-
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', initializeDashboard);
-    </script>
 </body>
+
 </html>
