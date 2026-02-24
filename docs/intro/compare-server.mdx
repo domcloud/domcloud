@@ -5,20 +5,17 @@ sidebar_position: 5
 
 DOM Cloud has many servers and they are different spec depends on capacity. All customers enjoy equal computing power no matter their current plan.
 
-| Server Code (City, Country)  | vCPU | RAM | Disk | Backend | Has Docker | Minimum TLS |
-|------------------------------|------|-----|------|---------|------------|------------|
-| SGA (Singapore)              | 2    | 2   | NVME | x64     | Yes        | TLSv1.2    |
-| SGN (Singapore)              | 2    | 4   | NVME | x64     | Yes        | TLSv1.2    |
-| WDC (Washington DC, US)      | 4    | 8   | NVME | x64     | Yes        | TLSv1.2    |
-| SGP (Singapore)              | 3    | 16  | NVME | arm64   | Yes        | TLSv1.3    |
-| MNZ (Manassas, Virginia, US) | 10   | 16  | NVME | arm64   | Yes        | TLSv1.3    |
-| NUE (Nuremberg, Germany)     | 6    | 8   | NVME | arm64   | Yes        | TLSv1.3    |
-| OSK (Osaka, Japan)           | 1    | 6   | NVME | arm64   | No         | TLSv1.3    |
-| SAO (Sao Paulo, Brazil)      | 1    | 6   | NVME | arm64   | No         | TLSv1.3    |
+| Server Code (City, Country) | vCPU   | RAM     | Disk | Backend | Has Docker | Min TLS     | Max App Mem |
+|-----------------------------|--------|---------|------|---------|------------|-------------|-------------|
+| SGX (Singapore)             | 2      | **14G** | NVME | **x64** | **Yes**    | **TLSv1.2** | **128MB**   |
+| WDC (Washington DC, US)     | **4**  | 8G      | NVME | **x64** | **Yes**    | **TLSv1.2** | **128MB**   |
+| SGP (Singapore)             | **3**  | **16G** | NVME | arm64   | **Yes**    | TLSv1.3     | 32MB        |
+| MNZ (Virginia, US)          | **10** | **16G** | NVME | arm64   | **Yes**    | TLSv1.3     | 32MB        |
+| NUE (Nuremberg, Germany)    | **6**  | 8G      | NVME | arm64   | **Yes**    | **TLSv1.2** | **64MB**    |
+| OSK (Osaka, Japan)          | 1      | 6G      | NVME | arm64   | No         | **TLSv1.2** | **64MB**    |
+| SAO (Sao Paulo, Brazil)     | 1      | 6G      | NVME | arm64   | No         | **TLSv1.2** | **64MB**    |
 
-To make sure no abuse and no slow down, we have many [security features](./security.mdx) in place.
-
-The rule of thumb is pick closest with your targeted visitors. As more people came in and use any server, the server spec will get upgraded. This is also true for storage, which will be expanded or shink depending on usage on regular basis.
+The rule of thumb is pick closest with your targeted visitors if requirement for the website is fit. As more people came in and use any server, the server spec will get upgraded. This is also true for storage, which will be expanded or shink depending on usage on regular basis.
 
 ## ARM64 vs X64
 
@@ -37,7 +34,7 @@ Regular servers has TLSv1.3 as minimum TLS version for lesser handshake operatio
 
 ## Docker Availability
 
-Docker is generally not available on servers with one vCPU.
+Docker is generally not available on servers with one vCPU. Enabling Docker feature will remove max app memory limit restriction.
 
 ## Database and Cache Availability
 
