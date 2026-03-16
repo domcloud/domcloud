@@ -5,16 +5,16 @@ sidebar_position: 5
 
 DOM Cloud has many servers and they are different spec depends on capacity. All customers enjoy equal computing power no matter their current plan.
 
-| Server Code (City, Country) | vCPU   | RAM     | Disk | Backend | Has Docker | Min TLS     | Max Mem (Peak/Idle) |
-|-----------------------------|--------|---------|------|---------|------------|-------------|---------------------|
-| SGA (Singapore)             | 8      | **16G** | NVME | **x64** | **Yes**    | **TLSv1.2** | 2GB / **256MB**     |
-| SGX (Singapore)             | 2      | **14G** | NVME | **x64** | **Yes**    | **TLSv1.2** | 2GB / **256MB**     |
-| SGP (Singapore)             | **3**  | **16G** | NVME | arm64   | **Yes**    | TLSv1.3     | 1GB / **64MB**      |
-| WDC (Washington DC, US)     | **4**  | 8G      | NVME | **x64** | **Yes**    | **TLSv1.2** | 2GB / **256MB**     |
-| MNZ (Virginia, US)          | **10** | **16G** | NVME | arm64   | **Yes**    | TLSv1.3     | 1GB / **64MB**      |
-| NUE (Nuremberg, Germany)    | **6**  | 8G      | NVME | arm64   | **Yes**    | **TLSv1.2** | 1GB / **128MB**     |
-| OSK (Osaka, Japan)          | 1      | 6G      | NVME | arm64   | No         | **TLSv1.2** | 1GB / **128MB**     |
-| SAO (Sao Paulo, Brazil)     | 1      | 6G      | NVME | arm64   | No         | **TLSv1.2** | 1GB / **128MB**     |
+| Server Code (City, Country) | vCPU   | RAM     | Disk | Backend | Has Docker | Min TLS     | Max Mem (Peak/Idle) | Max Nproc |
+|-----------------------------|--------|---------|------|---------|------------|-------------|---------------------|-----------|
+| SGA (Singapore)             | 8      | **16G** | NVME | **x64** | **Yes**    | **TLSv1.2** | 2GB / **256MB**     | 80        |
+| SGX (Singapore)             | 2      | **14G** | NVME | **x64** | **Yes**    | **TLSv1.2** | 2GB / **256MB**     | 80        |
+| WDC (Washington DC, US)     | **4**  | 8G      | NVME | **x64** | **Yes**    | **TLSv1.2** | 2GB / **256MB**     | 80        |
+| SGP (Singapore)             | **3**  | **16G** | NVME | arm64   | **Yes**    | TLSv1.3     | 1GB / **64MB**      | 40        |
+| MNZ (Virginia, US)          | **10** | **16G** | NVME | arm64   | **Yes**    | TLSv1.3     | 1GB / **64MB**      | 40        |
+| NUE (Nuremberg, Germany)    | **6**  | 8G      | NVME | arm64   | **Yes**    | **TLSv1.2** | 1GB / **128MB**     | 60        |
+| OSK (Osaka, Japan)          | 1      | 6G      | NVME | arm64   | No         | **TLSv1.2** | 1GB / **128MB**     | 60        |
+| SAO (Sao Paulo, Brazil)     | 1      | 6G      | NVME | arm64   | No         | **TLSv1.2** | 1GB / **128MB**     | 60        |
 
 The rule of thumb is pick closest with your targeted visitors if requirement for the website is fit. As more people came in and use any server, the server spec will get upgraded. This is also true for storage, which will be expanded or shink depending on usage on regular basis.
 
