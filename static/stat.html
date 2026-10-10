@@ -136,9 +136,7 @@
   </style>
 </head>
 
-
 <body>
-
   <div id="app" :class="{ 'loaded': initialLoadComplete }" class="container-fluid my-4">
     <div class="d-flex align-items-center mb-4">
       <button v-if="selectedServer" @click="selectServer(null)" class="btn btn-outline-secondary me-3">
@@ -146,6 +144,9 @@
       </button>
       <h1 class="text-center flex-grow-1 m-0">
         {{ selectedServer ? selectedServer.name : 'Server Monitoring Dashboard' }}
+        <a v-if="selectedServer" :href="`https://${selectedServer.name}/status/test`" target="_blank" class="btn btn-sm btn-outline-info ms-2 pb-1" title="View Raw /status/test">
+          <i class="fa-solid fa-up-right-from-square"></i> JSON
+        </a>
       </h1>
       <button @click="toggleTheme" class="btn btn-outline-secondary ms-3">
         <i class="fa-solid" :class="theme === 'light' ? 'fa-moon' : 'fa-sun'"></i>
@@ -295,8 +296,8 @@
                 Could not load user ports data: {{ selectedServer.portsError }}
               </div>
               <div v-else-if="selectedServer.ports" class="d-flex flex-wrap font-monospace">
-                <div v-for="port in selectedServer.ports" :key="port[0]" data-bs-toggle="tooltip"
-                  :data-bs-title="port[0]" class="mx-1" :class="getPortStatusClass(port)">
+                <div v-for="port in selectedServer.ports" :key="port[1]" data-bs-toggle="tooltip"
+                  :data-bs-title="getPortTooltip(port)" class="mx-1 mb-1" :class="getPortStatusClass(port)" style="cursor: pointer;">
                   {{port[1]}} {{port[2] ? '🟢' : '🔴'}}
                 </div>
               </div>
@@ -391,6 +392,20 @@
           }
         };
 
+        const handleHashRouting = () => {
+          const hash = window.location.hash.slice(1);
+          if (hash) {
+            const srv = servers.value.find(s => s.name === hash);
+            if (srv) {
+              selectedServer.value = srv;
+            } else {
+              selectedServer.value = null;
+            }
+          } else {
+            selectedServer.value = null;
+          }
+        };
+
         const initializeDashboard = () => {
           const fetchPromises = servers.value.map(s => fetchServerStatus(s));
           Promise.allSettled(fetchPromises).then(() => initialLoadComplete.value = true);
@@ -422,8 +437,11 @@
             theme.value = 'dark';
           }
 
-          // This line is from your existing code, keep it.
           initializeDashboard();
+          
+          // Initial Route Load & Listener setup
+          handleHashRouting();
+          window.addEventListener('hashchange', handleHashRouting);
         });
 
         // --- Chart Management ---
@@ -529,6 +547,7 @@
             chartInstances[key] = new Chart(canvas, { type: 'line', data: { datasets }, options: chartOptions });
           });
         };
+        
         // Watch for server selection changes to fetch stats and render/destroy charts
         watch(selectedServer, (newServer, oldServer) => {
           destroyCharts();
@@ -556,6 +575,11 @@
         // --- UI Methods & Helpers ---
         const selectServer = (server) => {
           selectedServer.value = server;
+          if (server) {
+            window.location.hash = server.name; 
+          } else {
+            window.history.pushState('', document.title, window.location.pathname + window.location.search);
+          }
         };
 
         const getStatusText = (server) => {
@@ -647,6 +671,11 @@
           return status.length == 0 ? 'bg-success' : 'bg-danger';
         };
 
+        const getPortTooltip = (port) => {
+          // Format: username | domain | service
+          return [port[0], port[3], port[4]].filter(Boolean).join(' | ');
+        };
+
         const getPortStatusClass = (port) => {
           return port[2] ? 'text-success' : 'text-danger';
         };
@@ -701,6 +730,7 @@
           getMemoryInfo,
           getStorageList,
           getProgressBarClass,
+          getPortTooltip,
           getPortStatusClass,
           formatLog,
           formatTimestamp,
